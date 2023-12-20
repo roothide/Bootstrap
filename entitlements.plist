@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>platform-application</key>
+	<true/>
+	<key>com.apple.private.security.no-sandbox</key>
+	<true/>
+	<key>com.apple.security.get-task-allow</key>
+	<true/>
+	<key>get-task-allow</key>
+	<true/>
+	<key>task_for_pid-allow</key>
+	<true/>
+	<key>run-unsigned-code</key>
+	<true/>
+	<key>proc_info-allow</key>
+	<true/>
+    
+	<key>com.apple.private.security.storage.AppBundles</key>
+	<true/>
+	<key>com.apple.private.security.storage.AppDataContainers</key>
+	<true/>
+    
+	<key>com.apple.security.iokit-user-client-class</key>
+	<array>
+		<string>AGXDeviceUserClient</string>
+		<string>IOHDIXControllerUserClient</string>
+		<string>IOSurfaceRootUserClient</string>
+	</array>
+    
+	<key>com.apple.private.persona-mgmt</key>
+	<true/>
+    
+	<key>com.apple.security.exception.shared-preference.read-write</key>
+	<array>
+        <string>com.roothide.Bootstrap</string>
+        <string>com.roothide.Bootstrap.shared</string>
+	</array>
+    
+    <key>com.apple.private.MobileContainerManager.allowed</key>
+    <true/>
+    
+    <key>com.apple.springboard.launchapplications</key>
+    <true/>
+    <key>com.apple.backboardd.launchapplications</key>
+    <true/>
+
+    
+    
+</dict>
+</plist>

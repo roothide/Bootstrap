@@ -1,0 +1,10 @@
+Package: com.roothide.bootstrap
+Name: RootHide Bootstrap
+Version: 0.1
+Architecture: iphoneos-arm64e
+Depends: firmware (>= 15.0)
+Description: RootHide Bootstrap for TrollStore
+Maintainer: RootHide
+Author: RootHide
+Section: System
+
