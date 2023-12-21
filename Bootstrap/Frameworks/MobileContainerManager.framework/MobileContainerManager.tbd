@@ -1,6 +1,6 @@
 --- !tapi-tbd-v3
 archs:                 [ armv7, armv7s, arm64, arm64e ]
-platform:              (null)
+platform:              ios
 flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/MobileContainerManager.framework/MobileContainerManager
 current-version:       1
