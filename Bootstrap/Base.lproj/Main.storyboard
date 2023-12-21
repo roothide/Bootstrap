@@ -17,14 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
-                                <rect key="frame" x="147" y="561" width="99" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Bootstrap"/>
-                                <connections>
-                                    <action selector="bootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4t4-gT-m0w"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQX-IC-Eof">
                                 <rect key="frame" x="150" y="749" width="92" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -78,14 +70,26 @@
                                     <action selector="respring:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lbu-go-Y79"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
+                                <rect key="frame" x="132" y="559" width="129" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Bootstrap"/>
+                                <connections>
+                                    <action selector="bootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4t4-gT-m0w"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.88178811990567185" green="0.93043862189523185" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
+                        <outlet property="appEnablerBtn" destination="EZ0-Bd-3hy" id="k9y-cw-Yfn"/>
                         <outlet property="bootstraBtn" destination="a00-Is-meU" id="chJ-cA-4pr"/>
                         <outlet property="logView" destination="vAH-eh-yux" id="XVQ-B0-Whq"/>
+                        <outlet property="opensshState" destination="bPU-Gp-wbI" id="AD0-vT-lfL"/>
+                        <outlet property="respringBtn" destination="L3N-5g-U7l" id="eO9-fK-Z7Q"/>
                         <outlet property="unbootstrapBtn" destination="LQX-IC-Eof" id="isZ-rT-6Gz"/>
+                        <outlet property="uninstallBtn" destination="LQX-IC-Eof" id="u0Z-hU-k5W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

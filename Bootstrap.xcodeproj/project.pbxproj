@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; };
 		84364F3E2B323FB600E90B58 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84364F432B33BCA100E90B58 /* bootstrap.tar.zst in Resources */ = {isa = PBXBuildFile; fileRef = 84364F422B33BCA100E90B58 /* bootstrap.tar.zst */; };
 		84438D472B26090D00A1E407 /* sileo.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D432B26090D00A1E407 /* sileo.deb */; };
 		84438D482B26090D00A1E407 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = 84438D442B26090D00A1E407 /* tar */; };
-		84438D492B26090D00A1E407 /* bootstrap-ssh.tar.zst in Resources */ = {isa = PBXBuildFile; fileRef = 84438D452B26090D00A1E407 /* bootstrap-ssh.tar.zst */; };
 		84438D4A2B26090D00A1E407 /* zebra.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D462B26090D00A1E407 /* zebra.deb */; };
 		84438D4C2B2609B200A1E407 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D4B2B2609B200A1E407 /* utils.m */; };
 		84438D502B260F8200A1E407 /* libzstd in Frameworks */ = {isa = PBXBuildFile; productRef = 84438D4F2B260F8200A1E407 /* libzstd */; };
@@ -33,7 +33,7 @@
 		847099952B1D855E003FA4ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847099932B1D855E003FA4ED /* LaunchScreen.storyboard */; };
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
-		847099A52B1D9686003FA4ED /* bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* bootstrap.m */; };
+		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,12 +53,12 @@
 /* Begin PBXFileReference section */
 		84364F382B2E53BA00E90B58 /* seh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = seh.h; sourceTree = "<group>"; };
 		84364F392B3235A100E90B58 /* sources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sources.h; sourceTree = "<group>"; };
-		84364F3A2B3235BF00E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Bootstrap/MBProgressHUD.framework; sourceTree = "<group>"; };
 		84364F402B32627200E90B58 /* credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credits.h; sourceTree = "<group>"; };
+		84364F412B337BC000E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
+		84364F422B33BCA100E90B58 /* bootstrap.tar.zst */ = {isa = PBXFileReference; lastKnownFileType = file; path = bootstrap.tar.zst; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
-		84438D452B26090D00A1E407 /* bootstrap-ssh.tar.zst */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bootstrap-ssh.tar.zst"; sourceTree = "<group>"; };
 		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
 		84438D4B2B2609B200A1E407 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		84438D4D2B2609C600A1E407 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		8470999E2B1D868F003FA4ED /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
 		8470999F2B1D868F003FA4ED /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		847099A42B1D9686003FA4ED /* bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bootstrap.m; sourceTree = "<group>"; };
+		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,11 +124,9 @@
 		847099792B1D855D003FA4ED = {
 			isa = PBXGroup;
 			children = (
-				84364F3A2B3235BF00E90B58 /* bootstrap.h */,
-				84364F392B3235A100E90B58 /* sources.h */,
+				84364F422B33BCA100E90B58 /* bootstrap.tar.zst */,
 				84438D662B279F6600A1E407 /* fakekrw.deb */,
 				84438D582B261FBA00A1E407 /* basebin */,
-				84438D452B26090D00A1E407 /* bootstrap-ssh.tar.zst */,
 				84438D432B26090D00A1E407 /* sileo.deb */,
 				84438D442B26090D00A1E407 /* tar */,
 				84438D462B26090D00A1E407 /* zebra.deb */,
@@ -154,24 +152,26 @@
 			children = (
 				84438D692B2CDE0100A1E407 /* AppList.h */,
 				84438D682B2CDE0100A1E407 /* AppList.m */,
-				84438D6A2B2CDE0100A1E407 /* AppViewController.h */,
-				84438D6B2B2CDE0100A1E407 /* AppViewController.m */,
-				84438D5B2B264A2800A1E407 /* NSUserDefaults+appDefaults.h */,
-				84438D5C2B264A2800A1E407 /* NSUserDefaults+appDefaults.m */,
 				847099852B1D855D003FA4ED /* AppDelegate.h */,
 				847099862B1D855D003FA4ED /* AppDelegate.m */,
 				847099882B1D855D003FA4ED /* SceneDelegate.h */,
 				847099892B1D855D003FA4ED /* SceneDelegate.m */,
 				8470998B2B1D855D003FA4ED /* ViewController.h */,
 				8470998C2B1D855D003FA4ED /* ViewController.m */,
-				84364F402B32627200E90B58 /* credits.h */,
+				84438D5B2B264A2800A1E407 /* NSUserDefaults+appDefaults.h */,
+				84438D5C2B264A2800A1E407 /* NSUserDefaults+appDefaults.m */,
+				84438D6A2B2CDE0100A1E407 /* AppViewController.h */,
+				84438D6B2B2CDE0100A1E407 /* AppViewController.m */,
 				84438D512B260FEB00A1E407 /* zstd_wrapper.m */,
 				8470998E2B1D855D003FA4ED /* Main.storyboard */,
 				847099912B1D855E003FA4ED /* Assets.xcassets */,
 				847099932B1D855E003FA4ED /* LaunchScreen.storyboard */,
 				847099962B1D855E003FA4ED /* Info.plist */,
 				847099972B1D855E003FA4ED /* main.m */,
-				847099A42B1D9686003FA4ED /* bootstrap.m */,
+				84364F402B32627200E90B58 /* credits.h */,
+				84364F392B3235A100E90B58 /* sources.h */,
+				84364F412B337BC000E90B58 /* bootstrap.h */,
+				847099A42B1D9686003FA4ED /* Bootstrap.m */,
 				84438D6E2B2CE5A300A1E407 /* AppEnabler.m */,
 				84438D632B27522400A1E407 /* envbuf.h */,
 				84438D642B27522400A1E407 /* envbuf.c */,
@@ -249,7 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84438D592B261FBA00A1E407 /* basebin in Resources */,
-				84438D492B26090D00A1E407 /* bootstrap-ssh.tar.zst in Resources */,
+				84364F432B33BCA100E90B58 /* bootstrap.tar.zst in Resources */,
 				84438D672B279F6600A1E407 /* fakekrw.deb in Resources */,
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
 				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
@@ -269,7 +269,7 @@
 			files = (
 				847099A32B1D868F003FA4ED /* Makefile in Sources */,
 				8470998D2B1D855D003FA4ED /* ViewController.m in Sources */,
-				847099A52B1D9686003FA4ED /* bootstrap.m in Sources */,
+				847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */,
 				84438D652B27522400A1E407 /* envbuf.c in Sources */,
 				84438D4C2B2609B200A1E407 /* utils.m in Sources */,
 				84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */,

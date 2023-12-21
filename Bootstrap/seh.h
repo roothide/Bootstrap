@@ -14,10 +14,10 @@
 #undef assert
 #define assert   #error#
 
-#define ASSERT(e)  do{if(!(e)) {\
+#define ASSERT(...)  do{if(!(__VA_ARGS__)) {\
 @throw [NSException\
         exceptionWithName:@"ASSERT"\
-        reason:[NSString stringWithFormat:@"%s (%d): %s", __FILE_NAME__, __LINE__, #e]\
+        reason:[NSString stringWithFormat:@"%s (%d): %s", __FILE_NAME__, __LINE__, #__VA_ARGS__]\
         userInfo:nil];\
 }} while(0)
 

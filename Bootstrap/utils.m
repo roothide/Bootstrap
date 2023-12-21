@@ -210,7 +210,9 @@ int spawn(const char* path, const char** argv, const char** envp, void(^std_out)
 
 int spawnBootstrap(const char** argv, NSString** stdOut, NSString** stdErr)
 {
-    SYSLOG("spawnBootstrap %s", argv[0]);
+    NSMutableArray* argArr = [[NSMutableArray alloc] init];
+    for(int i=1; argv[i]; i++) [argArr addObject:[NSString stringWithUTF8String:argv[i]]];
+    SYSLOG("spawnBootstrap %s with %@", argv[0], argArr);
     
     char **envc = envbuf_mutcopy(environ);
     

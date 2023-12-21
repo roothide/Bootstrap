@@ -8,4 +8,4 @@
 
 #define SYSLOG(...) do {openlog("bootstrap",LOG_PID,LOG_AUTH);syslog(LOG_DEBUG, __VA_ARGS__);closelog();} while(0)
 
-#define STRAPLOG(...) do {SYSLOG(__VA_ARGS__); fprintf(stdout, __VA_ARGS__); fprintf(stdout, "\n");} while(0)
+#define STRAPLOG(...) do {SYSLOG(__VA_ARGS__); fprintf(stdout, [NSString stringWithFormat:@__VA_ARGS__].UTF8String); fprintf(stdout, "\n"); fflush(stdout);} while(0)

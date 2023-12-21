@@ -1,5 +1,5 @@
 .theos/
 packages/
 .DS_Store
-basebin/
-layout/
+/basebin/
+/layout/

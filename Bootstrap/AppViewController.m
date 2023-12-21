@@ -5,6 +5,7 @@
 #import "AppList.h"
 #include "common.h"
 #include "AppDelegate.h"
+#include <sys/stat.h>
 
 @interface PrivateApi_LSApplicationWorkspace
 - (NSArray*)allInstalledApplications;
@@ -205,7 +206,8 @@
     
     UISwitch *theSwitch = [[UISwitch alloc] init];
     
-    BOOL enabled = [NSFileManager.defaultManager fileExistsAtPath:[app.bundleURL.path stringByAppendingPathComponent:@".jbroot"]];
+    struct stat st;
+    BOOL enabled = lstat([app.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
     [theSwitch setOn:enabled];
     [theSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
@@ -235,7 +237,7 @@
         
         [AppDelegate dismissHud];
         
-        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"stats(%d)",status]];
+        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 
         killAllForApp(app.bundleURL.path.UTF8String);
     });
