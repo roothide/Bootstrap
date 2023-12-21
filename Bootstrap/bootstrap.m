@@ -313,6 +313,10 @@ int unbootstrap()
     {
         //try
         spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", [@"/Applications/" stringByAppendingPathComponent:bundle].UTF8String,NULL}, nil, nil);
+        
+        if([fm fileExistsAtPath:[@"/Applications/" stringByAppendingPathComponent:bundle]]) {
+            spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", [@"/rootfs/Applications/" stringByAppendingPathComponent:bundle].UTF8String,NULL}, nil, nil);
+        }
     }
     
     NSString* dirpath = @"/var/containers/Bundle/Application/";

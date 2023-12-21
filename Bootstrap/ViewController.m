@@ -211,22 +211,32 @@
     });
 }
 
+
 - (IBAction)unbootstrap:(id)sender {
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Uninstalling")];
-        
-        NSString* log=nil;
-        NSString* err=nil;
-        int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
-        
-        [AppDelegate dismissHud];
-        if(status!=0)
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-        else
-            [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
 
-    });
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Uninstall") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [AppDelegate showHudMsg:Localized(@"Uninstalling")];
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
+                
+            [AppDelegate dismissHud];
+            if(status!=0)
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            else
+                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
+
+        });
+        
+    }]];
+    [AppDelegate showAlert:alert];
+    
 }
 
 

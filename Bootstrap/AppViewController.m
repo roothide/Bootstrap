@@ -12,6 +12,9 @@
 - (bool)openApplicationWithBundleID:(id)arg1;
 - (NSArray*)privateURLSchemes;
 - (NSArray*)publicURLSchemes;
+- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
+                                                  internal:(BOOL)arg2
+                                                      user:(BOOL)arg3;
 @end
 
 @interface AppViewController () {
