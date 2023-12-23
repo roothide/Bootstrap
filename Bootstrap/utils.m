@@ -335,6 +335,8 @@ void machoGetInfo(FILE* candidateFile, bool *isMachoOut, bool *isLibraryOut)
         fseek(candidateFile, anyArchOffset, SEEK_SET);
         fread(&mh, sizeof(mh), 1, candidateFile);
 
+        //static lib
+        isMacho = mh.magic == MH_MAGIC_64 || mh.magic == MH_CIGAM_64 || mh.magic == FAT_MAGIC || mh.magic == FAT_CIGAM;
         isLibrary = OSSwapLittleToHostInt32(mh.filetype) != MH_EXECUTE;
     }
 
