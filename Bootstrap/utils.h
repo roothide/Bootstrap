@@ -15,6 +15,8 @@ NSString* jbroot(NSString *path);
 
 int is_jbroot_name(const char* name);
 
+NSString* rootfsPrefix(NSString* path);
+
 NSString* getBootSession();
 
 int spawn(const char* path, const char** argv, const char** envp, void(^std_out)(char*), void(^std_err)(char*));

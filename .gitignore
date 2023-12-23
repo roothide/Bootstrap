@@ -3,3 +3,4 @@ packages/
 .DS_Store
 /basebin/
 /layout/
+*.xcuserstate

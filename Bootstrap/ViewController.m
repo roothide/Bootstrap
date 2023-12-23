@@ -94,7 +94,7 @@
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:@"\nthanks to these guys, we couldn't have completed this project without their help!"];
+        [AppDelegate addLogText:Localized(@"\nthanks to these guys, we couldn't have completed this project without their help!")];
         
     });
     
@@ -104,11 +104,40 @@
     [NSUserDefaults.appDefaults synchronize];
     SYSLOG("locale=%@", [NSUserDefaults.appDefaults valueForKey:@"locale"]);
     
-    if(isSystemBootstrapped()) {
-        self.opensshState.on = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"check"], nil, nil)==0;
-    } else {
-        self.opensshState.on = [NSUserDefaults.appDefaults boolForKey:@"openssh"];
+    if(isSystemBootstrapped())
+    {
+        if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                
+                NSString* log=nil;
+                NSString* err=nil;
+                if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
+                    [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
+                    [self updateOpensshStatus];
+                } else {
+                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
+                }
+                
+            }]];
+            
+            [AppDelegate showAlert:alert];
+        } else {
+            [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+            [self updateOpensshStatus];
+        }
     }
+}
+
+-(void) updateOpensshStatus {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(isSystemBootstrapped()) {
+            self.opensshState.on = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"check"], nil, nil)==0;
+        } else {
+            self.opensshState.on = [NSUserDefaults.appDefaults boolForKey:@"openssh"];
+        }
+    });
 }
 
 - (IBAction)respring:(id)sender {
@@ -157,11 +186,16 @@
     else
     {
         [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-        [enabled setOn:!enabled.on];
+        if(enabled.on) [enabled setOn:NO];
     }
 }
 
 - (IBAction)bootstrap:(id)sender {
+    
+    if(find_jbroot() && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
+        [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Warnning")];
+        return;
+    }
     
     [(UIButton*)sender setEnabled:NO];
     
@@ -183,15 +217,9 @@
             [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
             return;
         }
+        
         NSString* log=nil;
         NSString* err=nil;
-         status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"server"], &log, &err);
-        if(status != 0) {
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@", log, err] title:[NSString stringWithFormat:@"bootstrap server load faild(%d)",status]];
-            return;
-        }
-        
-        [AppDelegate addLogText:@"bootstrap server load successful"];
             
         if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
             NSString* log=nil;

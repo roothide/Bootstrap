@@ -223,16 +223,18 @@
     UISwitch *switchInCell = (UISwitch *)sender;
     CGPoint pos = [switchInCell convertPoint:switchInCell.bounds.origin toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pos];
-    
+    BOOL enabled = switchInCell.on;
     AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
         
+        killAllForApp(app.bundleURL.path.UTF8String);
+        
         int status;
         NSString* log=nil;
         NSString* err=nil;
-        if(switchInCell.on) {
+        if(enabled) {
             status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"enableapp",app.bundleURL.path], &log, &err);
         } else {
             status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
@@ -240,9 +242,15 @@
         
         [AppDelegate dismissHud];
         
-        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-
+        if(status == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                switchInCell.on = enabled;
+            });
+        } else {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
         killAllForApp(app.bundleURL.path.UTF8String);
+        
     });
 }
 @end

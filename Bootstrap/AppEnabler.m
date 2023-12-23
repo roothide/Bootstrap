@@ -2,59 +2,6 @@
 #include "AppList.h"
 #include "common.h"
 
-extern void rebuildSignature(NSString *directoryPath);
-
-int rebuildApp(NSString *bundlePath)
-{
-    int machoCount=0, libCount=0;
-    
-    NSString *resolvedPath = [[bundlePath stringByResolvingSymlinksInPath] stringByStandardizingPath];
-    NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsSymbolicLinkKey] options:0 errorHandler:nil];
-    
-    NSString* decryptor = jbroot(@"/basebin/bootstrapd");
-    NSString* fastSignPath = jbroot(@"/basebin/fastPathSign");
-    
-    for (NSURL *enumURL in directoryEnumerator) {
-        @autoreleasepool {
-            NSNumber *isSymlink;
-            [enumURL getResourceValue:&isSymlink forKey:NSURLIsSymbolicLinkKey error:nil];
-            if (isSymlink && ![isSymlink boolValue])
-            {
-                if([enumURL.path.lastPathComponent.pathExtension isEqualToString:@"machobackup"]) {
-                    continue;
-                }
-
-                FILE *fp = fopen(enumURL.fileSystemRepresentation, "rb");
-                ASSERT(fp != NULL);
-                
-                bool ismacho=false, islib=false;
-                machoGetInfo(fp, &ismacho, &islib);
-                
-                fclose(fp);
-                
-                if(ismacho) {
-                    
-                    SYSLOG("rebuild %@", enumURL.path);
-                    
-                    machoCount++;
-                    
-                    if(!islib) {
-                        libCount++;
-                    }
-                    
-                    ASSERT(spawnRoot(decryptor, @[@"unrestrict", enumURL.path], nil, nil) == 0);
-                    ASSERT(spawnRoot(fastSignPath, @[enumURL.path], nil, nil) == 0);
-                }
-                
-
-            }
-        }
-    }
-    
-    SYSLOG("rebuild finished! machoCount=%d, libCount=%d", machoCount, libCount);
-    
-    return 0;
-}
 
 int backupApp(NSString* bundlePath)
 {
@@ -199,7 +146,11 @@ int enableForApp(NSString* bundlePath)
         
         ASSERT([fm copyItemAtPath:bundlePath toPath:jbroot(bundlePath) error:nil]);
         
-        rebuildSignature(jbroot(bundlePath));
+        NSString* rebuildFile = [jbroot(bundlePath) stringByAppendingPathComponent:@".rebuild"];
+        if(![fm fileExistsAtPath:rebuildFile]) {
+            ASSERT(spawnRoot(jbroot(@"/basebin/rebuildapp"), @[bundlePath], nil, nil) == 0);
+            ASSERT([[NSString new] writeToFile:rebuildFile atomically:YES encoding:NSUTF8StringEncoding error:nil] );
+        }
         
         ASSERT([fm createSymbolicLinkAtPath:[jbroot(bundlePath) stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
         
@@ -208,11 +159,15 @@ int enableForApp(NSString* bundlePath)
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
     {
-        rebuildSignature(bundlePath);
-        
+        NSString* rebuildFile = [bundlePath stringByAppendingPathComponent:@".rebuild"];
+        if(![fm fileExistsAtPath:rebuildFile]) {
+            ASSERT(spawnRoot(jbroot(@"/basebin/rebuildapp"), @[rootfsPrefix(bundlePath)], nil, nil) == 0);
+            ASSERT([[NSString new] writeToFile:rebuildFile atomically:YES encoding:NSUTF8StringEncoding error:nil] );
+        }
+                
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
 
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", [@"/rootfs/" stringByAppendingString:bundlePath].UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     else
     {
@@ -233,11 +188,15 @@ int enableForApp(NSString* bundlePath)
         
         ASSERT(backupApp(bundlePath) == 0);
         
-        ASSERT(rebuildApp(bundlePath) == 0);
+        NSString* rebuildFile = [bundlePath stringByAppendingPathComponent:@".rebuild"];
+        if(![fm fileExistsAtPath:rebuildFile]) {
+            ASSERT(spawnRoot(jbroot(@"/basebin/rebuildapp"), @[rootfsPrefix(bundlePath)], nil, nil) == 0);
+            ASSERT([[NSString new] writeToFile:rebuildFile atomically:YES encoding:NSUTF8StringEncoding error:nil] );
+        }
         
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
         
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", [@"/rootfs/" stringByAppendingString:bundlePath].UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     
     return 0;
@@ -256,14 +215,15 @@ int disableForApp(NSString* bundlePath)
     {
         ASSERT([fm removeItemAtPath:bundlePath error:nil]);
         
-        NSString* sysPath = [@"/rootfs/Applications/" stringByAppendingString:bundlePath.lastPathComponent];
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", sysPath.UTF8String, NULL}, nil, nil) == 0);
+        NSString* sysPath = [@"/Applications/" stringByAppendingString:bundlePath.lastPathComponent];
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).UTF8String, NULL}, nil, nil) == 0);
     }
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
     {
         ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", [@"/rootfs/" stringByAppendingString:bundlePath].UTF8String, NULL}, nil, nil) == 0);
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     else
     {
@@ -272,11 +232,12 @@ int disableForApp(NSString* bundlePath)
         ASSERT(restoreApp(bundlePath) == 0);
         
         ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
         
         //unregister or respring to keep app's icon on home screen
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-u", [@"/rootfs/" stringByAppendingString:bundlePath].UTF8String, NULL}, nil, nil) == 0);
-        
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", [@"/rootfs/" stringByAppendingString:bundlePath].UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        //come back
+        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     
     return 0;

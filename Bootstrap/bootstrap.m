@@ -111,7 +111,31 @@ int rebuildBasebin()
     return 0;
 }
 
-int install(NSString* jbroot_path)
+int startBootstrapd()
+{
+    NSString* log=nil;
+    NSString* err=nil;
+    int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon"], &log, &err);
+    if(status != 0) {
+        STRAPLOG("bootstrap server load faild(%d):\n%@\nERR:%@", status, log, err);
+        ABORT();
+    }
+
+    STRAPLOG("bootstrap server load successful");
+    
+    sleep(1);
+    
+     status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], &log, &err);
+    if(status != 0) {
+        STRAPLOG("bootstrap server check faild(%d):\n%@\nERR:%@", status, log, err);
+        ABORT();
+    }
+    STRAPLOG("bootstrap server check successful");
+    
+    return 0;
+}
+
+int InstallBootstrap(NSString* jbroot_path)
 {
     STRAPLOG("install bootstrap...");
     
@@ -163,6 +187,9 @@ int install(NSString* jbroot_path)
     STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
+    STRAPLOG("Status: Starting Bootstrapd");
+    ASSERT(startBootstrapd() == 0);
+    
     STRAPLOG("Status: Finalizing Bootstrap");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, nil, nil) == 0);
 
@@ -176,14 +203,14 @@ int install(NSString* jbroot_path)
     
     
     STRAPLOG("Status: Installing Packages");
-    NSString* fakekrw = [NSString stringWithFormat:@"/rootfs/%@/fakekrw.deb", NSBundle.mainBundle.bundlePath];
-    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", fakekrw.fileSystemRepresentation, NULL}, nil, nil) == 0);
+    NSString* fakekrw = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"fakekrw.deb"];
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(fakekrw).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
-    NSString* sileoDeb = [NSString stringWithFormat:@"/rootfs/%@/sileo.deb", NSBundle.mainBundle.bundlePath];
-    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", sileoDeb.fileSystemRepresentation, NULL}, nil, nil) == 0);
+    NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
-    NSString* zebraDeb = [NSString stringWithFormat:@"/rootfs/%@/zebra.deb", NSBundle.mainBundle.bundlePath];
-    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", zebraDeb.fileSystemRepresentation, NULL}, nil, nil) == 0);
+    NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
     ASSERT([fm createFileAtPath:jbroot(@"/.bootstrapped") contents:nil attributes:nil]);
     
@@ -193,7 +220,7 @@ int install(NSString* jbroot_path)
     return 0;
 }
 
-int rerandomize()
+int ReRandomizeBootstrap()
 {
     //jbroot() disabled
     
@@ -240,11 +267,14 @@ int rerandomize()
     STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
+    STRAPLOG("Status: Starting Bootstrapd");
+    ASSERT(startBootstrapd() == 0);
+    
     STRAPLOG("Status: Updating Symlinks");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
     STRAPLOG("Status: Rebuilding Apps");
-    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/app-rebuild", NULL}, nil, nil) == 0);
+    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
     
     return 0;
 }
@@ -266,7 +296,7 @@ int bootstrap()
         
         STRAPLOG("bootstrap @ %@", jbroot_path);
         
-        ASSERT(install(jbroot_path) == 0);
+        ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
         STRAPLOG("remove unfinished bootstrap %@", jbroot_path);
@@ -283,19 +313,19 @@ int bootstrap()
         
         STRAPLOG("bootstrap @ %@", jbroot_path);
         
-        ASSERT(install(jbroot_path) == 0);
+        ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else {
         STRAPLOG("device is strapped: %@", jbroot_path);
         
         STRAPLOG("Status: Rerandomize jbroot");
         
-        ASSERT(rerandomize() == 0);
+        ASSERT(ReRandomizeBootstrap() == 0);
     }
 
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
-    [bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES];
+    ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
     
     STRAPLOG("Status: Bootstrap Successful");
     
@@ -312,10 +342,12 @@ int unbootstrap()
     if(find_jbroot()) for(NSString* bundle in [fm directoryContentsAtPath:jbroot(@"/Applications/")])
     {
         //try
-        spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", [@"/Applications/" stringByAppendingPathComponent:bundle].UTF8String,NULL}, nil, nil);
+        
+        NSString* bundlePath = [@"/Applications/" stringByAppendingPathComponent:bundle];
+        spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", bundlePath.UTF8String,NULL}, nil, nil);
         
         if([fm fileExistsAtPath:[@"/Applications/" stringByAppendingPathComponent:bundle]]) {
-            spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", [@"/rootfs/Applications/" stringByAppendingPathComponent:bundle].UTF8String,NULL}, nil, nil);
+            spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", rootfsPrefix(bundlePath).UTF8String,NULL}, nil, nil);
         }
     }
     

@@ -70,9 +70,9 @@ NSString* find_jbroot()
         {
             NSString* path = [@"/var/containers/Bundle/Application/" stringByAppendingPathComponent:subItem];
             
-            if([NSFileManager.defaultManager fileExistsAtPath:
-                 [path stringByAppendingPathComponent:@".installed_dopamine"]])
-                continue;
+//            if([NSFileManager.defaultManager fileExistsAtPath:
+//                 [path stringByAppendingPathComponent:@".installed_dopamine"]])
+//                continue;
                 
             jbroot = path;
             break;
@@ -93,6 +93,11 @@ uint64_t jbrand()
     NSString* jbroot = find_jbroot();
     ASSERT(jbroot != NULL);
     return resolve_jbrand_value([jbroot lastPathComponent].UTF8String);
+}
+
+NSString* rootfsPrefix(NSString* path)
+{
+    return [@"/rootfs/" stringByAppendingPathComponent:path];
 }
 
 #define POSIX_SPAWN_PERSONA_FLAGS_OVERRIDE 1
