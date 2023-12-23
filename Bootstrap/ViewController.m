@@ -191,7 +191,8 @@
 }
 
 - (IBAction)bootstrap:(id)sender {
-    
+    UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
+    generator.impactOccurred;
     if(find_jbroot() && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
         [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Warnning")];
         return;
