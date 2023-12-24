@@ -4,8 +4,8 @@
 NSDictionary* CREDITS = @{
 @"opa334" : @"http://github.com/opa334",
 @"hayden" : @"https://twitter.com/Diatrus",
-@"Alife" : @"https://alfiecg.uk",
-@"bomberfish" : @"https://twitter.com/bomberfish77",
+@"Alfie" : @"https://alfiecg.uk",
+@"BomberFish" : @"https://twitter.com/bomberfish77",
 @"Évelyne" : @"http://github.com/evelyneee",
 @"sourcelocation" : @"http://github.com/sourcelocation",
 @"Linus Henze" : @"http://github.com/LinusHenze",
