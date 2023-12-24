@@ -9,6 +9,11 @@
 extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_path);
 
 
+int getCFMajorVersion()
+{
+    return ((int)kCFCoreFoundationVersionNumber / 100) * 100;
+}
+
 void rebuildSignature(NSString *directoryPath)
 {
     int machoCount=0, libCount=0;

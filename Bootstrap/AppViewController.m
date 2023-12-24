@@ -240,16 +240,20 @@
             status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
         }
         
-        [AppDelegate dismissHud];
-        
         if(status == 0) {
+            //refresh app cache list
+            [self updateData];
             dispatch_async(dispatch_get_main_queue(), ^{
-                switchInCell.on = enabled;
+                [self reloadSearch];
+                [self.tableView reloadData];
             });
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
+        
         killAllForApp(app.bundleURL.path.UTF8String);
+        
+        [AppDelegate dismissHud];
         
     });
 }
