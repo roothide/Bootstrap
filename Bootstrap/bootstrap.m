@@ -196,7 +196,13 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(startBootstrapd() == 0);
     
     STRAPLOG("Status: Finalizing Bootstrap");
-    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, nil, nil) == 0);
+    NSString* log=nil;
+    NSString* err=nil;
+    int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
+    if(status != 0) {
+        STRAPLOG("faild(%d):%@\nERR:%@", status, log, err);
+        ABORT();
+    }
 
     if(![fm fileExistsAtPath:jbroot(@"/var/mobile/Library/Preferences")])
     {
