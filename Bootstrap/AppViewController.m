@@ -128,7 +128,7 @@
     {
         AppList* app = [AppList appWithPrivateProxy:proxy];
     
-        if(app.isHiddenApp) continue;
+//        if(app.isHiddenApp) continue;
                 
         if(![app.bundleURL.path hasPrefix:@"/Applications/"] && !isDefaultInstallationPath(app.bundleURL.path)) {
             //sysapp installed as jailbreak apps
@@ -196,6 +196,11 @@
     return newImage;
 }
 
+NSArray* unsupportedBundleIDs = @[
+    @"com.apple.mobileslideshow",
+    @"com.apple.mobilesafari",
+];
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     
@@ -208,6 +213,9 @@
     cell.detailTextLabel.text = app.bundleIdentifier;
     
     UISwitch *theSwitch = [[UISwitch alloc] init];
+    
+    if([unsupportedBundleIDs containsObject:app.bundleIdentifier])
+        theSwitch.enabled = NO;
     
     struct stat st;
     BOOL enabled = lstat([app.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
@@ -240,18 +248,18 @@
             status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
         }
         
-        if(status == 0) {
-            //refresh app cache list
-            [self updateData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self reloadSearch];
-                [self.tableView reloadData];
-            });
-        } else {
+        if(status != 0) {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
         
         killAllForApp(app.bundleURL.path.UTF8String);
+        
+        //refresh app cache list
+        [self updateData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self reloadSearch];
+            [self.tableView reloadData];
+        });
         
         [AppDelegate dismissHud];
         

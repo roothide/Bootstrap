@@ -7,6 +7,7 @@
 #include "credits.h"
 #include <sys/utsname.h>
 
+
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *logView;
 @property (weak, nonatomic) IBOutlet UIButton *bootstraBtn;
@@ -39,7 +40,8 @@
         
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
-        self.uninstallBtn.hidden = YES;
+        self.uninstallBtn.enabled = NO;
+        self.uninstallBtn.hidden = NO;
         
     }
     else if(isBootstrapInstalled())
@@ -193,9 +195,21 @@
 - (IBAction)bootstrap:(id)sender {
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     generator.impactOccurred;
-    if(find_jbroot() && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
-        [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Warnning")];
-        return;
+
+    if(find_jbroot()) //make sure jbroot() function available
+    {
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
+            [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
+            return;
+        }
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
+            NSString* strappedVersion = [NSString stringWithContentsOfFile:jbroot(@"/.bootstrapped") encoding:NSUTF8StringEncoding error:nil];
+            if(strappedVersion.intValue != BOOTSTRAP_VERSION) {
+                [AppDelegate showMesage:Localized(@"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.") title:Localized(@"Error")];
+                return;
+            }
+        }
     }
     
     [(UIButton*)sender setEnabled:NO];
@@ -240,7 +254,6 @@
     });
 }
 
-
 - (IBAction)unbootstrap:(id)sender {
     
 
@@ -256,11 +269,12 @@
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
                 
             [AppDelegate dismissHud];
-            if(status!=0)
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-            else
+            
+            if(status == 0) {
                 [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
-
+            } else {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            }
         });
         
     }]];

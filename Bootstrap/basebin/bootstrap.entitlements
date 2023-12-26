@@ -8,6 +8,8 @@
 	<false/>
 	<key>dynamic-codesigning</key>
 	<false/>
+	<key>platform-application</key>
+	<true/>
 	<key>get-task-allow</key>
 	<true/>
 	<key>com.apple.private.persona-mgmt</key>

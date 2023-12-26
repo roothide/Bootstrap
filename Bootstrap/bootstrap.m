@@ -344,23 +344,19 @@ int bootstrap()
 }
 
 
+
+@interface LSApplicationWorkspace : NSObject
++ (id)defaultWorkspace;
+- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
+                                                  internal:(BOOL)arg2
+                                                      user:(BOOL)arg3;
+@end
+
 int unbootstrap()
 {
     SYSLOG("unbootstrap...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
-    
-    if(find_jbroot()) for(NSString* bundle in [fm directoryContentsAtPath:jbroot(@"/Applications/")])
-    {
-        //try
-        
-        NSString* bundlePath = [@"/Applications/" stringByAppendingPathComponent:bundle];
-        spawnBootstrap((char*[]){"/usr/bin/uicache", "-u", bundlePath.UTF8String,NULL}, nil, nil);
-        
-        if([fm fileExistsAtPath:[@"/Applications/" stringByAppendingPathComponent:bundle]]) {
-            spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", rootfsPrefix(bundlePath).UTF8String,NULL}, nil, nil);
-        }
-    }
     
     NSString* dirpath = @"/var/containers/Bundle/Application/";
     for(NSString* item in [fm directoryContentsAtPath:dirpath])
@@ -390,6 +386,10 @@ int unbootstrap()
     }
 
     SYSLOG("bootstrap uninstalled!");
+    
+    [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:NO user:NO];
+    
+    killAllForApp("/usr/libexec/backboardd");
     
     return 0;
 }
