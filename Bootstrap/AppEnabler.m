@@ -203,6 +203,7 @@ int enableForApp(NSString* bundlePath)
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
     {
+        ASSERT(backupApp(bundlePath) == 0);
 
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
 
@@ -210,7 +211,6 @@ int enableForApp(NSString* bundlePath)
     }
     else
     {
-        
         ASSERT(backupApp(bundlePath) == 0);
         
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
@@ -240,6 +240,7 @@ int disableForApp(NSString* bundlePath)
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
     {
+        ASSERT(restoreApp(bundlePath) == 0);
         ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }

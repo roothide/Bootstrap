@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "sources.h"
+#include "bootstrap.h"
 #include "NSUserDefaults+appDefaults.h"
 
 extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_path);
@@ -223,7 +224,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
-    ASSERT([fm createFileAtPath:jbroot(@"/.bootstrapped") contents:nil attributes:nil]);
+    ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
     STRAPLOG("Status: Bootstrap Installed");
     
