@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; };
 		84364F3E2B323FB600E90B58 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */; };
 		84438D472B26090D00A1E407 /* sileo.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D432B26090D00A1E407 /* sileo.deb */; };
 		84438D482B26090D00A1E407 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = 84438D442B26090D00A1E407 /* tar */; };
 		84438D4A2B26090D00A1E407 /* zebra.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D462B26090D00A1E407 /* zebra.deb */; };
@@ -20,7 +21,6 @@
 		84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D5F2B26546E00A1E407 /* MobileCoreServices.framework */; };
 		84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D612B2654EB00A1E407 /* MobileContainerManager.framework */; };
 		84438D652B27522400A1E407 /* envbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 84438D642B27522400A1E407 /* envbuf.c */; };
-		84438D672B279F6600A1E407 /* fakekrw.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D662B279F6600A1E407 /* fakekrw.deb */; };
 		84438D6C2B2CDE0100A1E407 /* AppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D682B2CDE0100A1E407 /* AppList.m */; };
 		84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6B2B2CDE0100A1E407 /* AppViewController.m */; };
 		84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6E2B2CE5A300A1E407 /* AppEnabler.m */; };
@@ -55,6 +55,7 @@
 		84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Bootstrap/MBProgressHUD.framework; sourceTree = "<group>"; };
 		84364F402B32627200E90B58 /* credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credits.h; sourceTree = "<group>"; };
 		84364F412B337BC000E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
+		84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkrw0-dummy.deb"; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
 		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		84438D612B2654EB00A1E407 /* MobileContainerManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileContainerManager.framework; path = Bootstrap/Frameworks/MobileContainerManager.framework; sourceTree = "<group>"; };
 		84438D632B27522400A1E407 /* envbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envbuf.h; sourceTree = "<group>"; };
 		84438D642B27522400A1E407 /* envbuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = envbuf.c; sourceTree = "<group>"; };
-		84438D662B279F6600A1E407 /* fakekrw.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fakekrw.deb; sourceTree = "<group>"; };
 		84438D682B2CDE0100A1E407 /* AppList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppList.m; sourceTree = "<group>"; };
 		84438D692B2CDE0100A1E407 /* AppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppList.h; sourceTree = "<group>"; };
 		84438D6A2B2CDE0100A1E407 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		847099792B1D855D003FA4ED = {
 			isa = PBXGroup;
 			children = (
-				84438D662B279F6600A1E407 /* fakekrw.deb */,
+				84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */,
 				84438D582B261FBA00A1E407 /* basebin */,
 				84438D432B26090D00A1E407 /* sileo.deb */,
 				84438D442B26090D00A1E407 /* tar */,
@@ -246,9 +246,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				84438D592B261FBA00A1E407 /* basebin in Resources */,
-				84438D672B279F6600A1E407 /* fakekrw.deb in Resources */,
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
 				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
+				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,
 				847099952B1D855E003FA4ED /* LaunchScreen.storyboard in Resources */,
 				847099922B1D855E003FA4ED /* Assets.xcassets in Resources */,

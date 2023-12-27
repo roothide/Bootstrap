@@ -215,8 +215,8 @@ int InstallBootstrap(NSString* jbroot_path)
     
     
     STRAPLOG("Status: Installing Packages");
-    NSString* fakekrw = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"fakekrw.deb"];
-    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(fakekrw).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    NSString* libkrw0_dummy = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"libkrw0-dummy.deb"];
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(libkrw0_dummy).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
     NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
