@@ -11,6 +11,11 @@ THEOS_DEVICE_IP = iphone13.local
 
 CFVER ?= 1900
 
+XCRUN := /usr/bin/xcrun
+SDKROOT := $(shell $(XCRUN) -sdk 'iphoneos' -show-sdk-path)
+CODESIGN := $(shell $(XCRUN) -sdk "$(SDKROOT)" -find codesign)
+CODESIGN_ALLOCATE := $(shell $(XCRUN) -sdk "$(SDKROOT)" -find codesign_allocate)
+
 #disable theos auto sign for all mach-o
 TARGET_CODESIGN = echo "don't sign"
 
@@ -36,7 +41,8 @@ clean::
 before-package::
 	rm -rf ./packages
 	cp ./bootstrap-$(CFVER).tar.zst ./.theos/_/Applications/Bootstrap.app/bootstrap.tar.zst
-	ldid -Sentitlements.plist ./.theos/_/Applications/Bootstrap.app/Bootstrap
+	env CODESIGN_ALLOCATE=$(CODESIGN_ALLOCATE) \
+	    $(CODESIGN) -s - --entitlements entitlements.plist ./.theos/_/Applications/Bootstrap.app/Bootstrap
 	mkdir -p ./packages/Payload
 	cp -R ./.theos/_/Applications/Bootstrap.app ./packages/Payload
 	cd ./packages && zip -mry ./Bootstrap.tipa ./Payload
