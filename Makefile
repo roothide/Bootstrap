@@ -9,7 +9,7 @@ THEOS_PACKAGE_SCHEME = roothide
 
 THEOS_DEVICE_IP = iphone13.local
 
-CFVER ?= 1800
+CFVER ?= 1900
 
 #disable theos auto sign for all mach-o
 TARGET_CODESIGN = echo "don't sign"
