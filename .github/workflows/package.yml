@@ -21,11 +21,14 @@ jobs:
       - name: Install Theos
         run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
 
+      - name: Install make
+        run: brew install make
+
       - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Make Bootstrap Package
-        run: make package
+        run: gmake -j$(sysctl -n hw.ncpu) package
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
