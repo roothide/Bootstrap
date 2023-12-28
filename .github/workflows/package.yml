@@ -24,5 +24,11 @@ jobs:
       - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Build Package
+      - name: Make Bootstrap Package
         run: make package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Bootstrap.tipa
+          path: ./packages/Bootstrap.tipa
