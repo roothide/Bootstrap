@@ -14,12 +14,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+        with:
+          submodules: true
+          
       - name: Install Theos
         uses: Randomblock1/theos-action@v1
         with:
           theos-dir: 'theos'
           theos-src: 'https://github.com/roothide/theos'
-          theos-sdks: 'https://github.com/theos/sdks'
           orion: 'false'
-        
+
+      - name: Build package
+        run: 'make package'
