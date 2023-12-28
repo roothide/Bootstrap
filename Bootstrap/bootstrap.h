@@ -1,7 +1,7 @@
 #ifndef bootstrap_h
 #define bootstrap_h
 
-#define BOOTSTRAP_VERSION   (1)
+#define BOOTSTRAP_VERSION   (2)
 
 void rebuildSignature(NSString *directoryPath);
 

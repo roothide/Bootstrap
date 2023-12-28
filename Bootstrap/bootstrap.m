@@ -285,9 +285,6 @@ int ReRandomizeBootstrap()
     STRAPLOG("Status: Updating Symlinks");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
-    STRAPLOG("Status: Rebuilding Apps");
-    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
-    
     return 0;
 }
 
@@ -334,7 +331,9 @@ int bootstrap()
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
-
+    
+    STRAPLOG("Status: Rebuilding Apps");
+    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
@@ -388,7 +387,7 @@ int unbootstrap()
 
     SYSLOG("bootstrap uninstalled!");
     
-    [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:NO user:NO];
+    [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
     
     killAllForApp("/usr/libexec/backboardd");
     

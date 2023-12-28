@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *appEnablerBtn;
 @property (weak, nonatomic) IBOutlet UIButton *respringBtn;
 @property (weak, nonatomic) IBOutlet UIButton *uninstallBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rebuildappsBtn;
 
 @end
 
@@ -40,6 +41,7 @@
         
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
+        self.rebuildappsBtn.enabled = YES;
         self.uninstallBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
         
@@ -52,6 +54,7 @@
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
+        self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
     }
     else if(@available(iOS 16.0, *))
@@ -61,6 +64,7 @@
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
+        self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = YES;
     } else {
         self.bootstraBtn.enabled = NO;
@@ -68,6 +72,7 @@
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
+        self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = YES;
         
         [AppDelegate showMesage:Localized(@"the current ios version is not supported yet, we may add support in a future version.") title:Localized(@"Unsupported")];
@@ -146,10 +151,22 @@
     
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnBootstrap((char*[]){"/usr/bin/uicache", "-ar", NULL}, &log, &err);
+    int status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
     if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 }
 
+- (IBAction)rebuildapps:(id)sender {
+    STRAPLOG("Status: Rebuilding Apps");
+    
+    NSString* log=nil;
+    NSString* err=nil;
+    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
+    if(status==0) {
+        killAllForApp("/usr/libexec/backboardd");
+    } else {
+        [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+    }
+}
 
 - (IBAction)appenabler:(id)sender {
     
@@ -255,9 +272,8 @@
 }
 
 - (IBAction)unbootstrap:(id)sender {
-    
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.") preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Uninstall") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         

@@ -78,6 +78,7 @@ NSArray* appBackupFileNames = @[
     @"SC_Info",
 ];
 
+//will skip empty dir
 int backupApp(NSString* bundlePath)
 {
     NSFileManager* fm = NSFileManager.defaultManager;
@@ -85,18 +86,18 @@ int backupApp(NSString* bundlePath)
     NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
     
     if([fm fileExistsAtPath:backup]) {
-        ASSERT(![fm fileExistsAtPath:[backup stringByAppendingPathComponent:@".appbackup"]]);
+        ASSERT(![fm fileExistsAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"]]);
         ASSERT([fm removeItemAtPath:backup error:nil]);
     }
     
     NSString *resolvedPath = [[bundlePath stringByResolvingSymlinksInPath] stringByStandardizingPath];
-    NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsSymbolicLinkKey] options:0 errorHandler:nil];
+    NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 errorHandler:nil];
 
     int backupFileCount=0;
     for (NSURL *enumURL in directoryEnumerator) { @autoreleasepool {
-        NSNumber *isSymlink=nil;
-        ASSERT([enumURL getResourceValue:&isSymlink forKey:NSURLIsSymbolicLinkKey error:nil] && isSymlink != nil);
-        if ([isSymlink boolValue]) continue;
+        NSNumber *isFile=nil;
+        ASSERT([enumURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil] && isFile!=nil);
+        if (![isFile boolValue]) continue;
         
         FILE *fp = fopen(enumURL.fileSystemRepresentation, "rb");
         ASSERT(fp != NULL);
@@ -106,27 +107,30 @@ int backupApp(NSString* bundlePath)
         
         fclose(fp);
         
+        //bundlePath should be a real-path
+        NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:bundlePath], YES);
+        NSString* backupPath = [backup stringByAppendingPathComponent:subPath];
+        
+        if(![fm fileExistsAtPath:backupPath.stringByDeletingLastPathComponent])
+            ASSERT([fm createDirectoryAtPath:backupPath.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil]);
+        
         if(ismacho || [appBackupFileNames containsObject:enumURL.path.lastPathComponent])
         {
-            //bundlePath should be a real-path
-            NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:bundlePath], YES);
-            NSString* backupPath = [backup stringByAppendingPathComponent:subPath];
-            
-            if(![fm fileExistsAtPath:backupPath.stringByDeletingLastPathComponent])
-                ASSERT([fm createDirectoryAtPath:backupPath.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil]);
-            
             NSError* err=nil;
             ASSERT([fm copyItemAtPath:enumURL.path toPath:backupPath error:&err]);
             SYSLOG("copied %@ => %@", enumURL.path, backupPath);
             
             backupFileCount++;
         }
+        else {
+            ASSERT(link(enumURL.path.UTF8String, backupPath.UTF8String)==0);
+        }
         
     } }
     
     ASSERT(backupFileCount > 0);
 
-    ASSERT([[NSString new] writeToFile:[backup stringByAppendingPathComponent:@".appbackup"] atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([[NSString new] writeToFile:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
     return 0;
 }
@@ -139,7 +143,7 @@ int restoreApp(NSString* bundlePath)
     NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
     
     ASSERT([fm fileExistsAtPath:backup]);
-    ASSERT([fm fileExistsAtPath:[backup stringByAppendingPathComponent:@".appbackup"]]);
+    ASSERT([fm fileExistsAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"]]);
     
     NSString *resolvedPath = [[backup stringByResolvingSymlinksInPath] stringByStandardizingPath];
     NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 errorHandler:nil];
@@ -149,9 +153,6 @@ int restoreApp(NSString* bundlePath)
         NSNumber *isFile=nil;
         ASSERT([enumURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil] && isFile!=nil);
         if (![isFile boolValue]) continue;
-        
-        if([enumURL.path.lastPathComponent isEqualToString:@".appbackup"])
-            continue;
         
         //bundlePath should be a real-path
         NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:backup], YES);
@@ -175,6 +176,7 @@ int restoreApp(NSString* bundlePath)
     ASSERT(restoreFileCount > 0);
 
     ASSERT([fm removeItemAtPath:backup error:nil]);
+    ASSERT([fm removeItemAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] error:nil]);
     
     return 0;
 }

@@ -1,9 +1,10 @@
 #ifndef credits_h
 #define credits_h
-
+// dictionary will be sorted alphabetically
 NSDictionary* CREDITS = @{
 @"opa334" : @"http://github.com/opa334",
-@"hayden" : @"https://twitter.com/Diatrus",
+@"hayden" : @"https://procursus.social/@hayden",
+@"CKatri" : @"https://procursus.social/@cameron",
 @"Alfie" : @"https://alfiecg.uk",
 @"BomberFish" : @"https://twitter.com/bomberfish77",
 @"Évelyne" : @"http://github.com/evelyneee",
@@ -14,7 +15,7 @@ NSDictionary* CREDITS = @{
 @"Dhinakg" : @"http://github.com/dhinakg",
 @"Capt Inc" : @"http://github.com/captinc",
 @"Sam Bingner" : @"http://github.com/sbingner",
-@"ProcursusTeam" : @"http://github.com/ProcursusTeam",
+@"ProcursusTeam" : @"https://procursus.social/@team",
 @"TheosTeam" : @"https://theos.dev",
 @"kirb" : @"http://github.com/kirb",
 @"Amy While" : @"http://github.com/elihwyma",
@@ -27,7 +28,6 @@ NSDictionary* CREDITS = @{
 @"Nathan" : @"https://github.com/verygenericname",
 @"Nick Chan" : @"https://nickchan.lol",
 @"Muirey03" : @"https://twitter.com/Muirey03",
-@"CKatri" : @"https://ckatri.com",
 @"absidue" : @"https://github.com/absidue",
 @"MasterMike" : @"https://ios.cfw.guide",
 @"Nightwind" : @"https://twitter.com/NightwindDev",
