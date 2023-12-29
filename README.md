@@ -26,31 +26,32 @@ Once you open the Bootstrap app, press Bootstrap. This will install the necessar
 
 You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be RootHide compatible.
 
-By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard at the moment.
+By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) or Photos (com.apple.mobileslideshow) at the moment.
 
 ## FAQ
 
-- [Why can't I inject into SpringBoard?](#faq-springboard)
-- [What is the SpringBoard?](#faq-spring)
+- [What is SpringBoard?](#faq-springboard)
+- [Why can't I inject into SpringBoard?](#faq-noinject-springboard)
 - [How do I convert a tweak to be RootHide compatible?](#faq-convert)
 - [I have a question that isn't listed here. Where do I go for help?](#faq-discord)
 
-#### <a id="faq-springboard" /> Why can't I inject into SpringBoard?
+### <a id="faq-springboard" /> What is SpringBoard?
 
-Currently, there are exploits to inject into the SpringBoard, but nobody has currently figured out in what way to use them to inject into the SpringBoard
+The SpringBoard makes up several things such as the homescreen, lockscreen, control center, statusbar, and icon management. If you want to modify any of these with tweaks, you'll need SpringBoard injection. [Why can't I inject into SpringBoard?](#faq-noinject-springboard)
 
-#### <a id="faq-spring" /> What is the SpringBoard?
+### <a id="faq-noinject-springboard" /> Why can't I inject into SpringBoard?
 
-The SpringBoard is for example your HomeScreen or the Lockscreen including your ControlCenter.
-Most Tweaks need the possibility to inject into it.
+Currently, there are exploits (such as [CVE-2023-42824](https://nvd.nist.gov/vuln/detail/CVE-2023-42824), [Blog](https://blog.google/threat-analysis-group/0-days-exploited-by-commercial-surveillance-vendor-in-egypt/)) that can be used to inject into the SpringBoard, but nobody has figured out how to use them.
 
-#### <a id="faq-convert" /> How do I convert a tweak to be RootHide compatible?
+Any tweaks that inject into SpringBoard *will not function*.
+
+### <a id="faq-convert" /> How do I convert a tweak to be RootHide compatible?
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support RootHide.
 
 Install RootHide Patcher from the [RootHide repo](https://roothide.github.io). When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be RootHide compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
 
-#### <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
+### <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
 
 You can join the RootHide Discord [here](https://discord.com/invite/scqCkumAYp).
 
