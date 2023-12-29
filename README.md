@@ -3,6 +3,7 @@
 
 
 A full featured bootstrap for ios14.0-17.0, A8-A17,M1+M2. (currently tested on ios15.0~ios17.0)
+> Currently A15+ is unsupported
 
 ## Building
 
