@@ -34,6 +34,8 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 ## <a id="faq-convert" /> How to install tweaks?
 
+Bootstrap can enable tweaks for almost all apps, but it does not yet support springboard tweaks, such as the homescreen, lockscreen, control center, statusbar tweaks.
+
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
 Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
