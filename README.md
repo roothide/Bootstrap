@@ -1,14 +1,13 @@
 # Bootstrap
 [![Build and Package](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml/badge.svg)](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml)  [![GitHub stars](https://img.shields.io/github/stars/RootHide/Bootstrap?style=social)](https://github.com/RootHide/Bootstrap/stargazers)
 
-
-A full featured bootstrap for ios14.0-17.0, A8-A17,M1+M2. (currently tested on ios15.0~ios17.0)
+A full featured bootstrap for iOS 14.0-17.0 A8-A17 M1+M2. (Currently only tested tested on versions 15.0-17.0)
 
 ## Building
 
 You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
 
- 1. Update your theos to the this
+ 1. Update your Theos to the RootHide build
     
     ```bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"```
     
@@ -30,17 +29,19 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 ## Develop tweaks
 
-[Document](https://github.com/RootHide/Developer)
+Normal rootless tweaks aren't out-of-the-box compatible with this bootstrap, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/RootHide/Developer).
 
-## <a id="faq-convert" /> How to install tweaks?
+## Install tweaks
+
+Bootstrap can enable tweaks for almost all apps, but it currently does not *yet* support SpringBoard tweaks, meaning you cannot modify the homescreen, lockscreen, control center, statusbar, or anything related to the SpringBoard. While these tweaks are installable, you cannot enable SpringBoard in AppEnabler.
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
 Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
 
-## <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
+## Discord
 
-You can join the our Discord [here](https://discord.com/invite/scqCkumAYp).
+You can join our Discord for support or general talk [here](https://discord.com/invite/scqCkumAYp).
 
 ## Credits
 
