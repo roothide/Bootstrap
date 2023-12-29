@@ -11,6 +11,8 @@ uint64_t jbrand_new();
 
 NSString* find_jbroot();
 
+bool assert_trollstore();
+
 NSString* jbroot(NSString *path);
 
 int is_jbroot_name(const char* name);

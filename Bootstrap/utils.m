@@ -81,6 +81,28 @@ NSString* find_jbroot()
     return jbroot;
 }
 
+bool assert_trollstore(void) {
+    NSString* app_containers = @"/var/containers/Bundle/Application";
+    NSError* error;
+    NSArray* containers = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:app_containers error:&error];
+    for(NSString* container in containers) {
+        NSString* containerPath = [app_containers stringByAppendingPathComponent:container];
+                BOOL isDirectory = NO;
+                BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:containerPath isDirectory:&isDirectory];
+                if(exists && isDirectory)
+                {
+                    NSString* trollStoreMark = [containerPath stringByAppendingPathComponent:@"_TrollStore"];
+                    if(![[NSFileManager defaultManager] fileExistsAtPath:trollStoreMark])
+                    {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+    return false;
+}
+
 NSString *jbroot(NSString *path)
 {
     NSString* jbroot = find_jbroot();
