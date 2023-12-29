@@ -63,6 +63,7 @@ Huge thanks to these people, we couldn't have completed this project without the
 - dleovl: [https://github.com/dleovl](https://github.com/dleovl)
 - Elias Sfeir: [https://twitter.com/eliassfeir1](https://twitter.com/eliassfeir1)
 - Ellie: [https://twitter.com/elliessurviving](https://twitter.com/elliessurviving)
+- Elon Musk [https://twitter.com/elonmusk](https://twitter.com/elonmusk)
 - EquationGroups: [https://twitter.com/equationgroups](https://twitter.com/equationgroups)
 - Évelyne: [http://github.com/evelyneee](http://github.com/evelyneee)
 - GeoSnOw: [https://twitter.com/fce365](https://twitter.com/fce365)
