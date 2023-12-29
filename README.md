@@ -28,24 +28,11 @@ You can add various sources to Sileo or Zebra, and install tweaks. You may need 
 
 By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) or Photos (com.apple.mobileslideshow) at the moment.
 
-## FAQ
+## Develop tweaks
 
-- [What is SpringBoard?](#faq-springboard)
-- [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
-- [How do I convert a tweak to be Bootstrap compatible?](#faq-convert)
-- [I have a question that isn't listed here. Where do I go for help?](#faq-discord)
+[Document](https://github.com/RootHide/Developer)
 
-### <a id="faq-springboard" /> What is SpringBoard?
-
-The SpringBoard makes up several things such as the homescreen, lockscreen, control center, statusbar, and icon management. If you want to modify any of these with tweaks, you'll need SpringBoard injection. [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
-
-### <a id="faq-noinject-springboard" /> Why can't we inject into SpringBoard?
-
-Currently, there are exploits (such as [CVE-2023-42824](https://nvd.nist.gov/vuln/detail/CVE-2023-42824), [Blog](https://blog.google/threat-analysis-group/0-days-exploited-by-commercial-surveillance-vendor-in-egypt/)) that can be used to inject into the SpringBoard, but nobody has figured out how to use them.
-
-Any tweaks that inject into SpringBoard *will not function*.
-
-### <a id="faq-convert" /> How do I convert a tweak to be Bootstrap compatible?
+### <a id="faq-convert" /> How do install tweaks?
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
