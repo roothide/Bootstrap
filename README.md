@@ -3,6 +3,8 @@
 
 A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only tested tested on versions 15.0-17.0)
 
+##### Unsupported versions should be reported here: [https://github.com/RootHide/Bootstrap/issues/17](https://github.com/RootHide/Bootstrap/issues/17)
+
 ## Building
 
 You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
