@@ -61,18 +61,6 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [AppDelegate registerLogView:self.logView];
     
-    
-    BOOL WaitForFix=NO;
-    if(@available(iOS 17.0, *))
-    {
-       cpu_subtype_t cpuFamily = 0;
-       size_t cpuFamilySize = sizeof(cpuFamily);
-       sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
-       if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
-           WaitForFix=YES;
-       }
-    }
-    
     if(isSystemBootstrapped())
     {
         self.bootstraBtn.enabled = NO;
@@ -96,8 +84,19 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
     }
-    else if(@available(iOS 15.0, *))
+    else if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15)
     {
+        BOOL WaitForFix=NO;
+        if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion==17)
+        {
+           cpu_subtype_t cpuFamily = 0;
+           size_t cpuFamilySize = sizeof(cpuFamily);
+           sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
+           if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
+               WaitForFix=YES;
+           }
+        }
+        
         if(WaitForFix) {
             self.bootstraBtn.enabled = YES;
             [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
