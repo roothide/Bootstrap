@@ -121,7 +121,7 @@ int startBootstrapd()
 {
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon"], &log, &err);
+    int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err);
     if(status != 0) {
         STRAPLOG("bootstrap server load faild(%d):\n%@\nERR:%@", status, log, err);
         ABORT();

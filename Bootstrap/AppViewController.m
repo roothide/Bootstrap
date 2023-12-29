@@ -198,7 +198,7 @@
 
 NSArray* unsupportedBundleIDs = @[
     @"com.apple.mobileslideshow",
-    @"com.apple.mobilesafari",
+//    @"com.apple.mobilesafari",
 ];
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
