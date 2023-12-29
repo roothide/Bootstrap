@@ -39,7 +39,7 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 The SpringBoard makes up several things such as the homescreen, lockscreen, control center, statusbar, and icon management. If you want to modify any of these with tweaks, you'll need SpringBoard injection. [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
 
-### <a id="faq-noinject-springboard" /> Why can't I inject into SpringBoard?
+### <a id="faq-noinject-springboard" /> Why can't we inject into SpringBoard?
 
 Currently, there are exploits (such as [CVE-2023-42824](https://nvd.nist.gov/vuln/detail/CVE-2023-42824), [Blog](https://blog.google/threat-analysis-group/0-days-exploited-by-commercial-surveillance-vendor-in-egypt/)) that can be used to inject into the SpringBoard, but nobody has figured out how to use them.
 
