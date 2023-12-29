@@ -36,7 +36,7 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 #### <a id="faq-springboard" /> Why can't I inject into SpringBoard?
 
-Currently, there are no exploits to inject into SpringBoard. Check back later, you never know when something may happen!
+Currently, there are exploits to inject into the SpringBoard, but nobody has currently figured out in what way to use them to inject into the SpringBoard
 
 #### <a id="faq-convert" /> How do I convert a tweak to be RootHide compatible?
 
