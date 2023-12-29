@@ -32,7 +32,7 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 [Document](https://github.com/RootHide/Developer)
 
-## <a id="faq-convert" /> How do install tweaks?
+## <a id="faq-convert" /> How to install tweaks?
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
