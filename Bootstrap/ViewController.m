@@ -57,7 +57,7 @@
         self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
     }
-    else if(@available(iOS 16.0, *))
+    else if(@available(iOS 15.0, *))
     {
         self.bootstraBtn.enabled = YES;
         [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];

@@ -9,8 +9,6 @@ THEOS_PACKAGE_SCHEME = roothide
 
 THEOS_DEVICE_IP = iphone13.local
 
-CFVER ?= 1900
-
 #disable theos auto sign for all mach-o
 TARGET_CODESIGN = echo "don't sign"
 
@@ -35,7 +33,7 @@ clean::
 
 before-package::
 	rm -rf ./packages
-	cp ./bootstrap-$(CFVER).tar.zst ./.theos/_/Applications/Bootstrap.app/bootstrap.tar.zst
+	cp -a ./strapfiles ./.theos/_/Applications/Bootstrap.app/
 	ldid -Sentitlements.plist ./.theos/_/Applications/Bootstrap.app/Bootstrap
 	mkdir -p ./packages/Payload
 	cp -R ./.theos/_/Applications/Bootstrap.app ./packages/Payload

@@ -81,7 +81,7 @@ int buildPackageSources()
 {
     NSFileManager* fm = NSFileManager.defaultManager;
     
-    ASSERT([[NSString stringWithUTF8String:DEFAULT_SOURCES] writeToFile:jbroot(@"/etc/apt/sources.list.d/default.sources") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([[NSString stringWithFormat:@(DEFAULT_SOURCES), getCFMajorVersion()] writeToFile:jbroot(@"/etc/apt/sources.list.d/default.sources") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
     //Users in some regions seem to be unable to access github.io
     SYSLOG("locale=%@", [NSUserDefaults.appDefaults valueForKey:@"locale"]);
@@ -95,7 +95,7 @@ int buildPackageSources()
         ASSERT([fm createDirectoryAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra") withIntermediateDirectories:YES attributes:attr error:nil]);
     }
     
-    ASSERT([[NSString stringWithUTF8String:ZEBRA_SOURCES] writeToFile:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/sources.list") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([[NSString stringWithFormat:@(ZEBRA_SOURCES), getCFMajorVersion()] writeToFile:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/sources.list") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
     return 0;
 }
@@ -150,7 +150,13 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(mkdir(jbroot_path.fileSystemRepresentation, 0755) == 0);
     ASSERT(chown(jbroot_path.fileSystemRepresentation, 0, 0) == 0);
     
-    NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"bootstrap.tar.zst"];
+    NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:@"strapfiles/bootstrap-%d.tar.zst", getCFMajorVersion()]];
+    if(![fm fileExistsAtPath:bootstrapZstFile]) {
+        STRAPLOG("can not find bootstrap file, maybe this version of the app is not for iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
+        return -1;
+    }
+    
     NSString* bootstrapTarFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"bootstrap.tar"];
     if([fm fileExistsAtPath:bootstrapTarFile])
         ASSERT([fm removeItemAtPath:bootstrapTarFile error:nil]);
