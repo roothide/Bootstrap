@@ -25,7 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-  
     
     self.logView.text = nil;
     self.logView.layer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01].CGColor;
@@ -34,16 +33,6 @@
     self.logView.layer.cornerRadius = 5.0;
     
     [AppDelegate registerLogView:self.logView];
-    
-    if(assert_trollstore() == false) {
-        [AppDelegate showMesage:Localized(@"Please make sure you have installed Bootstrap with TrollStore 2") title:Localized(@"Error")];
-        self.bootstraBtn.enabled = NO;
-        self.respringBtn.enabled = NO;
-        self.appEnablerBtn.enabled = NO;
-        self.rebuildappsBtn.enabled = NO;
-        self.uninstallBtn.hidden = YES;
-        [AppDelegate addLogText:Localized(@"\nTrollStore 2 not found")];
-    }
     
     if(isSystemBootstrapped())
     {
@@ -114,9 +103,6 @@
         sleep(1);
         [AppDelegate addLogText:Localized(@"\nthanks to these guys, we couldn't have completed this project without their help!")];
         
-        
-        
-        
     });
     
     SYSLOG("locale=%@", NSLocale.currentLocale.countryCode);
@@ -172,14 +158,19 @@
 - (IBAction)rebuildapps:(id)sender {
     STRAPLOG("Status: Rebuilding Apps");
     
-    NSString* log=nil;
-    NSString* err=nil;
-    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
-    if(status==0) {
-        killAllForApp("/usr/libexec/backboardd");
-    } else {
-        [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Applying")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
+        if(status==0) {
+            killAllForApp("/usr/libexec/backboardd");
+        } else {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
+        [AppDelegate dismissHud];
+    });
 }
 
 - (IBAction)appenabler:(id)sender {

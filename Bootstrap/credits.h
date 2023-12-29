@@ -43,7 +43,6 @@ NSDictionary* CREDITS = @{
 @"limneos" : @"https://twitter.com/limneos",
 @"iDownloadBlog" : @"https://twitter.com/idownloadblog",
 @"GeoSnOw" : @"https://twitter.com/fce365",
-@"G3n3sis" : @"https://twitter.com/G3nNuk_e",
 @"onejailbreak" : @"https://twitter.com/onejailbreak_",
 @"iExmo" : @"https://twitter.com/iexmojailbreak",
 @"omrkujman" : @"https://twitter.com/omrkujman",
