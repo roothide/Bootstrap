@@ -7,17 +7,23 @@ A full featured bootstrap for iOS 14.0-17.0 A8-A17 M1+M2. (Currently only tested
 
 You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
 
+You will need Homebrew installed. If you don't have Homebrew installed, run the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
  1. Update your Theos to the RootHide build
     
-    ```bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"```
+    `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
     
     This build of Theos is consistently updated.
 
- 2. Build `Bootstrap.tipa`
+ 2. Install make
 
-    ```make package```
+    `brew install make`
 
- 3. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore!
+ 4. Build `Bootstrap.tipa`
+
+    `gmake -j$(sysctl -n hw.ncpu) package`
+
+ 5. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore!
 
 ## Usage
 
