@@ -98,11 +98,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         }
         
         if(WaitForFix) {
-            self.bootstraBtn.enabled = YES;
-            [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
-        } else {
             self.bootstraBtn.enabled = NO;
             [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
+        } else {
+            self.bootstraBtn.enabled = YES;
+            [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
         }
 
         self.respringBtn.enabled = NO;
