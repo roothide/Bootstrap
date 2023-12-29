@@ -1,7 +1,7 @@
 # Bootstrap
 [![Build and Package](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml/badge.svg)](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml)  [![GitHub stars](https://img.shields.io/github/stars/RootHide/Bootstrap?style=social)](https://github.com/RootHide/Bootstrap/stargazers)
 
-A full featured bootstrap for iOS 14.0-17.0 A8-A17 M1+M2. (Currently only tested tested on versions 15.0-17.0)
+A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only tested tested on versions 15.0-17.0)
 
 ## Building
 
@@ -27,6 +27,8 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 ## Usage
 
+Developer mode may need to be enabled. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
+
 Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
 You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be Bootstrap compatible.
@@ -44,6 +46,10 @@ Bootstrap can enable tweaks for almost all apps, but it currently does not *yet*
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
 Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
+
+## Tweak preferences
+
+You will need to enable Settings (com.apple.Preferences) in AppEnabler to have tweak preferences show up in the Settings app.
 
 ## Discord
 
