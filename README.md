@@ -31,13 +31,13 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 ## FAQ
 
 - [What is SpringBoard?](#faq-springboard)
-- [Why can't I inject into SpringBoard?](#faq-noinject-springboard)
+- [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
 - [How do I convert a tweak to be RootHide compatible?](#faq-convert)
 - [I have a question that isn't listed here. Where do I go for help?](#faq-discord)
 
 ### <a id="faq-springboard" /> What is SpringBoard?
 
-The SpringBoard makes up several things such as the homescreen, lockscreen, control center, statusbar, and icon management. If you want to modify any of these with tweaks, you'll need SpringBoard injection. [Why can't I inject into SpringBoard?](#faq-noinject-springboard)
+The SpringBoard makes up several things such as the homescreen, lockscreen, control center, statusbar, and icon management. If you want to modify any of these with tweaks, you'll need SpringBoard injection. [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
 
 ### <a id="faq-noinject-springboard" /> Why can't I inject into SpringBoard?
 
