@@ -13,7 +13,7 @@ NSDictionary* CREDITS = @{
 @"Cryptic" : @"http://github.com/Cryptiiiic",
 @"Clarity" : @"http://github.com/TheRealClarity",
 @"Dhinakg" : @"http://github.com/dhinakg",
-@"dleovl" : @"https://github.com/dleovl"
+@"dleovl" : @"https://github.com/dleovl",
 @"Capt Inc" : @"http://github.com/captinc",
 @"Sam Bingner" : @"http://github.com/sbingner",
 @"ProcursusTeam" : @"https://procursus.social/@team",
@@ -22,7 +22,7 @@ NSDictionary* CREDITS = @{
 @"Amy While" : @"http://github.com/elihwyma",
 @"roothide" : @"http://github.com/RootHide",
 @"Shadow-" : @"http://iosjb.top/",
-@"SeanIsTethered" : @"https://github.com/jailbreakmerebooted"
+@"SeanIsTethered" : @"https://github.com/jailbreakmerebooted",
 @"Huy Nguyen" : @"https://twitter.com/little_34306",
 @"haxi0" : @"https://haxi0.space",
 @"Nebula" : @"https://itsnebula.net",
