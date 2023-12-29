@@ -2,7 +2,7 @@
 [![Build and Package](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml/badge.svg)](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml)  [![GitHub stars](https://img.shields.io/github/stars/RootHide/Bootstrap?style=social)](https://github.com/RootHide/Bootstrap/stargazers)
 
 
-a full featured bootstrap for ios14.0-17.0, A8~A17,M1+M2. (currently tested on ios15.0~ios17.0)
+a full featured bootstrap for ios14.0-17.0, A8-A17,M1+M2. (currently tested on ios15.0~ios17.0)
 
 ## Building
 
@@ -32,13 +32,13 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 [Document](https://github.com/RootHide/Developer)
 
-### <a id="faq-convert" /> How do install tweaks?
+## <a id="faq-convert" /> How do install tweaks?
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
 Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
 
-### <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
+## <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
 
 You can join the our Discord [here](https://discord.com/invite/scqCkumAYp).
 
