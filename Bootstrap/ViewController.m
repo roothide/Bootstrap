@@ -5,7 +5,15 @@
 #include "AppViewController.h"
 #include "bootstrap.h"
 #include "credits.h"
+#import <sys/sysctl.h>
 #include <sys/utsname.h>
+
+#include <Security/SecKey.h>
+#include <Security/Security.h>
+typedef struct CF_BRIDGED_TYPE(id) __SecCode const* SecStaticCodeRef; /* code on disk */
+typedef enum { kSecCSDefaultFlags=0, kSecCSSigningInformation = 1 << 1 } SecCSFlags;
+OSStatus SecStaticCodeCreateWithPathAndAttributes(CFURLRef path, SecCSFlags flags, CFDictionaryRef attributes, SecStaticCodeRef* CF_RETURNS_RETAINED staticCode);
+OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, CFDictionaryRef* __nonnull CF_RETURNS_RETAINED information);
 
 
 @interface ViewController ()
@@ -21,6 +29,25 @@
 @end
 
 @implementation ViewController
+
+- (BOOL)checkTSVersion {
+    
+    CFURLRef binaryURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)NSBundle.mainBundle.executablePath, kCFURLPOSIXPathStyle, false);
+    if(binaryURL == NULL) return NO;
+    
+    SecStaticCodeRef codeRef = NULL;
+    OSStatus result = SecStaticCodeCreateWithPathAndAttributes(binaryURL, kSecCSDefaultFlags, NULL, &codeRef);
+    if(result != errSecSuccess) return NO;
+        
+    CFDictionaryRef signingInfo = NULL;
+     result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
+    if(result != errSecSuccess) return NO;
+        
+    NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
+    SYSLOG("teamID in trollstore: %@", teamID);
+    
+    return [teamID isEqualToString:@"T8ALTGMVXN"];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,8 +86,24 @@
     }
     else if(@available(iOS 15.0, *))
     {
-        self.bootstraBtn.enabled = YES;
-        [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
+        BOOL WaitForFix=NO;
+        if(@available(iOS 17.0, *))
+       {
+           cpu_subtype_t cpuFamily = 0;
+           size_t cpuFamilySize = sizeof(cpuFamily);
+           sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
+           if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
+               WaitForFix=YES;
+           }
+       }
+        
+        if(WaitForFix) {
+            self.bootstraBtn.enabled = YES;
+            [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
+        } else {
+            self.bootstraBtn.enabled = NO;
+            [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
+        }
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
@@ -215,6 +258,11 @@
 }
 
 - (IBAction)bootstrap:(id)sender {
+    if(![self checkTSVersion]) {
+        [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
+        return;
+    }
+    
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     generator.impactOccurred;
 

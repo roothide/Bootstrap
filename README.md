@@ -1,14 +1,14 @@
-# RootHide Bootstrap
+# Bootstrap
 [![Build and Package](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml/badge.svg)](https://github.com/RootHide/Bootstrap/actions/workflows/package.yml)  [![GitHub stars](https://img.shields.io/github/stars/RootHide/Bootstrap?style=social)](https://github.com/RootHide/Bootstrap/stargazers)
 
 
-A TrollStore-compatible bootstrap for A12+ devices running iOS 15.0-17.0!
+a full featured bootstrap for ios14.0-17.0, A8~A17,M1+M2. (currently tested on ios15.0~ios17.0)
 
 ## Building
 
 You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
 
- 1. Download the RootHide Theos build
+ 1. Update your theos to the this
     
     ```bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"```
     
@@ -24,7 +24,7 @@ You'll need MacOS to build, as you require Xcode Command Line Tools. If you don'
 
 Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
-You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be RootHide compatible.
+You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be Bootstrap compatible.
 
 By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) or Photos (com.apple.mobileslideshow) at the moment.
 
@@ -32,7 +32,7 @@ By default, tweaks are not injected into any apps. To enable tweak injection, cl
 
 - [What is SpringBoard?](#faq-springboard)
 - [Why can't we inject into SpringBoard?](#faq-noinject-springboard)
-- [How do I convert a tweak to be RootHide compatible?](#faq-convert)
+- [How do I convert a tweak to be Bootstrap compatible?](#faq-convert)
 - [I have a question that isn't listed here. Where do I go for help?](#faq-discord)
 
 ### <a id="faq-springboard" /> What is SpringBoard?
@@ -45,15 +45,15 @@ Currently, there are exploits (such as [CVE-2023-42824](https://nvd.nist.gov/vul
 
 Any tweaks that inject into SpringBoard *will not function*.
 
-### <a id="faq-convert" /> How do I convert a tweak to be RootHide compatible?
+### <a id="faq-convert" /> How do I convert a tweak to be Bootstrap compatible?
 
-When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support RootHide.
+When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
-Install RootHide Patcher from the [RootHide repo](https://roothide.github.io). When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be RootHide compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
+Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
 
 ### <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
 
-You can join the RootHide Discord [here](https://discord.com/invite/scqCkumAYp).
+You can join the our Discord [here](https://discord.com/invite/scqCkumAYp).
 
 ## Credits
 
