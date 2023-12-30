@@ -99,11 +99,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         
         if(WaitForFix) {
             self.bootstraBtn.enabled = NO;
-            [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
-            [AppDelegate showMesage:@"ios17.0 on A15+ is still waiting for fixing" title:Localized(@"Wait For Fix")];
+            [self.bootstraBtn setTitle:Localized(@"等待修复") forState:UIControlStateDisabled];
+            [AppDelegate showMesage:@"A15+上的ios17.0仍在等待修复" title:Localized(@"等待修复")];
         } else {
             self.bootstraBtn.enabled = YES;
-            [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
+            [self.bootstraBtn setTitle:Localized(@"安装") forState:UIControlStateNormal];
         }
 
         self.respringBtn.enabled = NO;
@@ -112,14 +112,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.uninstallBtn.hidden = YES;
     } else {
         self.bootstraBtn.enabled = NO;
-        [self.bootstraBtn setTitle:Localized(@"Unsupported") forState:UIControlStateDisabled];
+        [self.bootstraBtn setTitle:Localized(@"不支持") forState:UIControlStateDisabled];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
         self.uninstallBtn.hidden = YES;
         
-        [AppDelegate showMesage:Localized(@"the current ios version is not supported yet, we may add support in a future version.") title:Localized(@"Unsupported")];
+        [AppDelegate showMesage:Localized(@"目前的ios版本还不支持，我们可能会在未来的版本中添加支持。") title:Localized(@"不支持")];
     }
     
 
@@ -133,8 +133,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap installed":@"bootstrap not installed"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"system bootstrapped":@"system not bootstrapped"];
+    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap 已安装":@"bootstrap 未安装"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"system 已引导":@"system 未引导"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
@@ -145,7 +145,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:Localized(@"\nthanks to these guys, we couldn't have completed this project without their help!")];
+        [AppDelegate addLogText:Localized(@"\n感谢所有朋友，没有他们的帮助，我们不可能完成这个项目!")];
         
     });
     
@@ -159,23 +159,23 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     {
         if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"引导服务器未运行") message:Localized(@"由于未知的原因，引导服务器没有运行，我们现在唯一能做的就是重新启动它。") preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"重启引导服务器") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
                 
                 NSString* log=nil;
                 NSString* err=nil;
                 if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
-                    [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
+                    [AppDelegate addLogText:Localized(@"引导服务器重启成功")];
                     [self updateOpensshStatus];
                 } else {
-                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
+                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"错误")];
                 }
                 
             }]];
             
             [AppDelegate showAlert:alert];
         } else {
-            [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+            [AppDelegate addLogText:Localized(@"引导服务器检查成功")];
             [self updateOpensshStatus];
         }
     }
@@ -203,7 +203,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     STRAPLOG("Status: Rebuilding Apps");
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Applying")];
+        [AppDelegate showHudMsg:Localized(@"应用中")];
         
         NSString* log=nil;
         NSString* err=nil;
@@ -234,7 +234,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
-        [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
+        [AppDelegate showMesage:Localized(@"openssh 安装包未安装") title:Localized(@"开发者")];
         enabled.on = NO;
         return;
     }
@@ -260,7 +260,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 - (IBAction)bootstrap:(id)sender {
     if(![self checkTSVersion]) {
-        [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
+        [AppDelegate showMesage:Localized(@"你的trollstore版本太旧，Bootstrap只支持 trollstore>=2.0") title:Localized(@"错误")];
         return;
     }
     
@@ -270,14 +270,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     if(find_jbroot()) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
-            [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
+            [AppDelegate showMesage:Localized(@"roothide dopamine 已经安装在这个设备上，现在安装这个引导可能会破坏它!") title:Localized(@"错误")];
             return;
         }
         
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
             NSString* strappedVersion = [NSString stringWithContentsOfFile:jbroot(@"/.bootstrapped") encoding:NSUTF8StringEncoding error:nil];
             if(strappedVersion.intValue != BOOTSTRAP_VERSION) {
-                [AppDelegate showMesage:Localized(@"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.") title:Localized(@"Error")];
+                [AppDelegate showMesage:Localized(@"您已经安装了旧的测试版，请禁用所有应用程序调整并重新启动设备以卸载它，以便您可以安装新版本的引导程序。") title:Localized(@"错误")];
                 return;
             }
         }
@@ -312,12 +312,12 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             NSString* err=nil;
              status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
             if(status==0)
-                [AppDelegate addLogText:@"openssh launch successful"];
+                [AppDelegate addLogText:@"openssh 启动成功"];
             else
-                [AppDelegate addLogText:[NSString stringWithFormat:@"openssh launch faild(%d):\n%@\n%@", status, log, err]];
+                [AppDelegate addLogText:[NSString stringWithFormat:@"openssh 启动失败(%d):\n%@\n%@", status, log, err]];
         }
         
-        [AppDelegate addLogText:@"respring now..."]; sleep(1);
+        [AppDelegate addLogText:@"正在注销..."]; sleep(1);
         
          status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
         if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
@@ -327,12 +327,12 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 - (IBAction)unbootstrap:(id)sender {
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.") preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Uninstall") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"提示") message:Localized(@"你确定卸载bootstrap吗?\n\n在卸载之前,请确保您已经禁用了所有应用程序注入的插件。") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"取消") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"卸载") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [AppDelegate showHudMsg:Localized(@"Uninstalling")];
+            [AppDelegate showHudMsg:Localized(@"正在卸载")];
             
             NSString* log=nil;
             NSString* err=nil;
@@ -341,7 +341,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate dismissHud];
             
             if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
+                [AppDelegate showMesage:@"" title:@"bootstrap 未安装"];
             } else {
                 [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
             }
