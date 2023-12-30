@@ -153,7 +153,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:
                                   [NSString stringWithFormat:@"strapfiles/bootstrap-%d.tar.zst", getCFMajorVersion()]];
     if(![fm fileExistsAtPath:bootstrapZstFile]) {
-        STRAPLOG("can not find bootstrap file, maybe this version of the app is not for iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
+        STRAPLOG("无法找到引导文件,可能此版本的应用不支持iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
         return -1;
     }
     
@@ -207,7 +207,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
     if(status != 0) {
-        STRAPLOG("faild(%d):%@\nERR:%@", status, log, err);
+        STRAPLOG("失败(%d):%@\nERR:%@", status, log, err);
         ABORT();
     }
 
