@@ -30,7 +30,7 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 ## Usage
 
-Developer mode may need to be enabled. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
+Developer mode will need to be enabled to use this bootstrap. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
 
 Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
