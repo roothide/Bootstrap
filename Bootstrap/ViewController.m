@@ -200,7 +200,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 }
 
 - (IBAction)rebuildapps:(id)sender {
-    STRAPLOG("Status: Rebuilding Apps");
+    STRAPLOG("状态：正在重建应用程序");
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"正在应用...")];
@@ -260,7 +260,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 - (IBAction)bootstrap:(id)sender {
     if(![self checkTSVersion]) {
-        [AppDelegate showMesage:Localized(@"你的trollstore版本太旧，Bootstrap只支持 trollstore>=2.0") title:Localized(@"错误")];
+        [AppDelegate showMesage:Localized(@"你的trollstore版本太旧，Bootstrap只支持trollstore>=2.0版本") title:Localized(@"错误")];
         return;
     }
     
@@ -332,7 +332,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 - (IBAction)unbootstrap:(id)sender {
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"提示") message:Localized(@"你确定卸载bootstrap吗?\n\n在卸载之前,请确保您已经禁用了所有应用程序注入的插件。") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"提示") message:Localized(@"你确定卸载引导服务器吗?\n\n在卸载之前,请确保您已经禁用了所有应用程序已注入的插件。") preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"取消") style:UIAlertActionStyleDefault handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"卸载") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         
@@ -346,7 +346,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate dismissHud];
             
             if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap 未安装"];
+                [AppDelegate showMesage:@"" title:@"引导服务器未安装"];
             } else {
                 [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
             }
