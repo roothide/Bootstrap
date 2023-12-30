@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQX-IC-Eof">
-                                <rect key="frame" x="129" y="615" width="114" height="29"/>
+                                <rect key="frame" x="129" y="615" width="114" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <buttonConfiguration key="configuration" style="filled" image="trash" catalog="system" title="卸载"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3N-5g-U7l">
-                                <rect key="frame" x="36" y="502" width="137" height="34"/>
+                                <rect key="frame" x="36" y="502" width="137" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="注销"/>
                                 <connections>
