@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 1.同步官方beta 2 更新代码\n> - 2.为应用添加开发者模式检查和自动修复网络" >> release.txt
+          echo -e "> - 1.同步官方beta 2 最新代码\n> - 2.更完善的简体中文汉化" >> release.txt
       
       - name: Build Bootstrap
         run: |
