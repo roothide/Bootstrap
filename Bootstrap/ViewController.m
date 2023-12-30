@@ -123,18 +123,18 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"ios-version: %@",UIDevice.currentDevice.systemVersion]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"ios版本: %@",UIDevice.currentDevice.systemVersion]];
     
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"设备型号: %s",systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"应用版本: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"启动会话: %@",getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap 已安装":@"引导服务器未安装"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"system 已引导":@"系统未引导"];
+    [AppDelegate addLogText: isBootstrapInstalled()? @"引导服务器未安装":@"bootstrap not installed"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"系统未引导":@"system not bootstrapped"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
