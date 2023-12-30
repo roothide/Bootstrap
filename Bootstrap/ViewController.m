@@ -277,7 +277,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
             NSString* strappedVersion = [NSString stringWithContentsOfFile:jbroot(@"/.bootstrapped") encoding:NSUTF8StringEncoding error:nil];
             if(strappedVersion.intValue != BOOTSTRAP_VERSION) {
-                [AppDelegate showMesage:Localized(@"您已经安装了旧的测试版，请禁用所有应用程序调整并重新启动设备以卸载它，以便您可以安装新版本的引导程序。") title:Localized(@"错误")];
+                [AppDelegate showMesage:Localized(@"您已经安装了旧的测试版，请禁用所有应用程序注入的插件并重启设备以卸载它，以便您可以安装新版本的引导程序。") title:Localized(@"错误")];
                 return;
             }
         }
@@ -285,7 +285,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [(UIButton*)sender setEnabled:NO];
     
-    [AppDelegate showHudMsg:Localized(@"Bootstrapping")];
+    [AppDelegate showHudMsg:Localized(@"正在引导...")];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -332,7 +332,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"卸载") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [AppDelegate showHudMsg:Localized(@"正在卸载")];
+            [AppDelegate showHudMsg:Localized(@"正在卸载...")];
             
             NSString* log=nil;
             NSString* err=nil;
