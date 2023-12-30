@@ -100,6 +100,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         if(WaitForFix) {
             self.bootstraBtn.enabled = NO;
             [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
+            [AppDelegate showMesage:@"ios17.0 on A15+ is still waiting for fixing" title:Localized(@"Wait For Fix")];
         } else {
             self.bootstraBtn.enabled = YES;
             [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
