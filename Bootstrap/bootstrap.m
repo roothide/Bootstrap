@@ -63,7 +63,7 @@ void rebuildSignature(NSString *directoryPath)
 
 }
 
-void disableRootHideBlacklist()
+int disableRootHideBlacklist()
 {
     NSString* roothideDir = jbroot(@"/var/mobile/Library/RootHide");
     if(![NSFileManager.defaultManager fileExistsAtPath:roothideDir]) {
@@ -72,9 +72,13 @@ void disableRootHideBlacklist()
     
     NSString *configFilePath = jbroot(@"/var/mobile/Library/RootHide/RootHideConfig.plist");
     NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:configFilePath];
+    
     if(!defaults) defaults = [[NSMutableDictionary alloc] init];
     [defaults setValue:@YES forKey:@"blacklistDisabled"];
-    [defaults writeToFile:configFilePath atomically:YES];
+    
+    ASSERT([defaults writeToFile:configFilePath atomically:YES]);
+    
+    return 0;
 }
 
 int buildPackageSources()
@@ -337,6 +341,8 @@ int bootstrap()
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
+    
+    ASSERT(disableRootHideBlacklist()==0);
     
     STRAPLOG("Status: Rebuilding Apps");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
