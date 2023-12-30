@@ -271,7 +271,10 @@ NSArray* unsupportedBundleIDs = @[
 
 - (void)showApplicationSuccessAlert {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"应用成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"好的") style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 @end
