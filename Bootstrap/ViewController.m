@@ -77,7 +77,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     {
         
         self.bootstraBtn.enabled = YES;
-        [self.bootstraBtn setTitle:Localized(@"Bootstrap") forState:UIControlStateNormal];
+        [self.bootstraBtn setTitle:Localized(@"安装") forState:UIControlStateNormal];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
