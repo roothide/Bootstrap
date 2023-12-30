@@ -22,6 +22,10 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
     `brew install make`
 
+ 3. Clone the GitHub repository and enter directory
+
+    `git clone https://github.com/RootHide/Bootstrap/ && cd Bootstrap`
+
  4. Build `Bootstrap.tipa`
 
     `gmake -j$(sysctl -n hw.ncpu) package`
