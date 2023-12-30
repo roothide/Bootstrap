@@ -118,7 +118,7 @@ int backupApp(NSString* bundlePath)
         {
             NSError* err=nil;
             ASSERT([fm copyItemAtPath:enumURL.path toPath:backupPath error:&err]);
-            SYSLOG("copied %@ => %@", enumURL.path, backupPath);
+            SYSLOG("复制 %@ => %@", enumURL.path, backupPath);
             
             backupFileCount++;
         }
@@ -137,7 +137,7 @@ int backupApp(NSString* bundlePath)
 
 int restoreApp(NSString* bundlePath)
 {
-    SYSLOG("restoreApp=%@", bundlePath);
+    SYSLOG("恢复应用程序=%@", bundlePath);
     NSFileManager* fm = NSFileManager.defaultManager;
     
     NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
@@ -158,14 +158,14 @@ int restoreApp(NSString* bundlePath)
         NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:backup], YES);
         NSString* restorePath = [bundlePath stringByAppendingPathComponent:subPath];
         
-        SYSLOG("restore %@ => %@", enumURL.path, restorePath);
+        SYSLOG("恢复 %@ => %@", enumURL.path, restorePath);
         
         if([fm fileExistsAtPath:restorePath])
             ASSERT([fm removeItemAtPath:restorePath error:nil]);
         
         NSError* err=nil;
         if(![fm moveItemAtPath:enumURL.path toPath:restorePath error:&err]) {
-            SYSLOG("move failed %@", err);
+            SYSLOG("删除失败 %@", err);
             ABORT();
         }
         
@@ -184,7 +184,7 @@ int restoreApp(NSString* bundlePath)
 
 int enableForApp(NSString* bundlePath)
 {
-    SYSLOG("enableForApp %@", bundlePath);
+    SYSLOG("应用程序启用 %@", bundlePath);
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -225,7 +225,7 @@ int enableForApp(NSString* bundlePath)
 
 int disableForApp(NSString* bundlePath)
 {
-    SYSLOG("disalbeForApp %@", bundlePath);
+    SYSLOG("应用程序禁用 %@", bundlePath);
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
