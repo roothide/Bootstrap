@@ -92,7 +92,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Bd-3hy">
                                 <rect key="frame" x="102" y="444" width="180" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="checkmark.seal" catalog="system" title="选择应用程序启用"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="checkmark.seal" catalog="system" title="选择应用程序"/>
                                 <connections>
                                     <action selector="appenabler:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xRE-YA-IhT"/>
                                 </connections>
