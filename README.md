@@ -36,7 +36,7 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 The latest version of TrollStore is required as the bootstrap is built around the CoreTrust bug. Developer mode will need to be enabled to use this bootstrap. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
 
-Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
+Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files. You need to reboot to be able to uninstall the bootstrap.
 
 You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be Bootstrap compatible.
 
