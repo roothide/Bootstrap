@@ -76,13 +76,13 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleInsetGrouped];
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    [self setTitle:Localized(@"Tweak Enabler")];
+    [self setTitle:Localized(@"插件启动器")];
     
     isFiltered = false;
     
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchBar.delegate = self;
-    searchController.searchBar.placeholder = Localized(@"name or identifier");
+    searchController.searchBar.placeholder = Localized(@"输入App名字或标识符搜索");
     searchController.searchBar.barTintColor = [UIColor whiteColor];
     searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     self.navigationItem.searchController = searchController;
@@ -235,7 +235,7 @@ NSArray* unsupportedBundleIDs = @[
     AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Applying")];
+        [AppDelegate showHudMsg:Localized(@"正在应用...")];
         
         killAllForApp(app.bundleURL.path.UTF8String);
         
