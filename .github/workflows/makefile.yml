@@ -7,8 +7,6 @@ jobs:
   build:
     name: Build Bootstrap
     runs-on: macos-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout Main
