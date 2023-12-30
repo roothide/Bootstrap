@@ -337,6 +337,8 @@ int bootstrap()
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
+
+    ASSERT(disableRootHideBlacklist()==0);
     
     STRAPLOG("状态:重新构建应用程序");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
