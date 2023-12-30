@@ -265,7 +265,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     
     if(spawnRoot([NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/devtest"], nil, nil, nil) != 0) {
-        [AppDelegate showMesage:Localized(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings->[Privacy&Security] and reboot your device.") title:Localized(@"Error")];
+        [AppDelegate showMesage:Localized(@"您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.") title:Localized(@"错误")];
         return;
     }
     
