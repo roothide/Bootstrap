@@ -133,8 +133,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap 已安装":@"bootstrap 未安装"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"system 已引导":@"system 未引导"];
+    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap 已安装":@"引导服务器未安装"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"system 已引导":@"系统未引导"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
