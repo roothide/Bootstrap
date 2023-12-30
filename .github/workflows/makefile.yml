@@ -1,0 +1,54 @@
+name: Build and Package
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Bootstrap
+    runs-on: macos-latest
+    environment: Auto Build And Release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+
+      - name: Setup Environment
+        run: echo "THEOS=~/theos" >> $GITHUB_ENV
+
+      - name: Set env
+        run: |
+          sT=$(TZ=UTC-8 date +'%S')
+          echo "msT=$(date -j -f "%Y-%m-%d %H:%M:%S" "$(TZ=UTC-8 date +'%Y-%m-%d %H:%M'):${sT}" +%s)" >> $GITHUB_ENV
+
+      - name: Print env
+        run: |
+          echo ${{ env.msT }
+          
+      - name: Make Bootstrap Package
+        run: |
+          make package
+          mv Bootstrap/Bootstrap.tipa Bootstrap.ipa
+
+      - name: Release ipa
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Bootstrap
+          tag_name: ${{ env.msT }}
+          target_commitish: main
+          body_path: release.txt
+          latest: true
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          files: |
+           *.ipa
