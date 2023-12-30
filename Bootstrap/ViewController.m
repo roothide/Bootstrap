@@ -145,7 +145,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:Localized(@"\n感谢所有朋友，没有他们的帮助，我们不可能完成这个项目!")];
+        [AppDelegate addLogText:Localized(@"\n感谢以上所有朋友，没有他们的帮助，我们不可能完成这个项目!")];
         
     });
     
@@ -159,13 +159,13 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     {
         if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"引导服务器未运行") message:Localized(@"由于未知的原因，引导服务器没有运行，我们现在唯一能做的就是重新启动它。") preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"重启引导服务器") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"引导程序未运行") message:Localized(@"由于未知的原因，引导程序没有运行，我们现在唯一能做的就是重新启动它。") preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"重启引导程序") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
                 
                 NSString* log=nil;
                 NSString* err=nil;
                 if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
-                    [AppDelegate addLogText:Localized(@"引导服务器重启成功")];
+                    [AppDelegate addLogText:Localized(@"引导程序重启成功")];
                     [self updateOpensshStatus];
                 } else {
                     [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"错误")];
@@ -175,7 +175,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             
             [AppDelegate showAlert:alert];
         } else {
-            [AppDelegate addLogText:Localized(@"引导服务器检查成功")];
+            [AppDelegate addLogText:Localized(@"引导程序检查成功")];
             [self updateOpensshStatus];
         }
     }
@@ -275,7 +275,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     if(find_jbroot()) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
-            [AppDelegate showMesage:Localized(@"roothide dopamine 已经安装在这个设备上，现在安装这个引导可能会破坏它!") title:Localized(@"错误")];
+            [AppDelegate showMesage:Localized(@"roothide dopamine 已经安装在这个设备上，现在安装这个引导程序可能会破坏它!") title:Localized(@"错误")];
             return;
         }
         
@@ -317,9 +317,9 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             NSString* err=nil;
              status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
             if(status==0)
-                [AppDelegate addLogText:@"openssh 启动成功"];
+                [AppDelegate addLogText:@"openssh 启用成功"];
             else
-                [AppDelegate addLogText:[NSString stringWithFormat:@"openssh 启动失败(%d):\n%@\n%@", status, log, err]];
+                [AppDelegate addLogText:[NSString stringWithFormat:@"openssh 启用失败(%d):\n%@\n%@", status, log, err]];
         }
         
         [AppDelegate addLogText:@"正在注销..."]; sleep(1);
@@ -332,7 +332,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 - (IBAction)unbootstrap:(id)sender {
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"提示") message:Localized(@"你确定卸载引导服务器吗?\n\n在卸载之前,请确保您已经禁用了所有应用程序已注入的插件。") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"提示") message:Localized(@"你确定卸载引导程序吗?\n\n在卸载之前,请确保您已经禁用了所有应用程序已注入的插件。") preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"取消") style:UIAlertActionStyleDefault handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"卸载") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         
@@ -346,7 +346,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate dismissHud];
             
             if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"引导服务器未安装"];
+                [AppDelegate showMesage:@"" title:@"引导程序未安装"];
             } else {
                 [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
             }
