@@ -309,7 +309,7 @@ int bootstrap()
         
         jbroot_path = [NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", jbrand_new()];
         
-        STRAPLOG("bootstrap @ %@", jbroot_path);
+        STRAPLOG("引导 @ %@", jbroot_path);
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
@@ -372,7 +372,7 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            SYSLOG("remove %@ @ %@", item, dirpath);
+            SYSLOG("删除 %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
