@@ -244,7 +244,6 @@
 			files = (
 				84438D592B261FBA00A1E407 /* basebin in Resources */,
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
-				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
 				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,
 				847099952B1D855E003FA4ED /* LaunchScreen.storyboard in Resources */,
