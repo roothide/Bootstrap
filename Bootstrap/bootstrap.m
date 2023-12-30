@@ -340,7 +340,7 @@ int bootstrap()
 
     ASSERT(disableRootHideBlacklist()==0);
     
-    STRAPLOG("状态:重新构建应用程序");
+    STRAPLOG("Status: Rebuilding Apps");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
