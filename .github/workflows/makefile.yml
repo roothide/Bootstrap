@@ -9,6 +9,16 @@ on:
       - beta
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  VERSION: 'beta 1'
+
 jobs:
   build:
     name: Build Bootstrap
@@ -31,11 +41,20 @@ jobs:
         run: |
           sT=$(TZ=UTC-8 date +'%S')
           echo "msT=$(date -j -f "%Y-%m-%d %H:%M:%S" "$(TZ=UTC-8 date +'%Y-%m-%d %H:%M'):${sT}" +%s)" >> $GITHUB_ENV
+          echo "logT=$(TZ=UTC-8 date +'%Y年%m月%d %H:%M'):${sT}" >> $GITHUB_ENV
 
       - name: Print env
-        run: echo ${{ env.msT }}
-          
-      - name: Make Bootstrap Package
+        run: |
+          echo ${{ env.VERSION }}
+          echo ${{ env.msT }}
+          echo ${{ env.logT }}
+
+      - name: Pre body
+        run: |
+          echo -e "更新时间：${{ env.logT }}" >> release.txt
+          echo -e "> - 同步官方beta 1 更新代码" >> release.txt
+      
+      - name: Build Bootstrap
         run: |
           make package
           mv ./packages/Bootstrap.tipa Bootstrap.ipa
@@ -43,7 +62,7 @@ jobs:
       - name: Release ipa
         uses: softprops/action-gh-release@v1
         with:
-          name: Bootstrap
+          name: Bootstrap_${{ env.VERSION }}
           tag_name: ${{ env.msT }}
           target_commitish: main
           body_path: release.txt
