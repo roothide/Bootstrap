@@ -34,7 +34,7 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 ## Usage
 
-Developer mode will need to be enabled to use this bootstrap. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
+The latest version of TrollStore is required as the bootstrap is built around the CoreTrust bug. Developer mode will need to be enabled to use this bootstrap. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
 
 Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
@@ -49,8 +49,6 @@ Normal rootless tweaks aren't out-of-the-box compatible with this bootstrap, so 
 ## Install tweaks
 
 Bootstrap can enable tweaks for almost all apps, but it currently does not *yet* support SpringBoard tweaks, meaning you cannot modify the homescreen, lockscreen, control center, statusbar, or anything related to the SpringBoard. While these tweaks are installable, you cannot enable SpringBoard in AppEnabler.
-
-Bootstrap can enable tweaks for almost all apps, but it does not yet support springboard tweaks, such as the homescreen, lockscreen, control center, statusbar tweaks.
 
 When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
 
