@@ -44,7 +44,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     if(result != errSecSuccess) return NO;
         
     NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
-    SYSLOG("teamID in trollstore: %@", teamID);
+    SYSLOG("trollstore中的teamID: %@", teamID);
     
     return [teamID isEqualToString:@"T8ALTGMVXN"];
 }
