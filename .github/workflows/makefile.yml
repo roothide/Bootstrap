@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 env:
-  VERSION: 'beta 1'
+  VERSION: 'beta 2'
 
 jobs:
   build:
@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 同步官方beta 1 更新代码，增加中文简体汉化" >> release.txt
+          echo -e "> - 同步官方beta 2 更新代码" >> release.txt
       
       - name: Build Bootstrap
         run: |
