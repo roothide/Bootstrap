@@ -22,7 +22,7 @@
                                 <rect key="frame" x="129" y="615" width="114" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                <buttonConfiguration key="configuration" style="filled" image="trash" catalog="system" title="Uninstall"/>
+                                <buttonConfiguration key="configuration" style="filled" image="trash" catalog="system" title="卸载"/>
                                 <connections>
                                     <action selector="unbootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MGa-od-jOL"/>
                                 </connections>
@@ -40,7 +40,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3N-5g-U7l">
                                 <rect key="frame" x="36" y="502" width="137" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="Respring"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="注销"/>
                                 <connections>
                                     <action selector="respring:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lbu-go-Y79"/>
                                 </connections>
@@ -48,7 +48,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-sw-Fdy">
                                 <rect key="frame" x="193" y="499" width="166" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="RebuildApps"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="重建应用程序"/>
                                 <connections>
                                     <action selector="rebuildapps:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eln-8N-ArQ"/>
                                 </connections>
@@ -92,7 +92,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Bd-3hy">
                                 <rect key="frame" x="114" y="444" width="152" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="checkmark.seal" catalog="system" title="AppEnabler"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="checkmark.seal" catalog="system" title="选择应用程序启用"/>
                                 <connections>
                                     <action selector="appenabler:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xRE-YA-IhT"/>
                                 </connections>
