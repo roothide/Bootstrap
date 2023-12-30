@@ -262,7 +262,16 @@ NSArray* unsupportedBundleIDs = @[
         });
         
         [AppDelegate dismissHud];
+        if (status == 0) {
+            [self showApplicationSuccessAlert];
+        }
         
     });
+}
+
+- (void)showApplicationSuccessAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"应用成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"好的") style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 @end
