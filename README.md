@@ -3,7 +3,7 @@
 
 A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only tested tested on versions 15.0-17.0)
 
-##### The Bootstrap currently may not work on iOS 17.0 for A15+ devices and give 'Wait for Fix'. Unsupported devices and version combos should be reported here: [https://github.com/RootHide/Bootstrap/issues/17](https://github.com/RootHide/Bootstrap/issues/17)
+##### The Bootstrap currently may not work on iOS 17.0 for A15+ devices.
 
 ## Building
 
