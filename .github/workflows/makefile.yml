@@ -33,8 +33,7 @@ jobs:
           echo "msT=$(date -j -f "%Y-%m-%d %H:%M:%S" "$(TZ=UTC-8 date +'%Y-%m-%d %H:%M'):${sT}" +%s)" >> $GITHUB_ENV
 
       - name: Print env
-        run: |
-          echo ${{ env.msT }
+        run: echo ${{ env.msT }
           
       - name: Make Bootstrap Package
         run: |
