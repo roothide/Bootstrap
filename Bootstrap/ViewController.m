@@ -69,7 +69,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
         self.rebuildappsBtn.enabled = YES;
-        self.uninstallBtn.enabled = NO;
+        self.uninstallBtn.enabled = YES;
         self.uninstallBtn.hidden = NO;
         
     }
