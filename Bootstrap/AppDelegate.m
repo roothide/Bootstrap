@@ -68,7 +68,7 @@ MBProgressHUD *switchHud=nil;
 + (void)showMesage:(NSString*)msg title:(NSString*)title {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"好的") style:UIAlertActionStyleDefault handler:nil]];
     [self showAlert:alert];
 }
 
