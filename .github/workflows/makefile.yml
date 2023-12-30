@@ -38,7 +38,7 @@ jobs:
       - name: Make Bootstrap Package
         run: |
           make package
-          mv Bootstrap/Bootstrap.tipa Bootstrap.ipa
+          mv ./packages/Bootstrap.tipa Bootstrap.ipa
 
       - name: Release ipa
         uses: softprops/action-gh-release@v1
