@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 1.同步官方beta 2 最新代码.\n> - 2.更完善的简体中文汉化." >> release.txt
+          echo -e "> - 1.同步官方beta 2 最新代码.\n> - 2.更完善的简体中文汉化.\n> - 2.删除zebra插件商店，仅保留sileo插件商店." >> release.txt
       
       - name: Build Bootstrap
         run: |
