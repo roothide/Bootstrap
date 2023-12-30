@@ -203,7 +203,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     STRAPLOG("Status: Rebuilding Apps");
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"应用中")];
+        [AppDelegate showHudMsg:Localized(@"正在应用...")];
         
         NSString* log=nil;
         NSString* err=nil;
