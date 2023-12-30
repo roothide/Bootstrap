@@ -67,9 +67,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
-                                <rect key="frame" x="104" y="387" width="177" height="45"/>
+                                <rect key="frame" x="104" y="387" width="180" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="filled" image="terminal" catalog="system" title="Bootstrapped"/>
+                                <buttonConfiguration key="configuration" style="filled" image="terminal" catalog="system" title="已安装"/>
                                 <connections>
                                     <action selector="bootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4t4-gT-m0w"/>
                                 </connections>
