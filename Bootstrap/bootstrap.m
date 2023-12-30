@@ -127,27 +127,27 @@ int startBootstrapd()
     NSString* err=nil;
     int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err);
     if(status != 0) {
-        STRAPLOG("引导服务器加载失败(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("引导程序加载失败(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
 
-    STRAPLOG("引导服务器加载成功");
+    STRAPLOG("引导程序加载成功");
     
     sleep(1);
     
      status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], &log, &err);
     if(status != 0) {
-        STRAPLOG("引导服务器检查失败(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("引导程序检查失败(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
-    STRAPLOG("引导服务器检查成功");
+    STRAPLOG("引导程序检查成功");
     
     return 0;
 }
 
 int InstallBootstrap(NSString* jbroot_path)
 {
-    STRAPLOG("安装引导...");
+    STRAPLOG("安装引导程序...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -200,13 +200,13 @@ int InstallBootstrap(NSString* jbroot_path)
                     withDestinationPath:jbroot_path error:nil]);
     
     
-    STRAPLOG("状态:构建基础二进制文件");
+    STRAPLOG("状态: 构建基础二进制文件");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("状态:启动引导服务");
+    STRAPLOG("状态: 启动引导程序");
     ASSERT(startBootstrapd() == 0);
     
-    STRAPLOG("状态:完成引导服务初始化");
+    STRAPLOG("状态: 完成引导程序初始化");
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
@@ -224,7 +224,7 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(buildPackageSources() == 0);
     
     
-    STRAPLOG("状态:正在安装插件包");
+    STRAPLOG("状态: 正在安装插件包");
     NSString* libkrw0_dummy = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"libkrw0-dummy.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(libkrw0_dummy).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
@@ -236,7 +236,7 @@ int InstallBootstrap(NSString* jbroot_path)
     
     ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
-    STRAPLOG("状态:引导程序安装完成");
+    STRAPLOG("状态: 引导程序安装完成");
     
     
     return 0;
@@ -286,13 +286,13 @@ int ReRandomizeBootstrap()
     
     //jbroot() enabled
     
-    STRAPLOG("状态:正在构建基础二进制文件");
+    STRAPLOG("状态: 正在构建基础二进制文件");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("状态:正在启动引导程序(Bootstrapd)");
+    STRAPLOG("状态: 正在启动引导程序");
     ASSERT(startBootstrapd() == 0);
     
-    STRAPLOG("状态:正在更新软链接");
+    STRAPLOG("状态: 正在更新软链接");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
     return 0;
@@ -337,7 +337,7 @@ int bootstrap()
     } else {
         STRAPLOG("设备已启动: %@", jbroot_path);
         
-        STRAPLOG("状态:重新随机化 jbroot");
+        STRAPLOG("状态: 重新随机化 jbroot");
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
@@ -346,13 +346,13 @@ int bootstrap()
     
     ASSERT(disableRootHideBlacklist()==0);
     
-    STRAPLOG("Status: Rebuilding Apps");
+    STRAPLOG("状态: 重新构建应用程序");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
     
-    STRAPLOG("状态:引导成功");
+    STRAPLOG("状态: 引导成功");
     
     return 0;
 }
