@@ -106,6 +106,7 @@
 		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		FE0633AF2B41CCD700B94787 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
+		FE2A2B9B2B422EC400C6027B /* CoreServices-Structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreServices-Structs.h"; sourceTree = "<group>"; };
 		FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bootstrap-Bridging-Header.h"; sourceTree = "<group>"; };
 		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		FE0633B22B41CF3100B94787 /* Private Headers */ = {
 			isa = PBXGroup;
 			children = (
+				FE2A2B9C2B422F4500C6027B /* CoreServices */,
 				FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */,
 			);
 			path = "Private Headers";
@@ -243,6 +245,14 @@
 				FE895FE72B418FB800A16882 /* ContentView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FE2A2B9C2B422F4500C6027B /* CoreServices */ = {
+			isa = PBXGroup;
+			children = (
+				FE2A2B9B2B422EC400C6027B /* CoreServices-Structs.h */,
+			);
+			path = CoreServices;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
