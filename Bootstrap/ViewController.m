@@ -53,19 +53,15 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    // 1
+
     UIViewController *vc = [SwiftUIViewWrapper createSwiftUIView];
     
     UIView *swiftuiView = vc.view;
     swiftuiView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    // 2
-    // Add the view controller to the destination view controller.
     [self addChildViewController:vc];
     [self.view addSubview:swiftuiView];
     
-    // 3
-    // Create and activate the constraints for the SwiftUI's view to cover the entire superview.
     [NSLayoutConstraint activateConstraints:@[
         [swiftuiView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [swiftuiView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
@@ -73,8 +69,6 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         [swiftuiView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
     ]];
     
-    // 4
-    // Notify the child view controller that the move is complete.
     [vc didMoveToParentViewController:self];
     
     self.logView.text = nil;

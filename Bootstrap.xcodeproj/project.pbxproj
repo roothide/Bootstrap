@@ -33,6 +33,9 @@
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
+		FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AB2B41BC3D00B94787 /* CreditsView.swift */; };
+		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
+		FE0633B02B41CCD700B94787 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AF2B41CCD700B94787 /* AppView.swift */; };
 		FE895FE82B418FB900A16882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE72B418FB800A16882 /* ContentView.swift */; };
 		FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE92B418FC800A16882 /* VisualEffectView.swift */; };
 		FE895FED2B418FC800A16882 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEA2B418FC800A16882 /* Log.swift */; };
@@ -98,6 +101,11 @@
 		8470999F2B1D868F003FA4ED /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
+		FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrapFr.h; sourceTree = "<group>"; };
+		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
+		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		FE0633AF2B41CCD700B94787 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
 		FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bootstrap-Bridging-Header.h"; sourceTree = "<group>"; };
 		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -160,10 +168,10 @@
 		847099842B1D855D003FA4ED /* Bootstrap */ = {
 			isa = PBXGroup;
 			children = (
-				FE895FEA2B418FC800A16882 /* Log.swift */,
-				FE895FEB2B418FC800A16882 /* UIAlert++.swift */,
-				FE895FE92B418FC800A16882 /* VisualEffectView.swift */,
-				FE895FE72B418FB800A16882 /* ContentView.swift */,
+				FE0633B52B41CF6600B94787 /* Views */,
+				FE0633B42B41CF5800B94787 /* Extensions */,
+				FE0633B32B41CF4D00B94787 /* Classes */,
+				FE0633B22B41CF3100B94787 /* Private Headers */,
 				84438D692B2CDE0100A1E407 /* AppList.h */,
 				84438D682B2CDE0100A1E407 /* AppList.m */,
 				847099852B1D855D003FA4ED /* AppDelegate.h */,
@@ -196,8 +204,45 @@
 				84438D712B2E4E5D00A1E407 /* common.h */,
 				FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */,
 				FE895FF22B41924C00A16882 /* bootstrapFr.m */,
+				FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */,
+				FE0633AF2B41CCD700B94787 /* AppView.swift */,
 			);
 			path = Bootstrap;
+			sourceTree = "<group>";
+		};
+		FE0633B22B41CF3100B94787 /* Private Headers */ = {
+			isa = PBXGroup;
+			children = (
+				FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */,
+			);
+			path = "Private Headers";
+			sourceTree = "<group>";
+		};
+		FE0633B32B41CF4D00B94787 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FE895FEA2B418FC800A16882 /* Log.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		FE0633B42B41CF5800B94787 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE895FEB2B418FC800A16882 /* UIAlert++.swift */,
+				FE895FE92B418FC800A16882 /* VisualEffectView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FE0633B52B41CF6600B94787 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE0633AD2B41BCD900B94787 /* OptionsView.swift */,
+				FE0633AB2B41BC3D00B94787 /* CreditsView.swift */,
+				FE895FE72B418FB800A16882 /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,11 +333,13 @@
 				847099A32B1D868F003FA4ED /* Makefile in Sources */,
 				8470998D2B1D855D003FA4ED /* ViewController.m in Sources */,
 				FE895FE82B418FB900A16882 /* ContentView.swift in Sources */,
+				FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */,
 				847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */,
 				84438D652B27522400A1E407 /* envbuf.c in Sources */,
 				FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */,
 				FE895FED2B418FC800A16882 /* Log.swift in Sources */,
 				84438D4C2B2609B200A1E407 /* utils.m in Sources */,
+				FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */,
 				FE895FEE2B418FC800A16882 /* UIAlert++.swift in Sources */,
 				84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */,
 				847099872B1D855D003FA4ED /* AppDelegate.m in Sources */,
@@ -300,6 +347,7 @@
 				84438D522B260FEB00A1E407 /* zstd_wrapper.m in Sources */,
 				8470998A2B1D855D003FA4ED /* SceneDelegate.m in Sources */,
 				84438D6C2B2CDE0100A1E407 /* AppList.m in Sources */,
+				FE0633B02B41CCD700B94787 /* AppView.swift in Sources */,
 				84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */,
 				FE895FF32B41924C00A16882 /* bootstrapFr.m in Sources */,
 				84438D5D2B264A2800A1E407 /* NSUserDefaults+appDefaults.m in Sources */,
