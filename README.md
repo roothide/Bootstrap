@@ -8,7 +8,7 @@ A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only test
 
 ## Building
 
-You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
+You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is not sufficient.
 
 You will need Homebrew installed. If you don't have Homebrew installed, run the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
