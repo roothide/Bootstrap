@@ -3,10 +3,10 @@ name: Build and Package
 on:
   push:
     branches: 
-      - beta
+      - beta-2
   pull_request:
     branches: 
-      - beta
+      - beta-2
   workflow_dispatch:
 
 concurrency:
@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 1.同步官方beta 2 最新代码.\n> - 2.修复系统文件权限问题." >> release.txt
+          echo -e "> - 1.同步官方beta 2 最新代码.\n> - 2.修复系统文件权限问题.\n> - 3.采用最新第三方UI编译" >> release.txt
       
       - name: Build Bootstrap
         run: |
@@ -63,7 +63,7 @@ jobs:
         uses: dev-drprasad/delete-older-releases@v0.3.2
         with:
           repo: wwg135/Bootstrap
-          keep_latest: 1
+          keep_latest: 2
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
