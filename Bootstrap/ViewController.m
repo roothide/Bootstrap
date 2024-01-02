@@ -7,6 +7,7 @@
 #include "credits.h"
 #import <sys/sysctl.h>
 #include <sys/utsname.h>
+#import "Bootstrap-Swift.h"
 
 #include <Security/SecKey.h>
 #include <Security/Security.h>
@@ -38,11 +39,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     SecStaticCodeRef codeRef = NULL;
     OSStatus result = SecStaticCodeCreateWithPathAndAttributes(binaryURL, kSecCSDefaultFlags, NULL, &codeRef);
     if(result != errSecSuccess) return NO;
-        
+    
     CFDictionaryRef signingInfo = NULL;
-     result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
+    result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
     if(result != errSecSuccess) return NO;
-        
+    
     NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
     SYSLOG("trollstore中的teamID: %@", teamID);
     
@@ -52,6 +53,23 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    UIViewController *vc = [SwiftUIViewWrapper createSwiftUIView];
+    
+    UIView *swiftuiView = vc.view;
+    swiftuiView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self addChildViewController:vc];
+    [self.view addSubview:swiftuiView];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [swiftuiView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [swiftuiView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [swiftuiView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [swiftuiView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+    
+    [vc didMoveToParentViewController:self];
     
     self.logView.text = nil;
     self.logView.layer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01].CGColor;
@@ -89,12 +107,12 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         BOOL WaitForFix=NO;
         if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion==17)
         {
-           cpu_subtype_t cpuFamily = 0;
-           size_t cpuFamilySize = sizeof(cpuFamily);
-           sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
-           if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
-               WaitForFix=YES;
-           }
+            cpu_subtype_t cpuFamily = 0;
+            size_t cpuFamilySize = sizeof(cpuFamily);
+            sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
+            if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
+                WaitForFix=YES;
+            }
         }
         
         if(WaitForFix) {
@@ -105,7 +123,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             self.bootstraBtn.enabled = YES;
             [self.bootstraBtn setTitle:Localized(@"安装") forState:UIControlStateNormal];
         }
-
+        
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
@@ -271,7 +289,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     generator.impactOccurred;
-
+    
     if(find_jbroot()) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
@@ -311,11 +329,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         
         NSString* log=nil;
         NSString* err=nil;
-            
+        
         if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
             NSString* log=nil;
             NSString* err=nil;
-             status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
+            status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
             if(status==0)
                 [AppDelegate addLogText:@"openssh 启用成功"];
             else
@@ -324,7 +342,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         
         [AppDelegate addLogText:@"正在注销..."]; sleep(1);
         
-         status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
+        status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
         if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         
     });
@@ -342,7 +360,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             NSString* log=nil;
             NSString* err=nil;
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
-                
+            
             [AppDelegate dismissHud];
             
             if(status == 0) {

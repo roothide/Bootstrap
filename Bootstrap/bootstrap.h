@@ -3,6 +3,8 @@
 
 #define BOOTSTRAP_VERSION   (3)
 
+#import <Foundation/Foundation.h>
+
 void rebuildSignature(NSString *directoryPath);
 
 int bootstrap();
