@@ -24,8 +24,6 @@ UITextView* logView=nil;
         [logView setText:[logView.text stringByAppendingString:[NSString stringWithFormat:@"%@\n",text]]];
         if(logView.contentSize.height >= logView.bounds.size.height)
             [logView setContentOffset:CGPointMake(0, logView.contentSize.height - logView.bounds.size.height) animated:YES];
-        const char *cString = [text UTF8String];
-        printf("%s", cString);
     });
 }
 
