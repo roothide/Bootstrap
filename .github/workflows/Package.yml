@@ -10,32 +10,27 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  sync-with-root:
-    name: Sync with RootHide
-    runs-on: macos-latest
+  sync-fork:
+    name: Sync Fork with Upstream
+    runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up Git
         run: |
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
-          git remote add upstream https://github.com/RootHide/Bootstrap
+          git remote add upstream https://github.com/roothide/bootstrap
           git fetch upstream
-          git fetch --all --prune
-          CHANGES=$(git rev-list HEAD...upstream/main --count)
-          if [ $CHANGES -eq 0 ]; then
-            echo "No changes from upstream. Exiting with success."
-            exit 0
-          fi
-          git pull upstream main
-          git add .
-          git commit -m "Sync with RootHide/Bootstrap"
-          git push origin main
+          git checkout main
+          git merge upstream/main
 
   build:
     name: Build Bootstrap
     runs-on: macos-latest
-    needs: sync-with-root
+    needs: sync-fork
 
     steps:
       - name: Checkout
@@ -43,23 +38,14 @@ jobs:
         with:
           submodules: true
 
-      - name: List directory
-        run: ls -l .
-
-      - name: Install brew
-        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
-
       - name: Install Theos
-        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos')"
-
-      - name: Install make
-        run: brew install make
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
 
       - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Make Bootstrap Package
-        run: gmake -j$(sysctl -n hw.ncpu) package
+        run: make package
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -87,8 +73,8 @@ jobs:
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Beta Release
-          body: These are automatically updated builds of the latest Bootstrap commit.
+          name: Rolling Release
+          body: These are automatically updated builds of the latest commit.
           artifacts: "Bootstrap.tipa"
           tag: release
           token: ${{ secrets.GITHUB_TOKEN }}
