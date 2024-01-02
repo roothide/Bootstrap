@@ -67,6 +67,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
+      - name: Delete Old Tags
+        run: |
+          DELETED_RELEASES=($(cat deleted_releases.txt)) 
+          for RELEASE in "${DELETED_RELEASES[@]}" 
+          do
+            TAG=v"$RELEASE"
+            git tag -d "$TAG"
+            git push origin :refs/tags/"$TAG"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+
       - name: Release ipa
         uses: softprops/action-gh-release@v1
         with:
