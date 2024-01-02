@@ -29,7 +29,7 @@ struct OptionsView: View {
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
-                            .foregroundColor(.red   )
+                            .foregroundColor(.red)
                     }
                 }
                 
