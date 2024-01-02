@@ -145,14 +145,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"设备型号: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"\n设备型号: %s",systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"应用版本: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"\n应用版本: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"启动会话: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"\n启动会话: %@",getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"引导已安装":@"引导未安装"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"系统已引导":@"系统未引导"];
+    [AppDelegate addLogText: isBootstrapInstalled()? @"\n引导已安装":@"引导未安装"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"\n系统已引导":@"系统未引导"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
