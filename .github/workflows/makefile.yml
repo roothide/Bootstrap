@@ -3,10 +3,10 @@ name: Build and Package
 on:
   push:
     branches: 
-      - beta
+      - beta-1
   pull_request:
     branches: 
-      - beta
+      - beta-1
   workflow_dispatch:
 
 concurrency:
@@ -52,20 +52,12 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 采用最新第三方UI编译" >> release.txt
+          echo -e "> - 1.同步官方beta 2 最新代码.\n> - 2.修复系统文件权限问题." >> release.txt
       
       - name: Build Bootstrap
         run: |
           make package
           mv ./packages/Bootstrap.tipa Bootstrap.ipa
-
-      - name: Delete Older Releases
-        uses: dev-drprasad/delete-older-releases@v0.3.2
-        with:
-          repo: wwg135/Bootstrap
-          keep_latest: 1
-        env:
-          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
       - name: Release ipa
         uses: softprops/action-gh-release@v1
