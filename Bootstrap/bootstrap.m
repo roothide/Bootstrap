@@ -67,8 +67,12 @@ int disableRootHideBlacklist()
 {
     NSString* roothideDir = jbroot(@"/var/mobile/Library/RootHide");
     if(![NSFileManager.defaultManager fileExistsAtPath:roothideDir]) {
-        ASSERT([NSFileManager.defaultManager createDirectoryAtPath:roothideDir withIntermediateDirectories:YES attributes:nil error:nil]);
+        NSDictionary* attr = @{NSFilePosixPermissions:@(0755), NSFileOwnerAccountID:@(501), NSFileGroupOwnerAccountID:@(501)};
+        ASSERT([NSFileManager.defaultManager createDirectoryAtPath:roothideDir withIntermediateDirectories:YES attributes:attr error:nil]);
     }
+    
+    ASSERT(chmod(roothideDir.fileSystemRepresentation, 0755)==0);
+    ASSERT(chown(roothideDir.fileSystemRepresentation, 501, 501)==0);
     
     NSString *configFilePath = jbroot(@"/var/mobile/Library/RootHide/RootHideConfig.plist");
     NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:configFilePath];
