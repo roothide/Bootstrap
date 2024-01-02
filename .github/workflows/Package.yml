@@ -73,7 +73,7 @@ jobs:
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Rolling Release
+          name: Beta Release
           body: These are automatically updated builds of the latest commit.
           artifacts: "Bootstrap.tipa"
           tag: release
