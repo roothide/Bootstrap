@@ -193,7 +193,7 @@ struct ContentView: View {
     
     private func FetchLog() {
         guard let AttributedText = LogStream.shared.outputString.copy() as? NSAttributedString else {
-            LogItems = ["Error Getting Log!"]
+            LogItems = ["获取日志错误!"]
             return
         }
         LogItems = AttributedText.string.split(separator: "\n")
