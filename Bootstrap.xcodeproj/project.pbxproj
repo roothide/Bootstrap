@@ -40,7 +40,6 @@
 		FE895FE82B418FB900A16882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE72B418FB800A16882 /* ContentView.swift */; };
 		FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE92B418FC800A16882 /* VisualEffectView.swift */; };
 		FE895FED2B418FC800A16882 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEA2B418FC800A16882 /* Log.swift */; };
-		FE895FEE2B418FC800A16882 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEB2B418FC800A16882 /* UIAlert++.swift */; };
 		FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = FE895FF02B418FDC00A16882 /* FluidGradient */; };
 		FE895FF32B41924C00A16882 /* bootstrapFr.m in Sources */ = {isa = PBXBuildFile; fileRef = FE895FF22B41924C00A16882 /* bootstrapFr.m */; };
 /* End PBXBuildFile section */
@@ -111,7 +110,6 @@
 		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE895FEA2B418FC800A16882 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		FE895FEB2B418FC800A16882 /* UIAlert++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlert++.swift"; sourceTree = "<group>"; };
 		FE895FF22B41924C00A16882 /* bootstrapFr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bootstrapFr.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,7 +218,6 @@
 		FE0633B42B41CF5800B94787 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FE895FEB2B418FC800A16882 /* UIAlert++.swift */,
 				FE895FE92B418FC800A16882 /* VisualEffectView.swift */,
 				FE84597C2B44711F00DCB44E /* ButtonStyles.swift */,
 			);
@@ -335,7 +332,6 @@
 				84438D4C2B2609B200A1E407 /* utils.m in Sources */,
 				FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */,
 				FE84597D2B44711F00DCB44E /* ButtonStyles.swift in Sources */,
-				FE895FEE2B418FC800A16882 /* UIAlert++.swift in Sources */,
 				84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */,
 				847099872B1D855D003FA4ED /* AppDelegate.m in Sources */,
 				847099982B1D855E003FA4ED /* main.m in Sources */,

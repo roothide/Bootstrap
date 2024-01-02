@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreditsView: View {
     @Binding var showCredits: Bool
-
+    
     let credits: [String: String] = [
         "opa334": "http://github.com/opa334",
         "hayden": "https://procursus.social/@hayden",
