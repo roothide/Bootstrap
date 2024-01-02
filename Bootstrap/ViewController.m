@@ -152,7 +152,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     [AppDelegate addLogText:[NSString stringWithFormat:@"\n启动会话: %@",getBootSession()]];
     
     [AppDelegate addLogText: isBootstrapInstalled()? @"\n引导已安装":@"\n引导未安装"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"\n系统已引导":@"\n系统未引导"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"\n系统已引导\n":@"\n系统未引导\n"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
