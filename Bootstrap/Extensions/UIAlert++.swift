@@ -18,7 +18,7 @@ extension UIApplication {
     func alert(title: String, body: String, animated: Bool = true, withButton: Bool = true) {
         DispatchQueue.main.async {
             currentUIAlertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
-            if withButton { currentUIAlertController?.addAction(.init(title: "OK", style: .cancel)) }
+            if withButton { currentUIAlertController?.addAction(.init(title: "好的", style: .cancel)) }
             self.present(alert: currentUIAlertController!)
         }
     }
@@ -26,9 +26,9 @@ extension UIApplication {
         DispatchQueue.main.async {
             currentUIAlertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
             if !noCancel {
-                currentUIAlertController?.addAction(.init(title: "Cancel", style: .cancel))
+                currentUIAlertController?.addAction(.init(title: "取消", style: .cancel))
             }
-            currentUIAlertController?.addAction(.init(title: "OK", style: noCancel ? .cancel : .default, handler: { _ in
+            currentUIAlertController?.addAction(.init(title: "好的", style: noCancel ? .cancel : .default, handler: { _ in
                 onOK()
             }))
             self.present(alert: currentUIAlertController!)
@@ -60,9 +60,9 @@ extension UIApplication {
                    textField.placeholder = placeholder
                }
                
-               currentUIAlertController?.addAction(.init(title: "Cancel", style: .cancel))
+               currentUIAlertController?.addAction(.init(title: "取消", style: .cancel))
 
-               currentUIAlertController?.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+               currentUIAlertController?.addAction(UIAlertAction(title: "好的", style: .default) { _ in
                    if let text = currentUIAlertController?.textFields?.first?.text {
                        onOK(text)
                    }
@@ -72,4 +72,3 @@ extension UIApplication {
            }
        }
 }
-
