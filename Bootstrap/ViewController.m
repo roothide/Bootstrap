@@ -193,7 +193,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             
             [AppDelegate showAlert:alert];
         } else {
-            [AppDelegate addLogText:Localized(@"引导程序检查成功")];
+            [AppDelegate addLogText:Localized(@"\n引导程序检查成功")];
             [self updateOpensshStatus];
         }
     }
