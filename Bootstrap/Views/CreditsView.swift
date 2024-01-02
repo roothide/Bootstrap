@@ -99,18 +99,8 @@ struct CreditsView: View {
                 
                 ScrollView {
                     VStack {
-                        Text("感谢")
-                            .foregroundColor(Color(UIColor.label))
-                            .bold()
-                            .font(Font.system(size: 20))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Divider()
-                        
-                        VStack {
-                            ForEach(credits.sorted(by: { $0.key < $1.key }), id: \.key) { (name, link) in
-                                creditStack(name: name, link: link)
-                            }
+                        ForEach(credits.sorted(by: { $0.key < $1.key }), id: \.key) { (name, link) in
+                            creditStack(name: name, link: link)
                         }
                     }
                     .frame(width: 253)
