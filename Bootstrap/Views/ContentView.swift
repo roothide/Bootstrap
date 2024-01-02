@@ -16,7 +16,6 @@ import FluidGradient
 }
 
 struct ContentView: View {
-    // init console base text
     @State var LogItems: [String.SubSequence] = {
         return [""]
     }()
@@ -83,7 +82,7 @@ struct ContentView: View {
                             unbootstrapFr()
                         } label: {
                             Label(
-                                title: { Text("Unbootstrap").bold() },
+                                title: { Text("Uninstall").bold() },
                                 icon: { Image(systemName: "trash") }
                             )
                             .padding(25)
@@ -114,6 +113,7 @@ struct ContentView: View {
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
+                        .disabled(!isSystemBootstrapped())
                         
                         Button {
                             respringFr()

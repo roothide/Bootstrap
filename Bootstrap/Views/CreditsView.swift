@@ -80,6 +80,7 @@ struct CreditsView: View {
         ZStack {
             VisualEffectView(effect: UIBlurEffect(style: .regular))
                 .ignoresSafeArea()
+            
             VStack {
                 HStack {
                     Text("Credits")
@@ -92,7 +93,9 @@ struct CreditsView: View {
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
-                            .foregroundColor(.red   )
+                            .resizable()
+                            .foregroundColor(.red)
+                            .frame(width: 25, height: 25)
                     }
                 }
                 
