@@ -93,7 +93,7 @@ struct CreditsView: View {
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
-                            .foregroundColor(.red   )
+                            .foregroundColor(.red)
                     }
                 }
                 
