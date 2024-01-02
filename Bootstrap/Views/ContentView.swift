@@ -88,7 +88,6 @@ struct ContentView: View {
                             )
                             .padding(25)
                         }
-                        .frame(width: 295)
                         .background {
                             Color(UIColor.systemBackground)
                                 .cornerRadius(20)
