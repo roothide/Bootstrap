@@ -105,7 +105,6 @@
 		FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrapFr.h; sourceTree = "<group>"; };
 		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
 		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
-		FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSApplicationProxy.h; sourceTree = "<group>"; };
 		FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewControllerWrapper.swift; sourceTree = "<group>"; };
 		FE84597C2B44711F00DCB44E /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bootstrap-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -173,7 +172,6 @@
 				FE0633B52B41CF6600B94787 /* Views */,
 				FE0633B42B41CF5800B94787 /* Extensions */,
 				FE0633B32B41CF4D00B94787 /* Classes */,
-				FE0633B22B41CF3100B94787 /* Private Headers */,
 				84438D692B2CDE0100A1E407 /* AppList.h */,
 				84438D682B2CDE0100A1E407 /* AppList.m */,
 				847099852B1D855D003FA4ED /* AppDelegate.h */,
@@ -209,14 +207,6 @@
 				FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */,
 			);
 			path = Bootstrap;
-			sourceTree = "<group>";
-		};
-		FE0633B22B41CF3100B94787 /* Private Headers */ = {
-			isa = PBXGroup;
-			children = (
-				FE0633B12B41CF2B00B94787 /* LSApplicationProxy.h */,
-			);
-			path = "Private Headers";
 			sourceTree = "<group>";
 		};
 		FE0633B32B41CF4D00B94787 /* Classes */ = {

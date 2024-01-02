@@ -4,5 +4,4 @@
 
 #include "bootstrap.h"
 #include "bootstrapFr.h"
-#include "LSApplicationProxy.h"
 #include "AppViewController.h"
