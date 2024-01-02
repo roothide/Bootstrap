@@ -58,13 +58,13 @@ struct ContentView: View {
                     } label: {
                         if isBootstrapInstalled() {
                             Label(
-                                title: { Text("Kickstart").bold() },
+                                title: { Text("已安装").bold() },
                                 icon: { Image(systemName: "terminal") }
                             )
                             .padding(25)
                         } else {
                             Label(
-                                title: { Text("Bootstrap").bold() },
+                                title: { Text("安装").bold() },
                                 icon: { Image(systemName: "terminal") }
                             )
                             .padding(25)
@@ -83,7 +83,7 @@ struct ContentView: View {
                             unbootstrapFr()
                         } label: {
                             Label(
-                                title: { Text("Unbootstrap").bold() },
+                                title: { Text("未安装").bold() },
                                 icon: { Image(systemName: "trash") }
                             )
                             .padding(25)
@@ -104,7 +104,7 @@ struct ContentView: View {
                             }
                         } label: {
                             Label(
-                                title: { Text("Settings") },
+                                title: { Text("设置") },
                                 icon: { Image(systemName: "gear") }
                             )
                             .padding(25)
@@ -119,7 +119,7 @@ struct ContentView: View {
                             respringFr()
                         } label: {
                             Label(
-                                title: { Text("Respring") },
+                                title: { Text("注销") },
                                 icon: { Image(systemName: "arrow.clockwise") }
                             )
                             .padding(25)
@@ -160,7 +160,7 @@ struct ContentView: View {
                             .opacity(0.5)
                     }
                     
-                    Text("UI made with love by haxi0. ♡")
+                    Text("UI 制作：haxi0. ♡")
                         .font(Font.system(size: 13))
                         .opacity(0.5)
                 }
@@ -172,7 +172,7 @@ struct ContentView: View {
                 }
             } label: {
                 Label(
-                    title: { Text("Credits") },
+                    title: { Text("关于") },
                     icon: { Image(systemName: "person") }
                 )
             }
