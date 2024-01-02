@@ -54,14 +54,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     // Do any additional setup after loading the view.
     
     self.logView.text = nil;
-    self.logView.layer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01].CGColor;
-    self.logView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01].CGColor;
-    self.logView.layer.borderWidth = 1.0;
-    self.logView.layer.cornerRadius = 5.0;
-    
+    self.logView.textContainerInset = UIEdgeInsetsMake(12, 8, 8, 8);
+
     [AppDelegate registerLogView:self.logView];
     
-    if(isSystemBootstrapped())
+    if (isSystemBootstrapped())
     {
         self.bootstraBtn.enabled = NO;
         [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
@@ -70,37 +67,41 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.appEnablerBtn.enabled = YES;
         self.rebuildappsBtn.enabled = YES;
         self.uninstallBtn.enabled = NO;
+
+        self.bootstraBtn.hidden = YES;
+        self.rebuildappsBtn.hidden = NO;
         self.uninstallBtn.hidden = NO;
-        
     }
-    else if(isBootstrapInstalled())
+    else if (isBootstrapInstalled())
     {
-        
         self.bootstraBtn.enabled = YES;
         [self.bootstraBtn setTitle:Localized(@"Bootstrap") forState:UIControlStateNormal];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+
+        self.bootstraBtn.hidden = NO;
+        self.rebuildappsBtn.hidden = YES;
         self.uninstallBtn.hidden = NO;
     }
-    else if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15)
+    else if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15)
     {
-        BOOL WaitForFix=NO;
-        if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion==17)
+        BOOL waitForFix=NO;
+        if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion == 17)
         {
            cpu_subtype_t cpuFamily = 0;
            size_t cpuFamilySize = sizeof(cpuFamily);
            sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
-           if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
-               WaitForFix=YES;
+           if (cpuFamily == CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily == CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
+               waitForFix = YES;
            }
         }
         
-        if(WaitForFix) {
+        if (waitForFix) {
             self.bootstraBtn.enabled = NO;
-            [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
-            [AppDelegate showMesage:@"ios17.0 on A15+ is still waiting for fixing" title:Localized(@"Wait For Fix")];
+            [self.bootstraBtn setTitle:Localized(@"Wait for Bugfix") forState:UIControlStateDisabled];
+            [AppDelegate showMesage:@"iOS 17.0 on A15+ is still unsupported." title:Localized(@"Wait for Bugfix")];
         } else {
             self.bootstraBtn.enabled = YES;
             [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
@@ -109,6 +110,9 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+
+        self.bootstraBtn.hidden = NO;
+        self.appEnablerBtn.hidden = YES;
         self.uninstallBtn.hidden = YES;
     } else {
         self.bootstraBtn.enabled = NO;
@@ -117,6 +121,9 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+
+        self.bootstraBtn.hidden = NO;
+        self.appEnablerBtn.hidden = YES;
         self.uninstallBtn.hidden = YES;
         
         [AppDelegate showMesage:Localized(@"the current ios version is not supported yet, we may add support in a future version.") title:Localized(@"Unsupported")];
