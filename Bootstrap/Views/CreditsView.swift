@@ -12,6 +12,7 @@ struct CreditsView: View {
 
     let credits: [String: String] = [
         "opa334": "http://github.com/opa334",
+        "wwg135": "http://github.com/wwg135",
         "hayden": "https://procursus.social/@hayden",
         "CKatri": "https://procursus.social/@cameron",
         "Alfie": "https://alfiecg.uk",
@@ -82,7 +83,7 @@ struct CreditsView: View {
                 .ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("Credits")
+                    Text("感谢")
                         .bold()
                         .frame(maxWidth: 250, alignment: .leading)
                         .font(Font.system(size: 35))
@@ -98,7 +99,7 @@ struct CreditsView: View {
                 
                 ScrollView {
                     VStack {
-                        Text("Credits")
+                        Text("感谢")
                             .foregroundColor(Color(UIColor.label))
                             .bold()
                             .font(Font.system(size: 20))
