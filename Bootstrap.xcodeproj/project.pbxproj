@@ -37,6 +37,7 @@
 		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
 		FE84597B2B44508300DCB44E /* AppViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */; };
 		FE84597D2B44711F00DCB44E /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597C2B44711F00DCB44E /* ButtonStyles.swift */; };
+		FE84597F2B4475FA00DCB44E /* BootstrapViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597E2B4475FA00DCB44E /* BootstrapViewWrapper.swift */; };
 		FE895FE82B418FB900A16882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE72B418FB800A16882 /* ContentView.swift */; };
 		FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE92B418FC800A16882 /* VisualEffectView.swift */; };
 		FE895FED2B418FC800A16882 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEA2B418FC800A16882 /* Log.swift */; };
@@ -106,6 +107,7 @@
 		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewControllerWrapper.swift; sourceTree = "<group>"; };
 		FE84597C2B44711F00DCB44E /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		FE84597E2B4475FA00DCB44E /* BootstrapViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootstrapViewWrapper.swift; sourceTree = "<group>"; };
 		FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bootstrap-Bridging-Header.h"; sourceTree = "<group>"; };
 		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				FE0633AD2B41BCD900B94787 /* OptionsView.swift */,
 				FE0633AB2B41BC3D00B94787 /* CreditsView.swift */,
 				FE895FE72B418FB800A16882 /* ContentView.swift */,
+				FE84597E2B4475FA00DCB44E /* BootstrapViewWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */,
 				FE84597D2B44711F00DCB44E /* ButtonStyles.swift in Sources */,
 				84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */,
+				FE84597F2B4475FA00DCB44E /* BootstrapViewWrapper.swift in Sources */,
 				847099872B1D855D003FA4ED /* AppDelegate.m in Sources */,
 				847099982B1D855E003FA4ED /* main.m in Sources */,
 				84438D522B260FEB00A1E407 /* zstd_wrapper.m in Sources */,
