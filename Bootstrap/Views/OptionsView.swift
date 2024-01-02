@@ -18,7 +18,7 @@ struct OptionsView: View {
             
             VStack {
                 HStack {
-                    Text("Settings")
+                    Text("设置")
                         .bold()
                         .frame(maxWidth: 250, alignment: .leading)
                         .font(Font.system(size: 35))
@@ -36,7 +36,7 @@ struct OptionsView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         VStack {
-                            Text("Options")
+                            Text("选项")
                                 .foregroundColor(Color(UIColor.label))
                                 .bold()
                                 .font(Font.system(size: 20))
@@ -47,7 +47,7 @@ struct OptionsView: View {
                             VStack {
                                 Toggle(isOn: $openSSH, label: {
                                     Label(
-                                        title: { Text("OpenSSH") },
+                                        title: { Text("启用SSH") },
                                         icon: { Image(systemName: "terminal") }
                                     )
                                 })
@@ -63,7 +63,7 @@ struct OptionsView: View {
                         
                         VStack {
                             HStack {
-                                Text("AppEnabler")
+                                Text("应用程序启用")
                                     .foregroundColor(Color(UIColor.label))
                                     .bold()
                                     .font(Font.system(size: 20))
@@ -81,7 +81,7 @@ struct OptionsView: View {
                             Divider()
                             
                             VStack {
-                                Text("ToDo")
+                                Text("选择")
                             }
                         }
                         .frame(width: 253)
