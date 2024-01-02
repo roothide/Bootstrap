@@ -7,7 +7,6 @@
 #include "credits.h"
 #import <sys/sysctl.h>
 #include <sys/utsname.h>
-#import "Bootstrap-Swift.h"
 
 #include <Security/SecKey.h>
 #include <Security/Security.h>
@@ -53,23 +52,6 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    UIViewController *vc = [SwiftUIViewWrapper createSwiftUIView];
-    
-    UIView *swiftuiView = vc.view;
-    swiftuiView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [self addChildViewController:vc];
-    [self.view addSubview:swiftuiView];
-    
-    [NSLayoutConstraint activateConstraints:@[
-        [swiftuiView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [swiftuiView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [swiftuiView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [swiftuiView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-    ]];
-    
-    [vc didMoveToParentViewController:self];
     
     self.logView.text = nil;
     self.logView.layer.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.01].CGColor;
@@ -145,14 +127,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"\n设备型号: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"设备型号: %s",systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"\n应用版本: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"应用版本: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"\n启动会话: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"启动会话: %@",getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"\n引导已安装":@"\n引导未安装"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"\n系统已引导":@"\n系统未引导"];
+    [AppDelegate addLogText: isBootstrapInstalled()? @"引导已安装":@"引导未安装"];
+    [AppDelegate addLogText: isSystemBootstrapped()? @"系统已引导":@"系统未引导"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
