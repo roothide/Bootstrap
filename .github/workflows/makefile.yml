@@ -63,7 +63,7 @@ jobs:
         uses: dev-drprasad/delete-older-releases@v0.3.2
         with:
           repo: wwg135/Bootstrap
-          keep_latest: 2
+          keep_latest: 1
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
