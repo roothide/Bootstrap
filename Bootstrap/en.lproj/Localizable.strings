@@ -1,0 +1,80 @@
+/* No comment provided by engineer. */
+"\nThanks to these guys, we couldn't have completed this project without their help!" = "\nThanks to these guys, we couldn't have completed this project without their help!";
+
+/* No comment provided by engineer. */
+"Applying" = "Applying";
+
+/* No comment provided by engineer. */
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweaks for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweaks for all apps before uninstalling.";
+
+/* No comment provided by engineer. */
+"Bootstrap" = "Bootstrap";
+
+/* No comment provided by engineer. */
+"Bootstrap Uninstalled" = "Bootstrap Uninstalled";
+
+/* No comment provided by engineer. */
+"Bootstrapped" = "Bootstrapped";
+
+/* No comment provided by engineer. */
+"Bootstrapping" = "Bootstrapping";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancel";
+
+/* No comment provided by engineer. */
+"Developer" = "Developer";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
+
+/* No comment provided by engineer. */
+"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.";
+
+/* No comment provided by engineer. */
+"Install" = "Install";
+
+/* No comment provided by engineer. */
+"Name or identifier" = "Name or identifier";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OpenSSH package is not installed." = "OpenSSH package is not installed.";
+
+/* No comment provided by engineer. */
+"Restart Server" = "Restart Server";
+
+/* No comment provided by engineer. */
+"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine has been installed on this device, now install this bootstrap may break it!";
+
+/* No comment provided by engineer. */
+"Server Not Running" = "Server Not Running";
+
+/* No comment provided by engineer. */
+"The current iOS version is not supported yet, we may add support in a future version." = "The current iOS version is not supported yet, we may add support in a future version.";
+
+/* No comment provided by engineer. */
+"Tweak Enabler" = "Tweak Enabler";
+
+/* No comment provided by engineer. */
+"Uninstall" = "Uninstall";
+
+/* No comment provided by engineer. */
+"Uninstalling" = "Uninstalling";
+
+/* No comment provided by engineer. */
+"Unsupported" = "Unsupported";
+
+/* No comment provided by engineer. */
+"Warnning" = "Warnning";
+
+/* No comment provided by engineer. */
+"You've installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the latest version." = "You've installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the latest version.";
+
+/* No comment provided by engineer. */
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device.";
+
+/* No comment provided by engineer. */
+"Your TrollStore version is out of date. Bootstrap only supports TrollStore 2." = "Your TrollStore version is out of date. Bootstrap only supports TrollStore 2.";

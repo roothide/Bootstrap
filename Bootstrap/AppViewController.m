@@ -76,13 +76,13 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleInsetGrouped];
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    [self setTitle:Localized(@"Tweak Enabler")];
-    
+    [self setTitle:NSLocalizedString(@"Tweak Enabler", nil)];
+
     isFiltered = false;
     
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchBar.delegate = self;
-    searchController.searchBar.placeholder = Localized(@"name or identifier");
+    searchController.searchBar.placeholder = NSLocalizedString(@"Name or identifier", nil);
     searchController.searchBar.barTintColor = [UIColor whiteColor];
     searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     self.navigationItem.searchController = searchController;
@@ -235,7 +235,7 @@ NSArray* unsupportedBundleIDs = @[
     AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Applying")];
+        [AppDelegate showHudMsg:NSLocalizedString(@"Applying", nil)];
         
         killAllForApp(app.bundleURL.path.UTF8String);
         
@@ -249,7 +249,7 @@ NSArray* unsupportedBundleIDs = @[
         }
         
         if(status != 0) {
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
         }
         
         killAllForApp(app.bundleURL.path.UTF8String);

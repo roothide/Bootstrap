@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -40,8 +39,8 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0 Beta 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHb-JB-Wrw">
-                                <rect key="frame" x="185.33333333333334" y="128.66666666666666" width="59.666666666666657" height="15.666666666666657"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VERSION_STR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHb-JB-Wrw">
+                                <rect key="frame" x="171" y="128.66666666666666" width="88.333333333333314" height="15.666666666666657"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="1" alpha="0.79656456953642385" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -88,18 +87,14 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3N-5g-U7l">
                                                 <rect key="frame" x="0.0" y="0.0" width="171" height="42"/>
-                                                <buttonConfiguration key="configuration" style="tinted" title="Respring" imagePadding="4" cornerStyle="capsule">
-                                                    <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="default"/>
-                                                </buttonConfiguration>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Respring" cornerStyle="large"/>
                                                 <connections>
                                                     <action selector="respring:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lbu-go-Y79"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-sw-Fdy">
                                                 <rect key="frame" x="195" y="0.0" width="171" height="42"/>
-                                                <buttonConfiguration key="configuration" style="tinted" title="Rebuild Apps" imagePadding="4" cornerStyle="capsule">
-                                                    <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="default"/>
-                                                </buttonConfiguration>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Rebuild Apps" cornerStyle="large"/>
                                                 <connections>
                                                     <action selector="rebuildapps:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eln-8N-ArQ"/>
                                                 </connections>
@@ -112,29 +107,30 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="e5k-g0-f1P">
                                         <rect key="frame" x="0.0" y="122" width="366" height="64"/>
                                         <subviews>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Bd-3hy">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="64"/>
-                                                <buttonConfiguration key="configuration" style="tinted" title="App Enabler" imagePadding="4" cornerStyle="capsule">
-                                                    <imageReference key="image" image="checkmark.seal" catalog="system" symbolScale="default"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Bd-3hy">
+                                                <rect key="frame" x="0.0" y="0.0" width="171" height="64"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Tweak Enabler" cornerStyle="large">
+                                                    <color key="baseBackgroundColor" red="0.039215686270000001" green="0.51764705879999995" blue="1" alpha="0.84651800496688745" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="appenabler:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xRE-YA-IhT"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
-                                                <rect key="frame" x="0.0" y="0.0" width="366" height="64"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="Bootstrapped" imagePadding="4" cornerStyle="capsule">
-                                                    <imageReference key="image" image="apple.terminal" catalog="system" symbolScale="default"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
+                                                <rect key="frame" x="183" y="0.0" width="0.0" height="64"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Bootstrapped"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Bootstrapped" cornerStyle="large">
+                                                    <color key="baseBackgroundColor" red="0.039215686270000001" green="0.51764705879999995" blue="1" alpha="0.85140728476821192" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="bootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4t4-gT-m0w"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="destructive" translatesAutoresizingMaskIntoConstraints="NO" id="LQX-IC-Eof">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="64"/>
-                                                <color key="tintColor" systemColor="systemRedColor"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="Uninstall" imagePadding="4" cornerStyle="capsule">
-                                                    <imageReference key="image" image="trash" catalog="system" symbolScale="default"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQX-IC-Eof">
+                                                <rect key="frame" x="195" y="0.0" width="171" height="64"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Uninstall" cornerStyle="large">
+                                                    <color key="baseBackgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="0.85270074503311255" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="unbootstrap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MGa-od-jOL"/>
@@ -173,7 +169,6 @@
                         <outlet property="opensshState" destination="bPU-Gp-wbI" id="AD0-vT-lfL"/>
                         <outlet property="rebuildappsBtn" destination="Qyj-sw-Fdy" id="3LT-9H-8bm"/>
                         <outlet property="respringBtn" destination="L3N-5g-U7l" id="lIx-4D-zVr"/>
-                        <outlet property="unbootstrapBtn" destination="LQX-IC-Eof" id="isZ-rT-6Gz"/>
                         <outlet property="uninstallBtn" destination="LQX-IC-Eof" id="u0Z-hU-k5W"/>
                     </connections>
                 </viewController>
@@ -183,18 +178,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="apple.terminal" catalog="system" width="128" height="93"/>
-        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
-        <image name="checkmark.seal" catalog="system" width="128" height="124"/>
-        <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.5690000057220459" blue="0.57499998807907104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

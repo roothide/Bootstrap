@@ -19,7 +19,6 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *logView;
 @property (weak, nonatomic) IBOutlet UIButton *bootstraBtn;
-@property (weak, nonatomic) IBOutlet UIButton *unbootstrapBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *opensshState;
 @property (weak, nonatomic) IBOutlet UIButton *appEnablerBtn;
 @property (weak, nonatomic) IBOutlet UIButton *respringBtn;
@@ -61,55 +60,58 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     if (isSystemBootstrapped())
     {
         self.bootstraBtn.enabled = NO;
-        [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
-        
+        [self.bootstraBtn setTitle:NSLocalizedString(@"Bootstrapped", nil) forState:UIControlStateDisabled];
+
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
         self.rebuildappsBtn.enabled = YES;
-        self.uninstallBtn.enabled = NO;
+        self.uninstallBtn.enabled = YES;
 
         self.bootstraBtn.hidden = YES;
-        self.rebuildappsBtn.hidden = NO;
-        self.uninstallBtn.hidden = NO;
+        self.appEnablerBtn.hidden = NO;
+        self.uninstallBtn.hidden = YES;
     }
     else if (isBootstrapInstalled())
     {
         self.bootstraBtn.enabled = YES;
-        [self.bootstraBtn setTitle:Localized(@"Bootstrap") forState:UIControlStateNormal];
+        [self.bootstraBtn setTitle:NSLocalizedString(@"Bootstrap", nil) forState:UIControlStateNormal];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.uninstallBtn.enabled = YES;
 
         self.bootstraBtn.hidden = NO;
-        self.rebuildappsBtn.hidden = YES;
+        self.appEnablerBtn.hidden = YES;
         self.uninstallBtn.hidden = NO;
     }
     else if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15)
     {
         self.bootstraBtn.enabled = YES;
-        [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
+        [self.bootstraBtn setTitle:NSLocalizedString(@"Install", nil) forState:UIControlStateNormal];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.uninstallBtn.enabled = NO;
 
         self.bootstraBtn.hidden = NO;
         self.appEnablerBtn.hidden = YES;
         self.uninstallBtn.hidden = YES;
     } else {
         self.bootstraBtn.enabled = NO;
-        [self.bootstraBtn setTitle:Localized(@"Unsupported") forState:UIControlStateDisabled];
+        [self.bootstraBtn setTitle:NSLocalizedString(@"Unsupported", nil) forState:UIControlStateDisabled];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.uninstallBtn.enabled = NO;
 
         self.bootstraBtn.hidden = NO;
         self.appEnablerBtn.hidden = YES;
         self.uninstallBtn.hidden = YES;
         
-        [AppDelegate showMesage:Localized(@"the current ios version is not supported yet, we may add support in a future version.") title:Localized(@"Unsupported")];
+        [AppDelegate showMesage:NSLocalizedString(@"The current iOS version is not supported yet, we may add support in a future version.", nil) title:NSLocalizedString(@"Unsupported", nil)];
     }
     
 
@@ -135,8 +137,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:Localized(@"\nthanks to these guys, we couldn't have completed this project without their help!")];
-        
+        [AppDelegate addLogText:NSLocalizedString(@"\nThanks to these guys, we couldn't have completed this project without their help!", nil)];
+
     });
     
     SYSLOG("locale=%@", NSLocale.currentLocale.countryCode);
@@ -149,23 +151,23 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     {
         if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Server Not Running", nil) message:NSLocalizedString(@"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.", nil) preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Restart Server", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+
                 NSString* log=nil;
                 NSString* err=nil;
                 if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
-                    [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
+                    [AppDelegate addLogText:@"bootstrap server restart successful"];
                     [self updateOpensshStatus];
                 } else {
-                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
+                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@", log, err] title:NSLocalizedString(@"Error", nil)];
                 }
                 
             }]];
             
             [AppDelegate showAlert:alert];
         } else {
-            [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+            [AppDelegate addLogText:@"bootstrap server check successful"];
             [self updateOpensshStatus];
         }
     }
@@ -186,22 +188,22 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
-    if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+    if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
 }
 
 - (IBAction)rebuildapps:(id)sender {
     STRAPLOG("Status: Rebuilding Apps");
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Applying")];
-        
+        [AppDelegate showHudMsg:NSLocalizedString(@"Applying", nil)];
+
         NSString* log=nil;
         NSString* err=nil;
         int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
         if(status==0) {
             killAllForApp("/usr/libexec/backboardd");
         } else {
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
         }
         [AppDelegate dismissHud];
     });
@@ -224,7 +226,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
-        [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
+        [AppDelegate showMesage:NSLocalizedString(@"OpenSSH package is not installed.", nil) title:NSLocalizedString(@"Developer", nil)];
         enabled.on = NO;
         return;
     }
@@ -243,45 +245,46 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     else
     {
-        [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
         if(enabled.on) [enabled setOn:NO];
     }
 }
 
 - (IBAction)bootstrap:(id)sender {
     if(![self checkTSVersion]) {
-        [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
+        [AppDelegate showMesage:NSLocalizedString(@"Your TrollStore version is out of date. Bootstrap only supports TrollStore 2.", nil) title:NSLocalizedString(@"Error", nil)];
         return;
     }
     
     if(spawnRoot([NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/devtest"], nil, nil, nil) != 0) {
-        [AppDelegate showMesage:Localized(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings->[Privacy&Security] and reboot your device.") title:Localized(@"Error")];
+        [AppDelegate showMesage:NSLocalizedString(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device.", nil) title:NSLocalizedString(@"Error", nil)];
         return;
     }
     
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
-    generator.impactOccurred;
+    [generator impactOccurred];
 
     if(find_jbroot()) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
-            [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
+            [AppDelegate showMesage:NSLocalizedString(@"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!", nil) title:NSLocalizedString(@"Error", nil)];
             return;
         }
         
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
             NSString* strappedVersion = [NSString stringWithContentsOfFile:jbroot(@"/.bootstrapped") encoding:NSUTF8StringEncoding error:nil];
             if(strappedVersion.intValue != BOOTSTRAP_VERSION) {
-                [AppDelegate showMesage:Localized(@"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.") title:Localized(@"Error")];
+                [AppDelegate showMesage:NSLocalizedString(@"You've installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the latest version.", nil) title:NSLocalizedString(@"Error", nil)];
                 return;
             }
         }
     }
     
-    [(UIButton*)sender setEnabled:NO];
-    
-    [AppDelegate showHudMsg:Localized(@"Bootstrapping")];
-    
+    [self.bootstraBtn setEnabled:NO];
+    [self.uninstallBtn setEnabled:NO];
+
+    [AppDelegate showHudMsg:NSLocalizedString(@"Bootstrapping", nil)];
+
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
@@ -295,7 +298,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         
         if(status != 0)
         {
-            [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code (%d)",status]];
             return;
         }
         
@@ -315,20 +318,20 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         [AppDelegate addLogText:@"respring now..."]; sleep(1);
         
          status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
-        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-        
+        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
+
     });
 }
 
 - (IBAction)unbootstrap:(id)sender {
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.") preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Uninstall") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
-        
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Warnning", nil) message:NSLocalizedString(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweaks for all apps before uninstalling.", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Uninstall", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [AppDelegate showHudMsg:Localized(@"Uninstalling")];
-            
+            [AppDelegate showHudMsg:NSLocalizedString(@"Uninstalling", nil)];
+
             NSString* log=nil;
             NSString* err=nil;
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
@@ -336,9 +339,9 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
             [AppDelegate dismissHud];
             
             if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
+                [AppDelegate showMesage:@"" title:NSLocalizedString(@"Bootstrap Uninstalled", nil)];
             } else {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code (%d)",status]];
             }
         });
         

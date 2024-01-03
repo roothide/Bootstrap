@@ -1,0 +1,29 @@
+/* Class = "UIButton"; configuration.title = "Bootstrapped"; ObjectID = "a00-Is-meU"; */
+"a00-Is-meU.configuration.title" = "Bootstrapped";
+
+/* Class = "UIButton"; normalTitle = "Bootstrapped"; ObjectID = "a00-Is-meU"; */
+"a00-Is-meU.normalTitle" = "Bootstrapped";
+
+/* Class = "UIButton"; configuration.title = "Tweak Enabler"; ObjectID = "EZ0-Bd-3hy"; */
+"EZ0-Bd-3hy.configuration.title" = "Tweak Enabler";
+
+/* Class = "UILabel"; text = "VERSION_STR"; ObjectID = "jHb-JB-Wrw"; */
+"jHb-JB-Wrw.text" = "1.0 Beta 3.1";
+
+/* Class = "UIButton"; configuration.title = "Respring"; ObjectID = "L3N-5g-U7l"; */
+"L3N-5g-U7l.configuration.title" = "Respring";
+
+/* Class = "UIButton"; configuration.title = "Uninstall"; ObjectID = "LQX-IC-Eof"; */
+"LQX-IC-Eof.configuration.title" = "Uninstall";
+
+/* Class = "UITextField"; text = "Bootstrap"; ObjectID = "mHC-UO-Fsn"; */
+"mHC-UO-Fsn.text" = "Bootstrap";
+
+/* Class = "UIButton"; configuration.title = "Rebuild Apps"; ObjectID = "Qyj-sw-Fdy"; */
+"Qyj-sw-Fdy.configuration.title" = "Rebuild Apps";
+
+/* Class = "UILabel"; text = "OpenSSH"; ObjectID = "ZIf-Su-8xG"; */
+"ZIf-Su-8xG.text" = "OpenSSH";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "vAH-eh-yux"; */
+"vAH-eh-yux.text" = "";

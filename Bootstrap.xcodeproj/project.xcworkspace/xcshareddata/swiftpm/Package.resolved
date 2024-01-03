@@ -3,19 +3,19 @@
     {
       "identity" : "colorfulx",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Lakr233/ColorfulX.git",
+      "location" : "https://github.com/Lessica/ColorfulX.git",
       "state" : {
-        "revision" : "efee8c82e06e7f34df45301e831502d43bd3195a",
-        "version" : "2.2.14"
+        "branch" : "legacy-support",
+        "revision" : "7a1ad1b8c2ebba081ee887209459e535c9c9b47a"
       }
     },
     {
       "identity" : "springinterpolation",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Lakr233/SpringInterpolation.git",
+      "location" : "https://github.com/Lessica/SpringInterpolation.git",
       "state" : {
-        "revision" : "ae7e2133816ff4ae34c993a8e5b9171bf84bd880",
-        "version" : "1.1.0"
+        "branch" : "ci/add-platforms",
+        "revision" : "685501aadb58a9a9e88bf3c3ffa94a60f0eca864"
       }
     },
     {

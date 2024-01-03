@@ -1,0 +1,80 @@
+/* No comment provided by engineer. */
+"\nThanks to these guys, we couldn't have completed this project without their help!" = "感谢这些人，没有他们的帮助我们就不可能完成这个项目！";
+
+/* No comment provided by engineer. */
+"Applying" = "应用";
+
+/* No comment provided by engineer. */
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweaks for all apps before uninstalling." = "你确定要卸载 Bootstrap 程序吗？\n\n卸载之前，请确保已禁用所有应用程序的插件。";
+
+/* No comment provided by engineer. */
+"Bootstrap" = "引导";
+
+/* No comment provided by engineer. */
+"Bootstrap Uninstalled" = "Bootstrap 已卸载";
+
+/* No comment provided by engineer. */
+"Bootstrapped" = "已引导";
+
+/* No comment provided by engineer. */
+"Bootstrapping" = "引导中";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Developer" = "开发者";
+
+/* No comment provided by engineer. */
+"Error" = "错误";
+
+/* No comment provided by engineer. */
+"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知原因，Bootstrap 服务未运行，我们唯一能做的就是立即重新启动它。";
+
+/* No comment provided by engineer. */
+"Install" = "安装";
+
+/* No comment provided by engineer. */
+"Name or identifier" = "名称或标识符";
+
+/* No comment provided by engineer. */
+"OK" = "好的";
+
+/* No comment provided by engineer. */
+"OpenSSH package is not installed." = "未安装 OpenSSH 软件包。";
+
+/* No comment provided by engineer. */
+"Restart Server" = "重启服务";
+
+/* No comment provided by engineer. */
+"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
+
+/* No comment provided by engineer. */
+"Server Not Running" = "服务未运行";
+
+/* No comment provided by engineer. */
+"The current iOS version is not supported yet, we may add support in a future version." = "当前 iOS 版本尚不支持，我们可能会在未来版本中添加支持。";
+
+/* No comment provided by engineer. */
+"Tweak Enabler" = "插件注入";
+
+/* No comment provided by engineer. */
+"Uninstall" = "卸载";
+
+/* No comment provided by engineer. */
+"Uninstalling" = "卸载中";
+
+/* No comment provided by engineer. */
+"Unsupported" = "不支持";
+
+/* No comment provided by engineer. */
+"Warnning" = "警告";
+
+/* No comment provided by engineer. */
+"You've installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the latest version." = "已经安装了旧的测试版，请禁用所有应用程序插件并重新启动设备以卸载它，以便安装新版本的 Bootstrap 程序。";
+
+/* No comment provided by engineer. */
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "设备似乎没有启用开发者模式。\n\n请在“设置”->“隐私与安全”中启用开发者模式并重新启动设备。";
+
+/* No comment provided by engineer. */
+"Your TrollStore version is out of date. Bootstrap only supports TrollStore 2." = "你的 Trollstore 版本太旧，Bootstrap 仅支持 Trollstore 2。";
