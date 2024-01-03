@@ -86,25 +86,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     else if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15)
     {
-        BOOL WaitForFix=NO;
-        if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion==17)
-        {
-           cpu_subtype_t cpuFamily = 0;
-           size_t cpuFamilySize = sizeof(cpuFamily);
-           sysctlbyname("hw.cpufamily", &cpuFamily, &cpuFamilySize, NULL, 0);
-           if (cpuFamily==CPUFAMILY_ARM_BLIZZARD_AVALANCHE || cpuFamily==CPUFAMILY_ARM_EVEREST_SAWTOOTH) {
-               WaitForFix=YES;
-           }
-        }
-        
-        if(WaitForFix) {
-            self.bootstraBtn.enabled = NO;
-            [self.bootstraBtn setTitle:Localized(@"Wait For Fix") forState:UIControlStateDisabled];
-            [AppDelegate showMesage:@"ios17.0 on A15+ is still waiting for fixing" title:Localized(@"Wait For Fix")];
-        } else {
-            self.bootstraBtn.enabled = YES;
-            [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
-        }
+        self.bootstraBtn.enabled = YES;
+        [self.bootstraBtn setTitle:Localized(@"Install") forState:UIControlStateNormal];
 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
