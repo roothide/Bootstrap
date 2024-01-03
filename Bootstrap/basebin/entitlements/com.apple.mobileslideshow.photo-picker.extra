@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>platform-application</key>
+	<true/>
+	<key>get-task-allow</key>
+	<true/>
+	<key>com.apple.private.security.storage.AppDataContainers</key>
+	<true/>
+	<key>com.apple.private.security.no-sandbox</key>
+	<true/>
+
+	<key>com.apple.security.exception.process-info</key>
+	<true/>
+	<key>com.apple.security.temporary-exception.process-info</key>
+	<true/>
+	<key>com.apple.security.exception.sysctl.read-write</key>
+	<true/>
+	<key>com.apple.private.security.storage.AppBundles</key>
+	<true/>
+	<key>com.apple.security.exception.mobile-preferences-read-write</key>
+	<true/>
+	<key>user-preference-write</key>
+	<true/>
+	<key>seatbelt-profiles</key>
+	<false/>
+	<key>com.apple.security.iokit-user-client-class</key>
+	<array>
+		<string>IOUserClient</string>
+	</array>
+</dict>
+</plist>
