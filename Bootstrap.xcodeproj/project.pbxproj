@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0FE84F262B44494400B482D0 /* BSBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE84F252B44494400B482D0 /* BSBackgroundView.swift */; };
 		0FF75B9D2B4590C400786B24 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FF75B9F2B4590C400786B24 /* Localizable.strings */; };
-		0FF75BA72B45A6CE00786B24 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = 0FF75BA62B45A6CE00786B24 /* ColorfulX */; };
 		84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; };
 		84364F3E2B323FB600E90B58 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */; };
@@ -36,6 +35,7 @@
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
+		CC0DDB3C2B4707840052598D /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = CC0DDB3B2B4707840052598D /* ColorfulX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,7 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */,
-				0FF75BA72B45A6CE00786B24 /* ColorfulX in Frameworks */,
+				CC0DDB3C2B4707840052598D /* ColorfulX in Frameworks */,
 				84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */,
 				84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */,
 				84438D502B260F8200A1E407 /* libzstd in Frameworks */,
@@ -215,7 +215,7 @@
 			name = Bootstrap;
 			packageProductDependencies = (
 				84438D4F2B260F8200A1E407 /* libzstd */,
-				0FF75BA62B45A6CE00786B24 /* ColorfulX */,
+				CC0DDB3B2B4707840052598D /* ColorfulX */,
 			);
 			productName = Bootstrap;
 			productReference = 847099822B1D855D003FA4ED /* Bootstrap.app */;
@@ -248,7 +248,7 @@
 			mainGroup = 847099792B1D855D003FA4ED;
 			packageReferences = (
 				84438D4E2B260F8200A1E407 /* XCRemoteSwiftPackageReference "zstd" */,
-				0FF75BA52B45A6CE00786B24 /* XCRemoteSwiftPackageReference "ColorfulX" */,
+				CC0DDB3A2B4707840052598D /* XCRemoteSwiftPackageReference "ColorfulX" */,
 			);
 			productRefGroup = 847099832B1D855D003FA4ED /* Products */;
 			projectDirPath = "";
@@ -558,14 +558,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0FF75BA52B45A6CE00786B24 /* XCRemoteSwiftPackageReference "ColorfulX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Lessica/ColorfulX.git";
-			requirement = {
-				branch = "legacy-support";
-				kind = branch;
-			};
-		};
 		84438D4E2B260F8200A1E407 /* XCRemoteSwiftPackageReference "zstd" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/zstd.git";
@@ -574,18 +566,26 @@
 				minimumVersion = 1.5.5;
 			};
 		};
+		CC0DDB3A2B4707840052598D /* XCRemoteSwiftPackageReference "ColorfulX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Lakr233/ColorfulX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.15;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0FF75BA62B45A6CE00786B24 /* ColorfulX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0FF75BA52B45A6CE00786B24 /* XCRemoteSwiftPackageReference "ColorfulX" */;
-			productName = ColorfulX;
-		};
 		84438D4F2B260F8200A1E407 /* libzstd */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 84438D4E2B260F8200A1E407 /* XCRemoteSwiftPackageReference "zstd" */;
 			productName = libzstd;
+		};
+		CC0DDB3B2B4707840052598D /* ColorfulX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC0DDB3A2B4707840052598D /* XCRemoteSwiftPackageReference "ColorfulX" */;
+			productName = ColorfulX;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
