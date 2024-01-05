@@ -70,7 +70,7 @@ jobs:
           delete_release: true
           tag_name: release
         env:
-          GITHUB_TOKEN: ${{ secrets.ALL_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Get bootstrap artifact
@@ -85,4 +85,4 @@ jobs:
           body: WARNING:By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage to your device.
           artifacts: "Bootstrap.tipa"
           tag: release
-          token: ${{ secrets.ALL_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
