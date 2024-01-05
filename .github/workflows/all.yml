@@ -82,7 +82,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: Bootstrap_beta Release
-          body: WARNING:By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage to your device.
+          body: WARNING!!! By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage to your device.
           artifacts: "Bootstrap.tipa"
           tag: release
           token: ${{ secrets.GITHUB_TOKEN }}
