@@ -24,7 +24,7 @@ void rebuildSignature(NSString *directoryPath)
     
     NSString* ldidPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/ldid"];
     NSString* fastSignPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/fastPathSign"];
-    NSString* entitlementsPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/bootstrap.entitlements"];
+    NSString* entitlementsPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/nickchan.entitlements"];
     NSString* ldidEntitlements = [NSString stringWithFormat:@"-S%@", entitlementsPath];
     
     for (NSURL *enumURL in directoryEnumerator) {
@@ -67,8 +67,12 @@ int disableRootHideBlacklist()
 {
     NSString* roothideDir = jbroot(@"/var/mobile/Library/RootHide");
     if(![NSFileManager.defaultManager fileExistsAtPath:roothideDir]) {
-        ASSERT([NSFileManager.defaultManager createDirectoryAtPath:roothideDir withIntermediateDirectories:YES attributes:nil error:nil]);
+        NSDictionary* attr = @{NSFilePosixPermissions:@(0755), NSFileOwnerAccountID:@(501), NSFileGroupOwnerAccountID:@(501)};
+        ASSERT([NSFileManager.defaultManager createDirectoryAtPath:roothideDir withIntermediateDirectories:YES attributes:attr error:nil]);
     }
+    
+    ASSERT(chmod(roothideDir.fileSystemRepresentation, 0755)==0);
+    ASSERT(chown(roothideDir.fileSystemRepresentation, 501, 501)==0);
     
     NSString *configFilePath = jbroot(@"/var/mobile/Library/RootHide/RootHideConfig.plist");
     NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:configFilePath];
@@ -90,7 +94,7 @@ int buildPackageSources()
     //Users in some regions seem to be unable to access github.io
     SYSLOG("locale=%@", [NSUserDefaults.appDefaults valueForKey:@"locale"]);
     if([[NSUserDefaults.appDefaults valueForKey:@"locale"] isEqualToString:@"CN"]) {
-        ASSERT([[NSString stringWithUTF8String:ALT_SOURCES] writeToFile:jbroot(@"/etc/apt/sources.list.d/sileo.sources") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        ASSERT([[NSString stringWithFormat:@(ALT_SOURCES), getCFMajorVersion()] writeToFile:jbroot(@"/etc/apt/sources.list.d/sileo.sources") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     }
     
     if(![fm fileExistsAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra")])

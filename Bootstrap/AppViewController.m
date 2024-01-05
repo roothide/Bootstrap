@@ -197,7 +197,7 @@
 }
 
 NSArray* unsupportedBundleIDs = @[
-    @"com.apple.mobileslideshow",
+//    @"com.apple.mobileslideshow",
 //    @"com.apple.mobilesafari",
 ];
 
