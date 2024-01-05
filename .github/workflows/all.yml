@@ -1,0 +1,88 @@
+name: Build and Package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  build:
+    name: Build RootHide Bootstrap
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git remote add upstream https://github.com/RootHide/Bootstrap
+          git fetch upstream
+          git fetch --all --prune
+          git pull --rebase --strategy-option=theirs upstream main
+
+      - name: Cache Homebrew
+        uses: actions/cache@v2
+        with:
+          path: /usr/local/Homebrew
+          key: ${{ runner.os }}-homebrew-${{ hashFiles('**/Brewfile.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-homebrew-
+
+      - name: Install Homebrew
+        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
+
+      - name: Cache Theos
+        uses: actions/cache@v2
+        with:
+          path: ~/theos
+          key: ${{ runner.os }}-theos-${{ hashFiles('**/theos.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-theos-
+
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos')"
+
+      - name: Install make
+        run: brew install make
+
+      - name: Setup Theos environment
+        run: echo "THEOS=~/theos" >> $GITHUB_ENV
+
+      - name: Make bootstrap package
+        run: gmake -j$(sysctl -n hw.ncpu) package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Bootstrap.tipa
+          path: ./packages/Bootstrap.tipa
+
+      - name: Delete old release
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        with:
+          delete_release: true
+          tag_name: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALL_GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Get bootstrap artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: Bootstrap.tipa
+
+      - name: Create new release
+        uses: ncipollo/release-action@v1
+        with:
+          name: Bootstrap_beta Release
+          body: WARNING:By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage to your device.
+          artifacts: "Bootstrap.tipa"
+          tag: release
+          token: ${{ secrets.ALL_GITHUB_TOKEN }}
