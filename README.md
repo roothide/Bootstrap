@@ -8,6 +8,10 @@ A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only test
 
 ## Building
 
+Currently, you should build the `.tipa` file yourself, as using random `.tipa` files online (even on GitHub) can be outdated or contain malicious code. Please, do not install random `.tipa` files. You can find more information [here](https://www.reddit.com/r/jailbreak/comments/18z28qk/discussion_do_not_use_other_peoples_roothide/).
+
+If you do not have a Mac, check the FAQ in the Usage section of this README to build with GitHub Actions.
+
 You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is not sufficient.
 
 You will need Homebrew installed. If you don't have Homebrew installed, run the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
@@ -36,25 +40,25 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 The latest version of TrollStore is required as the bootstrap is built around the CoreTrust bug. Developer mode will need to be enabled to use this bootstrap. Follow [this guide](https://docs.expo.dev/guides/ios-developer-mode/) to enable developer mode. If you do not see the option to enable developer mode, you may need to first try sideloading an application (use AltStore or Sideloadly) and the option to enable developer mode will appear.
 
-Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files. You need to reboot to be able to uninstall the bootstrap.
+Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
-You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be Bootstrap compatible.
+You can add various sources and install tweaks through Sileo, like other jailbreaks. \You may need to convert tweaks to be Bootstrap compatible if they aren't already converted or developed for this bootstrap.
 
 By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) at the moment.
 
+A general FAQ is currently available [here](https://github.com/dleovl/RootHideBootstrapUnofficialFAQ/blob/main/README.md), though not officially affiliated with RootHide (as of writing).
+
 ## Develop tweaks
 
-Normal rootless tweaks aren't out-of-the-box compatible with this bootstrap, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/RootHide/Developer).
+Rootful and rootless tweaks aren't out-of-the-box compatible with this bootstrap, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/RootHide/Developer).
 
 ## Install tweaks
 
-Bootstrap can enable tweaks for almost all apps, but it currently does not *yet* support SpringBoard tweaks, meaning you cannot modify the homescreen, lockscreen, control center, statusbar, or anything related to the SpringBoard. While these tweaks are installable, you cannot enable SpringBoard in AppEnabler.
+Bootstrap can enable tweaks for almost all apps, but it currently does not *yet* support SpringBoard tweaks, meaning you cannot modify the homescreen, lockscreen, control center, statusbar, or anything related to the SpringBoard. While these tweaks are installable, you cannot enable SpringBoard in AppEnabler (making them useless).
 
-When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
+When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support the RootHide Bootstrap.
 
-Install RootHide Patcher from *Sileo*. If you have problems installing, you're using Zebra, and need to switch to Sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer. You will need to install rootless-compat as a dependancy. Once the tweak is converted, press Ok and click Sileo in the share sheet. Press GET on the tweak and run the queue.
-
-You will need to enable Settings (com.apple.Preferences) in AppEnabler to have tweak preferences show up in the Settings app, or download TweakSettings from CreatureSurvive. If an application disappears (like after a bootstrap uninstall) and is supposed to be on your homescreen, open TrollStore settings and press 'Rebuild Icon Cache'.
+Install RootHide Patcher from *Sileo* (https://roothide.github.io/, refresh sources if it's blank!). If you have problems installing RootHide Patcher, use Sileo, as Zebra doesn't have the best compatibility for this bootstrap. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. Usually, you can use the rootless compat layer, but rootful tweak debs will need to be converted using a simple convert. You will need to install rootless-compat as a dependancy when converting rootless tweaks. Once the tweak is converted, press Ok and press Sileo in the share sheet. Press GET on the tweak and run the queue to install.
 
 ## Discord
 
