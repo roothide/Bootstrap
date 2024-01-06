@@ -55,6 +55,9 @@ jobs:
       - name: Setup Theos environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
+      - name: Set Version 
+        run: echo "VERSION=3.1" >> $GITHUB_ENV
+
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
 
@@ -68,7 +71,7 @@ jobs:
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
         with:
           delete_release: true
-          tag_name: release
+          tag_name: v${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
@@ -84,5 +87,5 @@ jobs:
           name: Bootstrap_beta Release
           body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
           artifacts: "Bootstrap.tipa"
-          tag: release
+          tag: v${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
