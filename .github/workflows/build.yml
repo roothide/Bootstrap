@@ -1,0 +1,11 @@
+6S4AMCy.yml?ex=65ab36c1&is=6598c1c1&hm=c21a6624af3fd900dc0dd2b57aee91b1415059c82ee3195c6b6739a5432c38b3&` ```yml?ex=65ab36c1&is=6598c1c1&hm=c21a6624af3fd900dc0dd2b57aee91b1415059c82ee3195c6b6739a5432c38b3&
+name: Build and Package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
