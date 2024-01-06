@@ -1,4 +1,3 @@
-6S4AMCy.yml?ex=65ab36c1&is=6598c1c1&hm=c21a6624af3fd900dc0dd2b57aee91b1415059c82ee3195c6b6739a5432c38b3&` ```yml?ex=65ab36c1&is=6598c1c1&hm=c21a6624af3fd900dc0dd2b57aee91b1415059c82ee3195c6b6739a5432c38b3&
 name: Build and Package
 
 on:
@@ -9,3 +8,52 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    name: Build Bootstrap
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+
+      - name: Setup Environment
+        run: echo "THEOS=~/theos" >> $GITHUB_ENV
+
+      - name: Make Bootstrap Package
+        run: make package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Bootstrap.tipa
+          path: ./packages/Bootstrap.tipa
+  update-release:
+    name: Release .tipa
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Delete old release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.1
+      with:
+        delete_release: true
+        tag_name: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: Bootstrap.tipa
+    - name: Create new release
+      uses: ncipollo/release-action@v1
+      with:
+        name: Rolling Release
+        body: These are automatically updated builds of the latest commit.
+        artifacts: "Bootstrap.tipa"
+        tag: release
+        token: ${{ secrets.GITHUB_TOKEN }}
