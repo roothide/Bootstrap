@@ -44,7 +44,7 @@ Once you open the Bootstrap app, press Bootstrap. This will install the necessar
 
 You can add various sources and install tweaks through Sileo, like other jailbreaks. \You may need to convert tweaks to be Bootstrap compatible if they aren't already converted or developed for this bootstrap.
 
-By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) at the moment.
+By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You **cannot** inject into SpringBoard (com.apple.springboard) at the moment with official means.
 
 A general FAQ is currently available [here](https://github.com/dleovl/RootHideBootstrapUnofficialFAQ/blob/main/README.md), though not officially affiliated with RootHide (as of writing).
 
