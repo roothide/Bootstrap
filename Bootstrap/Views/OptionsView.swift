@@ -87,7 +87,27 @@ struct OptionsView: View {
                                 } label: {
                                     Label(
                                         title: { Text("Rebuild Apps") },
-                                        icon: { Image(systemName: "arrow.clockwise") }
+                                        icon: { Image(systemName: "app.dashed") }
+                                    )
+                                }
+                                .buttonStyle(DopamineButtonStyle())
+                                
+                                Button {
+                                    rebuildIconCacheFr()
+                                } label: {
+                                    Label(
+                                        title: { Text("Rebuild Icon Cache") },
+                                        icon: { Image(systemName: "app.dashed") }
+                                    )
+                                }
+                                .buttonStyle(DopamineButtonStyle())
+                                
+                                Button {
+                                    rebuildIconCacheFr()
+                                } label: {
+                                    Label(
+                                        title: { Text("Reinstall Sileo & Zebra") },
+                                        icon: { Image(systemName: "arrow.down.app") }
                                     )
                                 }
                                 .buttonStyle(DopamineButtonStyle())

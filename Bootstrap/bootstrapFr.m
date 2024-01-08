@@ -13,6 +13,7 @@
 #import <sys/sysctl.h>
 #include <sys/utsname.h>
 #import "Bootstrap-Swift.h"
+#include "AppList.h"
 
 #include <Security/SecKey.h>
 #include <Security/Security.h>
@@ -28,11 +29,11 @@ bool checkTSVersionFr(void) {
     SecStaticCodeRef codeRef = NULL;
     OSStatus result = SecStaticCodeCreateWithPathAndAttributes(binaryURL, kSecCSDefaultFlags, NULL, &codeRef);
     if(result != errSecSuccess) return NO;
-    
+        
     CFDictionaryRef signingInfo = NULL;
-    result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
+     result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
     if(result != errSecSuccess) return NO;
-    
+        
     NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
     SYSLOG("teamID in trollstore: %@", teamID);
     
@@ -52,7 +53,7 @@ void bootstrapFr(void) {
     
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     generator.impactOccurred;
-    
+
     if(find_jbroot()) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
@@ -90,11 +91,12 @@ void bootstrapFr(void) {
         
         NSString* log=nil;
         NSString* err=nil;
-        
-        if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
+            
+        if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")])
+        {
             NSString* log=nil;
             NSString* err=nil;
-            status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
+             status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
             if(status==0)
                 [AppDelegate addLogText:@"openssh launch successful"];
             else
@@ -103,14 +105,14 @@ void bootstrapFr(void) {
         
         [AppDelegate addLogText:@"respring now..."]; sleep(1);
         
-        status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
+         status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
         if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         
     });
 }
 
 void unbootstrapFr(void) {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.") preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Uninstall") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         
@@ -120,14 +122,18 @@ void unbootstrapFr(void) {
             NSString* log=nil;
             NSString* err=nil;
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
-            
+                
             [AppDelegate dismissHud];
             
-            if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
-            } else {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-            }
+            NSString* msg = (status==0) ? @"bootstrap uninstalled" : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                exit(0);
+            }]];
+            
+            [AppDelegate showAlert:alert];
+            
         });
         
     }]];
@@ -142,7 +148,7 @@ void respringFr(void) {
 }
 
 void rebuildappsFr(void) {
-    STRAPLOG("Status: Rebuilding Apps");
+    [AppDelegate addLogText:@"Status: Rebuilding Apps"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
@@ -154,6 +160,94 @@ void rebuildappsFr(void) {
             killAllForApp("/usr/libexec/backboardd");
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
+        [AppDelegate dismissHud];
+    });
+}
+
+void rebuildIconCacheFr(void) {
+    [AppDelegate addLogText:@"Status: Rebuilding Icon Cache"];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen.")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
+        if(status != 0) {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
+        
+        [AppDelegate dismissHud];
+    });
+}
+
+void checkServerFr(void) {
+    static bool alerted = false;
+    if(alerted) return;
+    
+    if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
+    {
+        alerted = true;
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+            alerted = false;
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
+                [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
+                //[self updateOpensshStatus];
+            } else {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
+            }
+            
+        }]];
+        
+        [AppDelegate showAlert:alert];
+    } else {
+        [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+        //[self updateOpensshStatus];
+    }
+}
+
+void reinstallPackageManagerFr(void) {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Applying")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        
+        BOOL success=YES;
+        
+        [AppDelegate addLogText:@"Status: Reinstalling Sileo"];
+        NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
+        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        [AppDelegate addLogText:@"Status: Reinstalling Zebra"];
+        NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
+        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(success) {
+            [AppDelegate showMesage:@"Sileo and Zebra reinstalled!" title:@""];
         }
         [AppDelegate dismissHud];
     });

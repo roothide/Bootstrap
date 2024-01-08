@@ -190,6 +190,9 @@ struct ContentView: View {
                 OptionsView(showOptions: $showOptions, openSSH: $openSSH)
             }
         }
+        .onAppear {
+            checkServerFr()
+        }
     }
     
     private func FetchLog() {
