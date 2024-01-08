@@ -91,6 +91,7 @@ struct OptionsView: View {
                                     )
                                 }
                                 .buttonStyle(DopamineButtonStyle())
+                                .disabled(!isSystemBootstrapped())
                                 
                                 Button {
                                     rebuildIconCacheFr()
@@ -101,6 +102,7 @@ struct OptionsView: View {
                                     )
                                 }
                                 .buttonStyle(DopamineButtonStyle())
+                                .disabled(!isSystemBootstrapped())
                                 
                                 Button {
                                     rebuildIconCacheFr()
@@ -111,6 +113,7 @@ struct OptionsView: View {
                                     )
                                 }
                                 .buttonStyle(DopamineButtonStyle())
+                                .disabled(!isSystemBootstrapped())
                             })
                         }
                         .frame(width: 253)
