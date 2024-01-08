@@ -460,11 +460,15 @@ int rebuildIconCache()
                 
             [AppDelegate dismissHud];
             
-            if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
-            } else {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-            }
+            NSString* msg = (status==0) ? @"bootstrap uninstalled" : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                exit(0);
+            }]];
+            
+            [AppDelegate showAlert:alert];
+            
         });
         
     }]];
