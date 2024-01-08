@@ -28,7 +28,7 @@
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bPU-Gp-wbI">
-                                <rect key="frame" x="179.5" y="482" width="51" height="31"/>
+                                <rect key="frame" x="179.5" y="504" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" name="AccentColor"/>
                                 <color key="onTintColor" name="AccentColor"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3N-5g-U7l">
-                                <rect key="frame" x="18" y="428" width="137" height="34"/>
+                                <rect key="frame" x="18" y="408" width="137" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="Respring"/>
                                 <connections>
@@ -46,20 +46,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="OpenSSH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIf-Su-8xG">
-                                <rect key="frame" x="88.5" y="486" width="83" height="23"/>
+                                <rect key="frame" x="88.5" y="508" width="83" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bootstrap(beta 3.1)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mHC-UO-Fsn">
-                                <rect key="frame" x="20" y="34" width="300" height="51"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bootstrap(beta 4.1)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mHC-UO-Fsn">
+                                <rect key="frame" x="14" y="34" width="300" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="42"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a00-Is-meU">
-                                <rect key="frame" x="76" y="314" width="177" height="45"/>
+                                <rect key="frame" x="76" y="310" width="177" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonConfiguration key="configuration" style="filled" image="terminal" catalog="system" title="Bootstrapped"/>
                                 <connections>
@@ -67,7 +67,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vAH-eh-yux">
-                                <rect key="frame" x="3" y="93" width="307" height="215"/>
+                                <rect key="frame" x="3" y="93" width="312" height="215"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -82,7 +82,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Bd-3hy">
-                                <rect key="frame" x="89" y="371" width="152" height="34"/>
+                                <rect key="frame" x="89" y="360" width="152" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonConfiguration key="configuration" style="tinted" image="checkmark.seal" catalog="system" title="AppEnabler"/>
                                 <connections>
@@ -90,11 +90,27 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qyj-sw-Fdy">
-                                <rect key="frame" x="163" y="427" width="152" height="35"/>
+                                <rect key="frame" x="163" y="408" width="152" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="RebuildApps"/>
                                 <connections>
                                     <action selector="rebuildapps:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eln-8N-ArQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMY-Su-mQL">
+                                <rect key="frame" x="16" y="450" width="139" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="Reinstall Sileo+Zebra"/>
+                                <connections>
+                                    <action selector="reinstallPackageManager:" destination="BYZ-38-t0r" eventType="touchUpInside" id="egA-SC-xt5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocj-vU-eoB">
+                                <rect key="frame" x="163" y="450" width="152" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system" title="Rebuild Icon Cache"/>
+                                <connections>
+                                    <action selector="rebuildIconCache:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WQs-ju-vYv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -105,8 +121,11 @@
                         <outlet property="appEnablerBtn" destination="EZ0-Bd-3hy" id="k9y-cw-Yfn"/>
                         <outlet property="bootstraBtn" destination="a00-Is-meU" id="chJ-cA-4pr"/>
                         <outlet property="logView" destination="vAH-eh-yux" id="XVQ-B0-Whq"/>
+                        <outlet property="opensshLabel" destination="ZIf-Su-8xG" id="kqm-4V-SI1"/>
                         <outlet property="opensshState" destination="bPU-Gp-wbI" id="AD0-vT-lfL"/>
+                        <outlet property="rebuildIconCacheBtn" destination="Ocj-vU-eoB" id="pUg-zo-HAd"/>
                         <outlet property="rebuildappsBtn" destination="Qyj-sw-Fdy" id="3LT-9H-8bm"/>
+                        <outlet property="reinstallPackageManagerBtn" destination="fMY-Su-mQL" id="E3R-GV-oLX"/>
                         <outlet property="respringBtn" destination="L3N-5g-U7l" id="lIx-4D-zVr"/>
                         <outlet property="unbootstrapBtn" destination="LQX-IC-Eof" id="isZ-rT-6Gz"/>
                         <outlet property="uninstallBtn" destination="LQX-IC-Eof" id="u0Z-hU-k5W"/>

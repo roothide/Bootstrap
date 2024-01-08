@@ -23,6 +23,9 @@ int main(int argc, char * argv[]) {
             } else if(strcmp(argv[1], "disableapp")==0) {
                 int disableForApp(NSString* bundlePath);
                 exit(disableForApp(@(argv[2])));
+            } else if(strcmp(argv[1], "rebuildiconcache")==0) {
+                int rebuildIconCache();
+                exit(rebuildIconCache());
             } else if(strcmp(argv[1], "testprefs")==0) {
                 SYSLOG("locale=%@", [NSUserDefaults.appDefaults valueForKey:@"locale"]);
                 [NSUserDefaults.appDefaults setValue:@"CA" forKey:@"locale"];
