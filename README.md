@@ -8,13 +8,13 @@ A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only test
 
 ## Building
 
-Currently, you should build the `.tipa` file yourself, as using random `.tipa` files online (even on GitHub) can be outdated or contain malicious code. Please, do not install random `.tipa` files. You can find more information [here](https://www.reddit.com/r/jailbreak/comments/18z28qk/discussion_do_not_use_other_peoples_roothide/).
+*Warning:* You should build the `.tipa` file yourself, as using untrusted `.tipa` files online (even on GitHub) can be outdated or contain malicious code. You can find more information [here](https://www.reddit.com/r/jailbreak/comments/18z28qk/discussion_do_not_use_other_peoples_roothide/).
 
-If you do not have a Mac, check the FAQ in the Usage section of this README to build with GitHub Actions.
+If you do not have MacOS, check the FAQ in the Usage section of this README to build with GitHub Actions instead.
 
-You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is not sufficient.
+You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is *insufficient*.
 
-You will need Homebrew installed. If you don't have Homebrew installed, run the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+You will need Homebrew installed. If you don't have Homebrew installed, run the following command in your terminal: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
  1. Update your Theos to the RootHide build
     
@@ -26,8 +26,7 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
     `brew install make`
 
- 3. Clone the GitHub repository and enter directory
-
+ 3. Clone the GitHub repository and enter directoryB
     `git clone https://github.com/RootHide/Bootstrap/ && cd Bootstrap`
 
  4. Build `Bootstrap.tipa`
