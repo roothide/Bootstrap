@@ -1,0 +1,36 @@
+name: Build bootstrap
+on: [push]
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Check cache
+        run: |
+          echo upstream_heads=`git ls-remote https://github.com/theos/theos | head -n 1 | cut -f 1`-`git ls-remote https://github.com/theos/sdks | head -n 1 | cut -f 1` >> $GITHUB_ENV
+
+      - name: Use cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/theos
+          key: ${{ runner.os }}-${{ env.upstream_heads }}
+
+      - name: Prepare Theos
+        # Don't use @main in production, this repo is specifically for testing it.
+        uses: Randomblock1/theos-action@main
+
+      - name: Build package
+        run: |
+          rm -f packages/*
+          make package FINALPACKAGE=1
+
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: "Package built by ${{ matrix.os }}"
+          path: ${{ github.workspace }}/packages/*.tipa
