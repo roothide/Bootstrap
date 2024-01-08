@@ -191,7 +191,9 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            checkServerFr()
+            if isSystemBootstrapped() {
+                checkServerFr()
+            }
         }
     }
     
