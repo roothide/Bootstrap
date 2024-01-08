@@ -9,7 +9,7 @@
 
 @interface PrivateApi_LSApplicationWorkspace
 - (NSArray*)allInstalledApplications;
-- (bool)openApplicationWithBundleID:(id)arg1;
+- (BOOL)openApplicationWithBundleID:(id)arg1;
 - (NSArray*)privateURLSchemes;
 - (NSArray*)publicURLSchemes;
 - (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
@@ -93,10 +93,10 @@
     [refreshControl addTarget:self action:@selector(startRefresh) forControlEvents:UIControlEventValueChanged];
     self.tableView.refreshControl = refreshControl;
     
-    [self updateData];
+    [self updateData:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(startRefresh)
+                                             selector:@selector(startRefresh2)
                                           name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 }
@@ -104,10 +104,18 @@
 - (void)startRefresh {
     [self.tableView.refreshControl beginRefreshing];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [self updateData];
+        [self updateData:YES];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadSearch];
-            [self.tableView reloadData];
+            [self.tableView.refreshControl endRefreshing];
+        });
+    });
+}
+
+- (void)startRefresh2 {
+    [self.tableView.refreshControl beginRefreshing];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self updateData:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView.refreshControl endRefreshing];
         });
     });
@@ -119,7 +127,7 @@
     [self.tableView.refreshControl endRefreshing];
 }
 
-- (void)updateData {
+- (void)updateData:(BOOL)sort {
     NSMutableArray* applications = [NSMutableArray new];
     PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];
     NSArray* allInstalledApplications = [_workspace allInstalledApplications];
@@ -156,11 +164,59 @@
         [applications addObject:app];
     }
     
-    NSArray *appsSortedByName = [applications sortedArrayUsingComparator:^NSComparisonResult(AppList *app1, AppList *app2) {
-        return [app1.name localizedStandardCompare:app2.name];
-    }];
+    if(sort)
+    {
+        NSArray *appsSortedByName = [applications sortedArrayUsingComparator:^NSComparisonResult(AppList *app1, AppList *app2) {
+            struct stat st;
+            BOOL enabled1 = lstat([app1.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
+            BOOL enabled2 = lstat([app2.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
+            if(enabled1 || enabled2) {
+                return [@(enabled2) compare:@(enabled1)];
+            }
+            
+            if(app1.isHiddenApp || app2.isHiddenApp) {
+                return [@(app1.isHiddenApp) compare:@(app2.isHiddenApp)];
+            }
+            
+            return [app1.name localizedStandardCompare:app2.name];
+        }];
+        
+        self->appsArray = appsSortedByName;
+    }
+    else
+    {
+        NSMutableArray *newapps = [NSMutableArray array];
+        [applications enumerateObjectsUsingBlock:^(AppList *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
+            __block BOOL hasBeenContained = NO;
+            [self->appsArray enumerateObjectsUsingBlock:^(AppList *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.bundleIdentifier isEqualToString:newobj.bundleIdentifier]) {
+                    hasBeenContained = YES;
+                    *stop = YES;
+                }
+            }];
+            if (!hasBeenContained) {
+                [newapps addObject:newobj];
+            }
+        }];
+        
+        NSMutableArray *tmpArray = [NSMutableArray array];
+        [self->appsArray enumerateObjectsUsingBlock:^(AppList *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [applications enumerateObjectsUsingBlock:^(AppList *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.bundleIdentifier isEqualToString:newobj.bundleIdentifier]) {
+                    [tmpArray addObject:newobj];
+                    *stop = YES;
+                }
+            }];
+        }];
+
+        [tmpArray addObjectsFromArray:newapps];
+        self->appsArray = tmpArray.copy;
+    }
     
-    self->appsArray = appsSortedByName;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadSearch];
+        [self.tableView reloadData];
+    });
 }
 
 #pragma mark - Table view data source
@@ -206,10 +262,14 @@ NSArray* unsupportedBundleIDs = @[
     
     AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
     
-    UIImage *image = app.icon;
-    cell.imageView.image = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+    if(!app.isHiddenApp) {
+        UIImage *image = app.icon;
+        cell.imageView.image = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+        cell.textLabel.text = app.name;
+    } else {
+        cell.textLabel.text = app.bundleIdentifier;
+    }
     
-    cell.textLabel.text = app.name;
     cell.detailTextLabel.text = app.bundleIdentifier;
     
     UISwitch *theSwitch = [[UISwitch alloc] init];
@@ -223,6 +283,13 @@ NSArray* unsupportedBundleIDs = @[
     [theSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
     cell.accessoryView = theSwitch;
+    
+    UILongPressGestureRecognizer *gest = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(cellLongPress:)];
+    [cell.contentView addGestureRecognizer:gest];
+    gest.view.tag = indexPath.row | indexPath.section<<32;
+    gest.minimumPressDuration = 1;
+    
     return cell;
 }
 
@@ -255,14 +322,26 @@ NSArray* unsupportedBundleIDs = @[
         killAllForApp(app.bundleURL.path.UTF8String);
         
         //refresh app cache list
-        [self updateData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadSearch];
-            [self.tableView reloadData];
-        });
+        [self updateData:NO];
         
         [AppDelegate dismissHud];
         
     });
+}
+
+- (void)cellLongPress:(UIGestureRecognizer *)recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        long tag = recognizer.view.tag;
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:tag&0xFFFFFFFF inSection:tag>>32];
+        
+        AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];
+            [_workspace openApplicationWithBundleID:app.bundleIdentifier];
+        });
+    }
 }
 @end
