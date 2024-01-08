@@ -8,7 +8,14 @@
 import SwiftUI
 import FluidGradient
 
-struct BootstrapView: View {
+@objc class SwiftUIViewWrapper: NSObject {
+    @objc static func createSwiftUIView() -> UIViewController {
+        let viewController = UIHostingController(rootView: ContentView())
+        return viewController
+    }
+}
+
+struct ContentView: View {
     @State var LogItems: [String.SubSequence] = {
         return [""]
     }()

@@ -54,19 +54,19 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    UIViewController *vc = [BootstrapViewWrapper createBootstrapView];
+    UIViewController *vc = [SwiftUIViewWrapper createSwiftUIView];
     
-    UIView *bootstrapView = vc.view;
-    bootstrapView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *swiftuiView = vc.view;
+    swiftuiView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self addChildViewController:vc];
-    [self.view addSubview:bootstrapView];
+    [self.view addSubview:swiftuiView];
     
     [NSLayoutConstraint activateConstraints:@[
-        [bootstrapView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [bootstrapView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [bootstrapView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [bootstrapView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+        [swiftuiView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [swiftuiView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [swiftuiView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [swiftuiView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
     ]];
     
     [vc didMoveToParentViewController:self];

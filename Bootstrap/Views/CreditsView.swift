@@ -87,7 +87,6 @@ struct CreditsView: View {
                         .bold()
                         .frame(maxWidth: 250, alignment: .leading)
                         .font(Font.system(size: 35))
-                    
                     Button {
                         withAnimation {
                             showCredits.toggle()
