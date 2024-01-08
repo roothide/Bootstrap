@@ -4,7 +4,7 @@
 
 A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2. (Currently only tested tested on versions 15.0-17.0)
 
-##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage to your device.
+##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage.
 
 ## Building
 
