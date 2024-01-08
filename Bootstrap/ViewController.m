@@ -18,7 +18,17 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UITextView *logView;
+@property (weak, nonatomic) IBOutlet UIButton *bootstraBtn;
+@property (weak, nonatomic) IBOutlet UIButton *unbootstrapBtn;
+@property (weak, nonatomic) IBOutlet UISwitch *opensshState;
+@property (weak, nonatomic) IBOutlet UIButton *appEnablerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *respringBtn;
+@property (weak, nonatomic) IBOutlet UIButton *uninstallBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rebuildappsBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rebuildIconCacheBtn;
+@property (weak, nonatomic) IBOutlet UIButton *reinstallPackageManagerBtn;
+@property (weak, nonatomic) IBOutlet UILabel *opensshLabel;
 @end
 
 @implementation ViewController
