@@ -367,6 +367,11 @@ int unbootstrap()
 {
     STRAPLOG("unbootstrap...");
     
+    //try
+    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
+    
+    //jbroot unavailable now
+    
     NSFileManager* fm = NSFileManager.defaultManager;
     
     NSString* dirpath = @"/var/containers/Bundle/Application/";
@@ -397,8 +402,6 @@ int unbootstrap()
     }
 
     SYSLOG("bootstrap uninstalled!");
-    
-    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
     
