@@ -32,4 +32,12 @@ BOOL isDefaultInstallationPath(NSString* _path);
 void killAllForApp(const char* bundlePath);
 
 
+@interface LSApplicationWorkspace : NSObject
++ (id)defaultWorkspace;
+- (BOOL)openApplicationWithBundleID:(id)arg1;
+- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
+                                                  internal:(BOOL)arg2
+                                                      user:(BOOL)arg3;
+@end
+
 #endif /* utils_h */

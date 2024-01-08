@@ -6,6 +6,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 +(void)showHudMsg:(NSString*)msg;
++(void)showHudMsg:(NSString*)msg detail:(NSString*)info;
 +(void)dismissHud;
 
 + (void)showAlert:(UIAlertController*)alert;
