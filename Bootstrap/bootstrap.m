@@ -126,7 +126,7 @@ int rebuildBasebin()
     return 0;
 }
 
-int startBootstrapd()
+int startBootstrapServer()
 {
     NSString* log=nil;
     NSString* err=nil;
@@ -209,7 +209,7 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(rebuildBasebin() == 0);
     
     STRAPLOG("Status: Starting Bootstrapd");
-    ASSERT(startBootstrapd() == 0);
+    ASSERT(startBootstrapServer() == 0);
     
     STRAPLOG("Status: Finalizing Bootstrap");
     NSString* log=nil;
@@ -252,7 +252,7 @@ int InstallBootstrap(NSString* jbroot_path)
 
 int ReRandomizeBootstrap()
 {
-    //jbroot() disabled
+    //jbroot() unavailable
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -292,13 +292,13 @@ int ReRandomizeBootstrap()
     ASSERT([fm createSymbolicLinkAtPath:[jbroot_secondary stringByAppendingPathComponent:@".jbroot"]
                     withDestinationPath:jbroot_path error:nil]);
     
-    //jbroot() enabled
+    //jbroot() available now
     
     STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
     STRAPLOG("Status: Starting Bootstrapd");
-    ASSERT(startBootstrapd() == 0);
+    ASSERT(startBootstrapServer() == 0);
     
     STRAPLOG("Status: Updating Symlinks");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
@@ -313,6 +313,12 @@ int bootstrap()
     STRAPLOG("bootstrap...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
+    
+    struct stat st;
+    if(lstat("/var/jb", &st)==0) {
+        //remove /var/jb to avoid incorrect library loading via @rpath
+        ASSERT([fm removeItemAtPath:@"/var/jb" error:nil]);
+    }
     
     NSString* jbroot_path = find_jbroot();
     
@@ -355,7 +361,7 @@ int bootstrap()
     STRAPLOG("Status: Rebuilding Apps");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
-    NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
+    NSDictionary* bootinfo = @{@"bootsession":getBootSession(), @"bootversion":NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
     
     STRAPLOG("Status: Bootstrap Successful");
@@ -366,6 +372,11 @@ int bootstrap()
 int unbootstrap()
 {
     STRAPLOG("unbootstrap...");
+    
+    //try
+    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
+    
+    //jbroot unavailable now
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -397,8 +408,6 @@ int unbootstrap()
     }
 
     SYSLOG("bootstrap uninstalled!");
-    
-    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
     
@@ -441,4 +450,17 @@ bool isSystemBootstrapped()
     if(!bootsession) return false;
     
     return [bootsession isEqualToString:getBootSession()];
+}
+
+bool checkBootstrapVersion()
+{
+    if(!isBootstrapInstalled()) return false;
+    
+    NSDictionary* bootinfo = [NSDictionary dictionaryWithContentsOfFile:jbroot(@"/basebin/.bootinfo.plist")];
+    if(!bootinfo) return false;
+    
+    NSString* bootversion = bootinfo[@"bootversion"];
+    if(!bootversion) return false;
+    
+    return [bootversion isEqualToString:NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]];
 }
