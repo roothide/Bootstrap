@@ -6,6 +6,7 @@
 #include "sources.h"
 #include "bootstrap.h"
 #include "NSUserDefaults+appDefaults.h"
+#include "AppList.h"
 
 extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_path);
 
@@ -234,11 +235,14 @@ int InstallBootstrap(NSString* jbroot_path)
     
     NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, nil, nil) == 0);
     
     NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, nil, nil) == 0);
     
     ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([fm copyItemAtPath:jbroot(@"/.bootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".bootstrapped"] error:nil]);
     
     STRAPLOG("Status: Bootstrap Installed");
     
@@ -359,18 +363,14 @@ int bootstrap()
     return 0;
 }
 
-
-
-@interface LSApplicationWorkspace : NSObject
-+ (id)defaultWorkspace;
-- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
-                                                  internal:(BOOL)arg2
-                                                      user:(BOOL)arg3;
-@end
-
 int unbootstrap()
 {
-    SYSLOG("unbootstrap...");
+    STRAPLOG("unbootstrap...");
+    
+    //try
+    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
+    
+    //jbroot unavailable now
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -382,7 +382,7 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            SYSLOG("remove %@ @ %@", item, dirpath);
+            STRAPLOG("remove %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
@@ -396,7 +396,7 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            SYSLOG("remove %@ @ %@", item, dirpath);
+            STRAPLOG("remove %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
@@ -404,6 +404,17 @@ int unbootstrap()
     SYSLOG("bootstrap uninstalled!");
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
+    
+    AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    if(tsapp) {
+        NSString* log=nil;
+        NSString* err=nil;
+        if(spawnRoot([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
+            STRAPLOG("refresh tsapps failed:%@\nERR:%@", log, err);
+        }
+    } else {
+        STRAPLOG("trollstore not found!");
+    }
     
     killAllForApp("/usr/libexec/backboardd");
     

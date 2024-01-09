@@ -38,6 +38,16 @@ MBProgressHUD *switchHud=nil;
     });
 }
 
++(void)showHudMsg:(NSString*)msg detail:(NSString*)info
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switchHud = [MBProgressHUD showHUDAddedTo:UIApplication.sharedApplication.keyWindow animated:YES];
+        [switchHud showAnimated:YES];
+        switchHud.label.text = msg;
+        switchHud.detailsLabel.text = info;
+    });
+}
+
 +(void)dismissHud {
     dispatch_async(dispatch_get_main_queue(), ^{
         [switchHud hideAnimated:YES];
