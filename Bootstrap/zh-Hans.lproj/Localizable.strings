@@ -1,80 +1,197 @@
 /* No comment provided by engineer. */
-"\nThanks to these guys, we couldn't have completed this project without their help!" = "感谢这些人，没有他们的帮助我们就不可能完成这个项目！";
+"Bootstrapped" = "已安装";
 
 /* No comment provided by engineer. */
-"Applying" = "应用";
-
-/* No comment provided by engineer. */
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweaks for all apps before uninstalling." = "你确定要卸载 Bootstrap 程序吗？\n\n卸载之前，请确保已禁用所有应用程序的插件。";
-
-/* No comment provided by engineer. */
-"Bootstrap" = "引导";
-
-/* No comment provided by engineer. */
-"Bootstrap Uninstalled" = "Bootstrap 已卸载";
-
-/* No comment provided by engineer. */
-"Bootstrapped" = "已引导";
-
-/* No comment provided by engineer. */
-"Bootstrapping" = "引导中";
-
-/* No comment provided by engineer. */
-"Cancel" = "取消";
-
-/* No comment provided by engineer. */
-"Developer" = "开发者";
-
-/* No comment provided by engineer. */
-"Error" = "错误";
-
-/* No comment provided by engineer. */
-"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知原因，Bootstrap 服务未运行，我们唯一能做的就是立即重新启动它。";
+"Bootstrap" = "安装";
 
 /* No comment provided by engineer. */
 "Install" = "安装";
 
 /* No comment provided by engineer. */
-"Name or identifier" = "名称或标识符";
-
-/* No comment provided by engineer. */
-"OK" = "好的";
-
-/* No comment provided by engineer. */
-"OpenSSH package is not installed." = "未安装 OpenSSH 软件包。";
-
-/* No comment provided by engineer. */
-"Restart Server" = "重启服务";
-
-/* No comment provided by engineer. */
-"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
-
-/* No comment provided by engineer. */
-"Server Not Running" = "服务未运行";
+"Unsupported" = "不支持";
 
 /* No comment provided by engineer. */
 "The current iOS version is not supported yet, we may add support in a future version." = "当前 iOS 版本尚不支持，我们可能会在未来版本中添加支持。";
 
 /* No comment provided by engineer. */
-"Tweak Enabler" = "插件注入";
+"ios-version: %@" = "ios版本: %@";
+
+/* No comment provided by engineer. */
+"device-model: %s" = "\n设备型号: %s";
+
+/* No comment provided by engineer. */
+"app-version: %@/%@" = "\n应用版本: %@/%@";
+
+/* No comment provided by engineer. */
+"boot-session: %@" = "\n启动会话: %@";
+
+/* No comment provided by engineer. */
+"bootstrap installed" = "\n引导已安装";
+
+/* No comment provided by engineer. */
+"bootstrap not installed" = "\n引导未安装";
+
+/* No comment provided by engineer. */
+"system bootstrapped" = "\n系统已引导";
+
+/* No comment provided by engineer. */
+"system not bootstrapped" = "\n系统未引导\n";
+
+/* No comment provided by engineer. */
+"\n:::Credits:::\n" = "\n:::感谢:::\n";
+
+/* No comment provided by engineer. */
+"\nThanks to these guys, we couldn't have completed this project without their help!" = "\n感谢以上所有朋友，没有他们的帮助，我们就不可能完成这个项目！";
+
+/* No comment provided by engineer. */
+"Server Not Running" = "服务未运行";
+
+/* No comment provided by engineer. */
+"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知的原因，引导程序没有运行，我们现在唯一能做的就是重新启动它。";
+
+/* No comment provided by engineer. */
+"Restart Server" = "重启引导程序";
+
+/* No comment provided by engineer. */
+"bootstrap server restart successful" = "引导程序重启成功";
+
+/* No comment provided by engineer. */
+"Error" = "错误";
+
+/* No comment provided by engineer. */
+"bootstrap server check successful" = "\n引导程序检查成功";
+
+/* No comment provided by engineer. */
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+
+/* No comment provided by engineer. */
+"Applying" = "正在应用...";
+
+/* No comment provided by engineer. */
+"OpenSSH package is not installed." = "未安装 OpenSSH 插件包";
+
+/* No comment provided by engineer. */
+"Developer" = "开发者";
+
+/* No comment provided by engineer. */
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0" = "你的trollstore版本太低，Bootstrap只支持trollstore>=2.0版本";
+
+/* No comment provided by engineer. */
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.";
+
+/* No comment provided by engineer. */
+"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
+
+/* No comment provided by engineer. */
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "已经安装了旧的测试版，请禁用所有应用程序插件并重新启动设备以卸载它，以便安装新版本的 Bootstrap 程序。";
+
+/* No comment provided by engineer. */
+"Bootstrapping" = "正在引导...";
+
+/* No comment provided by engineer. */
+"openssh launch successful" = "openssh 启用成功";
+
+/* No comment provided by engineer. */
+"openssh launch faild(%d):\n%@\n%@" = "openssh 启用失败(%d):\n%@\n%@";
+
+/* No comment provided by engineer. */
+"respring now..." = "正在注销...";
+
+/* No comment provided by engineer. */
+"Warnning" = "提示";
+
+/* No comment provided by engineer. */
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载 Bootstrap 程序吗？\n\n卸载之前，请确保已禁用所有应用程序的插件。";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
 
 /* No comment provided by engineer. */
 "Uninstall" = "卸载";
 
 /* No comment provided by engineer. */
-"Uninstalling" = "卸载中";
+"Uninstalling" = "正在卸载...";
 
 /* No comment provided by engineer. */
-"Unsupported" = "不支持";
+"Bootstrap Uninstalled" = "引导程序未安装";
 
 /* No comment provided by engineer. */
-"Warnning" = "警告";
+"Bootstrap Uninstalled" = "Bootstrap 已卸载";
 
 /* No comment provided by engineer. */
-"You've installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the latest version." = "已经安装了旧的测试版，请禁用所有应用程序插件并重新启动设备以卸载它，以便安装新版本的 Bootstrap 程序。";
+"teamID in trollstore: %@" = "trollstore中的teamID: %@";
 
 /* No comment provided by engineer. */
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "设备似乎没有启用开发者模式。\n\n请在“设置”->“隐私与安全”中启用开发者模式并重新启动设备。";
+"Kickstart" = "已安装";
 
 /* No comment provided by engineer. */
-"Your TrollStore version is out of date. Bootstrap only supports TrollStore 2." = "你的 Trollstore 版本太旧，Bootstrap 仅支持 Trollstore 2。";
+"Settings" = "设置";
+
+/* No comment provided by engineer. */
+"Respring" = "注销";
+
+/* No comment provided by engineer. */
+"UI made with love by haxi0. ♡" = "UI 制作：haxi0. ♡";
+
+/* No comment provided by engineer. */
+"Credits" = "感谢";
+
+/* No comment provided by engineer. */
+"Options" = "选项";
+
+/* No comment provided by engineer. */
+"OpenSSH" = "启用 SSH";
+
+/* No comment provided by engineer. */
+"Tweaks" = "注入插件";
+
+/* No comment provided by engineer. */
+"AppEnabler" = "选择应用程序";
+
+/* No comment provided by engineer. */
+"Rebuild Apps" = "重建应用程序";
+
+/* No comment provided by engineer. */
+"Tweak Enabler" = "插件注入";
+
+/* No comment provided by engineer. */
+"Name or identifier" = "输入App名字或标识符";
+
+/* No comment provided by engineer. */
+"OK" = "好的";
+
+/* No comment provided by engineer. */
+"Button_Update_Available" = "更新链接";
+
+/* No comment provided by engineer. */
+"Rebuild Icon Cache" = "重建图标缓存";
+
+/* No comment provided by engineer. */
+"Reinstall Sileo" = "重装Sileo商店"; 
+
+/* No comment provided by engineer. */
+"Sileo reinstalled!" = "Sileo商店重装成功";
+
+/* No comment provided by engineer. */
+"Status: Reinstalling Sileo" = "\n状态：正在安装Sileo商店";
+
+/* No comment provided by engineer. */
+"Rebuilding" = "正在重建...";
+
+/* No comment provided by engineer. */
+"Status: Rebuilding Icon Cache" = "\n状态：正在重建图标缓存";
+
+/* No comment provided by engineer. */
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+
+/* No comment provided by engineer. */
+"Reboot" = "重启";
+
+/* No comment provided by engineer. */
+"Sure" = "确定";
+
+/* No comment provided by engineer. */
+"Are you sure to reboot device?" = "你确定重启设备吗？";
+
+/* No comment provided by engineer. */
+"Leadstart" = "引导";

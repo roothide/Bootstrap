@@ -6,6 +6,7 @@
 #include "sources.h"
 #include "bootstrap.h"
 #include "NSUserDefaults+appDefaults.h"
+#include "AppList.h"
 
 extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_path);
 
@@ -41,7 +42,7 @@ void rebuildSignature(NSString *directoryPath)
                 
                 if(ismacho) {
                     
-                    SYSLOG("rebuild %@", enumURL.path);
+                    SYSLOG("重建 %@", enumURL.path);
                     
                     machoCount++;
                     
@@ -59,7 +60,7 @@ void rebuildSignature(NSString *directoryPath)
         }
     }
     
-    SYSLOG("rebuild finished! machoCount=%d, libCount=%d", machoCount, libCount);
+    SYSLOG("重建完成! machoCount=%d, libCount=%d", machoCount, libCount);
 
 }
 
@@ -97,14 +98,6 @@ int buildPackageSources()
         ASSERT([[NSString stringWithFormat:@(ALT_SOURCES), getCFMajorVersion()] writeToFile:jbroot(@"/etc/apt/sources.list.d/sileo.sources") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     }
     
-    if(![fm fileExistsAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra")])
-    {
-        NSDictionary* attr = @{NSFilePosixPermissions:@(0755), NSFileOwnerAccountID:@(501), NSFileGroupOwnerAccountID:@(501)};
-        ASSERT([fm createDirectoryAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra") withIntermediateDirectories:YES attributes:attr error:nil]);
-    }
-    
-    ASSERT([[NSString stringWithFormat:@(ZEBRA_SOURCES), getCFMajorVersion()] writeToFile:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/sources.list") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
-    
     return 0;
 }
 
@@ -125,33 +118,33 @@ int rebuildBasebin()
     return 0;
 }
 
-int startBootstrapd()
+int startBootstrapServer()
 {
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err);
     if(status != 0) {
-        STRAPLOG("bootstrap server load faild(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("引导程序加载失败(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
 
-    STRAPLOG("bootstrap server load successful");
+    STRAPLOG("引导程序加载成功");
     
     sleep(1);
     
      status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], &log, &err);
     if(status != 0) {
-        STRAPLOG("bootstrap server check faild(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("引导程序检查失败(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
-    STRAPLOG("bootstrap server check successful");
+    STRAPLOG("引导程序检查成功");
     
     return 0;
 }
 
 int InstallBootstrap(NSString* jbroot_path)
 {
-    STRAPLOG("install bootstrap...");
+    STRAPLOG("安装引导程序...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -161,7 +154,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:
                                   [NSString stringWithFormat:@"strapfiles/bootstrap-%d.tar.zst", getCFMajorVersion()]];
     if(![fm fileExistsAtPath:bootstrapZstFile]) {
-        STRAPLOG("can not find bootstrap file, maybe this version of the app is not for iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
+        STRAPLOG("无法找到引导文件,可能此版本的应用不支持iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
         return -1;
     }
     
@@ -174,7 +167,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* tarPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"tar"];
     ASSERT(spawnRoot(tarPath, @[@"-xpkf", bootstrapTarFile, @"-C", jbroot_path], nil, nil) == 0);
     
-    STRAPLOG("rebuild boostrap binaries");
+    STRAPLOG("重新构建引导二进制文件");
     rebuildSignature(jbroot_path);
     
     NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", jbrand()];
@@ -204,18 +197,18 @@ int InstallBootstrap(NSString* jbroot_path)
                     withDestinationPath:jbroot_path error:nil]);
     
     
-    STRAPLOG("Status: Building Base Binaries");
+    STRAPLOG("状态: 构建基础二进制文件");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("Status: Starting Bootstrapd");
-    ASSERT(startBootstrapd() == 0);
+    STRAPLOG("状态: 正在启动引导程序");
+    ASSERT(startBootstrapServer() == 0);
     
-    STRAPLOG("Status: Finalizing Bootstrap");
+    STRAPLOG("状态: 完成引导程序初始化");
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
     if(status != 0) {
-        STRAPLOG("faild(%d):%@\nERR:%@", status, log, err);
+        STRAPLOG("失败(%d):%@\nERR:%@", status, log, err);
         ABORT();
     }
 
@@ -228,19 +221,18 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(buildPackageSources() == 0);
     
     
-    STRAPLOG("Status: Installing Packages");
+    STRAPLOG("状态: 正在安装插件包");
     NSString* libkrw0_dummy = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"libkrw0-dummy.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(libkrw0_dummy).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
     NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
-    
-    NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
-    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, nil, nil) == 0);
     
     ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([fm copyItemAtPath:jbroot(@"/.bootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".bootstrapped"] error:nil]);
     
-    STRAPLOG("Status: Bootstrap Installed");
+    STRAPLOG("状态: 引导程序安装完成");
     
     
     return 0;
@@ -248,7 +240,7 @@ int InstallBootstrap(NSString* jbroot_path)
 
 int ReRandomizeBootstrap()
 {
-    //jbroot() disabled
+    //jbroot() unavailable
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -288,15 +280,15 @@ int ReRandomizeBootstrap()
     ASSERT([fm createSymbolicLinkAtPath:[jbroot_secondary stringByAppendingPathComponent:@".jbroot"]
                     withDestinationPath:jbroot_path error:nil]);
     
-    //jbroot() enabled
+    //jbroot() available now
     
-    STRAPLOG("Status: Building Base Binaries");
+    STRAPLOG("状态: 正在构建基础二进制文件");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("Status: Starting Bootstrapd");
-    ASSERT(startBootstrapd() == 0);
+    STRAPLOG("状态: 正在启动引导程序");
+    ASSERT(startBootstrapServer() == 0);
     
-    STRAPLOG("Status: Updating Symlinks");
+    STRAPLOG("状态: 正在更新软链接");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
     return 0;
@@ -306,23 +298,29 @@ int bootstrap()
 {
     ASSERT(getuid()==0);
     
-    STRAPLOG("bootstrap...");
+    STRAPLOG("引导中...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
+    
+    struct stat st;
+    if(lstat("/var/jb", &st)==0) {
+        //remove /var/jb to avoid incorrect library loading via @rpath
+        ASSERT([fm removeItemAtPath:@"/var/jb" error:nil]);
+    }
     
     NSString* jbroot_path = find_jbroot();
     
     if(!jbroot_path) {
-        STRAPLOG("device is not strapped...");
+        STRAPLOG("设备未启动...");
         
         jbroot_path = [NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", jbrand_new()];
         
-        STRAPLOG("bootstrap @ %@", jbroot_path);
+        STRAPLOG("引导 @ %@", jbroot_path);
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
-        STRAPLOG("remove unfinished bootstrap %@", jbroot_path);
+        STRAPLOG("删除未完成的引导程序 %@", jbroot_path);
         
         uint64_t prev_jbrand = jbrand();
         
@@ -330,47 +328,45 @@ int bootstrap()
         
         NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", prev_jbrand];
         if([fm fileExistsAtPath:jbroot_secondary]) {
-            STRAPLOG("remove unfinished bootstrap %@", jbroot_secondary);
+            STRAPLOG("删除未完成的引导程序 %@", jbroot_secondary);
             ASSERT([fm removeItemAtPath:jbroot_secondary error:nil]);
         }
         
-        STRAPLOG("bootstrap @ %@", jbroot_path);
+        STRAPLOG("引导 @ %@", jbroot_path);
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else {
-        STRAPLOG("device is strapped: %@", jbroot_path);
+        STRAPLOG("设备已启动: %@", jbroot_path);
         
-        STRAPLOG("Status: Rerandomize jbroot");
+        STRAPLOG("状态: 重新随机化 jbroot");
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
+
+    ASSERT(disableRootHideBlacklist()==0);
     
     ASSERT(disableRootHideBlacklist()==0);
     
-    STRAPLOG("Status: Rebuilding Apps");
+    STRAPLOG("状态: 重新构建应用程序");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
-    NSDictionary* bootinfo = @{@"bootsession":getBootSession()};
+    NSDictionary* bootinfo = @{@"bootsession":getBootSession(), @"bootversion":NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
     
-    STRAPLOG("Status: Bootstrap Successful");
+    STRAPLOG("状态: 引导成功");
     
     return 0;
 }
 
-
-
-@interface LSApplicationWorkspace : NSObject
-+ (id)defaultWorkspace;
-- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
-                                                  internal:(BOOL)arg2
-                                                      user:(BOOL)arg3;
-@end
-
 int unbootstrap()
 {
-    SYSLOG("unbootstrap...");
+    STRAPLOG("取消引导...");
+    
+    //try
+    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
+    
+    //jbroot unavailable now
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -382,7 +378,7 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            SYSLOG("remove %@ @ %@", item, dirpath);
+            STRAPLOG("删除 %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
@@ -396,14 +392,25 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            SYSLOG("remove %@ @ %@", item, dirpath);
+            STRAPLOG("删除 %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
 
-    SYSLOG("bootstrap uninstalled!");
+    SYSLOG("引导程序已卸载!");
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
+    
+    AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    if(tsapp) {
+        NSString* log=nil;
+        NSString* err=nil;
+        if(spawnRoot([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
+            STRAPLOG("refresh tsapps failed:%@\nERR:%@", log, err);
+        }
+    } else {
+        STRAPLOG("trollstore not found!");
+    }
     
     killAllForApp("/usr/libexec/backboardd");
     
@@ -433,4 +440,17 @@ bool isSystemBootstrapped()
     if(!bootsession) return false;
     
     return [bootsession isEqualToString:getBootSession()];
+}
+
+bool checkBootstrapVersion()
+{
+    if(!isBootstrapInstalled()) return false;
+    
+    NSDictionary* bootinfo = [NSDictionary dictionaryWithContentsOfFile:jbroot(@"/basebin/.bootinfo.plist")];
+    if(!bootinfo) return false;
+    
+    NSString* bootversion = bootinfo[@"bootversion"];
+    if(!bootversion) return false;
+    
+    return [bootversion isEqualToString:NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]];
 }

@@ -1,7 +1,11 @@
 #ifndef bootstrap_h
 #define bootstrap_h
 
-#define BOOTSTRAP_VERSION   (4)
+#define BOOTSTRAP_VERSION   (5)
+
+#import <Foundation/Foundation.h>
+
+#import <Foundation/Foundation.h>
 
 void rebuildSignature(NSString *directoryPath);
 
@@ -13,5 +17,6 @@ bool isBootstrapInstalled();
 
 bool isSystemBootstrapped();
 
+bool checkBootstrapVersion();
 
 #endif /* bootstrap_h */

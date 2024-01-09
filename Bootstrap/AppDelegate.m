@@ -24,6 +24,8 @@ UITextView* logView=nil;
         [logView setText:[logView.text stringByAppendingString:[NSString stringWithFormat:@"%@\n",text]]];
         if(logView.contentSize.height >= logView.bounds.size.height)
             [logView setContentOffset:CGPointMake(0, logView.contentSize.height - logView.bounds.size.height) animated:YES];
+        const char *cString = [text UTF8String];
+        printf("%s", cString);
     });
 }
 
@@ -35,6 +37,16 @@ MBProgressHUD *switchHud=nil;
         switchHud = [MBProgressHUD showHUDAddedTo:UIApplication.sharedApplication.keyWindow animated:YES];
         [switchHud showAnimated:YES];
         switchHud.label.text = msg;
+    });
+}
+
++(void)showHudMsg:(NSString*)msg detail:(NSString*)info
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switchHud = [MBProgressHUD showHUDAddedTo:UIApplication.sharedApplication.keyWindow animated:YES];
+        [switchHud showAnimated:YES];
+        switchHud.label.text = msg;
+        switchHud.detailsLabel.text = info;
     });
 }
 

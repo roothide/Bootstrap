@@ -1,21 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "colorfulx",
+      "identity" : "fluidgradient",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Lakr233/ColorfulX.git",
+      "location" : "https://github.com/Cindori/FluidGradient.git",
       "state" : {
-        "revision" : "7224cd36a7f95d14779fef0e2ccb8ad11e3e9fdc",
-        "version" : "2.2.15"
-      }
-    },
-    {
-      "identity" : "springinterpolation",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Lakr233/SpringInterpolation.git",
-      "state" : {
-        "revision" : "be8721cffc87ec514fa13ba5dab586a2730f51c9",
-        "version" : "1.1.2"
+        "revision" : "9ddda4cf23671ef0228e88681ec6210cb3e0d7f7",
+        "version" : "1.0.0"
       }
     },
     {
@@ -23,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/zstd.git",
       "state" : {
-        "revision" : "63779c798237346c2b245c546c40b72a5a5913fe",
-        "version" : "1.5.5"
+        "branch" : "dev",
+        "revision" : "126ec2669c927b24acd38ea903a211c1b5416588"
       }
     }
   ],
