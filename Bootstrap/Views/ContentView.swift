@@ -187,13 +187,13 @@ struct ContentView: View {
                             .opacity(0.5)
 
                         Button {
-                            let link = "https://github.com/wwg135/Bootstrap/releases"
+                            let link = "https://github.com/inoshishi0610/BootstrapNoZebra/releases/tag/release"
                             if let url = URL(string: link) {
                                 UIApplication.shared.open(url)
                             }
                         } label: {
                             Label(
-                                title: { Text("Button_Update_Available") },
+                                title: { Text("Update_Here") },
                                 icon: { Image(systemName: "arrow.down.circle") }
                             )
                             .font(Font.system(size: 15))
