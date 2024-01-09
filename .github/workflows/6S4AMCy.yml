@@ -2,9 +2,9 @@ name: Build and Package
 
 on:
   push:
-    branches: [ "ux/new-design" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "ux/new-design" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
