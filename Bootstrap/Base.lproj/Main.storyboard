@@ -52,7 +52,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bootstrap(beta 4.1)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mHC-UO-Fsn">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bootstrap(beta 4.2)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mHC-UO-Fsn">
                                 <rect key="frame" x="14" y="34" width="300" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="42"/>

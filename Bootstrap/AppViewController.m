@@ -160,6 +160,10 @@
         
         if([app.bundleURL.path.lastPathComponent isEqualToString:@"Bootstrap.app"])
             continue;
+        
+        if([app.bundleIdentifier isEqualToString:NSBundle.mainBundle.bundleIdentifier]
+           || [app.bundleIdentifier isEqualToString:@"com.roothide.Bootstrap"])
+            continue;
             
         [applications addObject:app];
     }
