@@ -13,5 +13,6 @@ bool isBootstrapInstalled();
 
 bool isSystemBootstrapped();
 
+bool checkBootstrapVersion();
 
 #endif /* bootstrap_h */

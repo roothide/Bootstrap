@@ -2,10 +2,13 @@
 #define credits_h
 // dictionary will be sorted alphabetically
 NSDictionary* CREDITS = @{
+@"Nick Chan" : @"https://github.com/asdfugil",
 @"opa334" : @"http://github.com/opa334",
 @"hayden" : @"https://procursus.social/@hayden",
 @"CKatri" : @"https://procursus.social/@cameron",
 @"Alfie" : @"https://alfiecg.uk",
+@"Mineek" : @"https://github.com/mineek",
+@"hrtowii" : @"https://github.com/hrtowii",
 @"BomberFish" : @"https://twitter.com/bomberfish77",
 @"Évelyne" : @"http://github.com/evelyneee",
 @"sourcelocation" : @"http://github.com/sourcelocation",
@@ -28,7 +31,6 @@ NSDictionary* CREDITS = @{
 @"Nebula" : @"https://itsnebula.net",
 @"DuyKhanhTran" : @"https://twitter.com/TranKha50277352",
 @"Nathan" : @"https://github.com/verygenericname",
-@"Nick Chan" : @"https://nickchan.lol",
 @"Muirey03" : @"https://twitter.com/Muirey03",
 @"absidue" : @"https://github.com/absidue",
 @"MasterMike" : @"https://ios.cfw.guide",
@@ -55,6 +57,7 @@ NSDictionary* CREDITS = @{
 @"akusio" : @"https://twitter.com/akusio_rr",
 @"xsf1re" : @"https://twitter.com/xsf1re",
 @"PoomSmart" : @"https://twitter.com/poomsmart",
+@"katana" : @"https://twitter.com/nsbedtime",
 @"Elias Sfeir" : @"https://twitter.com/eliassfeir1",
 @"SquidGesture" : @"https://twitter.com/lclrc",
 @"yandevelop" : @"https://twitter.com/yandevelop",
