@@ -67,8 +67,13 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     if(isSystemBootstrapped())
     {
-        self.bootstraBtn.enabled = NO;
-        [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
+        if(checkBootstrapVersion()) {
+            self.bootstraBtn.enabled = NO;
+            [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
+        } else {
+            self.bootstraBtn.enabled = YES;
+            [self.bootstraBtn setTitle:Localized(@"Update") forState:UIControlStateNormal];
+        }
         
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
@@ -134,7 +139,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     uname(&systemInfo);
     [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@",NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
     [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
     
@@ -162,20 +167,33 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     if(isSystemBootstrapped())
     {
-        [self checkServer];
+        if([self checkServer]) {
+            [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkServer)
                                               name:UIApplicationWillEnterForegroundNotification object:nil];
     }
+    
+    if(isBootstrapInstalled() || isSystemBootstrapped()) {
+        if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
+           || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
+        {
+            [AppDelegate showMesage:Localized(@"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.") title:Localized(@"Warnning")];
+        }
+    }
 }
 
--(void)checkServer
+-(BOOL)checkServer
 {
     static bool alerted = false;
-    if(alerted) return;
+    if(alerted) return NO;
+    
+    BOOL ret=NO;
     
     if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
     {
+        ret = NO;
         alerted = true;
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
@@ -196,9 +214,11 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         
         [AppDelegate showAlert:alert];
     } else {
-        [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
         [self updateOpensshStatus];
+        ret = YES;
     }
+    
+    return ret;
 }
 
 -(void)updateOpensshStatus {
@@ -373,6 +393,22 @@ int rebuildIconCache()
 }
 
 - (IBAction)bootstrap:(id)sender {
+    
+    if(isSystemBootstrapped())
+    {
+        ASSERT(checkBootstrapVersion()==false);
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Update") message:Localized(@"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.") preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+        }]];
+        
+        [AppDelegate showAlert:alert];
+        return;
+    }
+    
     if(![self checkTSVersion]) {
         [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
         return;
@@ -384,7 +420,7 @@ int rebuildIconCache()
     }
     
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
-    generator.impactOccurred;
+    [generator impactOccurred];
 
     if(find_jbroot()) //make sure jbroot() function available
     {
@@ -437,6 +473,7 @@ int rebuildIconCache()
                 [AppDelegate addLogText:[NSString stringWithFormat:@"openssh launch faild(%d):\n%@\n%@", status, log, err]];
         }
         
+        [generator impactOccurred];
         [AppDelegate addLogText:@"respring now..."]; sleep(1);
         
          status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
