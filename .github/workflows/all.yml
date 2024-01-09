@@ -26,7 +26,8 @@ jobs:
           git fetch upstream
           git fetch --all --prune
           git pull --rebase --strategy-option=theirs upstream main
-          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Cache Homebrew
         uses: actions/cache@v3
