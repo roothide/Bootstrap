@@ -6,6 +6,8 @@
 	<true/>
 	<key>com.apple.private.security.no-sandbox</key>
 	<true/>
+    
+    <!---app can't be launched if developer mode not enabled
 	<key>com.apple.security.get-task-allow</key>
 	<true/>
 	<key>get-task-allow</key>
@@ -13,7 +15,8 @@
 	<key>task_for_pid-allow</key>
 	<true/>
 	<key>run-unsigned-code</key>
-	<true/>
+	<true/>-->
+    
 	<key>proc_info-allow</key>
 	<true/>
     
@@ -46,7 +49,8 @@
     <key>com.apple.backboardd.launchapplications</key>
     <true/>
 
-    
+    <key>com.apple.lsapplicationworkspace.rebuildappdatabases</key>
+    <true/>
     
 </dict>
 </plist>
