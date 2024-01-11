@@ -60,14 +60,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     if(!isBootstrapInstalled()) dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
-        [AppDelegate addLogText:NSLocalizedString(@"\n:::Credits:::\n", @"")];
+        [AppDelegate addLogText:NSLocalizedString(@"\n\n", @"")];
         usleep(1000*500);
         for(NSString* name in CREDITS) {
             usleep(1000*50);
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:NSLocalizedString(@"\nThanks to these guys, we couldn't have completed this project without their help!", nil)];
+        [AppDelegate addLogText:NSLocalizedString(@"\n", nil)];
 
     });
     
