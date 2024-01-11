@@ -40,10 +40,4 @@ void killAllForApp(const char* bundlePath);
                                                       user:(BOOL)arg3;
 @end
 
-@interface LSPlugInKitProxy : NSObject
-+(id)pluginKitProxyForIdentifier:(id)arg1 ;
-- (NSString *)bundleIdentifier;
-@property (nonatomic,readonly) NSURL *dataContainerURL;
-@end
-
 #endif /* utils_h */
