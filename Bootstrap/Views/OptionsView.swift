@@ -108,7 +108,7 @@ struct OptionsView: View {
                                     rebuildIconCacheFr()
                                 } label: {
                                     Label(
-                                        title: { Text("Reinstall Sileo & Zebra") },
+                                        title: { Text("Reinstall Sileo") },
                                         icon: { Image(systemName: "arrow.down.app") }
                                     )
                                 }
