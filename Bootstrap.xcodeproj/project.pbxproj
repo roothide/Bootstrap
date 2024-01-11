@@ -67,7 +67,6 @@
 		84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkrw0-dummy.deb"; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
-		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
 		84438D4B2B2609B200A1E407 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		84438D4D2B2609C600A1E407 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		84438D512B260FEB00A1E407 /* zstd_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zstd_wrapper.m; sourceTree = "<group>"; };
