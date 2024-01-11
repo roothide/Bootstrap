@@ -42,7 +42,7 @@ void rebuildSignature(NSString *directoryPath)
                 
                 if(ismacho) {
                     
-                    SYSLOG("重建 %@", enumURL.path);
+                    SYSLOG("rebuild %@", enumURL.path);
                     
                     machoCount++;
                     
@@ -60,7 +60,7 @@ void rebuildSignature(NSString *directoryPath)
         }
     }
     
-    SYSLOG("重建完成! machoCount=%d, libCount=%d", machoCount, libCount);
+    SYSLOG("rebuild finished! machoCount=%d, libCount=%d", machoCount, libCount);
 
 }
 
@@ -124,27 +124,27 @@ int startBootstrapServer()
     NSString* err=nil;
     int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err);
     if(status != 0) {
-        STRAPLOG("引导程序加载失败(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("bootstrap server load faild(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
 
-    STRAPLOG("引导程序加载成功");
+    STRAPLOG("bootstrap server load successful");
     
     sleep(1);
     
      status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], &log, &err);
     if(status != 0) {
-        STRAPLOG("引导程序检查失败(%d):\n%@\nERR:%@", status, log, err);
+        STRAPLOG("bootstrap server check faild(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
     }
-    STRAPLOG("引导程序检查成功");
+    STRAPLOG("bootstrap server check successful");
     
     return 0;
 }
 
 int InstallBootstrap(NSString* jbroot_path)
 {
-    STRAPLOG("安装引导程序...");
+    STRAPLOG("install bootstrap...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -154,7 +154,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:
                                   [NSString stringWithFormat:@"strapfiles/bootstrap-%d.tar.zst", getCFMajorVersion()]];
     if(![fm fileExistsAtPath:bootstrapZstFile]) {
-        STRAPLOG("无法找到引导文件,可能此版本的应用不支持iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
+        STRAPLOG("can not find bootstrap file, maybe this version of the app is not for iOS%d", NSProcessInfo.processInfo.operatingSystemVersion.majorVersion);
         return -1;
     }
     
@@ -167,7 +167,7 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* tarPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"tar"];
     ASSERT(spawnRoot(tarPath, @[@"-xpkf", bootstrapTarFile, @"-C", jbroot_path], nil, nil) == 0);
     
-    STRAPLOG("重新构建引导二进制文件");
+    STRAPLOG("rebuild boostrap binaries");
     rebuildSignature(jbroot_path);
     
     NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", jbrand()];
@@ -197,18 +197,18 @@ int InstallBootstrap(NSString* jbroot_path)
                     withDestinationPath:jbroot_path error:nil]);
     
     
-    STRAPLOG("状态: 构建基础二进制文件");
+    STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("状态: 正在启动引导程序");
+    STRAPLOG("Status: Starting Bootstrapd");
     ASSERT(startBootstrapServer() == 0);
     
-    STRAPLOG("状态: 完成引导程序初始化");
+    STRAPLOG("Status: Finalizing Bootstrap");
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
     if(status != 0) {
-        STRAPLOG("失败(%d):%@\nERR:%@", status, log, err);
+        STRAPLOG("faild(%d):%@\nERR:%@", status, log, err);
         ABORT();
     }
 
@@ -221,7 +221,7 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(buildPackageSources() == 0);
     
     
-    STRAPLOG("状态: 正在安装插件包");
+    STRAPLOG("Status: Installing Packages");
     NSString* libkrw0_dummy = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"libkrw0-dummy.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(libkrw0_dummy).fileSystemRepresentation, NULL}, nil, nil) == 0);
     
@@ -232,7 +232,7 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     ASSERT([fm copyItemAtPath:jbroot(@"/.bootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".bootstrapped"] error:nil]);
     
-    STRAPLOG("状态: 引导程序安装完成");
+    STRAPLOG("Status: Bootstrap Installed");
     
     
     return 0;
@@ -282,13 +282,13 @@ int ReRandomizeBootstrap()
     
     //jbroot() available now
     
-    STRAPLOG("状态: 正在构建基础二进制文件");
+    STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG("状态: 正在启动引导程序");
+    STRAPLOG("Status: Starting Bootstrapd");
     ASSERT(startBootstrapServer() == 0);
     
-    STRAPLOG("状态: 正在更新软链接");
+    STRAPLOG("Status: Updating Symlinks");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
     return 0;
@@ -311,16 +311,16 @@ int bootstrap()
     NSString* jbroot_path = find_jbroot();
     
     if(!jbroot_path) {
-        STRAPLOG("设备未启动...");
+        STRAPLOG("device is not strapped...");
         
         jbroot_path = [NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", jbrand_new()];
         
-        STRAPLOG("引导 @ %@", jbroot_path);
+        STRAPLOG("bootstrap @ %@", jbroot_path);
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
-        STRAPLOG("删除未完成的引导程序 %@", jbroot_path);
+        STRAPLOG("remove unfinished bootstrap %@", jbroot_path);
         
         uint64_t prev_jbrand = jbrand();
         
@@ -328,18 +328,18 @@ int bootstrap()
         
         NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", prev_jbrand];
         if([fm fileExistsAtPath:jbroot_secondary]) {
-            STRAPLOG("删除未完成的引导程序 %@", jbroot_secondary);
+            STRAPLOG("remove unfinished bootstrap %@", jbroot_secondary);
             ASSERT([fm removeItemAtPath:jbroot_secondary error:nil]);
         }
         
-        STRAPLOG("引导 @ %@", jbroot_path);
+        STRAPLOG("bootstrap @ %@", jbroot_path);
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
     } else {
-        STRAPLOG("设备已启动: %@", jbroot_path);
+        STRAPLOG("device is strapped: %@", jbroot_path);
         
-        STRAPLOG("状态: 重新随机化 jbroot");
+        STRAPLOG("Status: Rerandomize jbroot");
         
         ASSERT(ReRandomizeBootstrap() == 0);
     }
@@ -348,20 +348,20 @@ int bootstrap()
     
     ASSERT(disableRootHideBlacklist()==0);
     
-    STRAPLOG("状态: 重新构建应用程序");
+    STRAPLOG("Status: Rebuilding Apps");
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession(), @"bootversion":NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
     
-    STRAPLOG("状态: 引导成功");
+    STRAPLOG("Status: Bootstrap Successful");
     
     return 0;
 }
 
 int unbootstrap()
 {
-    STRAPLOG("取消引导...");
+    STRAPLOG("unbootstrap...");
     
     //try
     spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
@@ -378,7 +378,7 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            STRAPLOG("删除 %@ @ %@", item, dirpath);
+            STRAPLOG("remove %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
@@ -392,12 +392,12 @@ int unbootstrap()
             continue;
         
         if(is_jbroot_name(item.UTF8String)) {
-            STRAPLOG("删除 %@ @ %@", item, dirpath);
+            STRAPLOG("remove %@ @ %@", item, dirpath);
             ASSERT([fm removeItemAtPath:[dirpath stringByAppendingPathComponent:item] error:nil]);
         }
     }
 
-    SYSLOG("引导程序已卸载!");
+    SYSLOG("bootstrap uninstalled!");
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
     
