@@ -298,7 +298,7 @@ int bootstrap()
 {
     ASSERT(getuid()==0);
     
-    STRAPLOG("引导中...");
+    STRAPLOG("bootstrap...");
     
     NSFileManager* fm = NSFileManager.defaultManager;
     
