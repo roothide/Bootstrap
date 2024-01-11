@@ -51,7 +51,7 @@ struct CreditsView: View {
         "Misty": "https://twitter.com/miscmisty",
         "Muirey03": "https://twitter.com/Muirey03",
         "Nathan": "https://github.com/verygenericname",
-  inoshishi0610",
+        "inoshishi0610": "http://github.com/inoshishi0610",
         "SeanIsTethered": "http://github.com/jailbreakmerebooted",
         "TheosTeam": "https://theos.dev",
         "tigisoftware": "https://twitter.com/tigisoftware",
