@@ -193,7 +193,7 @@ struct ContentView: View {
                             }
                         } label: {
                             Label(
-                                title: { Text("Button_Update_Available") },
+                                title: { Text("Update_Here") },
                                 icon: { Image(systemName: "arrow.down.circle") }
                             )
                             .font(Font.system(size: 15))
