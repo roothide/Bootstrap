@@ -40,7 +40,7 @@ struct ContentView: View {
                             Text(" Bootstrap ")
                                 .bold()
                                 .font(Font.system(size: 35))
-                            Text("AAA")
+                            Text("0.4.2 Beta")
                                 .font(Font.system(size: 20))
                                 .opacity(0.5)
                         })
