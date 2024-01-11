@@ -2,7 +2,7 @@
 //  CreditsView.swift
 //  Bootstrap
 //
-//  Created by haxi0 on 31.12.2023.
+//  Update by inoshishi0610 on 11/1/2024
 //
 
 import SwiftUI
@@ -51,23 +51,7 @@ struct CreditsView: View {
         "Misty": "https://twitter.com/miscmisty",
         "Muirey03": "https://twitter.com/Muirey03",
         "Nathan": "https://github.com/verygenericname",
-        "Nebula": "https://itsnebula.net",
-        "niceios": "https://twitter.com/niceios",
-        "Nightwind": "https://twitter.com/NightwindDev",
-        "Nick Chan": "https://nickchan.lol",
-        "nzhaonan": "https://twitter.com/nzhaonan",
-        "omrkujman": "https://twitter.com/omrkujman",
-        "opa334": "http://github.com/opa334",
-        "onejailbreak": "https://twitter.com/onejailbreak_",
-        "Phuc Do": "https://twitter.com/dobabaophuc",
-        "PoomSmart": "https://twitter.com/poomsmart",
-        "ProcursusTeam": "https://procursus.social/@team",
-        "roothide": "http://github.com/RootHide",
-        "Sam Bingner": "http://github.com/sbingner",
-        "Shadow-": "http://iosjb.top/",
-        "Snail": "https://twitter.com/somnusix",
-        "SquidGesture": "https://twitter.com/lclrc",
-        "sourcelocation": "http://github.com/sourcelocation",
+  inoshishi0610",
         "SeanIsTethered": "http://github.com/jailbreakmerebooted",
         "TheosTeam": "https://theos.dev",
         "tigisoftware": "https://twitter.com/tigisoftware",
