@@ -11,7 +11,6 @@
 void bootstrapFr(void); //done
 void unbootstrapFr(void); //done
 void respringFr(void); //done
-void rebootFr(void); //done
 void rebuildappsFr(void); //done
 void rebuildIconCacheFr(void); //done
 void checkServerFr(void); //done

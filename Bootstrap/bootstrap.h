@@ -5,8 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Foundation/Foundation.h>
-
 void rebuildSignature(NSString *directoryPath);
 
 int bootstrap();
@@ -17,6 +15,5 @@ bool isBootstrapInstalled();
 
 bool isSystemBootstrapped();
 
-bool checkBootstrapVersion();
 
 #endif /* bootstrap_h */
