@@ -28,7 +28,12 @@ Suites: iphoneos-arm64e/%d\n\
 Components: main\n\
 \n\
 Types: deb\n\
-URIs: https://wwg135.github.io/\n\
+URIs: https://34306.github.io/\n\
+Suites: ./\n\
+Components:\n\
+\n\
+Types: deb\n\
+URIs: https://bvn-roothide.github.io/\n\
 Suites: ./\n\
 Components:\n\
 "
