@@ -1,9 +1,3 @@
-//
-//  ContentView.swift
-//  BootstrapUI
-//
-//  Created by haxi0 on 21.12.2023.
-//
 
 import SwiftUI
 import FluidGradient
@@ -182,7 +176,7 @@ struct ContentView: View {
                                 .opacity(0.5)
                         }
                     
-                        Text("♡ Update for inoshishi0610 ♡")
+                        Text("♡ Update by inoshishi0610 ♡")
                             .font(Font.system(size: 13))
                             .opacity(0.5)
 
