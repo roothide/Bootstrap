@@ -45,30 +45,30 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [vc didMoveToParentViewController:self];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"ios-version: %@",UIDevice.currentDevice.systemVersion]];
+    [AppDelegate addLogText:[NSString stringWithFormat:NSLocalizedString(@"ios-version: %@", @""),UIDevice.currentDevice.systemVersion]];
     
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:NSLocalizedString(@"device-model: %s", @""), systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:NSLocalizedString(@"app-version: %@/%@", @""), NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:NSLocalizedString(@"boot-session: %@", @""), getBootSession()]];
     
-    [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap installed":@"bootstrap not installed"];
-    [AppDelegate addLogText: isSystemBootstrapped()? @"system bootstrapped":@"system not bootstrapped"];
+    [AppDelegate addLogText: isBootstrapInstalled()? NSLocalizedString(@"bootstrap installed", @"") : NSLocalizedString(@"bootstrap not installed", @"")];
+    [AppDelegate addLogText: isSystemBootstrapped()? NSLocalizedString(@"system bootstrapped", @"") : NSLocalizedString(@"system not bootstrapped", @"")];
     
     if(!isBootstrapInstalled()) dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
-        [AppDelegate addLogText:@"\n:::Credits:::\n"];
+        [AppDelegate addLogText:NSLocalizedString(@"\n:::Credits:::\n", @"")];
         usleep(1000*500);
         for(NSString* name in CREDITS) {
             usleep(1000*50);
             [AppDelegate addLogText:[NSString stringWithFormat:@"%@ - %@\n",name,CREDITS[name]]];
         }
         sleep(1);
-        [AppDelegate addLogText:Localized(@"\nthanks to these guys, we couldn't have completed this project without their help!")];
-        
+        [AppDelegate addLogText:NSLocalizedString(@"\nThanks to these guys, we couldn't have completed this project without their help!", nil)];
+
     });
     
     SYSLOG("locale=%@", NSLocale.currentLocale.countryCode);

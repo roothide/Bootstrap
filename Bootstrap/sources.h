@@ -26,6 +26,11 @@ Types: deb\n\
 URIs: https://roothide.github.io/procursus\n\
 Suites: iphoneos-arm64e/%d\n\
 Components: main\n\
+\n\
+Types: deb\n\
+URIs: https://wwg135.github.io/\n\
+Suites: ./\n\
+Components:\n\
 "
 
 #define ALT_SOURCES "\
@@ -47,6 +52,7 @@ deb https://repo.chariz.com/ ./\n\
 deb https://havoc.app/ ./\n\
 deb https://roothide.github.io/ ./\n\
 deb https://roothide.github.io/procursus iphoneos-arm64e/%d main\n\
+deb https://wwg135.github.io/ ./\n\
 \n\
 "
 

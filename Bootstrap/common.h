@@ -5,6 +5,4 @@
 #include "utils.h"
 #include "seh.h"
 
-#define Localized(x) x
-
 #endif /* common_h */
