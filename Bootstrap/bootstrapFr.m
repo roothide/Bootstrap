@@ -164,7 +164,7 @@ void rebootFr(void) {
 }
 
 void rebuildappsFr(void) {
-    [AppDelegate addLogText:@"状态：正在重建应用程序"];
+    [AppDelegate addLogText:@"Rebuilding Icon Cache"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:NSLocalizedString(@"Applying", nil)];
