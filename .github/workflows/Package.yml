@@ -50,7 +50,6 @@ jobs:
           else
             echo "No version found in commit message."
             exit 1
-          fi
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
