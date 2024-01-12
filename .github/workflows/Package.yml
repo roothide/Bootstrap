@@ -39,7 +39,7 @@ jobs:
       - name: Setup Theos environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Extract version from commit message
+      - name: set version
         id: get_version
         run: |
           LATEST_COMMIT_MSG=$(git log -1 --pretty=%B)
