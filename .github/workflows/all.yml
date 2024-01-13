@@ -26,33 +26,9 @@ jobs:
           git fetch upstream
           git fetch --all --prune
           git pull --rebase --strategy-option=theirs upstream main
-          
-      - name: Cache Homebrew
-        uses: actions/cache@v3
-        with:
-          path: /usr/local/Homebrew
-          key: ${{ runner.os }}-homebrew-${{ hashFiles('**/Brewfile.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-homebrew-
-
-      - name: Install Homebrew dependencies
-        run: |
-         brew bundle --no-lock
-
-      - name: Generate Brewfile.lock.json
-        run: |
-         brew bundle dump --describe --force
 
       - name: Install Homebrew
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
-
-      - name: Cache Theos
-        uses: actions/cache@v3
-        with:
-          path: ~/theos
-          key: ${{ runner.os }}-theos-${{ hashFiles('**/theos.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-theos-
 
       - name: Install Theos
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos')"
