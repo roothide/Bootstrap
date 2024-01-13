@@ -35,6 +35,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-homebrew-
 
+      - name: Install Homebrew dependencies
+        run: brew bundle
+
+      - name: Generate Brewfile.lock.json
+        run: brew bundle dump --describe --force
+
       - name: Install Homebrew
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
 
