@@ -32,4 +32,18 @@ BOOL isDefaultInstallationPath(NSString* _path);
 void killAllForApp(const char* bundlePath);
 
 
+@interface LSApplicationWorkspace : NSObject
++ (id)defaultWorkspace;
+- (BOOL)openApplicationWithBundleID:(id)arg1;
+- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
+                                                  internal:(BOOL)arg2
+                                                      user:(BOOL)arg3;
+@end
+
+@interface LSPlugInKitProxy : NSObject
++(id)pluginKitProxyForIdentifier:(id)arg1 ;
+- (NSString *)bundleIdentifier;
+@property (nonatomic,readonly) NSURL *dataContainerURL;
+@end
+
 #endif /* utils_h */

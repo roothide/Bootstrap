@@ -5,6 +5,7 @@
 #include "AppViewController.h"
 #include "bootstrap.h"
 #include "credits.h"
+#include "AppList.h"
 #import <sys/sysctl.h>
 #include <sys/utsname.h>
 
@@ -25,6 +26,9 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 @property (weak, nonatomic) IBOutlet UIButton *respringBtn;
 @property (weak, nonatomic) IBOutlet UIButton *uninstallBtn;
 @property (weak, nonatomic) IBOutlet UIButton *rebuildappsBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rebuildIconCacheBtn;
+@property (weak, nonatomic) IBOutlet UIButton *reinstallPackageManagerBtn;
+@property (weak, nonatomic) IBOutlet UILabel *opensshLabel;
 
 @end
 
@@ -63,15 +67,32 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     if(isSystemBootstrapped())
     {
-        self.bootstraBtn.enabled = NO;
-        [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
+        if(checkBootstrapVersion()) {
+            self.bootstraBtn.enabled = NO;
+            [self.bootstraBtn setTitle:Localized(@"Bootstrapped") forState:UIControlStateDisabled];
+        } else {
+            self.bootstraBtn.enabled = YES;
+            [self.bootstraBtn setTitle:Localized(@"Update") forState:UIControlStateNormal];
+        }
         
         self.respringBtn.enabled = YES;
         self.appEnablerBtn.enabled = YES;
         self.rebuildappsBtn.enabled = YES;
+        self.rebuildIconCacheBtn.enabled = YES;
+        self.reinstallPackageManagerBtn.enabled = YES;
         self.uninstallBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
         
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
+            [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/basebin/.rebuildiconcache") error:nil];
+            
+            [AppDelegate showHudMsg:Localized(@"Rebuilding")];
+        }
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+            self.opensshState.hidden = YES;
+            self.opensshLabel.hidden = YES;
+        }
     }
     else if(isBootstrapInstalled())
     {
@@ -82,6 +103,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.rebuildIconCacheBtn.enabled = NO;
+        self.reinstallPackageManagerBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
     }
     else if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15)
@@ -92,6 +115,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.rebuildIconCacheBtn.enabled = NO;
+        self.reinstallPackageManagerBtn.enabled = NO;
         self.uninstallBtn.hidden = YES;
     } else {
         self.bootstraBtn.enabled = NO;
@@ -100,6 +125,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.respringBtn.enabled = NO;
         self.appEnablerBtn.enabled = NO;
         self.rebuildappsBtn.enabled = NO;
+        self.rebuildIconCacheBtn.enabled = NO;
+        self.reinstallPackageManagerBtn.enabled = NO;
         self.uninstallBtn.hidden = YES;
         
         [AppDelegate showMesage:Localized(@"the current ios version is not supported yet, we may add support in a future version.") title:Localized(@"Unsupported")];
@@ -112,14 +139,14 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     uname(&systemInfo);
     [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
     
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@/%@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"],NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@",NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
     
     [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
     
     [AppDelegate addLogText: isBootstrapInstalled()? @"bootstrap installed":@"bootstrap not installed"];
     [AppDelegate addLogText: isSystemBootstrapped()? @"system bootstrapped":@"system not bootstrapped"];
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    if(!isBootstrapInstalled()) dispatch_async(dispatch_get_global_queue(0, 0), ^{
         usleep(1000*500);
         [AppDelegate addLogText:@"\n:::Credits:::\n"];
         usleep(1000*500);
@@ -140,31 +167,61 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     if(isSystemBootstrapped())
     {
-        if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
-        {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                
-                NSString* log=nil;
-                NSString* err=nil;
-                if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
-                    [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
-                    [self updateOpensshStatus];
-                } else {
-                    [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
-                }
-                
-            }]];
-            
-            [AppDelegate showAlert:alert];
-        } else {
+        if([self checkServer]) {
             [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
-            [self updateOpensshStatus];
+        }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkServer)
+                                              name:UIApplicationWillEnterForegroundNotification object:nil];
+    }
+    
+    if(isBootstrapInstalled() || isSystemBootstrapped()) {
+        if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
+           || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
+        {
+            [AppDelegate showMesage:Localized(@"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.") title:Localized(@"Warnning")];
         }
     }
 }
 
--(void) updateOpensshStatus {
+-(BOOL)checkServer
+{
+    static bool alerted = false;
+    if(alerted) return NO;
+    
+    BOOL ret=NO;
+    
+    if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
+    {
+        ret = NO;
+        alerted = true;
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+            alerted = false;
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
+                [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
+                [self updateOpensshStatus];
+            } else {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nERR:%@"] title:Localized(@"Error")];
+            }
+            
+        }]];
+        
+        [AppDelegate showAlert:alert];
+    } else {
+        [self updateOpensshStatus];
+        ret = YES;
+    }
+    
+    return ret;
+}
+
+-(void)updateOpensshStatus {
     dispatch_async(dispatch_get_main_queue(), ^{
         if(isSystemBootstrapped()) {
             self.opensshState.on = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"check"], nil, nil)==0;
@@ -183,7 +240,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 }
 
 - (IBAction)rebuildapps:(id)sender {
-    STRAPLOG("Status: Rebuilding Apps");
+    [AppDelegate addLogText:@"Status: Rebuilding Apps"];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
@@ -196,6 +253,100 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
+        [AppDelegate dismissHud];
+    });
+}
+
+- (IBAction)reinstallPackageManager:(id)sender {
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Applying")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        
+        BOOL success=YES;
+        
+        [AppDelegate addLogText:@"Status: Reinstalling Sileo"];
+        NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
+        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        [AppDelegate addLogText:@"Status: Reinstalling Zebra"];
+        NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
+        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
+            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
+            success = NO;
+        }
+        
+        if(success) {
+            [AppDelegate showMesage:@"Sileo and Zebra reinstalled!" title:@""];
+        }
+        [AppDelegate dismissHud];
+    });
+}
+
+int rebuildIconCache()
+{
+    AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    if(!tsapp) {
+        STRAPLOG("trollstore not found!");
+        return -1;
+    }
+        
+    STRAPLOG("rebuild icon cache...");
+    ASSERT([LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES]);
+    
+    NSString* log=nil;
+    NSString* err=nil;
+    
+    if(spawnRoot([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
+        STRAPLOG("refresh tsapps failed:%@\nERR:%@", log, err);
+        return -1;
+    }
+    
+    [[NSString new] writeToFile:jbroot(@"/basebin/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    [LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
+    
+    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, &log, &err);
+    if(status==0) {
+        killAllForApp("/usr/libexec/backboardd");
+    } else {
+        STRAPLOG("rebuildapps failed:%@\nERR:\n%@",log,err);
+    }
+    
+    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
+        [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/basebin/.rebuildiconcache") error:nil];
+    }
+    
+    return status;
+}
+
+- (IBAction)rebuildIconCache:(id)sender {
+    [AppDelegate addLogText:@"Status: Rebuilding Icon Cache"];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen.")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
+        if(status != 0) {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
+        
         [AppDelegate dismissHud];
     });
 }
@@ -242,6 +393,22 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 }
 
 - (IBAction)bootstrap:(id)sender {
+    
+    if(isSystemBootstrapped())
+    {
+        ASSERT(checkBootstrapVersion()==false);
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Update") message:Localized(@"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.") preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+        }]];
+        
+        [AppDelegate showAlert:alert];
+        return;
+    }
+    
     if(![self checkTSVersion]) {
         [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
         return;
@@ -253,7 +420,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     }
     
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
-    generator.impactOccurred;
+    [generator impactOccurred];
 
     if(find_jbroot()) //make sure jbroot() function available
     {
@@ -295,7 +462,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         NSString* log=nil;
         NSString* err=nil;
             
-        if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
+        if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")])
+        {
             NSString* log=nil;
             NSString* err=nil;
              status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
@@ -305,6 +473,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
                 [AppDelegate addLogText:[NSString stringWithFormat:@"openssh launch faild(%d):\n%@\n%@", status, log, err]];
         }
         
+        [generator impactOccurred];
         [AppDelegate addLogText:@"respring now..."]; sleep(1);
         
          status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
@@ -328,11 +497,15 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
                 
             [AppDelegate dismissHud];
             
-            if(status == 0) {
-                [AppDelegate showMesage:@"" title:@"bootstrap uninstalled"];
-            } else {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-            }
+            NSString* msg = (status==0) ? @"bootstrap uninstalled" : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                exit(0);
+            }]];
+            
+            [AppDelegate showAlert:alert];
+            
         });
         
     }]];
