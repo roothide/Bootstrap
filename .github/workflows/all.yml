@@ -36,10 +36,12 @@ jobs:
             ${{ runner.os }}-homebrew-
 
       - name: Install Homebrew dependencies
-        run: brew bundle
+        run: |
+         brew bundle --no-lock
 
       - name: Generate Brewfile.lock.json
-        run: brew bundle dump --describe --force
+        run: |
+         brew bundle dump --describe --force
 
       - name: Install Homebrew
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
