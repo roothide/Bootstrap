@@ -45,7 +45,7 @@ int main(int argc, char * argv[]) {
         }
         @catch (NSException *exception)
         {
-            SYSLOG("***exception: %@", exception);
+            STRAPLOG("***exception: %@", exception);
             exit(-1);
         }
     }
