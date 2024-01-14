@@ -18,15 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-  build:
-    name: Build RootHide Bootstrap
-    runs-on: macos-latest
-    needs: check-for-changes
-    if: ${{ needs.check-for-changes.outputs.changes_detected == 'true' }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Set up Git
         id: check_changes
         run: |
@@ -44,6 +35,15 @@ jobs:
             echo "No changes since last build"
             echo "changes_detected=false" >> $GITHUB_ENV
 
+  build:
+    name: Build RootHide Bootstrap
+    runs-on: macos-latest
+    needs: check-for-changes
+    if: ${{ needs.check-for-changes.outputs.changes_detected == 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+            
       - name: Install Homebrew
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
 
