@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#include <sys/stat.h>
 #include "AppList.h"
 #include "common.h"
 
@@ -135,6 +136,7 @@ int backupApp(NSString* bundlePath)
     return 0;
 }
 
+//if the app package is changed/upgraded, the directory structure may change and some paths may become invalid.
 int restoreApp(NSString* bundlePath)
 {
     SYSLOG("restoreApp=%@", bundlePath);
@@ -200,7 +202,12 @@ int enableForApp(NSString* bundlePath)
         
         ASSERT([fm createSymbolicLinkAtPath:[jbroot(bundlePath) stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
         
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", bundlePath.UTF8String, NULL}, nil, nil) == 0);
+        NSString* log=nil;
+        NSString* err=nil;
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", bundlePath.UTF8String, NULL}, &log, &err) != 0) {
+            STRAPLOG("%@\nERR:%@", log, err);
+            ABORT();
+        }
     }
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
@@ -208,8 +215,13 @@ int enableForApp(NSString* bundlePath)
         ASSERT(backupApp(bundlePath) == 0);
 
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
-
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
+            STRAPLOG("%@\nERR:%@", log, err);
+            ABORT();
+        }
     }
     else
     {
@@ -217,7 +229,12 @@ int enableForApp(NSString* bundlePath)
         
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
         
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        NSString* log=nil;
+        NSString* err=nil;
+        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
+            STRAPLOG("%@\nERR:%@", log, err);
+            ABORT();
+        }
     }
     
     return 0;
@@ -242,17 +259,36 @@ int disableForApp(NSString* bundlePath)
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
             || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
     {
+        
+        struct stat st;
+        if(lstat([bundlePath stringByAppendingString:@"/.jbroot"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.prelib"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.prelib"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.preload"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.preload"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.rebuild"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
+        
         ASSERT(restoreApp(bundlePath) == 0);
-        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+        
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     else
     {
         //should be an appstored app
         
-        ASSERT(restoreApp(bundlePath) == 0);
+        struct stat st;
+        if(lstat([bundlePath stringByAppendingString:@"/.jbroot"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.prelib"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.prelib"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.preload"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.preload"] error:nil]);
+        if(lstat([bundlePath stringByAppendingString:@"/.rebuild"].fileSystemRepresentation, &st)==0)
+            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
         
-        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+        ASSERT(restoreApp(bundlePath) == 0);
         
         //unregister or respring to keep app's icon on home screen
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
