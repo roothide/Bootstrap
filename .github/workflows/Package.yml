@@ -18,19 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check for new commits in sync-fork
-        id: check_changes
-        run: |
-          git remote add upstream https://github.com/RootHide/Bootstrap
-          git fetch upstream main
-          CHANGE_COUNT=$(git rev-list HEAD...upstream/main --count)
-          if [ "$CHANGE_COUNT" -gt 0 ]; then
-            echo "New changes detected"
-            echo "changes_detected=true" >> $GITHUB_ENV
-          else
-            echo "No changes since last build"
-            echo "changes_detected=false" >> $GITHUB_ENV
-
   build:
     name: Build RootHide Bootstrap
     runs-on: macos-latest
@@ -41,6 +28,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Git
+        id: check_changes
         run: |
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
@@ -48,6 +36,13 @@ jobs:
           git fetch upstream
           git fetch --all --prune
           git pull --rebase --strategy-option=theirs upstream main
+          CHANGE_COUNT=$(git rev-list HEAD...upstream/main --count)
+          if [ "$CHANGE_COUNT" -gt 0 ]; then
+            echo "New changes detected"
+            echo "changes_detected=true" >> $GITHUB_ENV
+          else
+            echo "No changes since last build"
+            echo "changes_detected=false" >> $GITHUB_ENV
 
       - name: Install Homebrew
         run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
