@@ -40,7 +40,7 @@ jobs:
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Set Version 
-        run: echo "VERSION=4.2" >> $GITHUB_ENV
+        run: echo "VERSION=4.3" >> $GITHUB_ENV
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
