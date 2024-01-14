@@ -19,7 +19,7 @@ NSString* rootfsPrefix(NSString* path);
 
 NSString* getBootSession();
 
-int spawn(const char* path, const char** argv, const char** envp, void(^std_out)(char*), void(^std_err)(char*));
+int spawn(const char* path, const char** argv, const char** envp, void(^std_out)(char*,int), void(^std_err)(char*,int));
 
 int spawnBootstrap(const char** argv, NSString** stdOut, NSString** stdErr);
 
@@ -38,6 +38,12 @@ void killAllForApp(const char* bundlePath);
 - (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
                                                   internal:(BOOL)arg2
                                                       user:(BOOL)arg3;
+@end
+
+@interface LSPlugInKitProxy : NSObject
++(id)pluginKitProxyForIdentifier:(id)arg1 ;
+- (NSString *)bundleIdentifier;
+@property (nonatomic,readonly) NSURL *dataContainerURL;
 @end
 
 #endif /* utils_h */
