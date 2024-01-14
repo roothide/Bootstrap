@@ -36,7 +36,6 @@ jobs:
             echo "changes_detected=false" >> $GITHUB_ENV
           fi
 
-
   build:
     name: Build RootHide Bootstrap
     runs-on: macos-latest
