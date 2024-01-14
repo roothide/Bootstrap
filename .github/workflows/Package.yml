@@ -21,8 +21,7 @@ jobs:
       - name: Check for new commits in sync-fork
         id: check_changes
         run: |
-         git remote add upstream https://
-          github.com/RootHide/Bootstrap
+          git remote add upstream https://github.com/RootHide/Bootstrap
           git fetch upstream main
           CHANGE_COUNT=$(git rev-list HEAD...upstream/main --count)
           if [ "$CHANGE_COUNT" -gt 0 ]; then
