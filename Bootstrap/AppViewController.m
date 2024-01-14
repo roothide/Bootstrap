@@ -127,6 +127,28 @@
     [self.tableView.refreshControl endRefreshing];
 }
 
+-(BOOL)tweakEnabled:(AppList*)app {
+    struct stat st;
+    if(lstat([app.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0) {
+        return YES;
+    }
+    
+    if(!isDefaultInstallationPath(app.bundleURL.path)) {
+        return NO;
+    }
+    
+    NSString* uuidPath = [app.bundleURL.path stringByDeletingLastPathComponent];
+    NSString* backupFlag = [uuidPath stringByAppendingPathComponent:@".appbackup"];
+    NSString* backupPath = [[uuidPath stringByAppendingPathComponent:app.bundleURL.path.lastPathComponent] stringByAppendingPathExtension:@"appbackup"];
+    SYSLOG("uuidPath=%@, backupFlag=%@, backupPath=%@", uuidPath, backupFlag, backupPath);
+    if([NSFileManager.defaultManager fileExistsAtPath:backupFlag] && [NSFileManager.defaultManager fileExistsAtPath:backupPath]) {
+        //if the app has been successfully backed up but failed to enable tweak injection for some reason, or the app bundle is overwritten, we will still show that tweak injection has been enabled so that the user will have the chance to restore the app in appenabler
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)updateData:(BOOL)sort {
     NSMutableArray* applications = [NSMutableArray new];
     PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];
@@ -155,6 +177,10 @@
             [app.bundleURL.path stringByAppendingString:@"/.TrollStorePresistenceHelper"]])
                 continue;
         
+        if([NSFileManager.defaultManager fileExistsAtPath:
+            [app.bundleURL.path stringByAppendingString:@"/.Bootstrap"]])
+                continue;
+        
         if([app.bundleURL.path.lastPathComponent isEqualToString:@"TrollStore.app"])
             continue;
         
@@ -171,15 +197,16 @@
     if(sort)
     {
         NSArray *appsSortedByName = [applications sortedArrayUsingComparator:^NSComparisonResult(AppList *app1, AppList *app2) {
-            struct stat st;
-            BOOL enabled1 = lstat([app1.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
-            BOOL enabled2 = lstat([app2.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
-            if(enabled1 || enabled2) {
+
+            BOOL enabled1 = [self tweakEnabled:app1];
+            BOOL enabled2 = [self tweakEnabled:app2];
+            
+            if((enabled1&&!enabled2) || (!enabled1&&enabled2)) {
                 return [@(enabled2) compare:@(enabled1)];
             }
             
             if(app1.isHiddenApp || app2.isHiddenApp) {
-                return [@(app1.isHiddenApp) compare:@(app2.isHiddenApp)];
+                return (enabled1&&enabled2) ? [@(app2.isHiddenApp) compare:@(app1.isHiddenApp)] : [@(app1.isHiddenApp) compare:@(app2.isHiddenApp)];
             }
             
             return [app1.name localizedStandardCompare:app2.name];
@@ -281,9 +308,7 @@ NSArray* unsupportedBundleIDs = @[
     if([unsupportedBundleIDs containsObject:app.bundleIdentifier])
         theSwitch.enabled = NO;
     
-    struct stat st;
-    BOOL enabled = lstat([app.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0;
-    [theSwitch setOn:enabled];
+    [theSwitch setOn:[self tweakEnabled:app]];
     [theSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
     cell.accessoryView = theSwitch;
@@ -320,7 +345,7 @@ NSArray* unsupportedBundleIDs = @[
         }
         
         if(status != 0) {
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"error(%d)",status]];
         }
         
         killAllForApp(app.bundleURL.path.UTF8String);
