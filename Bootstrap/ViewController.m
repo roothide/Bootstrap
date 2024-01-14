@@ -29,6 +29,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
 @property (weak, nonatomic) IBOutlet UIButton *rebuildIconCacheBtn;
 @property (weak, nonatomic) IBOutlet UIButton *reinstallPackageManagerBtn;
 @property (weak, nonatomic) IBOutlet UILabel *opensshLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *tweakenableState;
 
 @end
 
@@ -65,6 +66,8 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
     
     [AppDelegate registerLogView:self.logView];
     
+    BOOL IconCacheRebuilding=NO;
+    
     if(isSystemBootstrapped())
     {
         if(checkBootstrapVersion()) {
@@ -82,11 +85,12 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.reinstallPackageManagerBtn.enabled = YES;
         self.uninstallBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
+        self.tweakenableState.on = [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")];
         
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
             [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/basebin/.rebuildiconcache") error:nil];
-            
-            [AppDelegate showHudMsg:Localized(@"Rebuilding")];
+            [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen.")];
+            IconCacheRebuilding = YES;
         }
         
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
@@ -106,6 +110,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
         self.rebuildIconCacheBtn.enabled = NO;
         self.reinstallPackageManagerBtn.enabled = NO;
         self.uninstallBtn.hidden = NO;
+//enable by default        self.tweakenableState.on = [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")];
     }
     else if(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15)
     {
@@ -175,7 +180,7 @@ OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, 
                                               name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     
-    if(isBootstrapInstalled() || isSystemBootstrapped()) {
+    if(!IconCacheRebuilding && isBootstrapInstalled() && !isSystemBootstrapped()) {
         if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
            || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
         {
@@ -358,6 +363,18 @@ int rebuildIconCache()
     [self presentViewController:navigationController animated:YES completion:^{}];
 }
 
+- (IBAction)tweakenable:(id)sender {
+    UISwitch* enabled = (UISwitch*)sender;
+    
+    if(!isBootstrapInstalled()) return;
+    
+    if(enabled.on) {
+        ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.tweakenabled") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    } else if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
+        ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
+    }
+}
+
 - (IBAction)openssh:(id)sender {
     UISwitch* enabled = (UISwitch*)sender;
     
@@ -410,7 +427,7 @@ int rebuildIconCache()
     }
     
     if(![self checkTSVersion]) {
-        [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0") title:Localized(@"Error")];
+        [AppDelegate showMesage:Localized(@"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.") title:Localized(@"Error")];
         return;
     }
     
@@ -445,10 +462,12 @@ int rebuildIconCache()
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
-        int status = spawn(argv[0], argv, environ, ^(char* outstr){
-            [AppDelegate addLogText:@(outstr)];
-        }, ^(char* errstr){
-            [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %s\n",errstr]];
+        int status = spawn(argv[0], argv, environ, ^(char* outstr, int length){
+            NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+            [AppDelegate addLogText:str];
+        }, ^(char* errstr, int length){
+            NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+            [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
         });
         
         [AppDelegate dismissHud];
@@ -471,6 +490,10 @@ int rebuildIconCache()
                 [AppDelegate addLogText:@"openssh launch successful"];
             else
                 [AppDelegate addLogText:[NSString stringWithFormat:@"openssh launch faild(%d):\n%@\n%@", status, log, err]];
+        }
+        
+        if(self.tweakenableState.on && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
+            ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.tweakenabled") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         }
         
         [generator impactOccurred];

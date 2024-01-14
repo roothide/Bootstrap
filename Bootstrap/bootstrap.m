@@ -60,7 +60,7 @@ void rebuildSignature(NSString *directoryPath)
         }
     }
     
-    SYSLOG("rebuild finished! machoCount=%d, libCount=%d", machoCount, libCount);
+    STRAPLOG("rebuild finished! machoCount=%d, libCount=%d", machoCount, libCount);
 
 }
 
@@ -359,7 +359,13 @@ int bootstrap()
     ASSERT(disableRootHideBlacklist()==0);
     
     STRAPLOG("Status: Rebuilding Apps");
-    ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil) == 0);
+    
+    NSString* log=nil;
+    NSString* err=nil;
+    if(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, &log, &err) != 0) {
+        STRAPLOG("%@\nERR:%@", log, err);
+        ABORT();
+    }
 
     NSDictionary* bootinfo = @{@"bootsession":getBootSession(), @"bootversion":NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]};
     ASSERT([bootinfo writeToFile:jbroot(@"/basebin/.bootinfo.plist") atomically:YES]);
@@ -374,7 +380,7 @@ int unbootstrap()
     STRAPLOG("unbootstrap...");
     
     //try
-    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"exit"], nil, nil);
+    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"stop"], nil, nil);
     
     //jbroot unavailable now
     

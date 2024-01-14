@@ -23,7 +23,7 @@ NSDictionary* CREDITS = @{
 @"TheosTeam" : @"https://theos.dev",
 @"kirb" : @"http://github.com/kirb",
 @"Amy While" : @"http://github.com/elihwyma",
-@"roothide" : @"http://github.com/RootHide",
+@"roothide" : @"http://github.com/roothide",
 @"Shadow-" : @"http://iosjb.top/",
 @"SeanIsTethered" : @"https://github.com/jailbreakmerebooted",
 @"Huy Nguyen" : @"https://twitter.com/little_34306",
