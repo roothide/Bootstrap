@@ -71,6 +71,8 @@ NSDictionary* CREDITS = @{
 @"Ellie" : @"https://twitter.com/elliessurviving",
 @"tigisoftware" : @"https://twitter.com/tigisoftware",
 @"Kevin" : @"https://github.com/iodes",
+@"i_82" : @"https://github.com/Lessica",
+@"Lakr" : @"https://github.com/Lakr233",
 };
 
 #endif /* credits_h */
