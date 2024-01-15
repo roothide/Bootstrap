@@ -57,8 +57,15 @@ jobs:
       - name: Setup Theos environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Set Version 
-        run: echo "VERSION=4.3" >> $GITHUB_ENV
+      - name: Set Version
+        id: version
+        run: |
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          IFS='.' read -ra VERSION_PARTS <<< "${LATEST_TAG//v/}"
+          let PATCH_VERSION=${VERSION_PARTS[2]}+1
+          NEW_VERSION="v${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH_VERSION"
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo ::set-output name=NEW_VERSION::$NEW_VERSION
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
@@ -81,8 +88,8 @@ jobs:
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Bootstrap_beta v${{ env.VERSION }} Release
+          name: Bootstrap_beta ${{ steps.version.outputs.NEW_VERSION }} Release
           body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
           artifacts: "Bootstrap.tipa"
-          tag: v${{ env.VERSION }}
+          tag: ${{ steps.version.outputs.NEW_VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
