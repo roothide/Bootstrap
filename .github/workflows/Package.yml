@@ -40,6 +40,7 @@ jobs:
     name: Build RootHide Bootstrap
     runs-on: macos-latest
     needs: check-for-changes
+    #if: ${{ needs.check-for-changes.outputs.changes_detected == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
