@@ -13,7 +13,6 @@
 + (void)showMesage:(NSString*)msg title:(NSString*)title;
 
 + (void)addLogText:(NSString*)text;
-+ (void)registerLogView:(UITextView*)view;
 
 @end
 

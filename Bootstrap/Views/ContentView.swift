@@ -20,9 +20,11 @@ struct ContentView: View {
         return [""]
     }()
     
-    @State private var openSSH = false
     @State private var showOptions = false
     @State private var showCredits = false
+    @State private var showAppView = false
+    @State private var strapButtonDisabled = false
+    
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
     var body: some View {
@@ -32,6 +34,7 @@ struct ContentView: View {
                           speed: 0.5,
                           blur: 0.95)
             .background(.quaternary)
+            .ignoresSafeArea()
             
             VStack {
                 HStack(spacing: 15) {
@@ -53,20 +56,47 @@ struct ContentView: View {
                 
                 VStack {
                     Button {
-                        bootstrapFr()
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        bootstrapAction()
                     } label: {
-                        if isBootstrapInstalled() {
+                        if isSystemBootstrapped() {
+                            if checkBootstrapVersion() {
+                                Label(
+                                    title: { Text("Bootstrapped").bold() },
+                                    icon: { Image(systemName: "chair.fill") }
+                                )
+                                .padding(25)
+                                .onAppear() {
+                                    strapButtonDisabled = true
+                                }
+                            } else {
+                                Label(
+                                    title: { Text("Update").bold() },
+                                    icon: { Image(systemName: "chair") }
+                                )
+                                .padding(25)
+                            }
+                        } else if isBootstrapInstalled() {
                             Label(
-                                title: { Text("Kickstart").bold() },
-                                icon: { Image(systemName: "terminal") }
+                                title: { Text("Bootstrap").bold() },
+                                icon: { Image(systemName: "chair") }
+                            )
+                            .padding(25)
+                        } else if ProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15 {
+                            Label(
+                                title: { Text("Install").bold() },
+                                icon: { Image(systemName: "chair") }
                             )
                             .padding(25)
                         } else {
                             Label(
-                                title: { Text("Bootstrap").bold() },
-                                icon: { Image(systemName: "terminal") }
+                                title: { Text("Unsupported").bold() },
+                                icon: { Image(systemName: "chair") }
                             )
                             .padding(25)
+                            .onAppear() {
+                                strapButtonDisabled = true
+                            }
                         }
                     }
                     .frame(width: 295)
@@ -75,30 +105,30 @@ struct ContentView: View {
                             .cornerRadius(20)
                             .opacity(0.5)
                     }
-                    .disabled(isSystemBootstrapped())
+                    .disabled(strapButtonDisabled)
                     
-                    if isBootstrapInstalled() {
+                    HStack {
+                        
                         Button {
-                            unbootstrapFr()
+                            showAppView.toggle()
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         } label: {
                             Label(
-                                title: { Text("Uninstall").bold() },
-                                icon: { Image(systemName: "trash") }
+                                title: { Text("App List") },
+                                icon: { Image(systemName: "checklist") }
                             )
                             .padding(25)
                         }
-                        .frame(width: 295)
                         .background {
                             Color(UIColor.systemBackground)
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
-                        .disabled(isSystemBootstrapped())
-                    }
-                    
-                    HStack {
+                        .disabled(!isSystemBootstrapped())
+                        
                         Button {
                             withAnimation {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showOptions.toggle()
                             }
                         } label: {
@@ -114,21 +144,6 @@ struct ContentView: View {
                                 .opacity(0.5)
                         }
                         
-                        Button {
-                            respringFr()
-                        } label: {
-                            Label(
-                                title: { Text("Respring") },
-                                icon: { Image(systemName: "arrow.clockwise") }
-                            )
-                            .padding(25)
-                        }
-                        .background {
-                            Color(UIColor.systemBackground)
-                                .cornerRadius(20)
-                                .opacity(0.5)
-                        }
-                        .disabled(!isSystemBootstrapped())
                     }
                     
                     VStack {
@@ -142,15 +157,15 @@ struct ContentView: View {
                                             .foregroundColor(.white)
                                     }
                                 }
-                                .onReceive(NotificationCenter.default.publisher(for: LogStream.shared.reloadNotification)) { obj in
+                                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("LogMsgNotification"))) { obj in
                                     DispatchQueue.global(qos: .utility).async {
-                                        FetchLog()
+                                        LogItems.append((obj.object as! NSString) as String.SubSequence)
                                         scroll.scrollTo(LogItems.count - 1)
                                     }
                                 }
                             }
                         }
-                        .frame(height: 150)
+                        .frame(maxHeight: 200)
                     }
                     .frame(width: 253)
                     .padding(20)
@@ -166,8 +181,11 @@ struct ContentView: View {
                 }
             }
             
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             Button {
                 withAnimation {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     showCredits.toggle()
                 }
             } label: {
@@ -176,31 +194,25 @@ struct ContentView: View {
                     icon: { Image(systemName: "person") }
                 )
             }
-            .frame(maxHeight: .infinity, alignment: .bottom)
-            .padding(25)
+            .frame(height:30, alignment: .bottom)
+            .padding(10)
+            
         }
-        .ignoresSafeArea()
         .overlay {
             if showCredits {
                 CreditsView(showCredits: $showCredits)
             }
             
             if showOptions {
-                OptionsView(showOptions: $showOptions, openSSH: $openSSH)
+                OptionsView(showOptions: $showOptions)
             }
         }
         .onAppear {
-            if isSystemBootstrapped() {
-                checkServerFr()
-            }
+            initFromSwiftUI()
+        }
+        .sheet(isPresented: $showAppView) {
+            AppViewControllerWrapper()
         }
     }
     
-    private func FetchLog() {
-        guard let AttributedText = LogStream.shared.outputString.copy() as? NSAttributedString else {
-            LogItems = ["Error Getting Log!"]
-            return
-        }
-        LogItems = AttributedText.string.split(separator: "\n")
-    }
 }

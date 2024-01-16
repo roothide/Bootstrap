@@ -41,7 +41,6 @@
 		FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE92B418FC800A16882 /* VisualEffectView.swift */; };
 		FE895FED2B418FC800A16882 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEA2B418FC800A16882 /* Log.swift */; };
 		FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = FE895FF02B418FDC00A16882 /* FluidGradient */; };
-		FE895FF32B41924C00A16882 /* bootstrapFr.m in Sources */ = {isa = PBXBuildFile; fileRef = FE895FF22B41924C00A16882 /* bootstrapFr.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -101,7 +100,6 @@
 		8470999F2B1D868F003FA4ED /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
-		FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrapFr.h; sourceTree = "<group>"; };
 		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
 		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewControllerWrapper.swift; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE895FEA2B418FC800A16882 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		FE895FF22B41924C00A16882 /* bootstrapFr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bootstrapFr.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +180,7 @@
 				84438D6A2B2CDE0100A1E407 /* AppViewController.h */,
 				84438D6B2B2CDE0100A1E407 /* AppViewController.m */,
 				84438D512B260FEB00A1E407 /* zstd_wrapper.m */,
+				FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */,
 				8470998E2B1D855D003FA4ED /* Main.storyboard */,
 				847099912B1D855E003FA4ED /* Assets.xcassets */,
 				847099932B1D855E003FA4ED /* LaunchScreen.storyboard */,
@@ -200,9 +198,6 @@
 				84364F382B2E53BA00E90B58 /* seh.h */,
 				84438D702B2E439300A1E407 /* syslog.h */,
 				84438D712B2E4E5D00A1E407 /* common.h */,
-				FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */,
-				FE895FF22B41924C00A16882 /* bootstrapFr.m */,
-				FE0633AA2B41B3BC00B94787 /* bootstrapFr.h */,
 			);
 			path = Bootstrap;
 			sourceTree = "<group>";
@@ -339,7 +334,6 @@
 				8470998A2B1D855D003FA4ED /* SceneDelegate.m in Sources */,
 				84438D6C2B2CDE0100A1E407 /* AppList.m in Sources */,
 				84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */,
-				FE895FF32B41924C00A16882 /* bootstrapFr.m in Sources */,
 				84438D5D2B264A2800A1E407 /* NSUserDefaults+appDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,7 +496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.3;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -540,7 +534,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.3;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";

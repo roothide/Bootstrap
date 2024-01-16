@@ -352,7 +352,7 @@ int bootstrap()
         STRAPLOG("device is strapped: %@", jbroot_path);
         
         if([fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) //beta version to public version
-            ASSERT([fm moveItemAtURL:jbroot(@"/.bootstrapped") toURL:jbroot(@"/.thebootstrapped") error:nil]);
+            ASSERT([fm moveItemAtPath:jbroot(@"/.bootstrapped") toPath:jbroot(@"/.thebootstrapped") error:nil]);
         
         STRAPLOG("Status: Rerandomize jbroot");
         

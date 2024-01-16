@@ -1,7 +1,7 @@
 #ifndef credits_h
 #define credits_h
 // dictionary will be sorted alphabetically
-NSDictionary* CREDITS = @{
+static NSDictionary* CREDITS = @{
 @"Nick Chan" : @"https://github.com/asdfugil",
 @"opa334" : @"http://github.com/opa334",
 @"hayden" : @"https://procursus.social/@hayden",
