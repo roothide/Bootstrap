@@ -69,4 +69,4 @@
 "openssh launch successful" = "Lancement d'openssh réussi";
 "respring now..." = "Respring maintenant...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Êtes-vous sûr de vouloir désinstaller le démarrage ?\n\nAssurez-vous d'avoir désactivé les tweaks pour toutes les applications avant de désinstaller.";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Êtes-vous sûr de vouloir désinstaller  bootstrap?\n\nAssurez-vous d'avoir désactivé les tweaks pour toutes les applications avant de désinstaller.";
