@@ -65,7 +65,8 @@ jobs:
           let PATCH_VERSION=${VERSION_PARTS[2]}+1
           NEW_VERSION="v${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH_VERSION"
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo ::set-output name=NEW_VERSION::$NEW_VERSION
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
