@@ -10,6 +10,7 @@
 		84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; };
 		84364F3E2B323FB600E90B58 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */; };
+		843E87572B56E45300CB45C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 843E87592B56E45300CB45C4 /* Localizable.strings */; };
 		84438D472B26090D00A1E407 /* sileo.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D432B26090D00A1E407 /* sileo.deb */; };
 		84438D482B26090D00A1E407 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = 84438D442B26090D00A1E407 /* tar */; };
 		84438D4A2B26090D00A1E407 /* zebra.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D462B26090D00A1E407 /* zebra.deb */; };
@@ -33,6 +34,14 @@
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
+		FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AB2B41BC3D00B94787 /* CreditsView.swift */; };
+		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
+		FE84597B2B44508300DCB44E /* AppViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */; };
+		FE84597D2B44711F00DCB44E /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597C2B44711F00DCB44E /* ButtonStyles.swift */; };
+		FE895FE82B418FB900A16882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE72B418FB800A16882 /* ContentView.swift */; };
+		FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FE92B418FC800A16882 /* VisualEffectView.swift */; };
+		FE895FED2B418FC800A16882 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE895FEA2B418FC800A16882 /* Log.swift */; };
+		FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = FE895FF02B418FDC00A16882 /* FluidGradient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +65,8 @@
 		84364F402B32627200E90B58 /* credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credits.h; sourceTree = "<group>"; };
 		84364F412B337BC000E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkrw0-dummy.deb"; sourceTree = "<group>"; };
+		843E87582B56E45300CB45C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		843E875A2B56E48D00CB45C4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
 		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
@@ -92,6 +103,14 @@
 		8470999F2B1D868F003FA4ED /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
+		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
+		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewControllerWrapper.swift; sourceTree = "<group>"; };
+		FE84597C2B44711F00DCB44E /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bootstrap-Bridging-Header.h"; sourceTree = "<group>"; };
+		FE895FE72B418FB800A16882 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FE895FE92B418FC800A16882 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		FE895FEA2B418FC800A16882 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */,
+				FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */,
 				84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */,
 				84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */,
 				84438D502B260F8200A1E407 /* libzstd in Frameworks */,
@@ -147,6 +167,9 @@
 		847099842B1D855D003FA4ED /* Bootstrap */ = {
 			isa = PBXGroup;
 			children = (
+				FE0633B52B41CF6600B94787 /* Views */,
+				FE0633B42B41CF5800B94787 /* Extensions */,
+				FE0633B32B41CF4D00B94787 /* Classes */,
 				84438D692B2CDE0100A1E407 /* AppList.h */,
 				84438D682B2CDE0100A1E407 /* AppList.m */,
 				847099852B1D855D003FA4ED /* AppDelegate.h */,
@@ -160,6 +183,7 @@
 				84438D6A2B2CDE0100A1E407 /* AppViewController.h */,
 				84438D6B2B2CDE0100A1E407 /* AppViewController.m */,
 				84438D512B260FEB00A1E407 /* zstd_wrapper.m */,
+				FE895FE62B418FB800A16882 /* Bootstrap-Bridging-Header.h */,
 				8470998E2B1D855D003FA4ED /* Main.storyboard */,
 				847099912B1D855E003FA4ED /* Assets.xcassets */,
 				847099932B1D855E003FA4ED /* LaunchScreen.storyboard */,
@@ -177,8 +201,37 @@
 				84364F382B2E53BA00E90B58 /* seh.h */,
 				84438D702B2E439300A1E407 /* syslog.h */,
 				84438D712B2E4E5D00A1E407 /* common.h */,
+				843E87592B56E45300CB45C4 /* Localizable.strings */,
 			);
 			path = Bootstrap;
+			sourceTree = "<group>";
+		};
+		FE0633B32B41CF4D00B94787 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FE895FEA2B418FC800A16882 /* Log.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		FE0633B42B41CF5800B94787 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE895FE92B418FC800A16882 /* VisualEffectView.swift */,
+				FE84597C2B44711F00DCB44E /* ButtonStyles.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FE0633B52B41CF6600B94787 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */,
+				FE0633AD2B41BCD900B94787 /* OptionsView.swift */,
+				FE0633AB2B41BC3D00B94787 /* CreditsView.swift */,
+				FE895FE72B418FB800A16882 /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +253,7 @@
 			name = Bootstrap;
 			packageProductDependencies = (
 				84438D4F2B260F8200A1E407 /* libzstd */,
+				FE895FF02B418FDC00A16882 /* FluidGradient */,
 			);
 			productName = Bootstrap;
 			productReference = 847099822B1D855D003FA4ED /* Bootstrap.app */;
@@ -216,6 +270,7 @@
 				TargetAttributes = {
 					847099812B1D855D003FA4ED = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1510;
 					};
 				};
 			};
@@ -226,10 +281,12 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 847099792B1D855D003FA4ED;
 			packageReferences = (
 				84438D4E2B260F8200A1E407 /* XCRemoteSwiftPackageReference "zstd" */,
+				FE895FEF2B418FDC00A16882 /* XCRemoteSwiftPackageReference "FluidGradient" */,
 			);
 			productRefGroup = 847099832B1D855D003FA4ED /* Products */;
 			projectDirPath = "";
@@ -249,6 +306,7 @@
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
 				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
 				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
+				843E87572B56E45300CB45C4 /* Localizable.strings in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,
 				847099952B1D855E003FA4ED /* LaunchScreen.storyboard in Resources */,
 				847099922B1D855E003FA4ED /* Assets.xcassets in Resources */,
@@ -265,9 +323,16 @@
 			files = (
 				847099A32B1D868F003FA4ED /* Makefile in Sources */,
 				8470998D2B1D855D003FA4ED /* ViewController.m in Sources */,
+				FE895FE82B418FB900A16882 /* ContentView.swift in Sources */,
+				FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */,
+				FE84597B2B44508300DCB44E /* AppViewControllerWrapper.swift in Sources */,
 				847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */,
 				84438D652B27522400A1E407 /* envbuf.c in Sources */,
+				FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */,
+				FE895FED2B418FC800A16882 /* Log.swift in Sources */,
 				84438D4C2B2609B200A1E407 /* utils.m in Sources */,
+				FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */,
+				FE84597D2B44711F00DCB44E /* ButtonStyles.swift in Sources */,
 				84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */,
 				847099872B1D855D003FA4ED /* AppDelegate.m in Sources */,
 				847099982B1D855E003FA4ED /* main.m in Sources */,
@@ -282,6 +347,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		843E87592B56E45300CB45C4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843E87582B56E45300CB45C4 /* en */,
+				843E875A2B56E48D00CB45C4 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		8470998E2B1D855D003FA4ED /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -305,6 +379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -363,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -416,6 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49LJ27SG38;
@@ -431,7 +508,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -441,6 +518,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bootstrap/Bootstrap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -450,6 +530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49LJ27SG38;
@@ -465,7 +546,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -475,6 +556,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bootstrap/Bootstrap-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -511,6 +594,14 @@
 				kind = branch;
 			};
 		};
+		FE895FEF2B418FDC00A16882 /* XCRemoteSwiftPackageReference "FluidGradient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cindori/FluidGradient.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -518,6 +609,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 84438D4E2B260F8200A1E407 /* XCRemoteSwiftPackageReference "zstd" */;
 			productName = libzstd;
+		};
+		FE895FF02B418FDC00A16882 /* FluidGradient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE895FEF2B418FDC00A16882 /* XCRemoteSwiftPackageReference "FluidGradient" */;
+			productName = FluidGradient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
