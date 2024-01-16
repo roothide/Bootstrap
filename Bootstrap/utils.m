@@ -105,7 +105,7 @@ extern int posix_spawnattr_set_persona_np(const posix_spawnattr_t* __restrict, u
 extern int posix_spawnattr_set_persona_uid_np(const posix_spawnattr_t* __restrict, uid_t);
 extern int posix_spawnattr_set_persona_gid_np(const posix_spawnattr_t* __restrict, uid_t);
 
-int spawn(const char* path, const char** argv, const char** envp, void(^std_out)(char*), void(^std_err)(char*))
+int spawn(const char* path, const char** argv, const char** envp, void(^std_out)(char*,int), void(^std_err)(char*,int))
 {
     SYSLOG("spawn %s", path);
     
@@ -162,7 +162,7 @@ int spawn(const char* path, const char** argv, const char** envp, void(^std_out)
             return;
         }
         SYSLOG("spawn[%d] stdout: %s", pid, buffer);
-        if(std_out) std_out(buffer);
+        if(std_out) std_out(buffer,bytes);
     });
     dispatch_source_set_event_handler(stdErrSource, ^{
         char buffer[BUFSIZ]={0};
@@ -172,7 +172,7 @@ int spawn(const char* path, const char** argv, const char** envp, void(^std_out)
             return;
         }
         SYSLOG("spawn[%d] stderr: %s", pid, buffer);
-        if(std_err) std_err(buffer);
+        if(std_err) std_err(buffer,bytes);
     });
     
     dispatch_resume(stdOutSource);
@@ -231,11 +231,16 @@ int spawnBootstrap(const char** argv, NSString** stdOut, NSString** stdErr)
     if(stdErr) errString = [NSMutableString new];
     
     
-    int retval = spawn(jbroot(@(argv[0])).fileSystemRepresentation, argv, envc, ^(char* outstr){
-        if(stdOut) [outString appendString:@(outstr)];
-    }, ^(char* errstr){
-        if(stdErr) [errString appendString:@(errstr)];
+    int retval = spawn(jbroot(@(argv[0])).fileSystemRepresentation, argv, envc, ^(char* outstr, int length){
+        NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+        if(stdOut) [outString appendString:str];
+    }, ^(char* errstr, int length){
+        NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+        if(stdErr) [errString appendString:str];
     });
+    
+    if(stdOut) *stdOut = outString.copy;
+    if(stdErr) *stdErr = errString.copy;
     
     envbuf_free(envc);
     
@@ -265,10 +270,12 @@ int spawnRoot(NSString* path, NSArray* args, NSString** stdOut, NSString** stdEr
     if(stdOut) outString = [NSMutableString new];
     if(stdErr) errString = [NSMutableString new];
     
-    int retval = spawn(path.fileSystemRepresentation, argsC, environ, ^(char* outstr){
-        if(stdOut) [outString appendString:@(outstr)];
-    }, ^(char* errstr){
-        if(stdErr) [errString appendString:@(errstr)];
+    int retval = spawn(path.fileSystemRepresentation, argsC, environ, ^(char* outstr, int length){
+        NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+        if(stdOut) [outString appendString:str];
+    }, ^(char* errstr, int length){
+        NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+        if(stdErr) [errString appendString:str];
     });
     
     if(stdOut) *stdOut = outString.copy;
@@ -283,7 +290,7 @@ int spawnRoot(NSString* path, NSArray* args, NSString** stdOut, NSString** stdEr
     return retval;
 }
 
-void machoEnumerateArchs(FILE* machoFile, void (^archEnumBlock)(struct mach_header_64* header, uint32_t offset, bool* stop))
+void machoEnumerateArchs(FILE* machoFile, bool (^archEnumBlock)(struct mach_header_64* header, uint32_t offset))
 {
     struct mach_header_64 mh={0};
     if(fseek(machoFile,0,SEEK_SET)!=0)return;
@@ -308,15 +315,13 @@ void machoEnumerateArchs(FILE* machoFile, void (^archEnumBlock)(struct mach_head
 
             if(mh.magic != MH_MAGIC_64 && mh.magic != MH_CIGAM_64) continue; //require Macho64
             
-            bool stop = false;
-            archEnumBlock(&mh, OSSwapBigToHostInt32(fatArch.offset), &stop);
-            if(stop) break;
+            if(!archEnumBlock(&mh, OSSwapBigToHostInt32(fatArch.offset)))
+                break;
         }
     }
     else if(mh.magic == MH_MAGIC_64 || mh.magic == MH_CIGAM_64) //require Macho64
     {
-        bool stop=false;
-        archEnumBlock(&mh, 0, &stop);
+        archEnumBlock(&mh, 0);
     }
 }
 
@@ -327,16 +332,23 @@ void machoGetInfo(FILE* candidateFile, bool *isMachoOut, bool *isLibraryOut)
     __block bool isMacho=false;
     __block bool isLibrary = false;
     
-    machoEnumerateArchs(candidateFile, ^(struct mach_header_64* header, uint32_t offset, bool* stop) {
-        isMacho = true;
-        isLibrary = OSSwapLittleToHostInt32(header->filetype) != MH_EXECUTE;
-        *stop = true;
+    machoEnumerateArchs(candidateFile, ^bool(struct mach_header_64* header, uint32_t offset) {
+        switch(OSSwapLittleToHostInt32(header->filetype)) {
+            case MH_DYLIB:
+            case MH_BUNDLE:
+                isLibrary = true;
+            case MH_EXECUTE:
+                isMacho = true;
+                return false;
+
+            default:
+                return true;
+        }
     });
 
     if (isMachoOut) *isMachoOut = isMacho;
     if (isLibraryOut) *isLibraryOut = isLibrary;
 }
-
 
 #define APP_PATH_PREFIX "/private/var/containers/Bundle/Application/"
 
