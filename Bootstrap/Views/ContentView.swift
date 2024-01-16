@@ -239,7 +239,7 @@ struct ContentView: View {
     
     func checkForUpdates() async throws {
         if let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            let owner = "roothide"
+            let owner = "wwg135"
             let repo = "Bootstrap"
             
             // Get the releases
