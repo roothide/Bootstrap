@@ -58,7 +58,6 @@ jobs:
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Set Version
-        id: version
         run: |
          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
          IFS='.' read -ra VERSION_PARTS <<< "${LATEST_TAG//v/}"
@@ -66,9 +65,7 @@ jobs:
          NEW_VERSION="v${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH_VERSION"
          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-
-
+         shell: /bin/bash -e {0}
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
