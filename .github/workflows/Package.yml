@@ -33,7 +33,7 @@ jobs:
             echo "changes_detected=true" >> $GITHUB_ENV
           else
             echo "No changes since last build"
-            echo "changes_detected=false" >> $GITHUB_ENV
+            echo "changes_detected=true" >> $GITHUB_ENV
           fi
 
   build:
