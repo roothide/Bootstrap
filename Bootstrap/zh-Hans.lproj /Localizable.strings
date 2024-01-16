@@ -1,0 +1,129 @@
+"Bootstrapped" = "已安装";
+
+"Bootstrap" = "安装";
+
+"Install" = "安装";
+
+"Unsupported" = "不支持";
+
+"The current iOS version is not supported yet, we may add support in a future version." = "当前 iOS 版本尚不支持，我们可能会在未来版本中添加支持。";
+
+"ios-version: %@" = "ios版本: %@";
+
+"device-model: %s" = "设备型号: %s";
+
+"app-version: %@/%@" = "\应用版本: %@/%@";
+
+"boot-session: %@" = "启动会话: %@";
+
+"bootstrap installed" = "引导已安装";
+
+"bootstrap not installed" = "引导未安装";
+
+"system bootstrapped" = "系统已引导";
+
+"system not bootstrapped" = "系统未引导";
+
+"\n:::Credits:::\n" = ":::感谢:::";
+
+"\nThanks to these guys, we couldn't have completed this project without their help!" = "\n感谢以上所有朋友，没有他们的帮助，我们就不可能完成这个项目！";
+
+"Server Not Running" = "服务未运行";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知的原因，引导程序没有运行，我们现在唯一能做的就是重新启动它。";
+
+"Restart Server" = "重启引导程序";
+
+"bootstrap server restart successful" = "引导服务重启成功";
+
+"Error" = "错误";
+
+"bootstrap server check successful" = "引导服务检查成功";
+
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+
+"Applying" = "正在应用...";
+
+"OpenSSH package is not installed." = "未安装 OpenSSH 插件包";
+
+"Developer" = "开发者";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0" = "你的trollstore版本太低，Bootstrap只支持trollstore>=2.0版本";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.";
+
+"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "已经安装了旧的测试版，请禁用所有应用程序插件并重新启动设备以卸载它，以便安装新版本的 Bootstrap 程序。";
+
+"Bootstrapping" = "正在引导...";
+
+"openssh launch successful" = "openssh 启用成功";
+
+"openssh launch faild(%d):\n%@\n%@" = "openssh 启用失败(%d):\n%@\n%@";
+
+"respring now..." = "正在注销...";
+
+"Warnning" = "提示";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载 Bootstrap 程序吗？\n\n卸载之前，请确保已禁用所有应用程序的插件。";
+
+"Cancel" = "取消";
+
+"Uninstall" = "卸载";
+
+"Uninstalling" = "正在卸载...";
+
+"Bootstrap Uninstalled" = "引导程序未安装";
+
+"Bootstrap Uninstalled" = "Bootstrap 已卸载";
+
+"teamID in trollstore: %@" = "trollstore中的teamID: %@";
+
+"Kickstart" = "已安装";
+
+"Settings" = "设置";
+
+"Respring" = "注销";
+
+"UI made with love by haxi0. ♡" = "UI 制作：haxi0. ♡";
+
+"Credits" = "感谢";
+
+"Options" = "选项";
+
+"OpenSSH" = "启用 SSH";
+
+"Tweaks" = "注入插件";
+
+"AppEnabler" = "选择应用程序";
+
+"Rebuild Apps" = "重建应用程序";
+
+"Tweak Enabler" = "插件注入";
+
+"Name or identifier" = "输入App名字或标识符";
+
+"OK" = "好的";
+
+"Button_Update_Available" = "更新链接";
+
+"Rebuild Icon Cache" = "重建图标缓存";
+
+"Reinstall Sileo" = "重装Sileo商店"; 
+
+"Sileo reinstalled!" = "Sileo商店重装成功";
+
+"Status: Reinstalling Sileo" = "\n状态：正在安装Sileo商店";
+
+"Rebuilding" = "正在重建...";
+
+"Status: Rebuilding Icon Cache" = "\n状态：正在重建图标缓存";
+
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+
+"Reboot" = "重启";
+
+"Sure" = "确定";
+
+"Are you sure to reboot device?" = "你确定重启设备吗？";
