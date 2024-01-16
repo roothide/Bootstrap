@@ -8,7 +8,7 @@
 "Uninstall" = "Désintaller";
 "Credits" = "Crédits";
 "New Version Available" = "Nouvelle Version Disponible";
-"Bootstrapped" = "Bootstrapped";
+"Bootstrapped" = "Bootstrapé";
 "Update" = "Mise à jour";
 "Install" = "Installer";
 "Unsupported" = "Non supporté";
@@ -19,9 +19,9 @@
 "Error" = "Erreur";
 "Warnning" = "Attention";
 "Applying" = "Appliqué";
-"Cannel" = "Canal";
-"Update" = "Update";
-"Bootstrapping" = "Bootstrapping";
+"Cannel" = "Annuler";
+"Update" = "Mettre à jour";
+"Bootstrapping" = "Démarrage";
 "Uninstall" = "Désintaller";
 "Uninstalling" = "Désinstallation";
 "bootstrap uninstalled" = "bootstrap désinstallé";
