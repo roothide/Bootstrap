@@ -1,18 +1,18 @@
-"Settings" = "Settings";
-"Tweak Enable" = "Tweak Enable";
+"Settings" = "Ajustes";
+"Tweak Enable" = "Activar Tweak";
 "OpenSSH" = "OpenSSH";
 "Respring" = "Respring";
-"Rebuild Apps" = "Rebuild Apps";
-"Rebuild Icon Cache" = "Rebuild Icon Cache";
-"Reinstall Sileo & Zebra" = "Reinstall Sileo & Zebra";
-"Uninstall" = "Uninstall";
-"Credits" = "Credits";
-"New Version Available" = "New Version Available";
+"Rebuild Apps" = "Reconstruir Apps";
+"Rebuild Icon Cache" = "Reconstruir Icon Cache";
+"Reinstall Sileo & Zebra" = "Reinstalar Sileo & Zebra";
+"Uninstall" = "Desinstalar";
+"Credits" = "Creditos";
+"New Version Available" = "Nueva Version Disponible";
 "Bootstrapped" = "Bootstrapped";
-"Update" = "Update";
-"Install" = "Install";
-"Unsupported" = "Unsupported";
-"App List" = "App List";
+"Update" = "Actualizar";
+"Install" = "Instalar";
+"Unsupported" = "No Soportado";
+"App List" = "Lista De Apps";
 
 
 "OK" = "OK";
