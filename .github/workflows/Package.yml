@@ -56,18 +56,24 @@ jobs:
 
       - name: Setup Theos environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
-
-      - name: Set Version
-        id: version
+        
+      - name: Set up Git
+        id: check_changes
         run: |
-         LATEST_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --max-count=1))
-         IFS='.' read -ra VERSION_PARTS <<< "${LATEST_TAG//v/}"
-         let PATCH_VERSION=${VERSION_PARTS[2]}+1
-         NEW_VERSION="v${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH_VERSION"
-         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-      - name: Use output
-        run: echo "The output was ${{ steps.my_step.outputs.my_output }}"
-
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git remote add upstream https://github.com/RootHide/Bootstrap
+          git fetch upstream
+          git fetch --all --prune
+          git pull --rebase --strategy-option=theirs upstream main
+          CHANGE_COUNT=$(git rev-list HEAD...upstream/main --count)
+          if [ "$CHANGE_COUNT" -gt 0 ]; then
+            echo "New changes detected"
+            echo "changes_detected=true" >> $GITHUB_ENV
+          else
+            echo "No changes since last build"
+            echo "changes_detected=false" >> $GITHUB_ENV
+          fi
 
       - name: Make bootstrap package
         run: gmake -j$(sysctl -n hw.ncpu) package
@@ -82,7 +88,7 @@ jobs:
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
         with:
           delete_release: true
-          tag_name: v${{ env.NEW_VERSION }}
+          tag_name: v${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
