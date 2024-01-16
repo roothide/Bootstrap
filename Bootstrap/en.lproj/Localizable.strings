@@ -9,7 +9,7 @@
 "Credits" = "Creditos";
 "New Version Available" = "Nueva Version Disponible";
 "Bootstrapped" = "Bootstrapped";
-"Update" = "Actualizar";
+"Update" = "Actualizacion";
 "Install" = "Instalar";
 "Unsupported" = "No Soportado";
 "App List" = "Lista De Apps";
@@ -17,57 +17,57 @@
 
 "OK" = "OK";
 "Error" = "Error";
-"Warnning" = "Warnning";
-"Applying" = "Applying";
-"Cannel" = "Cannel";
-"Update" = "Update";
+"Warnning" = "Advertencia";
+"Applying" = "Aplicando";
+"Cannel" = "Canal";
+"Update" = "Actualizacion";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "Uninstall";
-"Uninstalling" = "Uninstalling";
-"bootstrap uninstalled" = "bootstrap uninstalled";
+"Uninstall" = "Desinstalar";
+"Uninstalling" = "Desinstalando";
+"bootstrap uninstalled" = "bootstrap desinstalado";
 
-"Eanble Tweak for App" = "Eanble Tweak for App";
-"name or identifier" = "name or identifier";
+"Eanble Tweak for App" = "Activar Tweak Para App";
+"name or identifier" = "nombre o identifier";
 
-"Server Not Running" = "Server Not Running";
+"Server Not Running" = "El Servidor No Esta Funcionando";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Por razones desconocidas el servidor bootstrap no esta funcionando, La unica solucion es reiniciarlo ahora.";
 
-"Restart Server" = "Restart Server";
-"bootstrap server restart successful" = "bootstrap server restart successful";
+"Restart Server" = "Reiniciar Servidor";
+"bootstrap server restart successful" = "el servidor bootstrap fue reiniciado exitosamente";
 
-"Rebuilding" = "Rebuilding";
-"Don't exit Bootstrap app until show the lock screen" = "Don't exit Bootstrap app until show the lock screen";
+"Rebuilding" = "Reconstruyendo";
+"Don't exit Bootstrap app until show the lock screen" = "No salgas de la app Bootstrap hasta que sea vea la pantalla de bloqueo";
 
-"bootstrap installed" = "bootstrap installed";
-"bootstrap not installed" = "bootstrap not installed";
-"system bootstrapped" = "system bootstrapped";
-"system not bootstrapped" = "system not bootstrapped";
-"bootstrap server check successful" = "bootstrap server check successful";
+"bootstrap installed" = "bootstrap instalado";
+"bootstrap not installed" = "bootstrap no esta instalado";
+"system bootstrapped" = "sistema con bootstrap";
+"system not bootstrapped" = "el sistema no tiene bootstrap";
+"bootstrap server check successful" = "el servidor bootstrap fue checkeado exitosamente";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Parece que tienes la app de Filza instalada, La cual puede ser detectada como Jailbroken. Puedes activar el tweak para ocultarla.";
 
-"Status: Rebuilding Apps" = "Status: Rebuilding Apps";
-"Status: Reinstalling Sileo" = "Status: Reinstalling Sileo";
-"Status: Reinstalling Zebra" = "Status: Reinstalling Zebra";
-"Sileo and Zebra reinstalled!" = "Sileo and Zebra reinstalled!";
-"Status: Rebuilding Icon Cache" = "Status: Rebuilding Icon Cache";
+"Status: Rebuilding Apps" = "Estado: Reconstruyendo Apps";
+"Status: Reinstalling Sileo" = "Estado: Reinstalando Sileo";
+"Status: Reinstalling Zebra" = "Estado: Reinstalando Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo Y Zebra Reinstalados!";
+"Status: Rebuilding Icon Cache" = "Estado: Reconstruyendo Icon Cache";
 
-"openssh package is not installed" = "openssh package is not installed";
+"openssh package is not installed" = "el paquete openssh no esta instalado";
 
-"Reboot Device" = "Reboot Device";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+"Reboot Device" = "Reiniciar Dispositivo";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "La version bootstrap instalada actualmente es inconsistente con la app bootstrap, Necesitas reiniciar el dispositivo para actualizarla.";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Tu version de Trollstore es muy antigua, Bootstrap solo soporta Trollstore>=2.0, Tienes que actualizar Trollstore y luego reinstalar la app Bootstrap.";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Tu dispositivo no parece tener el modo desarrollador activado. \n\nPorfavor activa el modo desarrollador y reinicia tu dispositivo.";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine fue instalado en tu dispositivo, instalando este bootstrap podria romperlo!";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Has instalado una version beta antigua, porfavor desactiva todos los app tweaks y reinicia tu dispostivo para desinstalarlo y poder instalar la nueva version de bootstrap.";
 
-"openssh launch successful" = "openssh launch successful";
-"respring now..." = "respring now...";
+"openssh launch successful" = "openssh activacion exitosa";
+"respring now..." = "respring ahora...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Estas seguro que quieres desinstalar bootstrap?\n\nPorfavor asegurate que desactivaste todos los app tweaks antes de desinstalar.";
 
