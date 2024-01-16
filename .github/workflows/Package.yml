@@ -60,7 +60,7 @@ jobs:
       - name: Set Version
         id: version
         run: |
-          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
           IFS='.' read -ra VERSION_PARTS <<< "${LATEST_TAG//v/}"
           let PATCH_VERSION=${VERSION_PARTS[2]}+1
           NEW_VERSION="v${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH_VERSION"
