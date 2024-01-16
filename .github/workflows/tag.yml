@@ -1,1 +1,3 @@
-
+    git fetch --tags
+    git tag # Список тегов, чтобы убедиться, что они существуют в локальном репозитории
+    git describe --tags $(git rev-list --tags --max-count=1) # Проверка команды
