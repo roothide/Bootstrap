@@ -12,7 +12,7 @@
 
 "device-model: %s" = "设备型号: %s";
 
-"app-version: %@/%@" = "\应用版本: %@/%@";
+"app-version: %@/%@" = "应用版本: %@/%@";
 
 "boot-session: %@" = "启动会话: %@";
 
@@ -114,11 +114,11 @@
 
 "Sileo reinstalled!" = "Sileo商店重装成功";
 
-"Status: Reinstalling Sileo" = "\n状态：正在安装Sileo商店";
+"Status: Reinstalling Sileo" = "状态：正在安装Sileo商店";
 
 "Rebuilding" = "正在重建...";
 
-"Status: Rebuilding Icon Cache" = "\n状态：正在重建图标缓存";
+"Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
 
 "Status: Rebuilding Apps" = "状态：正在重建应用程序";
 
