@@ -7,10 +7,17 @@
 
 import SwiftUI
 
+class toggleState: ObservableObject {
+    @Published var state:Bool
+    init(state: Bool) {
+        self.state = state
+    }
+}
+
 struct OptionsView: View {
     @Binding var showOptions: Bool
     @State var tweakEnable: Bool = !isSystemBootstrapped() || FileManager.default.fileExists(atPath: jbroot("/var/mobile/.tweakenabled"))
-    @State var opensshStatus: Bool = updateOpensshStatus(false)
+    @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
     
     var body: some View {
         ZStack {
@@ -50,23 +57,21 @@ struct OptionsView: View {
                                 tweaEnableAction(newValue)
                             }
                             
-                            Toggle(isOn: $opensshStatus, label: {
+                            Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
+                                opensshStatus.state = opensshAction($0)
+                            }), label: {
                                 Label(
                                     title: { Text("OpenSSH") },
                                     icon: { Image(systemName: "terminal") }
                                 )
-                            }).padding(5)
-                            .onChange(of: opensshStatus) { newValue in
-                                opensshStatus = opensshAction(newValue)
-                            }
+                            })
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
                                 DispatchQueue.global(qos: .utility).async {
                                     let newStatus = (obj.object as! NSNumber).boolValue
-                                    if newStatus != opensshStatus {
-                                        opensshStatus = newStatus
-                                    }
+                                    opensshStatus.state = newStatus
                                 }
                             }
+                            .padding(5)
                             
 
                             Divider().padding(10)

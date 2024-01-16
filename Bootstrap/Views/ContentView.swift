@@ -24,6 +24,8 @@ struct ContentView: View {
     @State private var showCredits = false
     @State private var showAppView = false
     @State private var strapButtonDisabled = false
+    @State private var newVersionAvailable = false
+    @State private var newVersionReleaseURL:String = ""
     
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
@@ -53,6 +55,20 @@ struct ContentView: View {
                     })
                 }
                 .padding(20)
+                
+                if newVersionAvailable {
+                    Button {
+                        UIApplication.shared.open(URL(string: newVersionReleaseURL)!)
+                    } label: {
+                        Label(
+                            title: { Text("New Version Available") },
+                            icon: { Image(systemName: "arrow.down.app.fill") }
+                        )
+                    }
+                    .frame(height:20)
+                    .padding(.top, -20)
+                    .padding(10)
+                }
                 
                 VStack {
                     Button {
@@ -117,7 +133,7 @@ struct ContentView: View {
                                 title: { Text("App List") },
                                 icon: { Image(systemName: "checklist") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -136,7 +152,7 @@ struct ContentView: View {
                                 title: { Text("Settings") },
                                 icon: { Image(systemName: "gear") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -180,7 +196,6 @@ struct ContentView: View {
                         .opacity(0.5)
                 }
             }
-            
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             Button {
@@ -209,10 +224,36 @@ struct ContentView: View {
         }
         .onAppear {
             initFromSwiftUI()
+            Task {
+                do {
+                    try await checkForUpdates()
+                } catch {
+
+                }
+            }
         }
         .sheet(isPresented: $showAppView) {
             AppViewControllerWrapper()
         }
     }
     
+    func checkForUpdates() async throws {
+        if let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            let owner = "roothide"
+            let repo = "Bootstrap"
+            
+            // Get the releases
+            let releasesURL = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/releases")!
+            let releasesRequest = URLRequest(url: releasesURL)
+            let (releasesData, _) = try await URLSession.shared.data(for: releasesRequest)
+            guard let releasesJSON = try JSONSerialization.jsonObject(with: releasesData, options: []) as? [[String: Any]] else {
+                return
+            }
+            
+            if let latestTag = releasesJSON.first?["tag_name"] as? String, latestTag != currentAppVersion {
+                newVersionAvailable = true
+                newVersionReleaseURL = "https://github.com/\(owner)/\(repo)/releases/tag/\(latestTag)"
+            }
+        }
+    }
 }

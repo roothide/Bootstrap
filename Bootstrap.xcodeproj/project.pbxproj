@@ -10,6 +10,7 @@
 		84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; };
 		84364F3E2B323FB600E90B58 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */; };
+		843E87572B56E45300CB45C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 843E87592B56E45300CB45C4 /* Localizable.strings */; };
 		84438D472B26090D00A1E407 /* sileo.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D432B26090D00A1E407 /* sileo.deb */; };
 		84438D482B26090D00A1E407 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = 84438D442B26090D00A1E407 /* tar */; };
 		84438D4A2B26090D00A1E407 /* zebra.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D462B26090D00A1E407 /* zebra.deb */; };
@@ -64,6 +65,8 @@
 		84364F402B32627200E90B58 /* credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credits.h; sourceTree = "<group>"; };
 		84364F412B337BC000E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkrw0-dummy.deb"; sourceTree = "<group>"; };
+		843E87582B56E45300CB45C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		843E875A2B56E48D00CB45C4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
 		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
@@ -198,6 +201,7 @@
 				84364F382B2E53BA00E90B58 /* seh.h */,
 				84438D702B2E439300A1E407 /* syslog.h */,
 				84438D712B2E4E5D00A1E407 /* common.h */,
+				843E87592B56E45300CB45C4 /* Localizable.strings */,
 			);
 			path = Bootstrap;
 			sourceTree = "<group>";
@@ -277,6 +281,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 847099792B1D855D003FA4ED;
 			packageReferences = (
@@ -301,6 +306,7 @@
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
 				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
 				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
+				843E87572B56E45300CB45C4 /* Localizable.strings in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,
 				847099952B1D855E003FA4ED /* LaunchScreen.storyboard in Resources */,
 				847099922B1D855E003FA4ED /* Assets.xcassets in Resources */,
@@ -341,6 +347,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		843E87592B56E45300CB45C4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843E87582B56E45300CB45C4 /* en */,
+				843E875A2B56E48D00CB45C4 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		8470998E2B1D855D003FA4ED /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -364,6 +379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -422,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -496,7 +513,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.4.3;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -534,7 +551,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.4.3;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
