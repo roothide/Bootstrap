@@ -64,7 +64,7 @@
 
 "roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine fue instalado en tu dispositivo, instalando este bootstrap podria romperlo!";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Has instalado una version beta antigua, porfavor desactiva todos los app tweaks y reinicia tu dispostivo para desinstalarlo y poder instalar la nueva version de bootstrap.";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Has instalado una version beta antigua, porfavor desactiva todos los app tweaks y reinicia tu dispositivo para desinstalarlo y poder instalar la nueva version de bootstrap.";
 
 "openssh launch successful" = "openssh activacion exitosa";
 "respring now..." = "respring ahora...";
