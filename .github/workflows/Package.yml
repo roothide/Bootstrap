@@ -31,18 +31,15 @@ jobs:
           if [ "$CHANGE_COUNT" -gt 0 ]; then
             echo "New changes detected"
             echo "changes_detected=true" >> $GITHUB_ENV
-            echo "changes_detected=true" >> $GITHUB_OUTPUT
           else
             echo "No changes since last build"
             echo "changes_detected=false" >> $GITHUB_ENV
-            echo "changes_detected=false" >> $GITHUB_OUTPUT
           fi
 
   build:
     name: Build RootHide Bootstrap
     runs-on: macos-latest
     needs: check-for-changes
-    if: ${{ needs.check-for-changes.outputs.changes_detected == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
