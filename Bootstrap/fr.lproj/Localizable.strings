@@ -1,0 +1,72 @@
+"Settings" = "Parametres";
+"Tweak Enable" = "Tweak Activé";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Recréer les Applications";
+"Rebuild Icon Cache" = "Recréer le cache des icônes";
+"Reinstall Sileo & Zebra" = "Réinstaller Sileo & Zebra";
+"Uninstall" = "Désintaller";
+"Credits" = "Crédits";
+"New Version Available" = "Nouvelle Version Disponible";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Mise à jour";
+"Install" = "Installer";
+"Unsupported" = "Non supporté";
+"App List" = "Liste des applications";
+
+
+"OK" = "OK";
+"Error" = "Erreur";
+"Warnning" = "Attention";
+"Applying" = "Appliqué";
+"Cannel" = "Canal";
+"Update" = "Update";
+"Bootstrapping" = "Bootstrapping";
+"Uninstall" = "Désintaller";
+"Uninstalling" = "Désinstallation";
+"bootstrap uninstalled" = "bootstrap désinstallé";
+
+"Eanble Tweak for App" = "Activer un Tweak pour une App";
+"name or identifier" = "nom ou identifieur";
+
+"Server Not Running" = "Serveur pas démarré";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "pour des raisons inconnu, le serveur du boostrap n'a pas démarré, la seule chose que vous pouvez faire est de le redémarrer maintenant.";
+
+"Restart Server" = "Redémarrer le serveur";
+"bootstrap server restart successful" = "Le serveur du boostrap à bien redémarré";
+
+"Rebuilding" = "Recréer";
+"Don't exit Bootstrap app until show the lock screen" = "Don't exit Bootstrap app until show the lock screen";
+
+"bootstrap installed" = "bootstrap installé";
+"bootstrap not installed" = "bootstrap pas installé";
+"system bootstrapped" = "système bootstrappé";
+"system not bootstrapped" = "système non bootstrappé";
+"bootstrap server check successful" = "vérification du serveur bootstrap réussi";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+
+"Status: Rebuilding Apps" = "Status: Reconstruction des Apps";
+"Status: Reinstalling Sileo" = "Status: Réinstallation de Sileo";
+"Status: Reinstalling Zebra" = "Status: Réinstallation de Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo and Zebra réinstallé!";
+"Status: Rebuilding Icon Cache" = "Status: Reconstruction du cache des icônes";
+
+"openssh package is not installed" = "openssh package is not installed";
+
+"Reboot Device" = "Reboot Device";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+
+"openssh launch successful" = "openssh launch successful";
+"respring now..." = "respring now...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
