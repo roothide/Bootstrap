@@ -2,10 +2,10 @@ name: Build and Package
 
 on:
   push:
-    branches: 
+    branches: 
       - main
   pull_request:
-    branches: 
+    branches: 
       - main
   workflow_dispatch:
 
@@ -52,8 +52,8 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 同步官方最新beta4.3代码" >> release.txt
-      
+          echo -e "> - 同步官方最新beta4.3代码，重启按钮、汉化晚点编译更新" >> release.txt
+      
       - name: Build Bootstrap
         run: |
           make package
