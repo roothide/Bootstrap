@@ -82,6 +82,7 @@ struct ContentView: View {
                                     title: { Text("Bootstrapped").bold() },
                                     icon: { Image(systemName: "chair.fill") }
                                 )
+                                .frame(maxWidth: .infinity)
                                 .padding(25)
                                 .onAppear() {
                                     strapButtonDisabled = true
@@ -91,6 +92,7 @@ struct ContentView: View {
                                     title: { Text("Update").bold() },
                                     icon: { Image(systemName: "chair") }
                                 )
+                                .frame(maxWidth: .infinity)
                                 .padding(25)
                             }
                         } else if isBootstrapInstalled() {
@@ -98,18 +100,21 @@ struct ContentView: View {
                                 title: { Text("Bootstrap").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                         } else if ProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15 {
                             Label(
                                 title: { Text("Install").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                         } else {
                             Label(
                                 title: { Text("Unsupported").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                             .onAppear() {
                                 strapButtonDisabled = true
