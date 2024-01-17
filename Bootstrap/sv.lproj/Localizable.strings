@@ -17,7 +17,7 @@
 
 "OK" = "OK";
 "Error" = "Fel";
-"Warnning" = "Varning";
+"Warning" = "Varning";
 "Applying" = "Tillämpar";
 "Cancel" = "Avbryt";
 "Update" = "Uppdatera";

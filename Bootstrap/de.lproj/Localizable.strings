@@ -16,7 +16,7 @@
 
 "OK" = "OK";
 "Error" = "Fehler";
-"Warnning" = "Warnung";
+"Warning" = "Warnung";
 "Applying" = "Anwenden";
 "Cancel" = "Abbrechen";
 "Update" = "Aktualisieren";

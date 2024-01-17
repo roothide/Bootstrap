@@ -17,7 +17,7 @@
 
 "OK" = "はい";
 "Error" = "エラー";
-"Warnning" = "警告";
+"Warning" = "警告";
 "Applying" = "適用中";
 "Cancel" = "キャンセル";
 "Update" = "アップデート";

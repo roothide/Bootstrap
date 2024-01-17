@@ -17,7 +17,7 @@
 
 "OK" = "확인";
 "Error" = "에러";
-"Warnning" = "주의";
+"Warning" = "주의";
 "Applying" = "적용중";
 "Cancel" = "취소";
 "Update" = "업데이트";

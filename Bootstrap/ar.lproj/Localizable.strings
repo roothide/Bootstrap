@@ -17,7 +17,7 @@
 
 "OK" = "حسنا";
 "Error" = "خطأ";
-"Warnning" = "تحذير";
+"Warning" = "تحذير";
 "Applying" = "تطبيق";
 "Cancel" = "الغاء";
 "Update" = "تحديث";

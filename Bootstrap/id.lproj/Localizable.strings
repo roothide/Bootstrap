@@ -16,7 +16,7 @@
 
 "OK" = "OK";
 "Error" = "Kesalahan";
-"Warnning" = "Peringatan";
+"Warning" = "Peringatan";
 "Applying" = "Menerapkan";
 "Cancel" = "Batal";
 "Update" = "Perbarui";

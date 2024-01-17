@@ -17,7 +17,7 @@
 
 "OK" = "了解";
 "Error" = "错误";
-"Warnning" = "警告";
+"Warning" = "警告";
 "Applying" = "应用中";
 "Cancel" = "取消";
 "Update" = "更新环境";
