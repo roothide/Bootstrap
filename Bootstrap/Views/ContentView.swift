@@ -274,22 +274,21 @@ struct ContentView: View {
     }
     
     func checkForUpdates() async throws {
-        if let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            let owner = "wwg135"
-            let repo = "Bootstrap"
+        let currentAppVersion = "AAA"
+        let owner = "wwg135"
+        let repo = "Bootstrap"
             
-            // Get the releases
-            let releasesURL = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/releases")!
-            let releasesRequest = URLRequest(url: releasesURL)
-            let (releasesData, _) = try await URLSession.shared.data(for: releasesRequest)
-            guard let releasesJSON = try JSONSerialization.jsonObject(with: releasesData, options: []) as? [[String: Any]] else {
-                return
-            }
+        // Get the releases
+        let releasesURL = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/releases")!
+        let releasesRequest = URLRequest(url: releasesURL)
+        let (releasesData, _) = try await URLSession.shared.data(for: releasesRequest)
+        guard let releasesJSON = try JSONSerialization.jsonObject(with: releasesData, options: []) as? [[String: Any]] else {
+            return
+        }
             
-            if let latestTag = releasesJSON.first?["tag_name"] as? String, latestTag != currentAppVersion {
-                newVersionAvailable = true
-                newVersionReleaseURL = "https://github.com/\(owner)/\(repo)/releases/tag/\(latestTag)"
-            }
+        if let latestTag = releasesJSON.first?["tag_name"] as? String, latestTag != currentAppVersion {
+            newVersionAvailable = true
+            newVersionReleaseURL = "https://github.com/\(owner)/\(repo)/releases/tag/\(latestTag)"
         }
     }
 }
