@@ -61,7 +61,7 @@
 
 "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Trollstore versi yg ente install udah ketuaan, Bootstrap cuman bisa pake trollstore>=2.0, perbarui trollstore baru pasang Bootstrap app.";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Kayaknya perangkatmu ga ngaktifin Mode Pengembang.\n\nAktifin dulu cok Mode Pengembang terus nyalakan ulang;
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Kayaknya perangkatmu ga ngaktifin Mode Pengembang.\n\nAktifin dulu cok Mode Pengembang terus nyalakan ulang";
 
 "roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine udah dipasang di perangkat ini, sekarang kalo ente mau pasang bootstrap hp ente bisajadi meledak!";
 
