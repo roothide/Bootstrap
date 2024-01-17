@@ -122,9 +122,44 @@ struct ContentView: View {
                             .opacity(0.5)
                     }
                     .disabled(strapButtonDisabled)
+
+                    HStack {
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            respringAction()
+                        } label: {
+                            Label(
+                                title: { Text("Respring") },
+                                icon: { Image(systemName: "arrow.clockwise") }
+                            )
+                            .frame(width: 145, height: 65)
+                        }
+                        .background {
+                            Color(UIColor.systemBackground)
+                                .cornerRadius(20)
+                                .opacity(0.5)
+                        }
+                        .disabled(!isSystemBootstrapped())
+                        
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            rebootAction()
+                        } label: {
+                            Label(
+                                title: { Text("Reboot") },
+                                icon: { Image(systemName: "arrow.clockwise.circle.fill") }
+                            )
+                            .frame(width: 145, height: 65)
+                        }
+                        .background {
+                            Color(UIColor.systemBackground)
+                                .cornerRadius(20)
+                                .opacity(0.5)
+                        }
+                        .disabled(!isSystemBootstrapped())
+                    }
                     
                     HStack {
-                        
                         Button {
                             showAppView.toggle()
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -158,8 +193,7 @@ struct ContentView: View {
                             Color(UIColor.systemBackground)
                                 .cornerRadius(20)
                                 .opacity(0.5)
-                        }
-                        
+                        }  
                     }
                     
                     VStack {
