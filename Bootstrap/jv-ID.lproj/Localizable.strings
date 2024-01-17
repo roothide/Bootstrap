@@ -57,7 +57,7 @@
 "Reboot Device" = "Reboot Perangkat";
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Versi bootstrapped saiki ora konsisten karo versi aplikasi Bootstrap, lan sampeyan perlu reboot perangkat kanggo nganyari iki.";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Versi trollstore sampeyan terlalu lawas, Bootstrap mung ngedukung trollstore>=2.0, sampeyan kudu nge update versi trolstore mari ngono ngepasang ulang Bootstrap app maneh."
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Versi trollstore sampeyan terlalu lawas, Bootstrap mung ngedukung trollstore>=2.0, sampeyan kudu nge update versi trolstore mari ngono ngepasang ulang Bootstrap app maneh.";
 
 "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Mode pengembang neng perangkat e sampeyan mungkin durung aktif.\n\nAktifake mode pengembang lan reboot perangkat e sampeyan.";
 
@@ -69,3 +69,4 @@
 "respring now..." = "respring saiki...";
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Sampeyan yakin pengen uninstall bootstrap?\n\nMangga pastekno sampeyan wis nonaktifne tweak kanggo kabeh aplikasi sakdurunge nguninstall.";
+

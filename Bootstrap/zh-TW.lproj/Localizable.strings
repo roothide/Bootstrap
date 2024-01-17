@@ -17,16 +17,16 @@
 
 "OK" = "OK";
 "Error" = "錯誤";
-"Warnning" = "警告";
+"Warning" = "警告";
 "Applying" = "應用中";
-"Cannel" = "取消";
+"Cancel" = "取消";
 "Update" = "更新";
 "Bootstrapping" = "正在Bootstrap";
 "Uninstall" = "卸載";
 "Uninstalling" = "正在卸載";
 "bootstrap uninstalled" = "bootstrap已卸載";
 
-"Eanble Tweak for App" = "為應用程式啟用Tweak";
+"Enable Tweak for App" = "為應用程式啟用Tweak";
 "name or identifier" = "應用程式名稱或包名";
 
 "Server Not Running" = "服務未在運行";
@@ -40,7 +40,7 @@
 "Don't exit Bootstrap app until show the lock screen" = "在顯示鎖定畫面之前,請不要退出Bootstrap應用程序";
 
 "bootstrap installed" = "bootstrap已安裝";
-"bootstrap not installed" = "bootstrap未安裝
+"bootstrap not installed" = "bootstrap未安裝";
 "system bootstrapped" = "系統已bootstrap";
 "system not bootstrapped" = "系統未bootstrap";
 "bootstrap server check successful" = "bootstrap服務檢查成功";
