@@ -133,3 +133,7 @@
 "Eanble Tweak for App" = "全局插件";
 
 "Update" = "更新";
+
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前的引导版本与已安装的引导程序版本不一致，您需要重启设备以更新它，确定重启设备吗？";
+
+"Reboot Device" = "确定";
