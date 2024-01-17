@@ -132,7 +132,7 @@ struct ContentView: View {
                                 title: { Text("Respring") },
                                 icon: { Image(systemName: "arrow.clockwise") }
                             )
-                            .frame(width: 145, height: 65)
+                            .padding(25)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -150,7 +150,7 @@ struct ContentView: View {
                                 title: { Text("Reboot") },
                                 icon: { Image(systemName: "arrow.clockwise.circle.fill") }
                             )
-                            .frame(width: 145, height: 65)
+                            .padding(25)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -170,7 +170,7 @@ struct ContentView: View {
                                 title: { Text("App List") },
                                 icon: { Image(systemName: "checklist") }
                             )
-                            .frame(width: 145, height: 65)
+                            .padding(25)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -189,7 +189,7 @@ struct ContentView: View {
                                 title: { Text("Settings") },
                                 icon: { Image(systemName: "gear") }
                             )
-                            .frame(width: 145, height: 65)
+                            .padding(25)
                         }
                         .background {
                             Color(UIColor.systemBackground)
