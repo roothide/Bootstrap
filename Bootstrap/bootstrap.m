@@ -197,13 +197,13 @@ int InstallBootstrap(NSString* jbroot_path)
                     withDestinationPath:jbroot_path error:nil]);
     
     
-    STRAPLOG(@"%@", Localized(@"Status: Building Base Binaries"));
+    STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
-    STRAPLOG(@"%@", Localized(@"Status: Starting Bootstrapd"));
+    STRAPLOG("Status: Starting Bootstrapd");
     ASSERT(startBootstrapServer() == 0);
     
-    STRAPLOG(@"%@", Localized(@"Status: Finalizing Bootstrap"));
+    STRAPLOG("Status: Finalizing Bootstrap");
     NSString* log=nil;
     NSString* err=nil;
     int status = spawnBootstrap((char*[]){"/bin/sh", "/prep_bootstrap.sh", NULL}, &log, &err);
