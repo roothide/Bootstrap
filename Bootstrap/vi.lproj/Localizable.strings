@@ -39,36 +39,36 @@
 "Rebuilding" = "Đang xây dựng lại";
 "Don't exit Bootstrap app until show the lock screen" = "Không thoát Bootstrap cho đến khi hiện màn hình khoá";
 
-"bootstrap installed" = "bootstrap installed";
-"bootstrap not installed" = "bootstrap not installed";
-"system bootstrapped" = "system bootstrapped";
-"system not bootstrapped" = "system not bootstrapped";
-"bootstrap server check successful" = "bootstrap server check successful";
+"bootstrap installed" = "bootstrap đã được cài đặt";
+"bootstrap not installed" = "bootstrap chưa được cài đặt";
+"system bootstrapped" = "hệ thống được tiêm bootstrap";
+"system not bootstrapped" = "hệ thống chưa có bootstrap";
+"bootstrap server check successful" = "kiểm tra máy chủ bootstrap thành công";
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Có vẻ như bạn có Filza, thứ có thể bị phát hiện đã bị bẻ khoá. Bạn có thể bật Tweak cho nó để ẩn nó.";
 
 "Status: Rebuilding Apps" = "Trạng thái: Rebuilding Apps";
 "Status: Reinstalling Sileo" = "Trạng thái: Đang cài lại Sileo";
 "Status: Reinstalling Zebra" = "Trạng thài: Đang cài lại Zebra";
-"Sileo and Zebra reinstalled!" = "Sileo and Zebra reinstalled!";
-"Status: Rebuilding Icon Cache" = "Status: Rebuilding Icon Cache";
+"Sileo and Zebra reinstalled!" = "Sileo và Zebra đã được cài đặt lại!";
+"Status: Rebuilding Icon Cache" = "Trạng thái: Rebuilding Icon Cache";
 
-"openssh package is not installed" = "openssh package is not installed";
+"openssh package is not installed" = "openssh chưa được cài đặt";
 
-"Reboot Device" = "Reboot Device";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+"Reboot Device" = "Khởi động lại";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Bản bootstrap được cài hiện tại khác với phiên bản ứng dụng Bootstrap, khởi động lại máy để cập nhật nó.";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "TrollStore của bạn quá cũ : dưới bản 2.0, bạn phải cập nhật TrollStore và cài đặt lại ứng dụng Bootstrap.";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Thiết bị này có vẻ như không bật chế độ Nhà phát triển. Bật nó lên và khởi động lại thiết bị.";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine được cài đặt trên thiết bị này, việc cài đặt bootstrap có thể phá hỏng nó!";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Bạn đang sử dụng một bản beta cũ, hãy tắt tiêm tweak cho mọi ứng dụng và khởi động lại thiết bị để gỡ nó và cài bản bootstrap mới hơn.";
 
-"openssh launch successful" = "openssh launch successful";
-"respring now..." = "respring now...";
+"openssh launch successful" = "khởi động openssh thành công";
+"respring now..." = "respring bây giờ...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Bạn có chắc muốn gỡ bootstrap?\n\nChắc chắn rằng bạn đã tắt tiêm tweak cho tất cả các ứng dụng trước khi gỡ bootstrap.";
 
 
