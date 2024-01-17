@@ -24,10 +24,6 @@
 
 "system not bootstrapped" = "系统未引导";
 
-"\n:::Credits:::\n" = ":::感谢:::";
-
-"\nThanks to these guys, we couldn't have completed this project without their help!" = "\n感谢以上所有朋友，没有他们的帮助，我们就不可能完成这个项目！";
-
 "Server Not Running" = "服务未运行";
 
 "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知的原因，引导程序没有运行，我们现在唯一能做的就是重新启动它。";
