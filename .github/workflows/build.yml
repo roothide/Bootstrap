@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 env:
-  VERSION: ＇1.0'
+  VERSION: '1.0'
 
 jobs:
   build:
