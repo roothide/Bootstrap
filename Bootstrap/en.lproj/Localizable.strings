@@ -131,3 +131,5 @@
 "Reboot Device" = "确定";
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "似乎你已安装了Filza文件管理器，这可能被检测为越狱状态，你可以启用插件来隐藏它。";
+
+"Don't exit Bootstrap app until show the lock screen" = "在显示锁屏界面之前，请勿退出Bootstrap应用程序。";
