@@ -52,7 +52,7 @@
 "Sileo and Zebra reinstalled!" = "Sileo dan Zebra dipasang ulang!";
 "Status: Rebuilding Icon Cache" = "Status: Membangun Ulang Icon Cache";
 
-"openssh package is not installed" = "paketa openssh tidak terpasang";
+"openssh package is not installed" = "paket openssh tidak terpasang";
 
 "Reboot Device" = "Reboot Perangkat";
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Versi bootstrap saat ini tidak konsisten dengan versi aplikasi Bootstrap, dan Anda perlu me-reboot perangkat untuk memperbarui.";
@@ -65,7 +65,7 @@
 
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Anda telah menginstal versi beta lama, harap nonaktifkan semua tweak aplikasi dan reboot perangkat untuk menghapusnya sehingga Anda dapat menginstal bootstrap versi baru.";
 
-"openssh launch successful" = "pencetakan openssh berhasil";
+"openssh launch successful" = "peluncuran openssh berhasil";
 "respring now..." = "respring sekarang...";
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Apakah Anda yakin ingin menghapus bootstrap?\n\nPastikan Anda telah menonaktifkan tweak untuk semua aplikasi sebelum menghapusnya.";
