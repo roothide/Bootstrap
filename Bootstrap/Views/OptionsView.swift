@@ -16,7 +16,7 @@ class toggleState: ObservableObject {
 
 struct OptionsView: View {
     @Binding var showOptions: Bool
-    @State var tweakEnable: Bool = !isSystemBootstrapped() || FileManager.default.fileExists(atPath: jbroot("/var/mobile/.tweakenabled"))
+    @Binding var tweakEnable: Bool
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
     
     var body: some View {
