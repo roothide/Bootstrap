@@ -3,10 +3,10 @@ name: Build and Package
 on:
   push:
     branches: 
-      - de
+      - dev
   pull_request:
     branches: 
-      - de
+      - dev
   workflow_dispatch:
 
 concurrency:
@@ -52,7 +52,8 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 持续修复汉化中，没汉化的在tg回复我" >> release.txt
+          echo -e "> - 1.首页添加“注销”、“重启”按钮！！！\n> - 2.持续修复汉化中，没汉化的在tg回复我" >> release.txt
+          sed -i '' "s/AAA/版本：${{ env.VERSION }}/g" ./Bootstrap/Views/ContentView.swift
       
       - name: Build Bootstrap
         run: |
