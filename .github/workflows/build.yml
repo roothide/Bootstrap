@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 1.删除zebra商店，首页添加“注销”、“重启”按钮！！！\n> - 2.持续修复汉化中，没汉化的在tg回复我" >> release.txt
+          echo -e "> - 持续修复汉化中，没汉化的在tg回复我" >> release.txt
           sed -i '' "s/AAA/${{ env.msT }}/g" ./Bootstrap/Views/ContentView.swift
       
       - name: Build Bootstrap
