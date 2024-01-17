@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 同步官方最新beta4.3代码，新增 bootstrap 的 OTA 升级， 重启按钮、汉化稍后就更新发布" >> release.txt
+          echo -e "> - 持续修复汉化中，没汉化的在tg回复我" >> release.txt
       
       - name: Build Bootstrap
         run: |
