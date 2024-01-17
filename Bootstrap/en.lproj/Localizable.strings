@@ -17,16 +17,16 @@
 
 "OK" = "OK";
 "Error" = "Error";
-"Warnning" = "Warnning";
+"Warning" = "Warning";
 "Applying" = "Applying";
-"Cannel" = "Cannel";
+"Cancel" = "Cancel";
 "Update" = "Update";
 "Bootstrapping" = "Bootstrapping";
 "Uninstall" = "Uninstall";
 "Uninstalling" = "Uninstalling";
 "bootstrap uninstalled" = "bootstrap uninstalled";
 
-"Eanble Tweak for App" = "Eanble Tweak for App";
+"Enable Tweak for App" = "Enable Tweak for App";
 "name or identifier" = "name or identifier";
 
 "Server Not Running" = "Server Not Running";
