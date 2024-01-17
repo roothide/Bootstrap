@@ -76,20 +76,7 @@ struct OptionsView: View {
 
                             Divider().padding(10)
                             
-                            VStack(alignment: .leading, spacing: 12, content: {
-                                
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    respringAction()
-                                } label: {
-                                    Label(
-                                        title: { Text("Respring") },
-                                        icon: { Image(systemName: "arrow.clockwise") }
-                                    )
-                                }
-                                .buttonStyle(DopamineButtonStyle())
-                                .disabled(!isSystemBootstrapped())
-                                
+                            VStack(alignment: .leading, spacing: 12, content: {                        
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     rebuildappsAction()
@@ -119,7 +106,7 @@ struct OptionsView: View {
                                     reinstallPackageManager()
                                 } label: {
                                     Label(
-                                        title: { Text("Reinstall Sileo & Zebra") },
+                                        title: { Text("Reinstall Sileo") },
                                         icon: { Image(systemName: "shippingbox") }
                                     )
                                 }
