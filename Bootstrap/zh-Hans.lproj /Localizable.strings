@@ -36,8 +36,6 @@
 
 "bootstrap server check successful" = "引导服务检查成功";
 
-"Status: Rebuilding Apps" = "状态：正在重建应用程序";
-
 "Applying" = "正在应用...";
 
 "openssh package is not installed" = "未安装 openSSH 插件包，请到 Sileo 商店搜索安装!";
