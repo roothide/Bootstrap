@@ -5,6 +5,7 @@
 
 void initFromSwiftUI();
 void respringAction();
+void rebootAction();
 void rebuildappsAction();
 void reinstallPackageManager();
 void rebuildIconCacheAction();
