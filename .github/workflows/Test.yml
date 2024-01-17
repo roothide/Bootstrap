@@ -96,8 +96,8 @@ jobs:
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Bootstrap_beta ${{ env.VERSION }} Release
+          name: Bootstrap_beta ${{ step.set_version.outputs.new_tag }} Release
           body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
           artifacts: "Bootstrap.tipa"
-          tag: ${{ env.VERSION }}
+          tag: ${{ step.set_version.outputs.new_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
