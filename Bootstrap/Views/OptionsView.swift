@@ -76,29 +76,7 @@ struct OptionsView: View {
 
                             Divider().padding(10)
                             
-                            VStack(alignment: .leading, spacing: 12, content: {
-                                
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    respringAction()
-                                } label: {
-                                    Label(
-                                        title: { Text("Respring") },
-                                        icon: { Image(systemName: "arrow.clockwise") }
-                                    )
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                                }
-                                .frame(width: 250)
-                                .background(Color.clear)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.gray, lineWidth: 1)
-                                        .opacity(0.3)
-                                )
-                                .disabled(!isSystemBootstrapped())
-                                
+                            VStack(alignment: .leading, spacing: 12, content: { 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     rebuildappsAction()
@@ -200,5 +178,3 @@ struct OptionsView: View {
         }
     }
 }
-
-
