@@ -139,6 +139,7 @@ struct ContentView: View {
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
+                        .buttonStyle(DopamineButtonStyle())
                         .disabled(!isSystemBootstrapped())
                         
                         Button {
@@ -156,6 +157,7 @@ struct ContentView: View {
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
+                        .buttonStyle(DopamineButtonStyle())
                         .disabled(!isSystemBootstrapped())
                     }
                     
