@@ -19,14 +19,14 @@
 "Error" = "ผิดพลาด";
 "Warnning" = "คำเตือน";
 "Applying" = "กำลังนำไปใช้";
-"Cannel" = "ยกเลิก";
+"Cancel" = "ยกเลิก";
 "Update" = "อัพเดท";
 "Bootstrapping" = "กำลังทำ Bootstrap";
 "Uninstall" = "ถอนการติดตั้ง";
 "Uninstalling" = "กำลังถอนการติดตั้ง";
 "bootstrap uninstalled" = "ถอน Bootstrap แล้ว";
 
-"Eanble Tweak for App" = "เปิดการใช้งาน Tweak บนแอป";
+"Enable Tweak for App" = "เปิดการใช้งาน Tweak บนแอป";
 "name or identifier" = "ชื่อ หรือ id ของแอป";
 
 "Server Not Running" = "เซิร์ฟเวอร์ไม่ได้ทำงานอยู่";

@@ -19,14 +19,14 @@
 "Error" = "Lỗi";
 "Warnning" = "Cảnh báo";
 "Applying" = "Đang áp dụng";
-"Cannel" = "Huý";
+"Cancel" = "Huý";
 "Update" = "Cập nhật";
 "Bootstrapping" = "Đang cài Bootstrap";
 "Uninstall" = "Gỡ cài đặt";
 "Uninstalling" = "Đang xoá";
 "bootstrap uninstalled" = "bootstrap đã bị gỡ";
 
-"Eanble Tweak for App" = "Bật tweak cho ứng dụng";
+"Enable Tweak for App" = "Bật tweak cho ứng dụng";
 "name or identifier" = "tên hoặc định danh";
 
 "Server Not Running" = "Máy chủ đang tắt";

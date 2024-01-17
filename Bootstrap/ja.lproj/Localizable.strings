@@ -19,14 +19,14 @@
 "Error" = "エラー";
 "Warnning" = "警告";
 "Applying" = "適用中";
-"Cannel" = "キャンセル";
+"Cancel" = "キャンセル";
 "Update" = "アップデート";
 "Bootstrapping" = "Bootstrapping";
 "Uninstall" = "アンインストール";
 "Uninstalling" = "アンインストール中";
 "bootstrap uninstalled" = "bootstrapはアンインストールされました";
 
-"Eanble Tweak for App" = "アプリのtweakを有効にする";
+"Enable Tweak for App" = "アプリのtweakを有効にする";
 "name or identifier" = "名前またはidentifier";
 
 "Server Not Running" = "サーバーが動作していません";

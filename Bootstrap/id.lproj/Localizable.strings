@@ -18,14 +18,14 @@
 "Error" = "Kesalahan";
 "Warnning" = "Peringatan";
 "Applying" = "Menerapkan";
-"Cannel" = "Batal";
+"Cancel" = "Batal";
 "Update" = "Perbarui";
 "Bootstrapping" = "Bootstrapping";
 "Uninstall" = "Hapus";
 "Uninstalling" = "Menghapus";
 "bootstrap uninstalled" = "bootstrap dihapus";
 
-"Eanble Tweak for App" = "Aktifkan Tweak untuk Aplikasi";
+"Enable Tweak for App" = "Aktifkan Tweak untuk Aplikasi";
 "name or identifier" = "nama atau pengenal";
 
 "Server Not Running" = "Server Tidak Berjalan";

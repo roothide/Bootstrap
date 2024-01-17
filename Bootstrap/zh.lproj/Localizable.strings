@@ -19,14 +19,14 @@
 "Error" = "错误";
 "Warnning" = "警告";
 "Applying" = "应用中";
-"Cannel" = "取消";
+"Cancel" = "取消";
 "Update" = "更新";
 "Bootstrapping" = "Bootstrapping";
 "Uninstall" = "卸载";
 "Uninstalling" = "正在卸载";
 "bootstrap uninstalled" = "已卸载bootstrap";
 
-"Eanble Tweak for App" = "启用应用程序tweak";
+"Enable Tweak for App" = "启用应用程序tweak";
 "name or identifier" = "名称或identifier";
 
 "Server Not Running" = "服务未运行";

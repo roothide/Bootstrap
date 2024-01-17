@@ -19,14 +19,14 @@
 "Error" = "Ошибка";
 "Warnning" = "Внимание";
 "Applying" = " Применение";
-"Cannel" = "Отмена";
+"Cancel" = "Отмена";
 "Update" = "Обновить";
 "Bootstrapping" = "Установка";
 "Uninstall" = "Удалить";
 "Uninstalling" = "Удаление";
 "bootstrap uninstalled" = "bootstrap удален";
 
-"Eanble Tweak for App" = "Включение твиков для приложения";
+"Enable Tweak for App" = "Включение твиков для приложения";
 "name or identifier" = "имя или идентификатор";
 
 "Server Not Running" = "Сервер не запущен";

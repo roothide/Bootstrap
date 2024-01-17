@@ -19,14 +19,14 @@
 "Error" = "Erreur";
 "Warnning" = "Attention";
 "Applying" = "Appliqué";
-"Cannel" = "Annuler";
+"Cancel" = "Annuler";
 "Update" = "Mettre à jour";
 "Bootstrapping" = "Démarrage";
 "Uninstall" = "Désintaller";
 "Uninstalling" = "Désinstallation";
 "bootstrap uninstalled" = "bootstrap désinstallé";
 
-"Eanble Tweak for App" = "Activer un Tweak pour une App";
+"Enable Tweak for App" = "Activer un Tweak pour une App";
 "name or identifier" = "nom ou identifieur";
 
 "Server Not Running" = "Serveur pas démarré";

@@ -19,14 +19,14 @@
 "Error" = "Fel";
 "Warnning" = "Varning";
 "Applying" = "Tillämpar";
-"Cannel" = "Avbryt";
+"Cancel" = "Avbryt";
 "Update" = "Uppdatera";
 "Bootstrapping" = "Bootstrappar";
 "Uninstall" = "Avinstallera";
 "Uninstalling" = "Avinstallerar";
 "bootstrap uninstalled" = "bootstrap avinstallerad";
 
-"Eanble Tweak for App" = "Aktivera Tweak för App";
+"Enable Tweak for App" = "Aktivera Tweak för App";
 "name or identifier" = "namn eller identifierare";
 
 "Server Not Running" = "Server Ej i Drift";
