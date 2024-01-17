@@ -69,4 +69,4 @@
 "openssh launch successful" = "Запуск openssh прошел успешно";
 "respring now..." = "перезагрузитесь сейчас...";
 
-"Are you sure to uninstall bootstrap?\n\nПожалуйста, убедитесь, что вы отключили твик для всех приложений перед деинсталляцией." = "Are you sure to uninstall bootstrap?\n\nПожалуйста, убедитесь, что вы отключили твик для всех приложений перед удалением.";
+"Are you sure to uninstall bootstrap?\n\nПожалуйста, убедитесь, что вы отключили твик для всех приложений перед деинсталляцией." = "Are you sure to uninstall bootstrap?\n\nПожалуйста, убедитесь, что вы отключили твик для всех приложений перед удалением.";.
