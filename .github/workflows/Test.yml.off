@@ -63,7 +63,7 @@ jobs:
         run: echo "VERSION=0.4.3" >> $GITHUB_ENV
 
       - name: Make bootstrap package
-        run: make -j$(sysctl -n hw.ncpu) package
+        run: gmake -j$(sysctl -n hw.ncpu) package
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -75,16 +75,21 @@ jobs:
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
         with:
           delete_release: true
-          tag_name: ${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
+      - name: Get bootstrap artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Bootstrap.tipa
+
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Bootstrap_beta ${{ env.VERSION }} Release
+          name: Bootstrap_beta v${{ env.VERSION }} Release
           body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
           artifacts: "Bootstrap.tipa"
-          tag: ${{ env.VERSION }}
+          tag: v${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
