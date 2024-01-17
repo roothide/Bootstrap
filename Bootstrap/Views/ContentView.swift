@@ -68,6 +68,7 @@ struct ContentView: View {
                     .frame(height:20)
                     .padding(.top, -20)
                     .padding(10)
+                    .animation(Animation.easeInOut.repeatForever(autoreverses: true), value: newVersionAvailable)
                 }
                 
                 VStack {
