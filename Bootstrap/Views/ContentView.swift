@@ -26,6 +26,7 @@ struct ContentView: View {
     @State private var strapButtonDisabled = false
     @State private var newVersionAvailable = false
     @State private var newVersionReleaseURL:String = ""
+    @State private var tweakEnable: Bool = !isSystemBootstrapped() || FileManager.default.fileExists(atPath: jbroot("/var/mobile/.tweakenabled"))
     
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
@@ -81,6 +82,7 @@ struct ContentView: View {
                                     title: { Text("Bootstrapped").bold() },
                                     icon: { Image(systemName: "chair.fill") }
                                 )
+                                .frame(maxWidth: .infinity)
                                 .padding(25)
                                 .onAppear() {
                                     strapButtonDisabled = true
@@ -90,6 +92,7 @@ struct ContentView: View {
                                     title: { Text("Update").bold() },
                                     icon: { Image(systemName: "chair") }
                                 )
+                                .frame(maxWidth: .infinity)
                                 .padding(25)
                             }
                         } else if isBootstrapInstalled() {
@@ -97,18 +100,21 @@ struct ContentView: View {
                                 title: { Text("Bootstrap").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                         } else if ProcessInfo.processInfo.operatingSystemVersion.majorVersion>=15 {
                             Label(
                                 title: { Text("Install").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                         } else {
                             Label(
                                 title: { Text("Unsupported").bold() },
                                 icon: { Image(systemName: "chair") }
                             )
+                            .frame(maxWidth: .infinity)
                             .padding(25)
                             .onAppear() {
                                 strapButtonDisabled = true
@@ -219,7 +225,7 @@ struct ContentView: View {
             }
             
             if showOptions {
-                OptionsView(showOptions: $showOptions)
+                OptionsView(showOptions: $showOptions, tweakEnable: $tweakEnable)
             }
         }
         .onAppear {
