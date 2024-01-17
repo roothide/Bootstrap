@@ -12,7 +12,7 @@
 
 "device-model: %s" = "设备型号: %s";
 
-"app-version: %@/%@" = "应用版本: %@/%@";
+"app-version: %@" = "应用版本: %@";
 
 "boot-session: %@" = "启动会话: %@";
 
