@@ -8,23 +8,9 @@
 
 @implementation AppDelegate
 
-UITextView* logView=nil;
-
-+ (void)registerLogView:(UITextView*)view
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        logView = view;
-        logView.layoutManager.allowsNonContiguousLayout = NO;
-    });
-}
-
 + (void)addLogText:(NSString*)text
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [logView setText:[logView.text stringByAppendingString:[NSString stringWithFormat:@"%@\n",text]]];
-        if(logView.contentSize.height >= logView.bounds.size.height)
-            [logView setContentOffset:CGPointMake(0, logView.contentSize.height - logView.bounds.size.height) animated:YES];
-    });
+    [NSNotificationCenter.defaultCenter postNotificationName:@"LogMsgNotification" object:text];
 }
 
 MBProgressHUD *switchHud=nil;
