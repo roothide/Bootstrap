@@ -110,15 +110,15 @@ void initFromSwiftUI()
         }
     }
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"ios-version: %@",UIDevice.currentDevice.systemVersion]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"ios-version: %@"),UIDevice.currentDevice.systemVersion]];
 
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"device-model: %s"),systemInfo.machine]];
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@",NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"app-version: %@"),NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"boot-session: %@"),getBootSession()]];
 
     [AppDelegate addLogText: isBootstrapInstalled()? Localized(@"bootstrap installed"):Localized(@"bootstrap not installed")];
     [AppDelegate addLogText: isSystemBootstrapped()? Localized(@"system bootstrapped"):Localized(@"system not bootstrapped")];
@@ -178,6 +178,24 @@ void respringAction()
     if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 }
 
+void rebootAction() 
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warnning") message:Localized(@"Are you sure to reboot device?") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Sure") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSString *log = nil;
+            NSString *err = nil;
+            int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], &log, &err);
+            if (status != 0) {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@", log, err] title:[NSString stringWithFormat:@"code(%d)", status]];
+            }
+        });
+    }]];
+    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
 void rebuildappsAction()
 {
     [AppDelegate addLogText:Localized(@"Status: Rebuilding Apps")];
@@ -219,20 +237,8 @@ void reinstallPackageManager()
             success = NO;
         }
 
-        [AppDelegate addLogText:Localized(@"Status: Reinstalling Zebra")];
-        NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
-        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
-            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
-            success = NO;
-        }
-
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
-            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
-            success = NO;
-        }
-
         if(success) {
-            [AppDelegate showMesage:Localized(@"Sileo and Zebra reinstalled!") title:@""];
+            [AppDelegate showMesage:Localized(@"Sileo reinstalled!") title:@""];
         }
         [AppDelegate dismissHud];
     });
