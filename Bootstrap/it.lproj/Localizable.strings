@@ -45,13 +45,13 @@
 "system not bootstrapped" = "sistema non bootstrappato";
 "bootstrap server check successful" = "controllo del server bootstrap riuscito";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Sembra che l'app Filza sia installata. Potrebbe essere rilevata come jailbreak. Puoi abilitare un Tweak per nasconderla.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Sembra che l'app Filza sia installata, la quale potrebbe essere rilevata come jailbreak. Puoi abilitare un Tweak per nasconderla.";
 
-"Status: Rebuilding Apps" = "Status: Ricostruzione App";
-"Status: Reinstalling Sileo" = "Status: Reinstallazione di Sileo";
-"Status: Reinstalling Zebra" = "Status: Reinstallazione di Zebra";
+"Status: Rebuilding Apps" = "Stato: Ricostruzione App";
+"Status: Reinstalling Sileo" = "Stato: Reinstallazione di Sileo";
+"Status: Reinstalling Zebra" = "Stato: Reinstallazione di Zebra";
 "Sileo and Zebra reinstalled!" = "Sileo and Zebra reinstallati!";
-"Status: Rebuilding Icon Cache" = "Status: Ricostruzione cache icone";
+"Status: Rebuilding Icon Cache" = "Stato: Ricostruzione cache icone";
 
 "openssh package is not installed" = "il pacchetto openssh non è installlato";
 
@@ -67,7 +67,7 @@
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Hai installato una vecchia versione beta, disabilita tutti i tweak e riavvia il dispositivo per disinstallare questa versione in modo da poter installare la nuova versione di bootstrap.";
 
 "openssh launch successful" = "openssh avviato correttamente";
-"respring now..." = "effettua un respring ora...";
+"respring now..." = "respring in corso...";
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Sei sicuro di voler disinstallare bootstrap?\n\nAssicurati di aver disabilitato i tweak per tutte le app prima di disinstallare.";
 
