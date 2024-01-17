@@ -132,14 +132,13 @@ struct ContentView: View {
                                 title: { Text("Respring") },
                                 icon: { Image(systemName: "arrow.clockwise") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
-                        .buttonStyle(DopamineButtonStyle())
                         .disabled(!isSystemBootstrapped())
                         
                         Button {
@@ -150,14 +149,13 @@ struct ContentView: View {
                                 title: { Text("Reboot") },
                                 icon: { Image(systemName: "arrow.clockwise.circle.fill") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
                                 .cornerRadius(20)
                                 .opacity(0.5)
                         }
-                        .buttonStyle(DopamineButtonStyle())
                         .disabled(!isSystemBootstrapped())
                     }
                     
@@ -170,7 +168,7 @@ struct ContentView: View {
                                 title: { Text("App List") },
                                 icon: { Image(systemName: "checklist") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -189,7 +187,7 @@ struct ContentView: View {
                                 title: { Text("Settings") },
                                 icon: { Image(systemName: "gear") }
                             )
-                            .padding(25)
+                            .frame(width: 145, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -286,9 +284,13 @@ struct ContentView: View {
             return
         }
             
-        if let latestTag = releasesJSON.first?["tag_name"] as? String, latestTag != currentAppVersion {
-            newVersionAvailable = true
-            newVersionReleaseURL = "https://github.com/\(owner)/\(repo)/releases/tag/\(latestTag)"
+        if let latestTag = releasesJSON.first?["tag_name"] as? String {
+            if latestTag.count == 10 && currentAppVersion.count == 10 {
+                if latestTag > currentAppVersion {
+                    newVersionAvailable = true
+                    newVersionReleaseURL = "https://github.com/\(owner)/\(repo)/releases/tag/\(latestTag)"
+                }
+            }
         }
     }
 }
