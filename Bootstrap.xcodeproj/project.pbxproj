@@ -65,6 +65,7 @@
 		84364F402B32627200E90B58 /* credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credits.h; sourceTree = "<group>"; };
 		84364F412B337BC000E90B58 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		84364F462B3C5D4600E90B58 /* libkrw0-dummy.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkrw0-dummy.deb"; sourceTree = "<group>"; };
+                843E87582B56E45300CB45C4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh-Hans; path = zh-Hans.lproj/Localizable.strings; sourceTree = "<group>"; };
 		843E87582B56E45300CB45C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		843E875A2B56E48D00CB45C4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
@@ -279,6 +280,7 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+                                zh-Hans,
 				en,
 				Base,
 				de,
@@ -350,6 +352,7 @@
 		843E87592B56E45300CB45C4 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
+                                843E87582B56E45300CB45C4 /* zh-Hans */,
 				843E87582B56E45300CB45C4 /* en */,
 				843E875A2B56E48D00CB45C4 /* de */,
 			);
