@@ -90,7 +90,7 @@ jobs:
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
         with:
           delete_release: true
-          tag_name: ${{ env.VERSION }}
+          tag_name: ${{ new_tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
@@ -98,8 +98,8 @@ jobs:
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Bootstrap_beta ${{ steps.set_version.outputs.new_tag }} Release
+          name: Bootstrap_beta ${{ new_tag }} Release
           body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
           artifacts: "Bootstrap.tipa"
-          tag: ${{ steps.set_version.outputs.new_tag }}
+          tag: ${{ new_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
