@@ -40,7 +40,7 @@
 
 "Applying" = "正在应用...";
 
-"OpenSSH package is not installed." = "未安装 OpenSSH 插件包";
+"openssh package is not installed" = "未安装 openSSH 插件包，请到 Sileo 商店搜索安装!";
 
 "Developer" = "开发者";
 
@@ -88,9 +88,7 @@
 
 "Options" = "选项";
 
-"OpenSSH" = "启用 SSH";
-
-"Tweaks" = "注入插件";
+"OpenSSH" = "启用OpenSSH";
 
 "App List" = "应用管理器";
 
@@ -124,7 +122,7 @@
 
 "New Version Available" = "有新版本可用";
 
-"Eanble Tweak for App" = "全局插件";
+"Eanble Tweak for App" = "应用程序注入插件";
 
 "Update" = "更新";
 
