@@ -102,7 +102,7 @@
 
 "Tweak Enable" = "插件注入";
 
-"Name or identifier" = "输入App名字或标识符";
+"name or identifier" = "输入App名字或标识符";
 
 "OK" = "好的";
 
@@ -135,3 +135,5 @@
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前的引导版本与已安装的引导程序版本不一致，您需要重启设备以更新它，确定重启设备吗？";
 
 "Reboot Device" = "确定";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "似乎你已安装了Filza文件管理器，这可能被检测为越狱状态，你可以启用插件来隐藏它。";
