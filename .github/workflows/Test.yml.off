@@ -59,23 +59,8 @@ jobs:
       - name: Setup Theos environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Set Version
-        id: set_version
-        run: |
-          git fetch --tags
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          if [[ $latest_tag =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-            major=${BASH_REMATCH[1]}
-            minor=${BASH_REMATCH[2]}
-            patch=${BASH_REMATCH[3]}
-            let "patch+=1"
-            new_tag="v${major}.${minor}.${patch}"
-          else
-            echo "Failed to parse version tag: $latest_tag"
-            exit 1
-          fi
-          echo "VERSION=${new_tag}" >> $GITHUB_ENV
-          echo "New version is ${new_tag}"
+      - name: Set Version 
+        run: echo "VERSION=0.4.3" >> $GITHUB_ENV
 
       - name: Make bootstrap package
         run: make -j$(sysctl -n hw.ncpu) package
