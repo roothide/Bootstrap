@@ -43,7 +43,7 @@
 "bootstrap not installed" = "bootstrap no esta instalado";
 "system bootstrapped" = "sistema con bootstrap";
 "system not bootstrapped" = "el sistema no tiene bootstrap";
-"bootstrap server check successful" = "el servidor bootstrap fue checkeado exitosamente";
+"bootstrap server check successful" = "el servidor bootstrap fue revisado exitosamente";
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Parece que tienes la app de Filza instalada, La cual puede ser detectada como Jailbroken. Puedes activar el tweak para ocultarla.";
 
