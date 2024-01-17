@@ -44,11 +44,11 @@
 
 "Developer" = "开发者";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0" = "你的trollstore版本太低，Bootstrap只支持trollstore>=2.0版本";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的trollstore版本太低，Bootstrap只支持trollstore>=2.0版本，你必须更新你的trollstore并重新安装Bootstrap。";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode in Settings > Privacy & Security and reboot your device." = "您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.";
 
-"RootHide Dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已经安装在这个设备上，现在安装这个 Bootstrap 程序可能会破坏它！";
 
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "已经安装了旧的测试版，请禁用所有应用程序插件并重新启动设备以卸载它，以便安装新版本的 Bootstrap 程序。";
 
