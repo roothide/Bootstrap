@@ -1,73 +1,73 @@
-"Settings" = "Settings";
-"Tweak Enable" = "Tweak Enable";
+"Settings" = "Configuracion";
+"Tweak Enable" = "Tweak Permitido";
 "OpenSSH" = "OpenSSH";
 "Respring" = "Respring";
-"Rebuild Apps" = "Rebuild Apps";
-"Rebuild Icon Cache" = "Rebuild Icon Cache";
-"Reinstall Sileo & Zebra" = "Reinstall Sileo & Zebra";
-"Uninstall" = "Uninstall";
-"Credits" = "Credits";
-"New Version Available" = "New Version Available";
+"Rebuild Apps" = "Reconstruir aplicaciones";
+"Rebuild Icon Cache" = "Reconstruir Iconos Cache";
+"Reinstall Sileo & Zebra" = "Reinstalar Sileo & Zebra";
+"Uninstall" = "Desinstalar";
+"Credits" = "Creditos";
+"New Version Available" = "Nueva Version Disponible";
 "Bootstrapped" = "Bootstrapped";
-"Update" = "Update";
-"Install" = "Install";
-"Unsupported" = "Unsupported";
-"App List" = "App List";
+"Update" = "Actualizar";
+"Install" = "Instalar";
+"Unsupported" = "No Disponible";
+"App List" = "Lista de aplicacion";
 
 
 "OK" = "OK";
 "Error" = "Error";
-"Warnning" = "Warnning";
-"Applying" = "Applying";
+"Warnning" = "Advertencia";
+"Applying" = "Aplicado";
 "Cannel" = "Cannel";
-"Update" = "Update";
+"Update" = "Actualizado";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "Uninstall";
-"Uninstalling" = "Uninstalling";
-"bootstrap uninstalled" = "bootstrap uninstalled";
+"Uninstall" = "Desinstalar";
+"Uninstalling" = "Desinstalando";
+"bootstrap uninstalled" = "bootstrap desinstalado";
 
-"Eanble Tweak for App" = "Eanble Tweak for App";
+"Eanble Tweak for App" = "Tweak activado para Apps";
 "name or identifier" = "name or identifier";
 
-"Server Not Running" = "Server Not Running";
+"Server Not Running" = "El Servidor No Se Ejecuta";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Por razones desconocidas, el servidor de arranque no se está ejecutando, lo único que podemos hacer es reiniciarlo ahora.";
 
-"Restart Server" = "Restart Server";
-"bootstrap server restart successful" = "bootstrap server restart successful";
+"Restart Server" = "Reiniciar el servidor";
+"bootstrap server restart successful" = "bootstrap reinicio del servidor exitoso";
 
-"Rebuilding" = "Rebuilding";
-"Don't exit Bootstrap app until show the lock screen" = "Don't exit Bootstrap app until show the lock screen";
+"Rebuilding" = "Reconstrucción";
+"Don't exit Bootstrap app until show the lock screen" = "No salgas de la aplicación Bootstrap hasta que se muestre la pantalla de bloqueo";
 
-"bootstrap installed" = "bootstrap installed";
-"bootstrap not installed" = "bootstrap not installed";
-"system bootstrapped" = "system bootstrapped";
-"system not bootstrapped" = "system not bootstrapped";
-"bootstrap server check successful" = "bootstrap server check successful";
+"bootstrap installed" = "bootstrap instalado";
+"bootstrap not installed" = "bootstrap no instalado";
+"system bootstrapped" = "sistema bootstrapped";
+"system not bootstrapped" = "no sistema bootstrapped";
+"bootstrap server check successful" = "bootstrap comprobación del servidor exitosa";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Parece que tienes instalada la aplicación Filza, que puede detectarse como con jailbreak. Puedes habilitar Tweak para que lo oculte.";
 
-"Status: Rebuilding Apps" = "Status: Rebuilding Apps";
-"Status: Reinstalling Sileo" = "Status: Reinstalling Sileo";
-"Status: Reinstalling Zebra" = "Status: Reinstalling Zebra";
-"Sileo and Zebra reinstalled!" = "Sileo and Zebra reinstalled!";
-"Status: Rebuilding Icon Cache" = "Status: Rebuilding Icon Cache";
+"Status: Rebuilding Apps" = "Estado: Reconstrucción de aplicaciones";
+"Status: Reinstalling Sileo" = "Estado: Reinstalación Sileo";
+"Status: Reinstalling Zebra" = "Estado: Reinstalación Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo y Zebra Reinstalado!";
+"Status: Rebuilding Icon Cache" = "Estado: Icono de reconstrucción Cache";
 
-"openssh package is not installed" = "openssh package is not installed";
+"openssh package is not installed" = "openssh el paquete no está instalado";
 
-"Reboot Device" = "Reboot Device";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+"Reboot Device" = "Reiniciar el dispositivo";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "El actual bootstrapped La versión es inconsistente con la versión de la aplicación Bootstrap, y necesitas reiniciar el dispositivo para actualizarlo.";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Tu trollstore la versión es demasiado antigua, Bootstrap solo soporta trollstore>=2.0, Tienes que actualizar tu trollstore luego reinstala Bootstrap app.";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Su dispositivo no parece tener habilitado el modo de desarrollador.\n\nPor favor, habilite el modo de desarrollador y reinicie su dispositivo.";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine Se ha instalado en este dispositivo, ahora instala bootstrap puedes difrutarlo!";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Has instalado una versión beta antigua, por favor, desactiva todos app tweaks y reinicie el dispositivo para desinstalarlo para que pueda instalar la nueva versión bootstrap.";
 
-"openssh launch successful" = "openssh launch successful";
-"respring now..." = "respring now...";
+"openssh launch successful" = "openssh launch exitoso";
+"respring now..." = "Respring ahora...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Estás seguro de desinstalar bootstrap?\n\nPor favor asegúrate de haber desactivado tweak para todos apps antes de desinstalar.";
 
