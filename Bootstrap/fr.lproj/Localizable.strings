@@ -1,13 +1,13 @@
-"Settings" = "Parametres";
+"Settings" = "Paramètres";
 "Tweak Enable" = "Tweak Activé";
 "OpenSSH" = "OpenSSH";
 "Respring" = "Respring";
-"Rebuild Apps" = "Recréer les Applications";
-"Rebuild Icon Cache" = "Recréer le cache des icônes";
+"Rebuild Apps" = "Reconstruire les applications";
+"Rebuild Icon Cache" = "Reconstruire le cache des icônes";
 "Reinstall Sileo & Zebra" = "Réinstaller Sileo & Zebra";
 "Uninstall" = "Désintaller";
 "Credits" = "Crédits";
-"New Version Available" = "Nouvelle Version Disponible";
+"New Version Available" = "Nouvelle version disponible";
 "Bootstrapped" = "Bootstrapé";
 "Update" = "Mise à jour";
 "Install" = "Installer";
@@ -18,7 +18,7 @@
 "OK" = "OK";
 "Error" = "Erreur";
 "Warning" = "Attention";
-"Applying" = "Appliqué";
+"Applying" = "En cours";
 "Cancel" = "Annuler";
 "Update" = "Mettre à jour";
 "Bootstrapping" = "Démarrage";
@@ -31,12 +31,12 @@
 
 "Server Not Running" = "Serveur pas démarré";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "pour des raisons inconnu, le serveur du boostrap n'a pas démarré, la seule chose que vous pouvez faire est de le redémarrer maintenant.";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "pour des raisons inconnu, le serveur bootstrap n'a pas démarré, la seule chose que vous pouvez faire est de le redémarrer maintenant.";
 
 "Restart Server" = "Redémarrer le serveur";
 "bootstrap server restart successful" = "Le serveur du boostrap à bien redémarré";
 
-"Rebuilding" = "Recréer";
+"Rebuilding" = "Reconstruction";
 "Don't exit Bootstrap app until show the lock screen" = "Ne quittez pas l'application Bootstrap tant que l'écran de verrouillage n'est pas affiché";
 
 "bootstrap installed" = "bootstrap installé";
@@ -45,7 +45,7 @@
 "system not bootstrapped" = "système non bootstrappé";
 "bootstrap server check successful" = "vérification du serveur bootstrap réussi";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Il semble que vous ayez l'application Filza installée, ce qui peut être détecté comme jailbreaké. Vous pouvez activer le tweak pour la cacher.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Il semble que vous ayez l'application Filza installée, ce qui peut être détecté comme jailbreaké. Vous pouvez activer le tweak pour cette dernière afin de la cacher.";
 
 "Status: Rebuilding Apps" = "Status: Reconstruction des Apps";
 "Status: Reinstalling Sileo" = "Status: Réinstallation de Sileo";
@@ -67,6 +67,6 @@
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Vous avez installé une ancienne version bêta, veuillez désactiver tous les tweaks d'application et redémarrer l'appareil pour la désinstaller afin de pouvoir installer la nouvelle version du démarrage.";
 
 "openssh launch successful" = "Lancement d'openssh réussi";
-"respring now..." = "Respring maintenant...";
+"respring now..." = "Respring en cours...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Êtes-vous sûr de vouloir désinstaller  bootstrap?\n\nAssurez-vous d'avoir désactivé les tweaks pour toutes les applications avant de désinstaller.";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Êtes-vous sûr de vouloir désinstaller Bootstrap?\n\nAssurez-vous d'avoir désactivé les tweaks pour toutes les applications avant de désinstaller.";
