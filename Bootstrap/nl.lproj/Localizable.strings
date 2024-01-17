@@ -45,7 +45,7 @@
 "system not bootstrapped" = "systeem niet gebootstrapt";
 "bootstrap server check successful" = "bootstrap server controle succesvol";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Het lijkt erop dat je de Filza-app hebt geïnstalleerd, deze wordt mogelijk gedetecteerd als jailbroken. Je kunt een Tweak inschakelen om het te verbergen.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Het lijkt erop dat je de Filza-app hebt geïnstalleerd, deze wordt mogelijk gedetecteerd als jailbreak. Je kunt Tweaks ervoor inschakelen om het te verbergen.";
 
 "Status: Rebuilding Apps" = "Status: Apps Herbouwen";
 "Status: Reinstalling Sileo" = "Status: Sileo Herinstalleren";
