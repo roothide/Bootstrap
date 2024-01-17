@@ -1,0 +1,73 @@
+"Settings" = "ترتیبات";
+"Tweak Enable" = "Tweak Enable";
+"OpenSSH" = "SSH ایچ";
+"Respring" = "Respring";
+"Rebuild Apps" = "ایپس کو دوبارہ بنائیں";
+"Rebuild Icon Cache" = "آئیکن کیشے کو دوبارہ بنائیں";
+"Reinstall Sileo & Zebra" = "سائلو اور زیبرا کو دوبارہ انسٹال کریں";
+"Uninstall" = "ان انسٹال کریں";
+"Credits" = "کریڈٹس";
+"New Version Available" = "نیا ورژن دستیاب ہے";
+"Bootstrapped" = "بوٹسٹریپڈ";
+"Update" = "اپ ڈیٹ";
+"Install" = "انسٹال کریں";
+"Unsupported" = "Unsupported";
+"App List" = "ایپ کی فہرست";
+
+
+"OK" = "ٹھیک ہے";
+"Error" = "خرابی";
+"Warning" = "انتباہ";
+"Applying" = "Applying";
+"Cancel" = "منسوخ کریں";
+"Update" = "اپ ڈیٹ";
+"Bootstrapping" = "بوٹسٹریپنگ";
+"Uninstall" = "ان انسٹال کریں";
+"Uninstalling" = "ان انسٹال ہورہاہے";
+"bootstrap uninstalled" = "بوٹسٹریپ ان انسٹال";
+
+"Enable Tweak for App" = "Enable Tweak for App";
+"name or identifier" = "name or identifier";
+
+"Server Not Running" = "سرور نہیں چل رہا ہے";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "نامعلوم وجوہات کی بنا پر بوٹسٹریپ سرور نہیں چل رہا ہے، ہم صرف یہ کر سکتے ہیں کہ اسے ابھی دوبارہ شروع کریں۔";
+
+"Restart Server" = "سرور کو دوبارہ شروع کریں";
+"bootstrap server restart successful" = "بوٹسٹریپ سرور دوبارہ شروع کرنا کامیاب";
+
+"Rebuilding" = "دوبارہ تعمیر";
+"Don't exit Bootstrap app until show the lock screen" = "بوٹسٹریپ ایپ سے باہر نہ نکلیں جب تک کہ لاک اسکرین ظاہر نہ ہو";
+
+"bootstrap installed" = "بوٹسٹریپ انسٹال ہوگیا";
+"bootstrap not installed" = "بوٹسٹریپ انسٹال نہیں ہوا";
+"system bootstrapped" = "سسٹم بوٹسٹریپڈ";
+"system not bootstrapped" = "سسٹم بوٹسٹریپڈ نہیں ہے";
+"bootstrap server check successful" = "بوٹسٹریپ سرور چیک کامیاب";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+
+"Status: Rebuilding Apps" = "اسٹیٹس: ایپس کی تعمیر نو";
+"Status: Reinstalling Sileo" = "اسٹیٹس: سائلیو کو دوبارہ انسٹال کرنا";
+"Status: Reinstalling Zebra" = "حیثیت: زیبرا کو دوبارہ انسٹال کرنا";
+"Sileo and Zebra reinstalled!" = "سائلو اور زیبرا دوبارہ انسٹال ہو گئے";
+"Status: Rebuilding Icon Cache" = "اسٹیٹس: آئیکن کیشے کو دوبارہ بنانا";
+
+"openssh package is not installed" = "openssh پیکیج انسٹال نہیں ہے";
+
+"Reboot Device" = "ڈیوائس کو دوبارہ شروع کریں";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+
+"openssh launch successful" = "openssh launch successful";
+"respring now..." = "respring now...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
+
