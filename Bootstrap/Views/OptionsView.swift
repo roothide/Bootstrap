@@ -18,35 +18,27 @@ struct OptionsView: View {
     @Binding var showOptions: Bool
     @Binding var tweakEnable: Bool
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack {
             VisualEffectView(effect: UIBlurEffect(style: .regular))
                 .ignoresSafeArea()
+                .onTapGesture {
+                   showOptions = false
+                }
             
             VStack {
-                HStack {
+                VStack {
                     Text("Settings")
                         .bold()
-                        .frame(maxWidth: 250, alignment: .leading)
+                        .frame(maxWidth: 250, alignment: .center)
                         .font(Font.system(size: 35))
-                    
-                    Button {
-                        withAnimation {
-                            showOptions.toggle()
-                        }
-                    } label: {
-                        Image(systemName: "xmark.circle")
-                            .resizable()
-                            .foregroundColor(.red)
-                            .frame(width: 30, height: 30)
-                    }
                 }
                 
                 //ScrollView {
                     VStack {
-                        VStack {
-                            
+                        VStack {  
                             Toggle(isOn: $tweakEnable, label: {
                                 Label(
                                     title: { Text("Tweak Enable") },
@@ -82,7 +74,7 @@ struct OptionsView: View {
                                     rebuildappsAction()
                                 } label: {
                                     Label(
-                                        title: { Text("Rebuild Apps") },
+                                        title: { Text("Rebuild Apps").foregroundColor(colorScheme == .dark ? .white : .black) },
                                         icon: { Image(systemName: "arrow.clockwise") }
                                     )
                                     .frame(maxWidth: .infinity)
@@ -103,7 +95,7 @@ struct OptionsView: View {
                                     rebuildIconCacheAction()
                                 } label: {
                                     Label(
-                                        title: { Text("Rebuild Icon Cache") },
+                                        title: { Text("Rebuild Icon Cache").foregroundColor(colorScheme == .dark ? .white : .black) },
                                         icon: { Image(systemName: "arrow.clockwise") }
                                     )
                                     .frame(maxWidth: .infinity)
@@ -124,7 +116,7 @@ struct OptionsView: View {
                                     reinstallPackageManager()
                                 } label: {
                                     Label(
-                                        title: { Text("Reinstall Sileo & Zebra") },
+                                        title: { Text("Reinstall Sileo").foregroundColor(colorScheme == .dark ? .white : .black) },
                                         icon: { Image(systemName: "shippingbox") }
                                     )
                                     .frame(maxWidth: .infinity)
@@ -146,7 +138,7 @@ struct OptionsView: View {
                                         unbootstrapAction()
                                     } label: {
                                         Label(
-                                            title: { Text("Uninstall") },
+                                            title: { Text("Uninstall").foregroundColor(colorScheme == .dark ? .white : .black)},
                                             icon: { Image(systemName: "trash") }
                                         )
                                         .frame(maxWidth: .infinity)
@@ -175,6 +167,7 @@ struct OptionsView: View {
                 //}
             }
             .frame(maxHeight: 550)
+            .zIndex(2)
         }
     }
 }
