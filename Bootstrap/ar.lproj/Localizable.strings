@@ -17,16 +17,16 @@
 
 "OK" = "حسنا";
 "Error" = "خطأ";
-"Warnning" = "تحذير";
+"Warning" = "تحذير";
 "Applying" = "تطبيق";
-"Cannel" = "الغاء";
+"Cancel" = "الغاء";
 "Update" = "تحديث";
 "Bootstrapping" = "Bootstrapping";
 "Uninstall" = "الغاء التثبيت";
 "Uninstalling" = "الغاء التثبيت جاري";
 "bootstrap uninstalled" = "ازالة bootstrap";
 
-"Eanble Tweak for App" = "تفعيل الادوات للتطبيقات";
+"Enable Tweak for App" = "تفعيل الادوات للتطبيقات";
 "name or identifier" = "اسم او معرف التطبيق";
 
 "Server Not Running" = "السيرفر لا يعمل";
