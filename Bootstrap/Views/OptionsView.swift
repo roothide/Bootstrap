@@ -36,49 +36,112 @@ struct OptionsView: View {
                         .font(Font.system(size: 35))
                 }
 
-                VStack {
-                    VStack {  
-                        Toggle(isOn: $tweakEnable, label: {
-                            Label(
-                                title: { Text("Tweak Enable") },
-                                icon: { Image(systemName: "wrench.and.screwdriver") }
-                            )
-                        }).padding(5)
-                        .onChange(of: tweakEnable) { newValue in
-                            tweaEnableAction(newValue)
-                        }
+                VStack {  
+                    Toggle(isOn: $tweakEnable, label: {
+                        Label(
+                            title: { Text("Tweak Enable") },
+                            icon: { Image(systemName: "wrench.and.screwdriver") }
+                        )
+                    }).padding(5)
+                    .onChange(of: tweakEnable) { newValue in
+                        tweaEnableAction(newValue)
+                    }
                             
-                        Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
-                            opensshStatus.state = opensshAction($0)
-                        }), label: {
-                            Label(
-                                title: { Text("OpenSSH") },
-                                icon: { Image(systemName: "terminal") }
-                            )
-                        })
-                        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
-                            DispatchQueue.global(qos: .utility).async {
-                                let newStatus = (obj.object as! NSNumber).boolValue
-                                opensshStatus.state = newStatus
-                            }
+                    Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
+                        opensshStatus.state = opensshAction($0)
+                    }), label: {
+                        Label(
+                            title: { Text("OpenSSH") },
+                            icon: { Image(systemName: "terminal") }
+                        )
+                    })
+                    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
+                        DispatchQueue.global(qos: .utility).async {
+                            let newStatus = (obj.object as! NSNumber).boolValue
+                            opensshStatus.state = newStatus
                         }
-                        .padding(5)
+                    }
+                    .padding(5)
                             
 
-                        Divider().padding(10)
+                    Divider().padding(10)
                             
-                        VStack(alignment: .leading, spacing: 12, content: { 
+                    VStack(alignment: .leading, spacing: 12, content: { 
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            rebuildappsAction()
+                        } label: {
+                            Label(
+                                title: { Text("Rebuild Apps").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                icon: { Image(systemName: "arrow.clockwise") }
+                            )
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                        }
+                        .frame(width: 250)
+                        .background(Color.clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.gray, lineWidth: 1)
+                                .opacity(0.3)
+                        )
+                        .disabled(!isSystemBootstrapped())
+                                
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            rebuildIconCacheAction()
+                        } label: {
+                            Label(
+                                title: { Text("Rebuild Icon Cache").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                icon: { Image(systemName: "arrow.clockwise") }
+                            )
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                        }
+                        .frame(width: 250)
+                        .background(Color.clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.gray, lineWidth: 1)
+                                .opacity(0.3)
+                        )
+                        .disabled(!isSystemBootstrapped())
+                                
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            reinstallPackageManager()
+                        } label: {
+                            Label(
+                                title: { Text("Reinstall Sileo").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                icon: { Image(systemName: "shippingbox") }
+                            )
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                        }
+                        .frame(width: 250)
+                        .background(Color.clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.gray, lineWidth: 1)
+                                .opacity(0.3)
+                        )
+                        .disabled(!isSystemBootstrapped())
+                                
+                        if isBootstrapInstalled() {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                rebuildappsAction()
+                                unbootstrapAction()
                             } label: {
                                 Label(
-                                    title: { Text("Rebuild Apps").foregroundColor(colorScheme == .dark ? .white : .black) },
-                                    icon: { Image(systemName: "arrow.clockwise") }
+                                    title: { Text("Uninstall").foregroundColor(colorScheme == .dark ? .white : .black)},
+                                    icon: { Image(systemName: "trash") }
                                 )
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 10)
-                                .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                             }
                             .frame(width: 250)
                             .background(Color.clear)
@@ -87,82 +150,19 @@ struct OptionsView: View {
                                     .stroke(.gray, lineWidth: 1)
                                     .opacity(0.3)
                             )
-                            .disabled(!isSystemBootstrapped())
-                                
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                rebuildIconCacheAction()
-                            } label: {
-                                Label(
-                                    title: { Text("Rebuild Icon Cache").foregroundColor(colorScheme == .dark ? .white : .black) },
-                                    icon: { Image(systemName: "arrow.clockwise") }
-                                )
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 10)
-                                .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                            }
-                            .frame(width: 250)
-                            .background(Color.clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.gray, lineWidth: 1)
-                                    .opacity(0.3)
-                            )
-                            .disabled(!isSystemBootstrapped())
-                                
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                reinstallPackageManager()
-                            } label: {
-                                Label(
-                                    title: { Text("Reinstall Sileo").foregroundColor(colorScheme == .dark ? .white : .black) },
-                                    icon: { Image(systemName: "shippingbox") }
-                                )
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 10)
-                                .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                            }
-                            .frame(width: 250)
-                            .background(Color.clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.gray, lineWidth: 1)
-                                    .opacity(0.3)
-                            )
-                            .disabled(!isSystemBootstrapped())
-                                
-                            if isBootstrapInstalled() {
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    unbootstrapAction()
-                                } label: {
-                                    Label(
-                                        title: { Text("Uninstall").foregroundColor(colorScheme == .dark ? .white : .black)},
-                                        icon: { Image(systemName: "trash") }
-                                    )
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                                }
-                                .frame(width: 250)
-                                .background(Color.clear)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.gray, lineWidth: 1)
-                                        .opacity(0.3)
-                                )
-                                .disabled(isSystemBootstrapped())
-                            }
-                        })
-                    }
-                    .frame(width: 253)
-                    .padding(20)
-                    .background {
-                        Color(UIColor.systemBackground)
-                            .cornerRadius(20)
-                            .opacity(0.5)
-                    }
+                            .disabled(isSystemBootstrapped())
+                        }
+                    })
                 }
+                .frame(width: 253)
+                .padding(20)
+                .background {
+                    Color(UIColor.systemBackground)
+                        .cornerRadius(20)
+                        .opacity(0.5)
+                }
+                .background(Color.clear)
+                .allowsHitTesting(false)
             }
             .frame(maxHeight: 550)
             .zIndex(2)
