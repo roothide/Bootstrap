@@ -58,7 +58,7 @@
 "Reboot Device" = "重启设备";
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前 BootStrap 环境和 BootStrap 应用程序不一致，请重启设备更新环境";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的 TrollStore 版本太低，Bootstrap 仅支持 TrollStore2.0 及以上，请更新 TrollStore 后重新尝试安装 BootStrap";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的 TrollStore 版本太低，BootStrap 需要 TrollStore 2.0 或更高版本，请更新 TrollStore 后再次尝试安装 BootStrap";
 
 "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "你的设备貌似没有开启开发者模式\n\n请启用开发者模式并重启设备";
 
