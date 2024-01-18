@@ -170,7 +170,6 @@ struct OptionsView: View {
                     .zIndex(3)
                 }
             }
-            .frame(maxHeight: 550)
         }
     }
 }
