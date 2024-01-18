@@ -42,7 +42,7 @@
 
 "Developer" = "开发者";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的trollstore版本太低，Bootstrap只支持trollstore>=2.0版本，你必须更新你的trollstore并重新安装Bootstrap。";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的 trollstore 版本太低，Bootstrap 只支持 trollstore>=2.0 版本，你必须更新你的 trollstore 并重新安装 Bootstrap。";
 
 "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "您的设备似乎未启用开发者模式.\n\n请在设置->[隐私与安全]中启用开发者模式,然后重启您的设备.";
 
@@ -72,10 +72,6 @@
 
 "Bootstrap Uninstalled" = "Bootstrap 已卸载";
 
-"teamID in trollstore: %@" = "trollstore中的teamID: %@";
-
-"Kickstart" = "已安装";
-
 "Settings" = "设置";
 
 "Respring" = "注销";
@@ -86,7 +82,7 @@
 
 "Options" = "选项";
 
-"OpenSSH" = "启用OpenSSH";
+"OpenSSH" = "启用 OpenSSH";
 
 "App List" = "应用管理器";
 
@@ -94,17 +90,17 @@
 
 "Tweak Enable" = "插件注入";
 
-"name or identifier" = "输入App名字或标识符";
+"name or identifier" = "输入 App 名字或标识符";
 
 "OK" = "好的";
 
 "Rebuild Icon Cache" = "重建图标缓存";
 
-"Reinstall Sileo" = "重装Sileo商店"; 
+"Reinstall Sileo" = "重装 Sileo 商店"; 
 
-"Sileo reinstalled!" = "Sileo商店重装成功";
+"Sileo reinstalled!" = "Sileo 商店重装成功";
 
-"Status: Reinstalling Sileo" = "状态：正在重装Sileo商店";
+"Status: Reinstalling Sileo" = "状态：正在重装 Sileo 商店";
 
 "Rebuilding" = "正在重建...";
 
@@ -120,14 +116,14 @@
 
 "New Version Available" = "有新版本可用";
 
-"Enable Tweak for App" = "应用程序注入插件";
+"Enable Tweak for App" = "应用程序列表";
 
-"Update" = "更新";
+"Update" = "更新环境";
 
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前的引导版本与已安装的引导程序版本不一致，您需要重启设备以更新它，确定重启设备吗？";
 
 "Reboot Device" = "确定";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "似乎你已安装了Filza文件管理器，这可能被检测为越狱状态，你可以启用插件来隐藏它。";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "似乎你已安装了 Filza 文件管理器，这可能被检测为越狱状态，你可以启用插件来隐藏它。";
 
-"Don't exit Bootstrap app until show the lock screen" = "在显示锁屏界面之前，请勿退出Bootstrap应用程序。";
+"Don't exit Bootstrap app until show the lock screen" = "在显示锁屏界面之前，请勿退出 Bootstrap 应用程序。";
