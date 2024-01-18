@@ -47,11 +47,11 @@
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，可能会被检测到越狱，你可以通过启用插件来隐藏它";
 
-"Status: Rebuilding Apps" = "状态: 正在重建应用程序...";
-"Status: Reinstalling Sileo" = "状态: 正在重装 Sileo...";
-"Status: Reinstalling Zebra" = "状态: 正在重装 Zebra...";
+"Status: Rebuilding Apps" = "状态：正在重建应用程序...";
+"Status: Reinstalling Sileo" = "状态：正在重装 Sileo...";
+"Status: Reinstalling Zebra" = "状态：正在重装 Zebra...";
 "Sileo and Zebra reinstalled!" = "已重新安装 Sileo 和 Zebra";
-"Status: Rebuilding Icon Cache" = "状态: 重建图标缓存中...";
+"Status: Rebuilding Icon Cache" = "状态：重建图标缓存中...";
 
 "openssh package is not installed" = "OpenSSH 未安装";
 
