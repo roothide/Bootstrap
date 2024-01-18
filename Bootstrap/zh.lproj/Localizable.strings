@@ -70,3 +70,11 @@
 "respring now..." = "正在注销...";
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载bootstrap吗?\n\n卸载之前,请确保已禁用所有应用程序的调整.";
+
+
+"Default Configuration" = "默认配置";
+"ios-version: %@" = "iOS 版本: %@";
+"device-model: %s" = "设备型号: %s";
+"app-version: %@" = "程序版本: %@";
+"boot-session: %@" = "启动会话: %@";
+"UI made with love by haxi0. ♡" = "haxi0 用 ♡ 制作的 UI";

@@ -70,3 +70,11 @@
 "respring now..." = "現在重新啟動SpringBorad...";
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你確定你要卸載Bootstrap嗎?\n\n請確定你在卸載前已經關閉了所有的tweak";
+
+
+"Default Configuration" = "預設配置";
+"ios-version: %@" = "iOS 版本: %@";
+"device-model: %s" = "設備型號: %s";
+"app-version: %@" = "程式版本: %@";
+"boot-session: %@" = "啟動會話: %@";
+"UI made with love by haxi0. ♡" = "haxi0 用 ♡ 製作的 UI";
