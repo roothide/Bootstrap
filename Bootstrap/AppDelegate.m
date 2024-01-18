@@ -8,23 +8,9 @@
 
 @implementation AppDelegate
 
-UITextView* logView=nil;
-
-+ (void)registerLogView:(UITextView*)view
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        logView = view;
-        logView.layoutManager.allowsNonContiguousLayout = NO;
-    });
-}
-
 + (void)addLogText:(NSString*)text
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [logView setText:[logView.text stringByAppendingString:[NSString stringWithFormat:@"%@\n",text]]];
-        if(logView.contentSize.height >= logView.bounds.size.height)
-            [logView setContentOffset:CGPointMake(0, logView.contentSize.height - logView.bounds.size.height) animated:YES];
-    });
+    [NSNotificationCenter.defaultCenter postNotificationName:@"LogMsgNotification" object:text];
 }
 
 MBProgressHUD *switchHud=nil;
@@ -64,11 +50,23 @@ MBProgressHUD *switchHud=nil;
     });
     
     dispatch_async(alertQueue, ^{
+        
+        __block UIViewController* availableVC=nil;
+        while(!availableVC) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIViewController* vc = UIApplication.sharedApplication.keyWindow.rootViewController;
+                while(vc.presentedViewController){
+                    vc = vc.presentedViewController;
+                    if(vc.isBeingDismissed) return;
+                }
+                availableVC = vc;
+            });
+            if(!availableVC) usleep(1000*100);
+        }
+        
         __block BOOL presented = NO;
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIViewController* vc = UIApplication.sharedApplication.keyWindow.rootViewController;
-            while(vc.presentedViewController) vc = vc.presentedViewController;
-            [vc presentViewController:alert animated:YES completion:^{ presented=YES; }];
+            [availableVC presentViewController:alert animated:YES completion:^{ presented=YES; }];
         });
         
         while(!presented) usleep(100*1000);

@@ -1,0 +1,73 @@
+"Settings" = "Pengaturan";
+"Tweak Enable" = "Aktifkan Tweak";
+"OpenSSH" = "OpenSSH";
+
+"Respring" = "Respring cok";
+"Rebuild Apps" = "Segarkan Aplikasi";
+"Rebuild Icon Cache" = " Segarkan Cache Ikon";
+"Reinstall Sileo & Zebra" = "Install Ulang Sileo & Zebra";
+"Uninstall" = "Hapus Instalasi";
+"Credits" = "Pemberdaya";
+"New Version Available" = "Versi baru udah ada";
+"Bootstrapped" = "Udah di-Bootstrap";
+"Update" = "Pembaruan";
+"Install" = "Pasang";
+"Unsupported" = "Ga support cok";
+"App List" = "List aplikasi";
+
+
+"OK" = "Oye";
+"Error" = "Terjadi kesalahan";
+"Warning" = "Peringatan";
+"Applying" = "Mengaplikasikan";
+"Cancel" = "Gak Jadi";
+"Update" = "Membarui";
+"Bootstrapping" = "Sedang nge-Bootstrapp";
+"Uninstall" = "Bongkar pasang";
+"Uninstalling" = "Sedang membongkar";
+"bootstrap uninstalled" = "bootstrap udah dibongkar nih";
+
+"Enable Tweak for App" = "Gunakan Tweak untuk aplikasi";
+"name or identifier" = "Nama atau pengidentifikasi";
+
+"Server Not Running" = "Server gak jalan boss";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Waduh gatau kenapa ini bootsrap servernya ga jalan gan, satu-satunya jalan cuman restart nih, ini lagi restart blog.";
+
+"Restart Server" = "Muat ulang Server";
+"bootstrap server restart successful" = "bootstrap server berhasil dimuat ulang";
+
+"Rebuilding" = "Lagi nukang";
+"Don't exit Bootstrap app until show the lock screen" = "Jangan keluar Bootstrap app sebelum muncul layar kunci";
+
+"bootstrap installed" = "bootstrap udah dipasang nih";
+"bootstrap not installed" = "bootstrapnya aja ga kepasang blog";
+"system bootstrapped" = "sistem udah dibootstrap";
+"system not bootstrapped" = "sistem engga dibootstrap nih";
+"bootstrap server check successful" = "pengecekan server bootstrap berhasil nih";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Ente keliatannya udah masang Filza, nah darisitu bisa kedetec jailbreak. Ente bisa pake tweak buat nyembunyiin itu.";
+
+"Status: Rebuilding Apps" = "Status: Lagi nukang gan";
+"Status: Reinstalling Sileo" = "Status: Lagi masang ulang Sileo";
+"Status: Reinstalling Zebra" = "Status: Lagi masang ulang Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo sama Zebra udah dipasang ulang nih!";
+"Status: Rebuilding Icon Cache" = "Status: Lagi benerin ikon cache";
+
+"openssh package is not installed" = "anu openssh pak ga diinstal nih";
+
+"Reboot Device" = "Muat ulang perangkat";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Trollstore versi yg ente install udah ketuaan, Bootstrap cuman bisa pake trollstore>=2.0, perbarui trollstore baru pasang Bootstrap app.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Kayaknya perangkatmu ga ngaktifin Mode Pengembang.\n\nAktifin dulu cok Mode Pengembang terus nyalakan ulang";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine udah dipasang di perangkat ini, sekarang kalo ente mau pasang bootstrap hp ente bisajadi meledak!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Ente udah masang versi purba, nonaktifkan semua tweak dan muat ulang perangkat buat bongkar pasangan beta itu biar ente bisa masang versi terbaru bootstrap.";
+
+"openssh launch successful" = "openssh berhasil terbuka";
+"respring now..." = "ini lagi respring gan ...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Ente yakin mau bongkar Bootstrap? \n\nPastiin dulu semua tweak dinonaktifin dulu cok sebelum uninstall.";
