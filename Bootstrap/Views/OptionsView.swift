@@ -22,12 +22,15 @@ struct OptionsView: View {
     
     var body: some View {
         ZStack {
-            VisualEffectView(effect: UIBlurEffect(style: .regular))
-                .onTapGesture {
-                    showOptions = false
-                }
-
-            ZStack {      
+            if showOptions {
+                Color.white
+                    .ignoresSafeArea()
+                    .opacity(0.5)
+                    .onTapGesture {
+                        showOptions = false
+                    }
+                    .zIndex(2)
+      
                 VStack {
                     VStack {
                         Text("Settings")
@@ -162,9 +165,9 @@ struct OptionsView: View {
                             .opacity(0.5)
                     }
                 }
+                .frame(maxHeight: 550)
+                .zIndex(3)
             }
-            .frame(maxHeight: 550)
-            .zIndex(2)
         }
     }
 }
