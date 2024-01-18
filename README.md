@@ -18,7 +18,7 @@ You will need Homebrew installed. If you don't have Homebrew installed, run the 
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
- 1. Update your Theos to the roothide build
+ 1. Update/Install Theos with roothide support
     
     `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
     
