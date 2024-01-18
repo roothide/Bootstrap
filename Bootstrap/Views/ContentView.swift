@@ -256,10 +256,12 @@ struct ContentView: View {
         .overlay {
             if showCredits {
                 CreditsView(showCredits: $showCredits)
+                    .zIndex(2)
             }
             
             if showOptions {
                 OptionsView(showOptions: $showOptions, tweakEnable: $tweakEnable)
+                    .zIndex(2)
             }
         }
         .onAppear {
