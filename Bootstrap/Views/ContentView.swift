@@ -29,7 +29,7 @@ struct ContentView: View {
     @State private var tweakEnable: Bool = !isSystemBootstrapped() || FileManager.default.fileExists(atPath: jbroot("/var/mobile/.tweakenabled"))
     
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    
+    let screenWidth = UIScreen.main.bounds.width
     var body: some View {
         ZStack {
             FluidGradient(blobs: [.red, .orange],
@@ -45,7 +45,16 @@ struct ContentView: View {
                         .resizable()
                         .frame(width: 80, height: 80)
                         .cornerRadius(18)
-                    
+                        .contextMenu {
+                            Button(action: {
+                                // 在确认后运行 respringAction()
+                                respringAction()
+                            }) {
+                                Text("Respring")
+                                Image(systemName: "arrow.clockwise")
+                            }
+                        }
+
                     VStack(alignment: .leading, content: {
                         Text("Bootstrap")
                             .bold()
@@ -121,7 +130,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .frame(width: 295)
+                    .frame(width: screenWidth*0.9)
                     .background {
                         Color(UIColor.systemBackground)
                             .cornerRadius(20)
@@ -136,10 +145,13 @@ struct ContentView: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         } label: {
                             Label(
-                                title: { Text("App List") },
+                                title: {
+                                    Text("App List")
+                                        .font(Font.system(size: 17).weight(.bold))
+                                },
                                 icon: { Image(systemName: "checklist") }
                             )
-                            .frame(width: 145, height: 65)
+                            .frame(width: screenWidth*0.44, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -155,10 +167,13 @@ struct ContentView: View {
                             }
                         } label: {
                             Label(
-                                title: { Text("Settings") },
+                                title: {
+                                    Text("Settings")
+                                        .font(Font.system(size: 17).weight(.bold))
+                                },
                                 icon: { Image(systemName: "gear") }
                             )
-                            .frame(width: 145, height: 65)
+                            .frame(width: screenWidth*0.44, height: 65)
                         }
                         .background {
                             Color(UIColor.systemBackground)
@@ -189,7 +204,7 @@ struct ContentView: View {
                         }
                         .frame(maxHeight: 200)
                     }
-                    .frame(width: 253)
+                    .frame(width: screenWidth*0.8)
                     .padding(20)
                     .background {
                         Color(.black)
