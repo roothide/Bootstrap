@@ -88,7 +88,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor(Color.init(uiColor: UIColor.label))
+                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -109,7 +109,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor(Color.init(uiColor: UIColor.label))
+                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -130,7 +130,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor(Color.init(uiColor: UIColor.label))
+                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -151,7 +151,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor(Color.init(uiColor: UIColor.label))
+                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -167,16 +167,13 @@ struct OptionsView: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         unbootstrapAction()
                                     } label: {
-                                        let label=Label(
+                                        Label(
                                             title: { Text("Uninstall") },
                                             icon: { Image(systemName: "trash") }
                                         )
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 10)
-                                        if !isSystemBootstrapped() {
-                                            label.foregroundColor(Color.init(uiColor: UIColor.label))
-                                        }
-                                        label
+                                        .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
                                     }
                                     .frame(width: 250)
                                     .background(Color.clear)
