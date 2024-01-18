@@ -30,10 +30,10 @@
 
 "Server Not Running" = "Server Tidak Berjalan";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "dengan alasan yang tidak diketahui server bootstrap tidak berjalan, satu-satunya yang dapat kita lakukan adalah me-restartnya sekarang.";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "dengan alasan yang tidak diketahui server bootstrap tidak berjalan, satu-satunya yang dapat kita lakukan adalah me-mulai ulang sekarang.";
 
-"Restart Server" = "Restart Server";
-"bootstrap server restart successful" = "restart server bootstrap berhasil";
+"Restart Server" = "Mulai Ulang Server";
+"bootstrap server restart successful" = "mulai ulang server bootstrap berhasil";
 
 "Rebuilding" = "Membangun Kembali";
 "Don't exit Bootstrap app until show the lock screen" = "Jangan keluar dari aplikasi Bootstrap sampai muncul layar kunci";
