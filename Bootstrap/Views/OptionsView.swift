@@ -21,13 +21,19 @@ struct OptionsView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        ZStack {
+        GeometryReader { geometry in
             VisualEffectView(effect: UIBlurEffect(style: .regular))
-                .ignoresSafeArea()
+                .zIndex(1)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .contentShape(Rectangle())
+                .allowsHitTesting(true)
                 .onTapGesture {
                     showOptions = false
                 }
-            
+        }
+        .ignoresSafeArea()
+
+        ZStack {
             VStack {
                 VStack {
                     Text("Settings")
@@ -161,8 +167,6 @@ struct OptionsView: View {
                         .cornerRadius(20)
                         .opacity(0.5)
                 }
-                .background(Color.clear)
-                .allowsHitTesting(false)
             }
             .frame(maxHeight: 550)
             .zIndex(2)
