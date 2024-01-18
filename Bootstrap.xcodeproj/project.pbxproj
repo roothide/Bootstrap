@@ -88,6 +88,7 @@
 		84438D6E2B2CE5A300A1E407 /* AppEnabler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppEnabler.m; sourceTree = "<group>"; };
 		84438D702B2E439300A1E407 /* syslog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = syslog.h; sourceTree = "<group>"; };
 		84438D712B2E4E5D00A1E407 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		8448631E2B59437200456D31 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		845F5C592B58531C004C4460 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		845F5C5A2B58532F004C4460 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		845F5C5B2B58533D004C4460 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -316,6 +317,7 @@
 				zh,
 				"zh-CN",
 				"zh-TW",
+				uk,
 			);
 			mainGroup = 847099792B1D855D003FA4ED;
 			packageReferences = (
@@ -403,6 +405,7 @@
 				845F5C652B5854A1004C4460 /* zh */,
 				845F5C662B5854E5004C4460 /* zh-CN */,
 				845F5C672B5854F2004C4460 /* zh-TW */,
+				8448631E2B59437200456D31 /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
