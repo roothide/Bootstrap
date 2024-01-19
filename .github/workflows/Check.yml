@@ -1,0 +1,93 @@
+name: Upstream Release Notifier
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  check-upstream-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Check for new release
+        id: check-release
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const axios = require('axios');
+            const fs = require('fs');
+            const path = require('path');
+
+            const upstreamRepo = 'roothide/Bootstrap';
+            const apiURL = `https://api.github.com/repos/${upstreamRepo}/releases/latest`;
+            const releaseFilePath = path.join(process.env.GITHUB_WORKSPACE, 'latest_release.txt');
+
+            async function getLatestRelease() {
+              try {
+                const response = await axios.get(apiURL);
+                return response.data.tag_name;
+              } catch (error) {
+                console.error(`Unable to get latest release: ${error}`);
+                return null;
+              }
+            }
+
+            async function run() {
+              const latestRelease = await getLatestRelease();
+              if (!latestRelease) return;
+
+              let previousRelease = '';
+              if (fs.existsSync(releaseFilePath)) {
+                previousRelease = fs.readFileSync(releaseFilePath, 'utf8');
+              }
+
+              if (latestRelease !== previousRelease) {
+                fs.writeFileSync(releaseFilePath, latestRelease, 'utf8');
+                console.log(`New release found: ${latestRelease}`);
+                core.setOutput('new-release', latestRelease);
+              } else {
+                console.log(`No new release found. Latest is still: ${previousRelease}`);
+              }
+            }
+
+            await run();
+
+      - name: Notify about new release
+        if: steps.check-release.outputs.new-release
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueTitle = `Upstream release update`;
+            const newRelease = '${{ steps.check-release.outputs.new-release }}';
+            const issueBody = `There's a new release upstream: [${newRelease}](https://github.com/roothide/Bootstrap/releases/tag/${newRelease}).`;
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'release-update'
+            });
+            const existingIssue = issues.data.find(issue => issue.title === issueTitle);
+            if (existingIssue) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: issueBody
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['release-update']
+              });
+            }
