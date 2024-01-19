@@ -36,11 +36,11 @@
 "Restart Server" = "Перезапустити сервер";
 "bootstrap server restart successful" = "Сервер bootstrap успішно перезавантажений";
 
-"Rebuilding" = Перестроювання";
+"Rebuilding" = "Перестроювання";
 "Don't exit Bootstrap app until show the lock screen" = "Не виходьте з програми Bootstrap поки не побачите екран блокування";
 
 "bootstrap installed" = "Bootstrap встановлений";
-"bootstrap not installed" = Bootstrap не встановлено";
+"bootstrap not installed" = "Bootstrap не встановлено";
 "system bootstrapped" = "Система вже має bootstrap";
 "system not bootstrapped" = "Система не має встановленого bootstrap";
 "bootstrap server check successful" = "Перевірка сервера bootstrap пройшла успішно";
