@@ -6,7 +6,7 @@
 "Rebuild Icon Cache" = "Перебудувати кеш іконок";
 "Reinstall Sileo & Zebra" = "Перевстановлення Sileo & Zebra";
 "Uninstall" = "Видалити";
-"Credits" = "Кредити";
+"Credits" = "Подяки";
 "New Version Available" = "Доступна нова версія";
 "Bootstrapped" = "Встановлено";
 "Update" = "Оновити";
@@ -17,9 +17,9 @@
 
 "OK" = "OK";
 "Error" = "Помилка";
-"Warnning" = "Увага";
-"Applying" = "Застосувати";
-"Cannel" = "Скасування";
+"Warning" = "Увага";
+"Applying" = "Применить";
+"Cancel" = "Скасування";
 "Update" = "Оновити";
 "Bootstrapping" = "Встановлення";
 "Uninstall" = "Видалити";
