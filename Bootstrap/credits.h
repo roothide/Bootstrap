@@ -25,6 +25,7 @@ static NSDictionary* CREDITS = @{
 @"Amy While" : @"http://github.com/elihwyma",
 @"roothide" : @"http://github.com/roothide",
 @"Shadow-" : @"http://iosjb.top/",
+@"Summit" : @"https://github.com/dbmz502",
 @"SeanIsTethered" : @"https://github.com/jailbreakmerebooted",
 @"Huy Nguyen" : @"https://twitter.com/little_34306",
 @"haxi0" : @"https://haxi0.space",
