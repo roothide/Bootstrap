@@ -52,7 +52,7 @@ jobs:
       - name: Pre body
         run: |
           echo -e "更新时间：${{ env.logT }}" >> release.txt
-          echo -e "> - 同步官方1.0版本更新" >> release.txt
+          echo -e "> - 同步官方最新代码更新" >> release.txt
           sed -i '' "s/AAA/${{ env.msT }}/g" ./Bootstrap/Views/ContentView.swift
       
       - name: Build Bootstrap
