@@ -31,8 +31,11 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Theos
-        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+      - name: Pre theos
+        run: |
+         curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos > theos
+         sed -i '' 's/get_sdks$//g' theos
+         bash theos
 
       - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
