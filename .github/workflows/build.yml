@@ -6,70 +6,54 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"
 
 jobs:
   build:
-    name: Build RootHide Bootstrap
+    name: Build Bootstrap
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Set up Git
-        run: |
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git config --global user.name "${GITHUB_ACTOR}"
-          git remote add upstream https://github.com/RootHide/Bootstrap
-          git fetch upstream
-          git fetch --all --prune
-          git pull --rebase --strategy-option=theirs upstream main
-
-      - name: Install Homebrew
-        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
+        with:
+          submodules: true
 
       - name: Install Theos
-        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos')"
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
 
-      - name: Install make
-        run: brew install make
-
-      - name: Setup Theos environment
+      - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Set Version 
-        run: echo "VERSION=0.4.3" >> $GITHUB_ENV
+      - name: Make Bootstrap Package
+        run: make package
 
-      - name: Make bootstrap package
-        run: gmake -j$(sysctl -n hw.ncpu) package
-
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Bootstrap.tipa
           path: ./packages/Bootstrap.tipa
+  update-release:
+    name: Release .tipa
+    runs-on: ubuntu-latest
+    needs: build
 
-      - name: Delete old release
-        uses: dev-drprasad/delete-tag-and-release@v0.2.1
-        with:
-          delete_release: true
-          tag_name: v${{ env.VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
-
-      - name: Get bootstrap artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: Bootstrap.tipa
-
-      - name: Create new release
-        uses: ncipollo/release-action@v1
-        with:
-          name: Bootstrap_beta v${{ env.VERSION }} Release
-          body: Installation of this beta file is at the user's own risk and responsibility. No person, including the developers and suppliers of this file, shall be held responsible for any consequences resulting from its installation on the user's phone.
-          artifacts: "Bootstrap.tipa"
-          tag: v${{ env.VERSION }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: Delete old release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.1
+      with:
+        delete_release: true
+        tag_name: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: Bootstrap.tipa
+    - name: Create new release
+      uses: ncipollo/release-action@v1
+      with:
+        name: Rolling Release
+        body: These are automatically updated builds of the latest commit.
+        artifacts: "Bootstrap.tipa"
+        tag: release
+        token: ${{ secrets.GITHUB_TOKEN }}
