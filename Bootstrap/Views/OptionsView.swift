@@ -65,112 +65,121 @@ struct OptionsView: View {
 
                     Divider().padding(10)
                             
-                    VStack(alignment: .leading, spacing: 12, content: { 
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            rebuildappsAction()
-                        } label: {
-                            Label(
-                                title: { Text("Rebuild Apps") },
-                                icon: { Image(systemName: "arrow.clockwise") }
-                            )
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                        }
-                        .frame(width: 250)
-                        .background(Color.clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.gray, lineWidth: 1)
-                                .opacity(0.3)
-                        )
-                        .disabled(!isSystemBootstrapped())
-                            
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            fixNotification()
-                        } label: {
-                            Label(
-                                title: { Text("Fix App Notification") },
-                                icon: { Image(systemName: "wrench") }
-                            )
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                        }
-                        .frame(width: 250)
-                        .background(Color.clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.gray, lineWidth: 1)
-                                .opacity(0.3)
-                        )
-                        .disabled(!isSystemBootstrapped())
-                                
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            rebuildIconCacheAction()
-                        } label: {
-                            Label(
-                                title: { Text("Rebuild Icon Cache") },
-                                icon: { Image(systemName: "arrow.clockwise") }
-                            )
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                        }
-                        .frame(width: 250)
-                        .background(Color.clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.gray, lineWidth: 1)
-                                .opacity(0.3)
-                        )
-                        .disabled(!isSystemBootstrapped())
-                                
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            reinstallPackageManager()
-                        } label: {
-                            Label(
-                                title: { Text("Reinstall Sileo") },
-                                icon: { Image(systemName: "shippingbox") }
-                            )
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                        }
-                        .frame(width: 250)
-                        .background(Color.clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.gray, lineWidth: 1)
-                                .opacity(0.3)
-                        )
-                        .disabled(!isSystemBootstrapped())
-                                
-                        if isBootstrapInstalled() {
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                unbootstrapAction()
-                            } label: {
-                                Label(
-                                    title: { Text("Uninstall")},
-                                    icon: { Image(systemName: "trash") }
+                          VStack(alignment: .leading, spacing: 12, content: {                                
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    rebuildappsAction()
+                                } label: {
+                                    Label(
+                                        title: { Text("Rebuild Apps") },
+                                        icon: { Image(systemName: "arrow.clockwise") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
                                 )
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 10)
-                                .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                            }
-                            .frame(width: 250)
-                            .background(Color.clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.gray, lineWidth: 1)
-                                    .opacity(0.3)
-                            )
-                            .disabled(isSystemBootstrapped())
+                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                                
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    rebuildIconCacheAction()
+                                } label: {
+                                    Label(
+                                        title: { Text("Rebuild Icon Cache") },
+                                        icon: { Image(systemName: "arrow.clockwise") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
+                                )
+                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                                
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    fixNotification()
+                                } label: {
+                                    Label(
+                                        title: { Text("Fix App Notification") },
+                                        icon: { Image(systemName: "wrench") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
+                                )
+                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                                
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    reinstallPackageManager()
+                                } label: {
+                                    Label(
+                                        title: { Text("Reinstall Sileo") },
+                                        icon: { Image(systemName: "shippingbox") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
+                                )
+                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                                
+                                if isBootstrapInstalled() {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        unbootstrapAction()
+                                    } label: {
+                                        Label(
+                                            title: { Text("Uninstall") },
+                                            icon: { Image(systemName: "trash") }
+                                        )
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 10)
+                                        .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    }
+                                    .frame(width: 250)
+                                    .background(Color.clear)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(.gray, lineWidth: 1)
+                                            .opacity(0.3)
+                                    )
+                                    .disabled(isSystemBootstrapped())
+                                }
+                            })
+                        }
+                        .frame(width: 253)
+                        .padding(20)
+                        .background {
+                            Color(UIColor.systemBackground)
+                                .cornerRadius(20)
+                                .opacity(0.5)
                         }
                     })
                 }
