@@ -96,9 +96,11 @@
 
 "Reinstall Sileo & Zebra" = "重新安装 Sileo & Zebra"; 
 
-"Sileo reinstalled!" = "Sileo 重装完成";
-
 "Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
+
+"Status: Reinstalling Zebra" = "状态：正在重装 Zebra";
+
+"Sileo and Zebra reinstalled!" = "已重新安装 Sileo 和 Zebra";
 
 "Rebuilding" = "正在重建";
 
