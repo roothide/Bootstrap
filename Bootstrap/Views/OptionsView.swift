@@ -18,7 +18,6 @@ struct OptionsView: View {
     @Binding var showOptions: Bool
     @Binding var tweakEnable: Bool
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack {
@@ -72,7 +71,7 @@ struct OptionsView: View {
                             rebuildappsAction()
                         } label: {
                             Label(
-                                title: { Text("Rebuild Apps").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                title: { Text("Rebuild Apps") },
                                 icon: { Image(systemName: "arrow.clockwise") }
                             )
                             .frame(maxWidth: .infinity)
@@ -93,7 +92,7 @@ struct OptionsView: View {
                             fixNotification()
                         } label: {
                             Label(
-                                title: { Text("Fix App Notification").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                title: { Text("Fix App Notification") },
                                 icon: { Image(systemName: "wrench") }
                             )
                             .frame(maxWidth: .infinity)
@@ -114,7 +113,7 @@ struct OptionsView: View {
                             rebuildIconCacheAction()
                         } label: {
                             Label(
-                                title: { Text("Rebuild Icon Cache").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                title: { Text("Rebuild Icon Cache") },
                                 icon: { Image(systemName: "arrow.clockwise") }
                             )
                             .frame(maxWidth: .infinity)
@@ -135,7 +134,7 @@ struct OptionsView: View {
                             reinstallPackageManager()
                         } label: {
                             Label(
-                                title: { Text("Reinstall Sileo").foregroundColor(colorScheme == .dark ? .white : .black) },
+                                title: { Text("Reinstall Sileo") },
                                 icon: { Image(systemName: "shippingbox") }
                             )
                             .frame(maxWidth: .infinity)
@@ -157,7 +156,7 @@ struct OptionsView: View {
                                 unbootstrapAction()
                             } label: {
                                 Label(
-                                    title: { Text("Uninstall").foregroundColor(colorScheme == .dark ? .white : .black)},
+                                    title: { Text("Uninstall")},
                                     icon: { Image(systemName: "trash") }
                                 )
                                 .frame(maxWidth: .infinity)
