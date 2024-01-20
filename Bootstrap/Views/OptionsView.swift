@@ -149,7 +149,7 @@ struct OptionsView: View {
                                 .opacity(0.3)
                         )
                         .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
-                                
+                                             
                         if isBootstrapInstalled() {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -159,38 +159,18 @@ struct OptionsView: View {
                                     title: { Text("Uninstall") },
                                     icon: { Image(systemName: "trash") }
                                 )
-                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
-                                
-                                if isBootstrapInstalled() {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        unbootstrapAction()
-                                    } label: {
-                                        Label(
-                                            title: { Text("Uninstall") },
-                                            icon: { Image(systemName: "trash") }
-                                        )
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 10)
-                                        .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                                    }
-                                    .frame(width: 250)
-                                    .background(Color.clear)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(.gray, lineWidth: 1)
-                                            .opacity(0.3)
-                                    )
-                                    .disabled(isSystemBootstrapped())
-                                }
-                            })
-                        }
-                        .frame(width: 253)
-                        .padding(20)
-                        .background {
-                            Color(UIColor.systemBackground)
-                                .cornerRadius(20)
-                                .opacity(0.5)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 10)
+                                .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                            }
+                            .frame(width: 250)
+                            .background(Color.clear)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(.gray, lineWidth: 1)
+                                    .opacity(0.3)
+                            )
+                            .disabled(isSystemBootstrapped())
                         }
                     })
                 }
