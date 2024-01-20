@@ -47,7 +47,7 @@ struct ContentView: View {
                         .cornerRadius(18)
                     
                     VStack(alignment: .leading, content: {
-                        Text("Bootstrap ")
+                        Text("Bootstrap")
                             .bold()
                             .font(Font.system(size: 35))
                         Text("Version \(appVersion!)")
