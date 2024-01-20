@@ -20,19 +20,19 @@ jobs:
         run: |
           REPO=${{ github.repository }}
   
-          if [ "$REPO" != "SATIS8CHIMPALEE/Bootstrap" ]; then
-            echo "This workflow is only permitted usage for SATIS8CHIMPALEE/Bootstrap repository. Exiting."
+          if [ "$REPO" != "loeraps/Bootstrap" ]; then
+            echo "This workflow is only permitted usage for loeraps/Bootstrap repository. Exiting."
             exit 1
           fi
 
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch from upstream repository SATIS8CHIMPALEE/Bootstrap
+      - name: Fetch from upstream repository loeraps/Bootstrap
         run: |
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
-          git remote add upstream https://github.com/SATIS8CHIMPALEE/Bootstrap
+          git remote add upstream https://github.com/loeraps/Bootstrap
           git fetch upstream
           git fetch --all --prune
           git pull --rebase --strategy-option=theirs upstream Patch
