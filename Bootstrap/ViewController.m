@@ -178,6 +178,24 @@ void respringAction()
     if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 }
 
+void rebootAction() 
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Are you sure to reboot device?") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Sure") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSString *log = nil;
+            NSString *err = nil;
+            int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], &log, &err);
+            if (status != 0) {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@", log, err] title:[NSString stringWithFormat:@"code(%d)", status]];
+            }
+        });
+    }]];
+    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
 void rebuildappsAction()
 {
     [AppDelegate addLogText:Localized(@"Status: Rebuilding Apps")];
