@@ -1,0 +1,84 @@
+name: Build roothide Bootstrap .tipa
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build.yml"
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  build:
+    name: Build roothide Bootstrap .tipa
+    runs-on: macos-latest
+
+    steps:
+      - name: Validate repository
+        run: |
+          REPO=${{ github.repository }}
+  
+          if [ "$REPO" != "SATIS8CHIMPALEE/Bootstrap" ]; then
+            echo "This workflow is only permitted usage for SATIS8CHIMPALEE/Bootstrap repository. Exiting."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch from upstream repository SATIS8CHIMPALEE/Bootstrap
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git remote add upstream https://github.com/SATIS8CHIMPALEE/Bootstrap
+          git fetch upstream
+          git fetch --all --prune
+          git pull --rebase --strategy-option=theirs upstream Patch
+          git checkout --track origin/Patch
+
+      - name: Install Homebrew
+        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
+
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL 'https://raw.githubusercontent.com/roothide/Theos/master/bin/install-theos')"
+
+      - name: Install make
+        run: brew install make
+
+      - name: Setup Theos environment
+        run: echo "THEOS=~/theos" >> $GITHUB_ENV
+
+      - name: Make roothide Bootstrap .tipa
+        run: gmake -j$(sysctl -n hw.ncpu) package
+
+      - name: Upload .tipa artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Bootstrap.tipa
+          path: ./packages/Bootstrap.tipa
+
+      - name: Delete old release
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        with:
+          delete_release: true
+          tag_name: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get roothide Bootstrap .tipa artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Bootstrap.tipa
+
+      - name: Create new rolling release
+        uses: ncipollo/release-action@v1
+        with:
+          name: Rolling roothide Bootstrap Release
+          body: |
+            This is an hourly updated build of the roothide Bootstrap.
+            If this release text is on anywhere except https://github.com/SATIS8CHIMPALEE/Bootstrap, it was stolen.
+          artifacts: "Bootstrap.tipa"
+          tag: release
+          token: ${{ secrets.GITHUB_TOKEN }}
