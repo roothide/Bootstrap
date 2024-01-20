@@ -58,6 +58,10 @@ Rootful and rootless tweaks aren't out-of-the-box compatible with this bootstrap
 
 You can join our Discord for support or general talk [here](https://discord.com/invite/scqCkumAYp). There's a FAQ channel if you need any more information.
 
+## The "Our Table" Icon
+
+[Alpha](https://github.com/TheAlphaStream) is the one who made the ProcursusTeam logo in the first place, and then redesigned by @sourcelocation
+
 ## Credits
 
 Huge thanks to these people, we couldn't have completed this project without their help!

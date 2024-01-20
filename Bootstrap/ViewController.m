@@ -197,6 +197,23 @@ void rebuildappsAction()
     });
 }
 
+void fixNotification()
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Applying")];
+
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/fixnotification.sh", NULL}, nil, nil);
+        if(status==0) {
+            [AppDelegate showMesage:Localized(@"done") title:@""];
+        } else {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        }
+        [AppDelegate dismissHud];
+    });
+}
+
 void reinstallPackageManager()
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
