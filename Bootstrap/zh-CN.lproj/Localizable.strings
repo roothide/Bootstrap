@@ -125,3 +125,7 @@
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
 
 "Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
+
+"Fix App Notification" = "修复应用通知";
+
+"done" = "完成";
