@@ -1,46 +1,64 @@
+"Settings" = "设置";
+"Tweak Enable" = "启用插件";
+"OpenSSH" = "OpenSSH";
+"Respring" = "注销";
+"Rebuild Apps" = "重建应用程序";
+"Rebuild Icon Cache" = "重建图标缓存";
+"Reinstall Sileo & Zebra" = "重新安装 Sileo & Zebra"; 
+"Fix App Notification" = "修复应用通知"; 
+"Uninstall" = "卸载";
+"Credits" = "鸣谢";
+"New Version Available" = "新版本已推出";
 "Bootstrapped" = "已引导";
-
-"Bootstrap" = "安装";
-
+"Update" = "更新";
 "Install" = "安装";
-
 "Unsupported" = "不支持";
+"App List" = "应用列表";
+"Developer" = "开发人员";
+"UI made with love by haxi0. ♡" = "UI 界面由 haxi0 用爱打造。 ♡";
 
-"The current iOS version is not supported yet, we may add support in a future version." = "当前运行的 iOS 版本尚未支持，也许我们稍后会在未来的版本中添加支持。";
 
-"ios-version: %@" = "iOS 版本：%@";
+"OK" = "好";
+"Error" = "错误";
+"Warning" = "警告";
+"Applying" = "正在应用";
+"Cancel" = "取消";
+"Bootstrapping" = "正在引导";
+"Uninstalling" = "正在卸载";
+"Bootstrap Uninstalled" = "Bootstrap 已卸载";
 
-"device-model: %s" = "设备型号：%s";
-
-"app-version: %@" = "应用版本：%@";
-
-"boot-session: %@" = "启动会话：%@";
-
-"bootstrap installed" = "引导已安装";
-
-"bootstrap not installed" = "引导未安装";
-
-"system bootstrapped" = "系统已引导";
-
-"system not bootstrapped" = "系统未引导";
+"Enable Tweak for App" = "为应用启用插件";
+"name or identifier" = "请输入应用名称或标识符";
 
 "Server Not Running" = "服务未运行";
 
 "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知原因，Bootstrap 服务未运行，我们现在唯一能做的就是重新启动它。";
 
 "Restart Server" = "重启 Bootstrap 服务";
-
 "bootstrap server restart successful" = "Bootstrap 服务重启完成";
 
-"Error" = "错误";
+"Rebuilding" = "正在重建";
+"Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
 
+"bootstrap installed" = "引导已安装";
+"bootstrap not installed" = "引导未安装";
+"system bootstrapped" = "系统已引导";
+"system not bootstrapped" = "系统未引导";
 "bootstrap server check successful" = "Bootstrap 服务检查完成";
 
-"Applying" = "正在应用";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
+
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+"Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
+"Status: Reinstalling Zebra" = "状态：正在重装 Zebra";
+"Sileo and Zebra reinstalled!" = "已重新安装 Sileo 和 Zebra";
+"Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
 
 "openssh package is not installed" = "OpenSSH 尚未安装";
 
-"Developer" = "开发人员";
+"Reboot Device" = "重启设备";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前 Bootstrap 环境和 Bootstrap 应用程序不一致，你需要重启设备后更新环境。";
 
 "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的 TrollStore 版本太低，Bootstrap 需要 TrollStore 2.0 或更高版本，请更新 TrollStore 后再次尝试安装 Bootstrap。";
 
@@ -50,78 +68,7 @@
 
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "检测到安装了早期的测试版，请在“应用列表”中关闭所有应用程序注入，重启设备并卸载环境后安装新版本的 Bootstrap。";
 
-"Bootstrapping" = "正在引导";
-
 "openssh launch successful" = "OpenSSH 启动完成";
-
-"openssh launch faild(%d):\n%@\n%@" = "OpenSSH 启动失败(%d):\n%@\n%@";
-
 "respring now..." = "正在注销";
 
-"Warning" = "警告";
-
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载 Bootstrap 吗？\n\n请在卸载之前确保已经在“应用列表”中关闭了所有应用的注入。";
-
-"Cancel" = "取消";
-
-"Uninstall" = "卸载";
-
-"Uninstalling" = "正在卸载";
-
-"Bootstrap Uninstalled" = "Bootstrap 已卸载";
-
-"Settings" = "设置";
-
-"Respring" = "注销";
-
-"UI made with love by haxi0. ♡" = "UI 界面由 haxi0 用爱打造。 ♡";
-
-"Credits" = "鸣谢";
-
-"Options" = "选项";
-
-"OpenSSH" = "OpenSSH";
-
-"App List" = "应用列表";
-
-"Rebuild Apps" = "重建应用程序";
-
-"Tweak Enable" = "启用插件";
-
-"name or identifier" = "请输入应用名称或标识符";
-
-"OK" = "好";
-
-"Rebuild Icon Cache" = "重建图标缓存";
-
-"Reinstall Sileo" = "重新安装 Sileo"; 
-
-"Sileo reinstalled!" = "Sileo 重装完成";
-
-"Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
-
-"Rebuilding" = "正在重建";
-
-"Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
-
-"Status: Rebuilding Apps" = "状态：正在重建应用程序";
-
-"Reboot" = "重启";
-
-"Sure" = "确定";
-
-"Are you sure to reboot device?" = "你确定要重启设备吗？";
-
-"New Version Available" = "新版本已推出";
-
-"Enable Tweak for App" = "为应用启用插件";
-
-"Update" = "更新";
-
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前 Bootstrap 环境和 Bootstrap 应用程序不一致，你需要重启设备后更新环境。";
-
-"Reboot Device" = "重启设备";
-
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
-
-"Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
