@@ -6,7 +6,7 @@
 "Rebuild Icon Cache" = "Перебудувати кеш іконок";
 "Reinstall Sileo & Zebra" = "Перевстановлення Sileo & Zebra";
 "Uninstall" = "Видалити";
-"Credits" = "Кредити";
+"Credits" = "Подяки";
 "New Version Available" = "Доступна нова версія";
 "Bootstrapped" = "Встановлено";
 "Update" = "Оновити";
@@ -17,9 +17,9 @@
 
 "OK" = "OK";
 "Error" = "Помилка";
-"Warnning" = "Увага";
-"Applying" = "Застосувати";
-"Cannel" = "Скасування";
+"Warning" = "Увага";
+"Applying" = "Применить";
+"Cancel" = "Скасування";
 "Update" = "Оновити";
 "Bootstrapping" = "Встановлення";
 "Uninstall" = "Видалити";
@@ -36,11 +36,11 @@
 "Restart Server" = "Перезапустити сервер";
 "bootstrap server restart successful" = "Сервер bootstrap успішно перезавантажений";
 
-"Rebuilding" = Перестроювання";
+"Rebuilding" = "Перестроювання";
 "Don't exit Bootstrap app until show the lock screen" = "Не виходьте з програми Bootstrap поки не побачите екран блокування";
 
 "bootstrap installed" = "Bootstrap встановлений";
-"bootstrap not installed" = Bootstrap не встановлено";
+"bootstrap not installed" = "Bootstrap не встановлено";
 "system bootstrapped" = "Система вже має bootstrap";
 "system not bootstrapped" = "Система не має встановленого bootstrap";
 "bootstrap server check successful" = "Перевірка сервера bootstrap пройшла успішно";
