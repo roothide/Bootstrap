@@ -20,9 +20,7 @@
 "Warning" = "Warning";
 "Applying" = "Applying";
 "Cancel" = "Cancel";
-"Update" = "Update";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "Uninstall";
 "Uninstalling" = "Uninstalling";
 "bootstrap uninstalled" = "bootstrap uninstalled";
 

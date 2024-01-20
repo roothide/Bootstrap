@@ -20,9 +20,7 @@
 "Warning" = "警告";
 "Applying" = "適用中";
 "Cancel" = "キャンセル";
-"Update" = "アップデート";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "アンインストール";
 "Uninstalling" = "アンインストール中";
 "bootstrap uninstalled" = "bootstrapはアンインストールされました";
 

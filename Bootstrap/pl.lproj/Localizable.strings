@@ -20,9 +20,7 @@
 "Warning" = "Ostrzeżenie";
 "Applying" = "Aplikowanie";
 "Cancel" = "Anuluj";
-"Update" = "Aktualizuj";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "Odinstaluj";
 "Uninstalling" = "Odinstalowywyanie";
 "bootstrap uninstalled" = "Odinstalowano bootstrap";
 

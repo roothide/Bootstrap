@@ -20,9 +20,7 @@
 "Warning" = "تحذير";
 "Applying" = "تطبيق";
 "Cancel" = "الغاء";
-"Update" = "تحديث";
 "Bootstrapping" = "Bootstrapping";
-"Uninstall" = "الغاء التثبيت";
 "Uninstalling" = "الغاء التثبيت جاري";
 "bootstrap uninstalled" = "ازالة bootstrap";
 
