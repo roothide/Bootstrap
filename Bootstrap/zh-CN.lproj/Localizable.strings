@@ -94,7 +94,9 @@
 
 "Rebuild Icon Cache" = "重建图标缓存";
 
-"Reinstall Sileo" = "重新安装 Sileo"; 
+"Fix App Notification" = "修复应用程序通知"; 
+
+"Reinstall Sileo & Zebra" = "重新安装 Sileo & Zebra"; 
 
 "Sileo reinstalled!" = "Sileo 重装完成";
 
