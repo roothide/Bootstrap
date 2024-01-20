@@ -98,6 +98,27 @@ struct OptionsView: View {
                                         .opacity(0.3)
                                 )
                                 .disabled(!isSystemBootstrapped())
+
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    respringAction()
+                                } label: {
+                                    Label(
+                                        title: { Text("Reboot") },
+                                        icon: { Image(systemName: "arrow.clockwise.circle.fill") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor(!isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
+                                )
+                                .disabled(!isSystemBootstrapped())
                                 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
