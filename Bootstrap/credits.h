@@ -1,7 +1,8 @@
 #ifndef credits_h
 #define credits_h
 // dictionary will be sorted alphabetically
-NSDictionary* CREDITS = @{
+static NSDictionary* CREDITS = @{
+@"TheAlphaStream" : @"https://github.com/TheAlphaStream",
 @"Nick Chan" : @"https://github.com/asdfugil",
 @"opa334" : @"http://github.com/opa334",
 @"hayden" : @"https://procursus.social/@hayden",
@@ -23,8 +24,9 @@ NSDictionary* CREDITS = @{
 @"TheosTeam" : @"https://theos.dev",
 @"kirb" : @"http://github.com/kirb",
 @"Amy While" : @"http://github.com/elihwyma",
-@"roothide" : @"http://github.com/RootHide",
+@"roothide" : @"http://github.com/roothide",
 @"Shadow-" : @"http://iosjb.top/",
+@"Summit" : @"https://github.com/dbmz502",
 @"SeanIsTethered" : @"https://github.com/jailbreakmerebooted",
 @"Huy Nguyen" : @"https://twitter.com/little_34306",
 @"haxi0" : @"https://haxi0.space",
@@ -71,6 +73,8 @@ NSDictionary* CREDITS = @{
 @"Ellie" : @"https://twitter.com/elliessurviving",
 @"tigisoftware" : @"https://twitter.com/tigisoftware",
 @"Kevin" : @"https://github.com/iodes",
+@"i_82" : @"https://github.com/Lessica",
+@"Lakr" : @"https://github.com/Lakr233",
 };
 
 #endif /* credits_h */
