@@ -1,7 +1,5 @@
 "Bootstrapped" = "已引导";
 
-"Bootstrap" = "安装";
-
 "Install" = "安装";
 
 "Unsupported" = "不支持";
@@ -94,9 +92,9 @@
 
 "Rebuild Icon Cache" = "重建图标缓存";
 
-"Reinstall Sileo" = "重新安装 Sileo"; 
+"Reinstall Sileo & Zebra" = "重新安装 Sileo & Zebra"; 
 
-"Sileo reinstalled!" = "Sileo 重装完成";
+"Sileo and Zebra reinstalled!" = "Sileo & Zebra重装完成";
 
 "Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
 
