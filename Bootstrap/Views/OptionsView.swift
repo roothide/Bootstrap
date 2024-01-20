@@ -101,7 +101,7 @@ struct OptionsView: View {
 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    respringAction()
+                                    rebootAction()
                                 } label: {
                                     Label(
                                         title: { Text("Reboot") },
