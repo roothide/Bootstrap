@@ -1,12 +1,15 @@
 name: Bootstrap Bug
 description: A bug while using the roothide Bootstrap
-title: "[🐛]: "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for using the roothide Bootstap!
+        Thanks for using the roothide Bootstap! If your issue can be solved with simple troubleshooting, check out these resources:
+        
+        [Bootstrap README.md](https://github.com/roothide/Bootstrap/blob/main/README.md)
+        [Bootstrap FAQ](https://github.com/dleovl/Bootstrap/blob/faq/README.md)
+        [roothide Discord server](https://discord.com/invite/scqCkumAYp) (with support channels)
   - type: input
     id: device-model
     attributes:
