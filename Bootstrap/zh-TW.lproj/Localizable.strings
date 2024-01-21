@@ -3,8 +3,8 @@
 "OpenSSH" = "OpenSSH";
 "Respring" = "重新啟動主畫面";
 "Rebuild Apps" = "重建應用程式";
-"Rebuild Icon Cache" = "重建圖標快取";
-"Reinstall Sileo & Zebra" = "重新安裝Sileo & Zebra";
+"Rebuild Icon Cache" = "重建圖示快取";
+"Reinstall Sileo & Zebra" = "重新安裝 Sileo、Zebra";
 "Uninstall" = "解除安裝";
 "Credits" = "鳴謝";
 "New Version Available" = "有新版本可供更新";
@@ -12,7 +12,7 @@
 "Update" = "更新";
 "Install" = "安裝";
 "Unsupported" = "不支援";
-"App List" = "應用程式列表";
+"App List" = "應用程式";
 
 
 "OK" = "OK";
@@ -26,24 +26,24 @@
 "Uninstalling" = "正在解除安裝";
 "bootstrap uninstalled" = "已解除安裝 Bootstrap";
 
-"Enable Tweak for App" = "在應用程式內啟用插件";
-"name or identifier" = "應用程式名稱或包名";
+"Enable Tweak for App" = "應用程式插件設定";
+"name or identifier" = "搜尋";
 
-"Server Not Running" = "尚未啟用服務";
+"Server Not Running" = "尚未啟用伺服器";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "因未知原因而無法啟動 Bootstrap 服務，將重新啟動此裝置。";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "因未知原因而無法啟動 Bootstrap 伺服器，故此裝置將重新啟動。";
 
-"Restart Server" = "重新啟動服務";
-"bootstrap server restart successful" = "已成功重新啟動服務";
+"Restart Server" = "重新啟動伺服器";
+"bootstrap server restart successful" = "已成功重新啟動伺服器";
 
 "Rebuilding" = "重建中";
 "Don't exit Bootstrap app until show the lock screen" = "請勿在螢幕尚未顯示鎖定畫面前退出應用程式";
 
 "bootstrap installed" = "已安裝 Bootstrap";
 "bootstrap not installed" = "未安裝 Bootstrap";
-"system bootstrapped" = "已 Bootstrap 作業系統";
-"system not bootstrapped" = "尚未 Bootstrap 作業系統";
-"bootstrap server check successful" = "已完成 Bootstrap 服務檢查";
+"system bootstrapped" = "已 Bootstrap 系統";
+"system not bootstrapped" = "尚未 Bootstrap 系統";
+"bootstrap server check successful" = "已完成 Bootstrap 伺服器檢查";
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "若欲閃避越獄偵測可在 Fliza 內啟用插件";
 
@@ -69,4 +69,5 @@
 "openssh launch successful" = "已啟動 OpenSSH";
 "respring now..." = "正在重新啟動主畫面...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "是否解除安裝 Bootstrap？\n\n請確認是否已停用所有應用程式內之插件";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "是否解除安裝 Bootstrap？\n\n請確認是否已停用所有應用程式內的插件";
+"Fix App Notification" = "修復應用程式推送通知"
