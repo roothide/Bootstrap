@@ -51,7 +51,7 @@
 "Status: Reinstalling Sileo" = "狀態：正在重新安裝 Sileo";
 "Status: Reinstalling Zebra" = "狀態: 正在重新安裝Zebra";
 "Sileo and Zebra reinstalled!" = "已重新安裝 Sileo 和 Zebra！";
-"Status: Rebuilding Icon Cache" = "狀態: 正在重建圖示快取";
+"Status: Rebuilding Icon Cache" = "狀態：正在重建圖示快取";
 
 "openssh package is not installed" = "尚未安裝 OpenSSH";
 
