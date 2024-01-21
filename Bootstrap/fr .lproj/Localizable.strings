@@ -1,0 +1,72 @@
+"Settings" = "Paramètres";
+"Tweak Enable" = "Activer le tweak"; 
+"OpenSSH" = "OpenSSH"; 
+"Respring" = "Respring"; 
+"Rebuild Apps" = "Reconstruire les applications"; 
+"Rebuild Icon Cache" = "Reconstruire le cache des icônes"; 
+"Reinstall Sileo & Zebra" = "Réinstaller Sileo et Zebra"; 
+"Uninstall" = "Désinstaller"; 
+"Credits" = "Crédits"; 
+"New Version Available" = "Nouvelle version disponible"; 
+"Bootstrapped" = "Démarrage réalisé"; 
+"Update" = "Mettre à jour"; 
+"Install" = "Installer"; 
+"Unsupported" = "Non supporté"; 
+"App List" = "Liste des applications";
+
+"OK" = "OK";
+"Error" = "Erreur";
+"Warnning" = "Avertissement";
+"Applying" = "Application";
+"Cannel" = "Annuler";
+"Update" = "Mettre à jour";
+"Bootstrapping" = "Démarrage";
+"Uninstall" = "Désinstaller";
+"Uninstalling" = "Désinstallation";
+"bootstrap uninstalled" = "démarrage désinstallé";
+
+"Eanble Tweak for App" = "Activer le tweak pour l'application";
+"name or identifier" = "nom ou identifiant";
+
+"Server Not Running" = "Serveur non démarré";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Pour des raisons inconnues, le serveur de démarrage n'est pas démarré, la seule chose que nous pouvons faire est de le redémarrer maintenant.";
+
+"Restart Server" = "Redémarrer le serveur";
+
+"bootstrap server restart successful" = "Redémarrage du serveur de démarrage réussi";
+
+"Rebuilding" = "Reconstruction";
+"Don't exit Bootstrap app until show the lock screen" = "Ne quittez pas l'application Bootstrap tant que l'écran de verrouillage n'est pas affiché";
+
+"bootstrap installed" = "démarrage installé";
+"bootstrap not installed" = "démarrage non installé";
+"system bootstrapped" = "système démarré";
+"system not bootstrapped" = "système non démarré";
+"bootstrap server check successful" = "Vérification du serveur de démarrage réussie";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Il semble que vous ayez l'application Filza installée, ce qui peut être détecté comme jailbreaké. Vous pouvez activer le tweak pour la cacher.";
+
+"Status: Rebuilding Apps" = "Statut : Reconstruction des applications";
+"Status: Reinstalling Sileo" = "Statut : Réinstallation de Sileo";
+"Status: Reinstalling Zebra" = "Statut : Réinstallation de Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo et Zebra réinstallés !";
+"Status: Rebuilding Icon Cache" = "Statut : Reconstruction du cache des icônes";
+
+"openssh package is not installed" = "Le paquet openssh n'est pas installé";
+
+"Reboot Device" = "Redémarrer l'appareil";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "La version actuelle du démarrage est incompatible avec la version de l'application Bootstrap, vous devez redémarrer l'appareil pour la mettre à jour.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Votre version de trollstore est trop ancienne, Bootstrap ne supporte que trollstore>=2.0, vous devez mettre à jour votre trollstore puis réinstaller l'application Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Votre appareil ne semble pas avoir le mode développeur activé. \n\nVeuillez activer le mode développeur et redémarrer votre appareil.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine a été installé sur cet appareil, installer ce bootstrap maintenant risque de le casser !";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Vous avez installé une ancienne version bêta, veuillez désactiver tous les tweaks d'application et redémarrer l'appareil pour la désinstaller afin de pouvoir installer la nouvelle version du démarrage.";
+
+"openssh launch successful" = "Lancement d'openssh réussi";
+"respring now..." = "Respring maintenant...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Êtes-vous sûr de vouloir désinstaller le démarrage ?\n\nAssurez-vous d'avoir désactivé les tweaks pour toutes les applications avant de désinstaller.";
