@@ -69,3 +69,8 @@
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "คุณมั่นใจแล้วใช่ไหมที่จะถอน bootstrap?\n\nโปรดเช็คให้แน่ใจว่าได้ปิดการใช้งาน tweak ในทุกแอปก่อนที่จะถอนมัน.";
 
+"ios-version: %@" = "เวอร์ชั่น iOS: %@";
+"device-model: %s" = "รุ่นโมเดล: %s";
+"app-version: %@" = "เวอร์ชั่นของแอป: %@";
+"boot-session: %@" = "เซสชั่นการบูต: %@";
+"UI made with love by haxi0. ♡" = "UI ที่สร้างด้วยความรักโดย haxi0. ♡";
