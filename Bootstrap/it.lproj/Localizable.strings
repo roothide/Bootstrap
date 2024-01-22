@@ -20,9 +20,7 @@
 "Warning" = "Attenzione";
 "Applying" = "Applicazione in corso";
 "Cancel" = "Annulla";
-"Update" = "Aggiorna";
 "Bootstrapping" = "Eseguendo il Bootstrap";
-"Uninstall" = "Disinstalla";
 "Uninstalling" = "Disinstallazione in corso";
 "bootstrap uninstalled" = "bootstrap disinstallato";
 

@@ -21,9 +21,7 @@
 "Warning" = "Attention";
 "Applying" = "Application";
 "Cancel" = "Annuler";
-"Update" = "Mettre à jour";
 "Bootstrapping" = "Démarrage";
-"Uninstall" = "Désintaller";
 "Uninstalling" = "Désinstallation";
 "bootstrap uninstalled" = "bootstrap désinstallé";
 

@@ -20,9 +20,7 @@
 "Warning" = "Увага";
 "Applying" = "Применить";
 "Cancel" = "Скасування";
-"Update" = "Оновити";
 "Bootstrapping" = "Встановлення";
-"Uninstall" = "Видалити";
 "Uninstalling" = "Видалення";
 "bootstrap uninstalled" = "Bootstrap видалено";
 

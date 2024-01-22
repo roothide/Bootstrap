@@ -20,9 +20,7 @@
 "Warning" = "警告";
 "Applying" = "套用中";
 "Cancel" = "取消";
-"Update" = "更新";
 "Bootstrapping" = "正在 Bootstrap";
-"Uninstall" = "解除安裝";
 "Uninstalling" = "正在解除安裝";
 "bootstrap uninstalled" = "已解除安裝 Bootstrap";
 

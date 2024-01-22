@@ -20,9 +20,7 @@
 "Warning" = "Varning";
 "Applying" = "Tillämpar";
 "Cancel" = "Avbryt";
-"Update" = "Uppdatera";
 "Bootstrapping" = "Bootstrappar";
-"Uninstall" = "Avinstallera";
 "Uninstalling" = "Avinstallerar";
 "bootstrap uninstalled" = "bootstrap avinstallerad";
 
