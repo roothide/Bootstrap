@@ -110,11 +110,11 @@ struct OptionsView: View {
                                 
 //                      Button {
 //                           UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                                    fixNotification()
-//                                } label: {
-//                                    Label(
-//                                        title: { Text("Fix App Notification") },
-//                                        icon: { Image(systemName: "wrench") }
+//                               fixNotification()
+//                            } label: {
+//                                Label(
+//                                    title: { Text("Fix App Notification") },
+//                                    icon: { Image(systemName: "wrench") }
 //                                    )
 //                                    .frame(maxWidth: .infinity)
 //                                    .padding(.vertical, 10)
