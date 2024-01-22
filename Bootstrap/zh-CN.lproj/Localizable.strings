@@ -73,42 +73,16 @@
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载 Bootstrap 吗？\n\n请在卸载之前确保已经在“应用列表”中关闭了所有应用的注入。";
 
-"Settings" = "设置";
-
-"Credits" = "鸣谢";
-
-"Options" = "选项";
-
-"OpenSSH" = "OpenSSH";
-
 "Reinstall Sileo" = "重新安装 Sileo"; 
 
 "Sileo reinstalled!" = "Sileo 重装完成";
 
 "Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
 
-"Rebuilding" = "正在重建";
-
-"Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
-
 "Reboot" = "重启";
 
 "Sure" = "确定";
 
 "Are you sure to reboot device?" = "你确定要重启设备吗？";
-
-"New Version Available" = "新版本已推出";
-
-"Enable Tweak for App" = "为应用启用插件";
-
-"Update" = "更新";
-
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前 Bootstrap 环境和 Bootstrap 应用程序不一致，你需要重启设备后更新环境。";
-
-"Reboot Device" = "重启设备";
-
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
-
-"Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
 
 "done" = "完成";
