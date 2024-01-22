@@ -1,70 +1,70 @@
 "Settings" = "設定";
-"Tweak Enable" = "Tweak開關";
+"Tweak Enable" = "啟用插件";
 "OpenSSH" = "OpenSSH";
-"Respring" = "重新啟動SpringBorad";
+"Respring" = "重新啟動主畫面";
 "Rebuild Apps" = "重建應用程式";
-"Rebuild Icon Cache" = "重建圖標快取";
-"Reinstall Sileo & Zebra" = "重新安裝Sileo & Zebra";
-"Uninstall" = "卸載";
+"Rebuild Icon Cache" = "重建圖示快取";
+"Reinstall Sileo & Zebra" = "重新安裝 Sileo、Zebra";
+"Uninstall" = "解除安裝";
 "Credits" = "鳴謝";
 "New Version Available" = "有新版本可供更新";
-"Bootstrapped" = "已Bootstrap";
+"Bootstrapped" = "已完成 Bootstrap";
 "Update" = "更新";
 "Install" = "安裝";
 "Unsupported" = "不支援";
-"App List" = "應用程式列表";
+"App List" = "應用程式";
 
 
 "OK" = "OK";
 "Error" = "錯誤";
 "Warning" = "警告";
-"Applying" = "應用中";
+"Applying" = "套用中";
 "Cancel" = "取消";
-"Bootstrapping" = "正在Bootstrap";
-"Uninstalling" = "正在卸載";
-"bootstrap uninstalled" = "bootstrap已卸載";
+"Bootstrapping" = "正在 Bootstrap";
+"Uninstalling" = "正在解除安裝";
+"bootstrap uninstalled" = "已解除安裝 Bootstrap";
 
-"Enable Tweak for App" = "為應用程式啟用Tweak";
-"name or identifier" = "應用程式名稱或包名";
+"Enable Tweak for App" = "應用程式插件設定";
+"name or identifier" = "搜尋";
 
-"Server Not Running" = "服務未在運行";
+"Server Not Running" = "尚未啟用伺服器";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由於未知原因,Bootstrap服務無法運行,我們唯一能做的就是重新啟動";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "因未知原因而無法啟動 Bootstrap 伺服器，故此裝置將重新啟動。";
 
-"Restart Server" = "重新啟動服務";
-"bootstrap server restart successful" = "bootstrap服務重新啟動成功";
+"Restart Server" = "重新啟動伺服器";
+"bootstrap server restart successful" = "已成功重新啟動伺服器";
 
 "Rebuilding" = "重建中";
-"Don't exit Bootstrap app until show the lock screen" = "在顯示鎖定畫面之前,請不要退出Bootstrap應用程序";
+"Don't exit Bootstrap app until show the lock screen" = "請勿在螢幕尚未顯示鎖定畫面前退出應用程式";
 
-"bootstrap installed" = "bootstrap已安裝";
-"bootstrap not installed" = "bootstrap未安裝";
-"system bootstrapped" = "系統已bootstrap";
-"system not bootstrapped" = "系統未bootstrap";
-"bootstrap server check successful" = "bootstrap服務檢查成功";
+"bootstrap installed" = "已安裝 Bootstrap";
+"bootstrap not installed" = "未安裝 Bootstrap";
+"system bootstrapped" = "已 Bootstrap 系統";
+"system not bootstrapped" = "尚未 Bootstrap 系統";
+"bootstrap server check successful" = "已完成 Bootstrap 伺服器檢查";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "你似乎安裝了Filza,該應用可能會被檢測為越獄狀態,啟用Tweak來隱藏該應用";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "若欲閃避越獄偵測可在 Fliza 內啟用插件";
 
-"Status: Rebuilding Apps" = "狀態: 正在重建應用程式";
-"Status: Reinstalling Sileo" = "狀態: 正在重新安裝Sileo";
+"Status: Rebuilding Apps" = "狀態：正在重建應用程式";
+"Status: Reinstalling Sileo" = "狀態：正在重新安裝 Sileo";
 "Status: Reinstalling Zebra" = "狀態: 正在重新安裝Zebra";
-"Sileo and Zebra reinstalled!" = "Sileo和Zebra已重新安裝!";
-"Status: Rebuilding Icon Cache" = "狀態: 正在重建圖標快取";
+"Sileo and Zebra reinstalled!" = "已重新安裝 Sileo 和 Zebra！";
+"Status: Rebuilding Icon Cache" = "狀態: 正在重建圖示快取";
 
-"openssh package is not installed" = "openssh插件未安裝";
+"openssh package is not installed" = "尚未安裝 OpenSSH";
 
 "Reboot Device" = "重新啟動設備";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "當前Bootstrap版本與已安裝的Bootstrap App版本不一致,需要重新啟動設備以進行更新";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "為了安裝 Bootstrap 更新此設備將重新啟動";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的TrollStore版本太舊,Bootstrap僅支援TrollStore>=2.0,您必須更新您的TrollStore然後重新安裝Bootstrap應用程式";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "請更新 TrollStore 至 2.0 以上以繼續使用此 Bootstrap";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "你的設備似乎沒有啟用開發者模式. \n\n請啟用開發者模式並重新啟動你的設備";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "未啟用開發者模式。\n\n請啟用開發者模式並重新啟動此設備";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine已安裝到此設備上,現在安裝bootstrap可能會被破壞!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "Dopamine Roothide 與 Bootstrap 衝突，若將兩者同時安裝將破壞 iOS！";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "您已經安裝了舊版本請關閉所有App的tweaks並重新啟動該設備,卸載後您將可以安裝新版本的Bootstrap";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "請停用所有應用程式內之插件並且重新開機。完成之後再解除安裝 Bootstrap。最後，請重新安裝最新版本的 Boostrap 以完成更新。";
 
-"openssh launch successful" = "openssh啟動成功";
-"respring now..." = "現在重新啟動SpringBorad...";
+"openssh launch successful" = "已啟動 OpenSSH";
+"respring now..." = "正在重新啟動主畫面...";
 
-"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你確定你要卸載Bootstrap嗎?\n\n請確定你在卸載前已經關閉了所有的tweak";
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "是否解除安裝 Bootstrap？\n\n請確認是否已停用所有應用程式內的插件";
