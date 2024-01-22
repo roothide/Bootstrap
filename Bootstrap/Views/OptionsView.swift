@@ -141,26 +141,26 @@ struct OptionsView: View {
                                 )
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    fixNotification()
-                                } label: {
-                                    Label(
-                                        title: { Text("Fix App Notification") },
-                                        icon: { Image(systemName: "wrench") }
-                                    )
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                                }
-                                .frame(width: 250)
-                                .background(Color.clear)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.gray, lineWidth: 1)
-                                        .opacity(0.3)
-                                )
-                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+//                                Button {
+//                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                    fixNotification()
+//                                } label: {
+//                                    Label(
+//                                        title: { Text("Fix App Notification") },
+//                                        icon: { Image(systemName: "wrench") }
+//                                    )
+//                                    .frame(maxWidth: .infinity)
+//                                    .padding(.vertical, 10)
+//                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+//                                }
+//                                .frame(width: 250)
+//                                .background(Color.clear)
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .stroke(.gray, lineWidth: 1)
+//                                        .opacity(0.3)
+//                                )
+//                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()

@@ -1,0 +1,64 @@
+name: Bootstrap Bug
+description: A bug while using the roothide Bootstrap
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for using the roothide Bootstap! If your issue can be solved with simple troubleshooting, check out these resources:
+        
+        [Bootstrap README.md](https://github.com/roothide/Bootstrap/blob/main/README.md)
+        [Bootstrap FAQ](https://github.com/dleovl/Bootstrap/blob/faq/README.md)
+        [roothide Discord server](https://discord.com/invite/scqCkumAYp) (with support channels)
+  - type: input
+    id: device-model
+    attributes:
+      label: Device Model
+      description: What device model are you using? (Device, Chipset)
+      placeholder: ex. iPhone 11, A13
+    validations:
+      required: true
+  - type: input
+    id: ios-version
+    attributes:
+      label: iOS Version
+      description: What iOS version are you using?
+      placeholder: ex. 17.0
+    validations:
+      required: true
+  - type: input
+    id: bootstrap-version
+    attributes:
+      label: Bootstrap Version
+      description: What version of the roothide Bootstrap are you using?
+      placeholder: ex. 1.0
+    validations:
+      required: true
+  - type: input
+    id: serotonin-version
+    attributes:
+      label: Serotonin Version
+      description: Are you using Serotonin, and if so, which version are you using?
+      placeholder: ex. 1.0.1
+  - type: textarea
+    id: bugs
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: I did ..., but ... was supposed to happen. ... doesn't work!
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: acknowledgement
+    attributes:
+      label: Acknowledgement of README and FAQ
+      description: By submitting this issue, you acknowledge you have read both the [README.md](https://github.com/roothide/Bootstrap/blob/main/README.md) and the [FAQ](https://github.com/dleovl/Bootstrap/blob/faq/README.md), and neither solve the issue (or it shouldn't be listed).
+      options:
+        - label: I have read both the README and the FAQ.
+          required: true
