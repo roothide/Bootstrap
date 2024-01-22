@@ -20,9 +20,7 @@
 "Warning" = "คำเตือน";
 "Applying" = "กำลังนำไปใช้";
 "Cancel" = "ยกเลิก";
-"Update" = "อัพเดท";
 "Bootstrapping" = "กำลังทำ Bootstrap";
-"Uninstall" = "ถอนการติดตั้ง";
 "Uninstalling" = "กำลังถอนการติดตั้ง";
 "bootstrap uninstalled" = "ถอน Bootstrap แล้ว";
 

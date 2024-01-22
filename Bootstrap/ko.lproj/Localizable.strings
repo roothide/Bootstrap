@@ -20,9 +20,7 @@
 "Warning" = "주의";
 "Applying" = "적용중";
 "Cancel" = "취소";
-"Update" = "업데이트";
 "Bootstrapping" = "부트스트랩중";
-"Uninstall" = "제거";
 "Uninstalling" = "제거중";
 "bootstrap uninstalled" = "부트스트랩 제거됨";
 
