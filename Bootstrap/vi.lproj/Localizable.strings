@@ -20,9 +20,7 @@
 "Warning" = "Cảnh báo";
 "Applying" = "Đang áp dụng";
 "Cancel" = "Huỷ";
-"Update" = "Cập nhật";
 "Bootstrapping" = "Đang cài Bootstrap";
-"Uninstall" = "Gỡ cài đặt";
 "Uninstalling" = "Đang gỡ cài đặt";
 "bootstrap uninstalled" = "bootstrap đã bị gỡ";
 
