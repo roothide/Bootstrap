@@ -18,7 +18,7 @@
 "OK" = "OK";
 "Error" = "錯誤";
 "Warning" = "警告";
-"Applying" = "套用用中";
+"Applying" = "套用中";
 "Cancel" = "取消";
 "Update" = "更新";
 "Bootstrapping" = "正在 Bootstrap";
