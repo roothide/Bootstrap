@@ -81,16 +81,6 @@
 
 "OpenSSH" = "OpenSSH";
 
-"App List" = "应用列表";
-
-"Rebuild Apps" = "重建应用程序";
-
-"name or identifier" = "请输入应用名称或标识符";
-
-"OK" = "好";
-
-"Rebuild Icon Cache" = "重建图标缓存";
-
 "Reinstall Sileo" = "重新安装 Sileo"; 
 
 "Sileo reinstalled!" = "Sileo 重装完成";
@@ -100,8 +90,6 @@
 "Rebuilding" = "正在重建";
 
 "Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
-
-"Status: Rebuilding Apps" = "状态：正在重建应用程序";
 
 "Reboot" = "重启";
 
@@ -122,7 +110,5 @@
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
 
 "Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
-
-"Fix App Notification" = "修复应用通知";
 
 "done" = "完成";
