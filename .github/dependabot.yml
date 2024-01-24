@@ -5,10 +5,10 @@
 
 version: 2
 updates:
-  - package-ecosystem: "Bootstrap/Bootstrap" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "docker"
+    directory: "/"
     schedule:
-      interval: "dayly"
-　　　time: "14:00"
+      interval: "daily"
+      time: "14:00"
       timezone: "Asia/Tokyo"
     target-branch: "develop"
