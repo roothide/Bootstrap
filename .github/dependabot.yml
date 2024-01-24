@@ -11,4 +11,3 @@ updates:
       interval: "daily"
       time: "14:00"
       timezone: "Asia/Tokyo"
-    target-branch: "develop"
