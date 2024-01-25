@@ -13,7 +13,7 @@ body:
   - type: input
     id: device-model
     attributes:
-      label: Device Model
+      label: Device Model:
       description: What device model are you using? (Device, Chipset)
       placeholder: ex. iPhone 11, A13
     validations:
@@ -44,7 +44,7 @@ body:
     id: bugs
     attributes:
       label: What happened?
-      description: Also, what did you expect to happen?
+      description: Also, what did you expect to happen? How do we reproduce this?
       placeholder: I did ..., but ... was supposed to happen. ... doesn't work!
     validations:
       required: true
