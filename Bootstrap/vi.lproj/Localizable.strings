@@ -1,0 +1,72 @@
+"Settings" = "Cài đặt";
+"Tweak Enable" = "Kích hoạt tweak";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Xây dựng lại Apps";
+"Rebuild Icon Cache" = "Xây dựng lại Icon Cache";
+"Reinstall Sileo & Zebra" = "Cài lại Sileo và Zebra";
+"Uninstall" = "Gỡ cài đặt";
+"Credits" = "Cảm ơn tới";
+"New Version Available" = "Có phiên bản mới";
+"Bootstrapped" = "Đã có Bootstrap";
+"Update" = "Cập nhật";
+"Install" = "Cài đặt";
+"Unsupported" = "Không được hỗ trợ";
+"App List" = "Danh sách ứng dụng";
+
+
+"OK" = "OK";
+"Error" = "Lỗi";
+"Warning" = "Cảnh báo";
+"Applying" = "Đang áp dụng";
+"Cancel" = "Huỷ";
+"Bootstrapping" = "Đang cài Bootstrap";
+"Uninstalling" = "Đang gỡ cài đặt";
+"bootstrap uninstalled" = "bootstrap đã bị gỡ";
+
+"Enable Tweak for App" = "Bật tweak cho ứng dụng";
+"name or identifier" = "tên hoặc định danh";
+
+"Server Not Running" = "Dịch vụ đang tắt";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "vì lý do không rõ nên dịch vụ của bootstrap đang không hoạt động, việc duy nhất chúng ta có thể làm bây giờ là khởi động lại nó.";
+
+"Restart Server" = "Khởi động lại dịch vụ";
+"bootstrap server restart successful" = "dịch vụ bootstrap được khởi động lại thành công";
+
+"Rebuilding" = "Đang xây dựng lại";
+"Don't exit Bootstrap app until show the lock screen" = "Không thoát Bootstrap cho đến khi hiện màn hình khoá";
+
+"bootstrap installed" = "bootstrap đã được cài đặt";
+"bootstrap not installed" = "bootstrap chưa được cài đặt";
+"system bootstrapped" = "hệ thống đã được gắn bootstrap";
+"system not bootstrapped" = "hệ thống chưa có bootstrap";
+"bootstrap server check successful" = "kiểm tra máy chủ bootstrap thành công";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Có vẻ như bạn có Filza, việc này có thể làm phát hiện máy đã jailbreak. Bạn có thể bật Tweak cho nó để ẩn.";
+
+"Status: Rebuilding Apps" = "Trạng thái: Đang xây dựng lại Apps";
+"Status: Reinstalling Sileo" = "Trạng thái: Đang cài lại Sileo";
+"Status: Reinstalling Zebra" = "Trạng thài: Đang cài lại Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo và Zebra đã được cài đặt lại!";
+"Status: Rebuilding Icon Cache" = "Trạng thái: Đang xây dựng lại Icon Cache";
+
+"openssh package is not installed" = "openssh chưa được cài đặt";
+
+"Reboot Device" = "Khởi động lại thiết bị";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Dịch vụ bootstrap đang được cài hiện tại khác với phiên bản ứng dụng Bootstrap, hãy khởi động lại máy để cập nhật nó.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Phiên bản TrollStore của bạn đã lỗi thời : dưới bản 2.0, bạn phải cập nhật TrollStore và cài đặt lại ứng dụng Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Thiết bị của bạn có vẻ như không bật chế độ Nhà phát triển. Hãy bật nó lên và khởi động lại thiết bị.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "phát hiện RootHide Dopamine đã được cài đặt trên thiết bị này, việc cài đặt bootstrap có thể gây xung đột !";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Bạn đang sử dụng một bản beta cũ, hãy tắt tiêm tweak cho mọi ứng dụng, sau đó khởi động lại thiết bị để gỡ nó và cài bản bootstrap mới hơn.";
+
+"openssh launch successful" = "khởi động openssh thành công";
+"respring now..." = "đang respring bây giờ...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Bạn có chắc muốn gỡ bootstrap?\n\nChắc chắn rằng bạn đã tắt tiêm tweak cho tất cả các ứng dụng trước khi gỡ bootstrap.";
+
+

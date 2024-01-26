@@ -1,0 +1,71 @@
+"Settings" = "ตั้งค่า";
+"Tweak Enable" = "เปิดการใช้งาน Tweak";
+"OpenSSH" = "OpenSSH";
+"Respring" = "รีสปริง";
+"Rebuild Apps" = "รีบิ๊วแอปใหม่";
+"Rebuild Icon Cache" = "รีบิ๊วแคชไอคอนใหม่";
+"Reinstall Sileo & Zebra" = "ติดตั้ง Sileo & Zebra ใหม่";
+"Uninstall" = "ถอนการติดตั้ง";
+"Credits" = "เครดิต";
+"New Version Available" = "มีเวอร์ชั่นใหม่";
+"Bootstrapped" = "Bootstrap พร้อมแล้ว";
+"Update" = "อัพเดท";
+"Install" = "ติดตั้ง";
+"Unsupported" = "ไม่รองรับ";
+"App List" = "รายการแอป";
+
+
+"OK" = "โอเค";
+"Error" = "ผิดพลาด";
+"Warning" = "คำเตือน";
+"Applying" = "กำลังนำไปใช้";
+"Cancel" = "ยกเลิก";
+"Bootstrapping" = "กำลังทำ Bootstrap";
+"Uninstalling" = "กำลังถอนการติดตั้ง";
+"bootstrap uninstalled" = "ถอน Bootstrap แล้ว";
+
+"Enable Tweak for App" = "เปิดการใช้งาน Tweak บนแอป";
+"name or identifier" = "ชื่อ หรือ id ของแอป";
+
+"Server Not Running" = "เซิร์ฟเวอร์ไม่ได้ทำงานอยู่";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "ไม่ทราบสาเหตุที่เซิร์ฟเวอร์ bootstrap ไม่ทำงาน, สิ่งเดียวที่เราทําได้คือรีสตาร์ทตอนนี้.";
+
+"Restart Server" = "รีสตาร์ทเซิร์ฟเวอร์";
+"bootstrap server restart successful" = "รีสตาร์ทเซิร์ฟเวอร์ bootstrap สำเร็จ";
+
+"Rebuilding" = "กำลังรีบิ๊ว";
+"Don't exit Bootstrap app until show the lock screen" = "อย่าออกจากแอป Bootstrap จนกว่าจะแสดงหน้าล็อกสกรีน";
+
+"bootstrap installed" = "bootstrap ติดตั้งแล้ว";
+"bootstrap not installed" = "bootstrap ยังไม่ได้ติดตั้ง";
+"system bootstrapped" = "ระบบทำ bootstrap แล้ว";
+"system not bootstrapped" = "ระบบยังไม่ได้ bootstrap";
+"bootstrap server check successful" = "ตรวจสอบ bootstrap เซิร์ฟเวอร์สำเร็จ";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "ดูเหมือนว่าคุณได้ติดตั้งแอป Filza ไว้, ซึ่งอาจจะโดนการตรวจจับเจลเบรค. คุณสามารถเปิดใช้งาน Tweak เพื่อซ่อนมัน.";
+
+"Status: Rebuilding Apps" = "สถานะ: กำลังรีบิ๊วแอปใหม่";
+"Status: Reinstalling Sileo" = "สถานะ: กำลังติดตั้ง Sileo";
+"Status: Reinstalling Zebra" = "สถานะ: กำลังติดตั้ง Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo และ Zebra ติดตั้งใหม่แล้ว!";
+"Status: Rebuilding Icon Cache" = "สถานะ: กำลังรีบิ๊วแคชไอคอน";
+
+"openssh package is not installed" = "openssh แพ็คเกจยังไม่ได้ติดตั้ง";
+
+"Reboot Device" = "รีบูตเครื่อง";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "เวอร์ชั่นของ bootstrap ที่ลงอยู่ไม่สอดคล้องกับแอป Bootstrap, คุณจะต้องรีบูตเครื่องเพื่ออัพเดทมัน.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "TrollStore ของคุณเก่าเกินไป, Bootstrap รองรับเฉพาะ trollstore>=2.0, คุณจะต้องอัพเดท TrollStore แล้วค่อยติดตั้ง Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "เครื่องของคุณดูเหมือนจะยังไม้ได้เปิดโหมดนักพัฒนา.\n\nโปรดเปิดโหมดนักพัฒนาและรีบูตเครื่องของคุณ.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine ถูกติดตั้งไว้บนเครื่องนี้, การติดตั้ง bootstrap นี้อาจจะทำมันพัง!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "คุณมีเบต้าเวอร์ชั่นเก่าติดตั้งอยู่, โปรดปิดการใช้งาน tweak ในทุกแอปและรีบูตเครื่องเพื่อถอนการติดตั้ง เพื่อจะสามารถติดตั้ง bootstrap เวอร์ชั่นใหม่.";
+
+"openssh launch successful" = "openssh ทำงานสำเร็จ";
+"respring now..." = "กำลังรีสปริง...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "คุณมั่นใจแล้วใช่ไหมที่จะถอน bootstrap?\n\nโปรดเช็คให้แน่ใจว่าได้ปิดการใช้งาน tweak ในทุกแอปก่อนที่จะถอนมัน.";
+

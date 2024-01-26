@@ -1,0 +1,70 @@
+"Settings" = "Налаштування";
+"Tweak Enable" = "Увімкнення твіків";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Респринг";
+"Rebuild Apps" = "Перебудувати додатки";
+"Rebuild Icon Cache" = "Перебудувати кеш іконок";
+"Reinstall Sileo & Zebra" = "Перевстановлення Sileo & Zebra";
+"Uninstall" = "Видалити";
+"Credits" = "Подяки";
+"New Version Available" = "Доступна нова версія";
+"Bootstrapped" = "Встановлено";
+"Update" = "Оновити";
+"Install" = "Встановити";
+"Unsupported" = "Не підтримується";
+"App List" = "Список додатків";
+
+
+"OK" = "OK";
+"Error" = "Помилка";
+"Warning" = "Увага";
+"Applying" = "Применить";
+"Cancel" = "Скасування";
+"Bootstrapping" = "Встановлення";
+"Uninstalling" = "Видалення";
+"bootstrap uninstalled" = "Bootstrap видалено";
+
+"Eanble Tweak for App" = "Увімкнути Твік для додатка";
+"name or identifier" = "Iм'я або ідентифікатор";
+
+"Server Not Running" = "Сервер не запущено";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "З невідомих причин сервер bootstrap не запущений, єдине, що ми можемо зробити, це перезавантажити його";
+
+"Restart Server" = "Перезапустити сервер";
+"bootstrap server restart successful" = "Сервер bootstrap успішно перезавантажений";
+
+"Rebuilding" = "Перестроювання";
+"Don't exit Bootstrap app until show the lock screen" = "Не виходьте з програми Bootstrap поки не побачите екран блокування";
+
+"bootstrap installed" = "Bootstrap встановлений";
+"bootstrap not installed" = "Bootstrap не встановлено";
+"system bootstrapped" = "Система вже має bootstrap";
+"system not bootstrapped" = "Система не має встановленого bootstrap";
+"bootstrap server check successful" = "Перевірка сервера bootstrap пройшла успішно";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Мабуть у вас встановлена Filza, що може привести до визначення як jailbroken. Ви можете включити твік, щоб заховати її.";
+
+"Status: Rebuilding Apps" = "Статус: Перебудова додатків";
+"Status: Reinstalling Sileo" = "Статус: Перевстановлення Sileo";
+"Status: Reinstalling Zebra" = "Статус: Перевстановлення Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo і Zebra успішно перевстановлені!";
+"Status: Rebuilding Icon Cache" = "Статус: Перебудова кеша іконок";
+
+"openssh package is not installed" = "Пакет openssh не встановлено";
+
+"Reboot Device" = "Перезавантажити пристрій";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Поточна bootstrapped версія несумісна з поточною версією програми Bootstrap, вам знадобиться перезавантажити пристрій, щоб оновити його.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Ваша версія TrollStore застаріла, Bootstrap підтримує тільки TrollStore > = 2.0, вам потрібно оновити TrollStore, а потім перевстановити додаток Bootstrap";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Мабуть, на вашому пристрої не включений режим розробника.\n\nБудь ласка, увімкніть режим розробника і перезавантажте пристрій.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine встановлений на вашому пристрої, установка bootstrap може зламати це!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "У вас встановлена стара бета-версія, будь ласка, вимкніть всі твіки додатків і перезавантажте пристрій, щоб встановити нову версію bootstrap.";
+
+"openssh launch successful" = "Запуск openssh пройшов успішно";
+"respring now..." = "Респринг...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Ви впевнені, що хочете видалити bootstrap?\n\nБудь ласка, переконайтеся, що ви відключили твіки для всіх додатків перед видаленням.";

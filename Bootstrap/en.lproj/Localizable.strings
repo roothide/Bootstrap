@@ -1,0 +1,71 @@
+"Settings" = "Settings";
+"Tweak Enable" = "Tweak Enable";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Rebuild Apps";
+"Rebuild Icon Cache" = "Rebuild Icon Cache";
+"Reinstall Sileo & Zebra" = "Reinstall Sileo & Zebra";
+"Uninstall" = "Uninstall";
+"Credits" = "Credits";
+"New Version Available" = "New Version Available";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Update";
+"Install" = "Install";
+"Unsupported" = "Unsupported";
+"App List" = "App List";
+
+
+"OK" = "OK";
+"Error" = "Error";
+"Warning" = "Warning";
+"Applying" = "Applying";
+"Cancel" = "Cancel";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "Uninstalling";
+"bootstrap uninstalled" = "bootstrap uninstalled";
+
+"Enable Tweak for App" = "Enable Tweak for App";
+"name or identifier" = "name or identifier";
+
+"Server Not Running" = "Server Not Running";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.";
+
+"Restart Server" = "Restart Server";
+"bootstrap server restart successful" = "bootstrap server restart successful";
+
+"Rebuilding" = "Rebuilding";
+"Don't exit Bootstrap app until show the lock screen" = "Don't exit Bootstrap app until show the lock screen";
+
+"bootstrap installed" = "bootstrap installed";
+"bootstrap not installed" = "bootstrap not installed";
+"system bootstrapped" = "system bootstrapped";
+"system not bootstrapped" = "system not bootstrapped";
+"bootstrap server check successful" = "bootstrap server check successful";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+
+"Status: Rebuilding Apps" = "Status: Rebuilding Apps";
+"Status: Reinstalling Sileo" = "Status: Reinstalling Sileo";
+"Status: Reinstalling Zebra" = "Status: Reinstalling Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo and Zebra reinstalled!";
+"Status: Rebuilding Icon Cache" = "Status: Rebuilding Icon Cache";
+
+"openssh package is not installed" = "openssh package is not installed";
+
+"Reboot Device" = "Reboot Device";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
+
+"openssh launch successful" = "openssh launch successful";
+"respring now..." = "respring now...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
+

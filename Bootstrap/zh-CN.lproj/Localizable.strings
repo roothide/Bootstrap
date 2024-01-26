@@ -1,0 +1,74 @@
+"Settings" = "设置";
+"Tweak Enable" = "启用插件";
+"OpenSSH" = "OpenSSH";
+"Respring" = "注销";
+"Rebuild Apps" = "重建应用程序";
+"Rebuild Icon Cache" = "重建图标缓存";
+"Reinstall Sileo & Zebra" = "重新安装 Sileo & Zebra"; 
+"Fix App Notification" = "修复应用通知"; 
+"Uninstall" = "卸载";
+"Credits" = "鸣谢";
+"New Version Available" = "新版本已推出";
+"Bootstrapped" = "已引导";
+"Update" = "更新";
+"Install" = "安装";
+"Unsupported" = "不支持";
+"App List" = "应用列表";
+"Developer" = "开发人员";
+"UI made with love by haxi0. ♡" = "UI 界面由 haxi0 用爱打造。 ♡";
+
+
+"OK" = "好";
+"Error" = "错误";
+"Warning" = "警告";
+"Applying" = "正在应用";
+"Cancel" = "取消";
+"Bootstrapping" = "正在引导";
+"Uninstalling" = "正在卸载";
+"Bootstrap Uninstalled" = "Bootstrap 已卸载";
+
+"Enable Tweak for App" = "为应用启用插件";
+"name or identifier" = "请输入应用名称或标识符";
+
+"Server Not Running" = "服务未运行";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "由于未知原因，Bootstrap 服务未运行，我们现在唯一能做的就是重新启动它。";
+
+"Restart Server" = "重启 Bootstrap 服务";
+"bootstrap server restart successful" = "Bootstrap 服务重启完成";
+
+"Rebuilding" = "正在重建";
+"Don't exit Bootstrap app until show the lock screen" = "请在出现锁屏界面之前不要退出 Bootstrap";
+
+"bootstrap installed" = "引导已安装";
+"bootstrap not installed" = "引导未安装";
+"system bootstrapped" = "系统已引导";
+"system not bootstrapped" = "系统未引导";
+"bootstrap server check successful" = "Bootstrap 服务检查完成";
+
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "看起来你安装了 Fliza，这可能会导致被某些应用检测为越狱，你可以通过启用插件来隐藏它。";
+
+"Status: Rebuilding Apps" = "状态：正在重建应用程序";
+"Status: Reinstalling Sileo" = "状态：正在重装 Sileo";
+"Status: Reinstalling Zebra" = "状态：正在重装 Zebra";
+"Sileo and Zebra reinstalled!" = "已重新安装 Sileo 和 Zebra";
+"Status: Rebuilding Icon Cache" = "状态：正在重建图标缓存";
+
+"openssh package is not installed" = "OpenSSH 尚未安装";
+
+"Reboot Device" = "重启设备";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "当前 Bootstrap 环境和 Bootstrap 应用程序不一致，你需要重启设备后更新环境。";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的 TrollStore 版本太低，Bootstrap 需要 TrollStore 2.0 或更高版本，请更新 TrollStore 后再次尝试安装 Bootstrap。";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "你的设备貌似没有开启开发者模式\n\n请启用开发者模式并重启设备";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "RootHide Dopamine 已在此设备上安装，现在安装 Bootstrap 可能会破坏已安装的环境！";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "检测到安装了早期的测试版，请在“应用列表”中关闭所有应用程序注入，重启设备并卸载环境后安装新版本的 Bootstrap。";
+
+"openssh launch successful" = "OpenSSH 启动完成";
+"respring now..." = "正在注销";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "你确定要卸载 Bootstrap 吗？\n\n请在卸载之前确保已经在“应用列表”中关闭了所有应用的注入。";

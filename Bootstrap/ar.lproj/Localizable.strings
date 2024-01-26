@@ -1,0 +1,71 @@
+"Settings" = "الاعدادات";
+"Tweak Enable" = "تفعيل الادوات";
+"OpenSSH" = "تفعيل ssh";
+"Respring" = "اعادة تشغيل سريعه";
+"Rebuild Apps" = "اعادة بناء التطبيقات";
+"Rebuild Icon Cache" = "اعادة بناء الايقونات";
+"Reinstall Sileo & Zebra" = "اعادة تثبيت سيليو و زيبرا";
+"Uninstall" = "الغاء التثبيت";
+"Credits" = "الحقوق";
+"New Version Available" = "نسخة جديدة متوفرة !";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "تحديث";
+"Install" = "تثبيت";
+"Unsupported" = "غير مدعوم";
+"App List" = "التطبيقات";
+
+
+"OK" = "حسنا";
+"Error" = "خطأ";
+"Warning" = "تحذير";
+"Applying" = "تطبيق";
+"Cancel" = "الغاء";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "الغاء التثبيت جاري";
+"bootstrap uninstalled" = "ازالة bootstrap";
+
+"Enable Tweak for App" = "تفعيل الادوات للتطبيقات";
+"name or identifier" = "اسم او معرف التطبيق";
+
+"Server Not Running" = "السيرفر لا يعمل";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "ل اسباب لا نعلمها ، الذي نستطيع فعله هو اعادة تشغيل السيرفر";
+
+"Restart Server" = "اعادة تشغيل السيرفر";
+"bootstrap server restart successful" = "تم اعادة تشغيل السيرفر بنجاح ";
+
+"Rebuilding" = "اعادة البناء.";
+"Don't exit Bootstrap app until show the lock screen" = "لا تخرج من التطبيق الا عندما ترى شاشة القفل ";
+
+"bootstrap installed" = "بوت ستراب مثبت";
+"bootstrap not installed" = "بوت ستراب ليس مثبت";
+"system bootstrapped" = "النظام مفعل bootstrap";
+"system not bootstrapped" = "النظام ليس مفعل bootstrap";
+"bootstrap server check successful" = "تم التحقق من سيرفر بوت ستراب";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "على ما يبدو لديك فيلزا مثبته على جهازك ، يمكنك تفعيل اداة ل اخفائه عن التطبيقات لكي لا يتعرف النظام ان جهازك مفعل جلبريك";
+
+"Status: Rebuilding Apps" = "الحالة : اعادة بناء التطبيقات";
+"Status: Reinstalling Sileo" = "الحالة : اعادة تثبيت سيليو";
+"Status: Reinstalling Zebra" = "الحالة : اعادة تثبيت زيبرا";
+"Sileo and Zebra reinstalled!" = "تم اعادة تثبيت سيليو و زيبرا";
+"Status: Rebuilding Icon Cache" = "الحالة : اعادة بناء ملفات الكاش ل الايقونات";
+
+"openssh package is not installed" = "حزمة openssh ليست مثبته";
+
+"Reboot Device" = "اعادة تشغيل الجهاز";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "الإصدار الحالي الذي تم تشغيله غير متوافق مع إصدار تطبيق Bootstrap، وتحتاج إلى إعادة تشغيل الجهاز لتحديثه.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "إصدار trollstore الخاص بك قديم جدًا، ولا يدعم Bootstrap سوى trollstore>=2.0، ويجب عليك تحديث trollstore ثم إعادة تثبيت تطبيق Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "يبدو أن وضع المطور غير ممكّن على جهازك.\n\nالرجاء تمكين وضع المطور وإعادة تشغيل جهازك.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "لقد تم تثبيت الدوبامين الجذري على هذا الجهاز، والآن قد يؤدي تثبيت هذا التمهيد إلى كسره!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "لقد قمت بتثبيت إصدار تجريبي قديم، يرجى تعطيل جميع تعديلات التطبيق وإعادة تشغيل الجهاز لإلغاء تثبيته حتى تتمكن من تثبيت الإصدار الجديد bootstrap.";
+
+"openssh launch successful" = "تم تشغيل ssh";
+"respring now..." = "ريسبرينج الان";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "هل أنت متأكد من إلغاء تثبيت bootstrap؟\n\nيُرجى التأكد من تعطيل التعديل لجميع التطبيقات قبل إلغاء التثبيت.";
+

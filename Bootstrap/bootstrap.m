@@ -228,9 +228,9 @@ int InstallBootstrap(NSString* jbroot_path)
     NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, nil, nil) == 0);
-
-    ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.bootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
-    ASSERT([fm copyItemAtPath:jbroot(@"/.bootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".bootstrapped"] error:nil]);
+    
+    ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.thebootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    ASSERT([fm copyItemAtPath:jbroot(@"/.thebootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".thebootstrapped"] error:nil]);
     
     STRAPLOG("Status: Bootstrap Installed");
     
@@ -319,7 +319,7 @@ int bootstrap()
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
-    } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
+    } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")] && ![fm fileExistsAtPath:jbroot(@"/.thebootstrapped")]) {
         STRAPLOG("remove unfinished bootstrap %@", jbroot_path);
         
         uint64_t prev_jbrand = jbrand();
@@ -338,6 +338,9 @@ int bootstrap()
         
     } else {
         STRAPLOG("device is strapped: %@", jbroot_path);
+        
+        if([fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) //beta version to public version
+            ASSERT([fm moveItemAtPath:jbroot(@"/.bootstrapped") toPath:jbroot(@"/.thebootstrapped") error:nil]);
         
         STRAPLOG("Status: Rerandomize jbroot");
         
@@ -427,7 +430,8 @@ bool isBootstrapInstalled()
     if(!find_jbroot())
         return NO;
 
-    if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")])
+    if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]
+       && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.thebootstrapped")])
         return NO;
     
     return YES;

@@ -1,0 +1,71 @@
+"Settings" = "Ustawienia";
+"Tweak Enable" = "Włącz Tweak'i";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Odbuduj aplikacje";
+"Rebuild Icon Cache" = "Odbuduj Icon Cache";
+"Reinstall Sileo & Zebra" = "Reinstaluj Sileo & Zebra";
+"Uninstall" = "Odinstaluj";
+"Credits" = "Podziękowania";
+"New Version Available" = "Nowa wersja dostępna";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Aktualizuj";
+"Install" = "Instaluj";
+"Unsupported" = "Niewspierane";
+"App List" = "Lista aplikacji";
+
+
+"OK" = "OK";
+"Error" = "Błąd";
+"Warning" = "Ostrzeżenie";
+"Applying" = "Aplikowanie";
+"Cancel" = "Anuluj";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "Odinstalowywyanie";
+"bootstrap uninstalled" = "Odinstalowano bootstrap";
+
+"Enable Tweak for App" = "Włącz Tweak dla aplikacji";
+"name or identifier" = "Szukaj po nazwie lub identyfikatorze";
+
+"Server Not Running" = "Serwer nie działa";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Z nieznanych przyczyn serwer bootstrap nie działa, jedyną rzeczą, którą można zrobić, jest jego ponowne uruchomienie.";
+
+"Restart Server" = "Zrestatuj serwer";
+"bootstrap server restart successful" = "Restart serwera bootstrap się powiódł";
+
+"Rebuilding" = "Odbudowywanie";
+"Don't exit Bootstrap app until show the lock screen" = "Nie wychodź z aplikacji, dopóki urządzenie samoistnie nie wróci do ekranu blokady.";
+
+"bootstrap installed" = "bootstrap zainstalowany";
+"bootstrap not installed" = "bootstrap nie zainstalowany";
+"system bootstrapped" = "system jest zbootstrappowany";
+"system not bootstrapped" = "system nie jest zbootstrappowany";
+"bootstrap server check successful" = "Sprawdzenie serwera bootstrap powiodło się";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Wygląda na to, że masz zainstalowane Filza, co może spowodować omylne wykrycie Jailbreak'u. Możesz użyć Tweak'u, aby ją ukryć.";
+
+"Status: Rebuilding Apps" = "Status: Odbudowywanie aplikacji";
+"Status: Reinstalling Sileo" = "Status: Reinstalowanie Sileo";
+"Status: Reinstalling Zebra" = "Status: Reinstalowanie Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo i Zebra zostały zainstalowane ponownie!";
+"Status: Rebuilding Icon Cache" = "Status: Odbudowywanie Icon Cache";
+
+"openssh package is not installed" = "Pakiet openssh nie jest zainstalowany";
+
+"Reboot Device" = "Uruchom ponownie urządzenie";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Twoja wersja Bootstrapped jest niezgodna z wersją aplikacji i aby ją zaktualizować, musisz ponownie uruchomić urządzenie.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Twoja wersja TrollStore jest za stara, Boostrap wspiera tylko ≥ 2.0, musisz zaktualizować TrollStore i ponownie zainstalować aplikację Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Wygląda na to, że to urządzenie nie ma włączonego trybu dewelopera.\n\nWłącz go i uruchom ponownie urządzenie.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "Roothide dopamine został zainstalowany na tym urządzeniu, teraz zainstalowanie tego bootstrap'a może go zepsuć!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Zainstalowałeś starą wersję beta, wyłącz wszystkie Tweak'i aplikacji i uruchom ponownie urządzenie, aby ją odinstalować i zainstalować nową wersję bootstrap.";
+
+"openssh launch successful" = "Uruchomienie OpenSSH powiodło się";
+"respring now..." = "Respring...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Czy na pewno chcesz odinstalować bootstrap?\n\nPrzed odinstalowaniem upewnij się, że Tweak'i dla wszystkich aplikacji zostały wyłączone.";
+

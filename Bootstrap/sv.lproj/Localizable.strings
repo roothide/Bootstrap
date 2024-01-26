@@ -1,0 +1,70 @@
+"Settings" = "Inställningar";
+"Tweak Enable" = "Tweak Aktivera";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Bygg om Appar";
+"Rebuild Icon Cache" = "Bygg om Ikon-Cache";
+"Reinstall Sileo & Zebra" = "Återinstallera Sileo & Zebra";
+"Uninstall" = "Avinstallera";
+"Credits" = " Medverkande";
+"New Version Available" = "Ny Version Tillgänglig";
+"Bootstrapped" = "Bootstrappad";
+"Update" = "Uppdatera";
+"Install" = "Installera";
+"Unsupported" = "Stöds ej";
+"App List" = "Applista";
+
+
+"OK" = "OK";
+"Error" = "Fel";
+"Warning" = "Varning";
+"Applying" = "Tillämpar";
+"Cancel" = "Avbryt";
+"Bootstrapping" = "Bootstrappar";
+"Uninstalling" = "Avinstallerar";
+"bootstrap uninstalled" = "bootstrap avinstallerad";
+
+"Enable Tweak for App" = "Aktivera Tweak för App";
+"name or identifier" = "namn eller identifierare";
+
+"Server Not Running" = "Server Ej i Drift";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "av okända anledningar är bootstrap-servern ej i drift, det enda som vi kan göra är att omstarta den.";
+
+"Restart Server" = "Omstarta Server";
+"bootstrap server restart successful" = "bootstrap-server lyckades omstarta";
+
+"Rebuilding" = "Bygger om";
+"Don't exit Bootstrap app until show the lock screen" = "Lämna inte Bootstrap-appen tills låsskärmen visas";
+
+"bootstrap installed" = "bootstrap installerad";
+"bootstrap not installed" = "bootstrap ej installerad";
+"system bootstrapped" = "system bootstrappat";
+"system not bootstrapped" = "system ej bootstrappat";
+"bootstrap server check successful" = "bootstrap-serverkontroll lyckad";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Det verkar som att du har installerat Filza-appen, vilket kan upptäckas som jailbreakad. Du kan aktivera Tweak för att dölja det.";
+
+"Status: Rebuilding Apps" = " Status: Bygger om Appar";
+"Status: Reinstalling Sileo" = " Status: Återinstallerar Sileo";
+"Status: Reinstalling Zebra" = " Status: Återinstallerar Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo och Zebra återinstallerade!";
+"Status: Rebuilding Icon Cache" = "Status: Bygger om Ikon-Cache";
+
+"openssh package is not installed" = "openssh-paket ej installerad";
+
+"Reboot Device" = "Omstarta Enhet";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Den nuvarande bootstrappade versionen skiljer från Bootstrap-appversionen och du behöver omstarta enheten för att uppdatera den.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Din trollstore-version är för gammal, Bootstrap stödjer endast trollstore>=2.0, du behöver uppdatera din trollstore och sedan återinstallera Bootstrap-appen.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Din enhet verkar inte ha utvecklarläge aktiverat.\n\nSnälla aktivera utvecklarläge och omstarta din enhet.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine har installerats på denna enhet, installation av denna bootstrap kan bryta det!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Du har installerat en gammal betaversion, snälla avaktivera alla app-tweaks och omstarta enheten för att avinstallera det så att du kan installera den nya bootstrap-versionen.";
+
+"openssh launch successful" = "start av openssh lyckad";
+"respring now..." = "respring nu…";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Är du säker på att avinstallera bootstrap? \n\nSnälla se till att du har avaktiverat tweak för alla appar innan avinstallation.";

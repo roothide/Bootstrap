@@ -1,0 +1,71 @@
+"Settings" = "設定";
+"Tweak Enable" = "Tweakを有効にする";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "アプリの再構築";
+"Rebuild Icon Cache" = "アイコンキャッシュの再構築";
+"Reinstall Sileo & Zebra" = "Sileo と Zebra を再インストールする";
+"Uninstall" = "アンインストール";
+"Credits" = "クレジット";
+"New Version Available" = "新しいバージョンが利用可能です";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "アップデート";
+"Install" = "インストール";
+"Unsupported" = "サポートされていません";
+"App List" = "アプリ一覧";
+
+
+"OK" = "はい";
+"Error" = "エラー";
+"Warning" = "警告";
+"Applying" = "適用中";
+"Cancel" = "キャンセル";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "アンインストール中";
+"bootstrap uninstalled" = "bootstrapはアンインストールされました";
+
+"Enable Tweak for App" = "アプリのtweakを有効にする";
+"name or identifier" = "名前またはidentifier";
+
+"Server Not Running" = "サーバーが動作していません";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "bootstrapサーバーの実行に失敗しました。再起動後にもう一度お試しください。";
+
+"Restart Server" = "サーバーを再起動";
+"bootstrap server restart successful" = "bootstrapサーバーの再起動に成功しました";
+
+"Rebuilding" = "再構築中";
+"Don't exit Bootstrap app until show the lock screen" = "ロック画面が表示されるまで、Bootstrapアプリを終了しないでください。";
+
+"bootstrap installed" = "bootstrapがインストールされました";
+"bootstrap not installed" = "bootstrapはインストールされていません";
+"system bootstrapped" = "システムはbootstrapされました";
+"system not bootstrapped" = "システムはbootstrapされていません";
+"bootstrap server check successful" = "bootstrapサーバーのチェックに成功しました";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Filzaがインストールされているため、脱獄として検知される可能性があります。Tweakを有効にすると、隠すことができます。";
+
+"Status: Rebuilding Apps" = "ステータス: アプリを再構築中";
+"Status: Reinstalling Sileo" = "ステータス: Sileoを再インストール中";
+"Status: Reinstalling Zebra" = "ステータス: Zebraを再インストール中";
+"Sileo and Zebra reinstalled!" = "SileoとZebraが再インストールされました!";
+"Status: Rebuilding Icon Cache" = "ステータス: アイコンキャッシュを再構築中";
+
+"openssh package is not installed" = "opensshパッケージがインストールされていません";
+
+"Reboot Device" = "デバイスを再起動";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "現在インストール済みのbootstrapのバージョンは、このアプリのbootstrapのバージョンと一致しないため、更新するにはデバイスを再起動する必要があります。";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "trollstoreのバージョンが古すぎます。Bootstrapはtrollstore>=2.0のみをサポートしています。trollstoreを更新してから、Bootstrapアプリを再インストールする必要があります。";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "お使いのデバイスでは開発者モードが有効になっていないようです。\n\n開発者モードを有効にしてデバイスを再起動してください。";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "競合する可能性のあるdopamineのroothideがこのデバイスに既にインストールされています。このbootstrapをインストールするとデバイスが壊れる可能性があります。";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "古いベータバージョンがインストールされています。新しいバージョンのブートストラップをインストールできるように、すべてのアプリのtweakを無効にし、デバイスを再起動してアンインストールしてください。";
+
+"openssh launch successful" = "opensshの起動に成功しました";
+"respring now..." = "デバイスはまもなくRespringされます...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "bootstrapをアンインストールしてもよろしいですか?\n\nアンインストールする前に、すべてのアプリのtweakが無効になっていることを確認してください。";
+

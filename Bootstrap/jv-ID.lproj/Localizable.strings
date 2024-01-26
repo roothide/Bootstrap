@@ -1,0 +1,70 @@
+"Settings" = "Setelan";
+"Tweak Enable" = "Tweak Aktif";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Mulihake Aplikasi";
+"Rebuild Icon Cache" = "Mulihake Icon Cache";
+"Reinstall Sileo & Zebra" = "Pasang Ulang Sileo & Zebra";
+"Uninstall" = "Busek";
+"Credits" = "Kridit";
+"New Version Available" = "Enek Versi Anyar";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Perbarui";
+"Install" = "Pasang";
+"Unsupported" = "Ora Didukung";
+"App List" = "Daftar Aplikasi";
+
+"OK" = "OK";
+"Error" = "Kesalahan";
+"Warning" = "Peringatan";
+"Applying" = "Ngelakoni";
+"Cancel" = "Batal";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "Ngebusek";
+"bootstrap uninstalled" = "ngebusek bootstrap";
+
+"Enable Tweak for App" = "Aktifake Tweak kanggo Aplikasi";
+"name or identifier" = "jeneng utawa pengenal";
+
+"Server Not Running" = "Server Ora Mlaku";
+
+"For unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Kanggo alasan sing ora dikenal, server bootstrap ora mlaku, sing iso awake dewe ya ngrestart saiki.";
+
+"Restart Server" = "Restart Server";
+"bootstrap server restart successful" = "restarting server bootstrap sukses";
+
+"Rebuilding" = "Mulihake";
+"Don't exit Bootstrap app until show the lock screen" = "Ojo metu saka aplikasi Bootstrap sampek muncul lock screen";
+
+"bootstrap installed" = "bootstrap wis dipasang";
+"bootstrap not installed" = "bootstrap durung dipasang";
+"system bootstrapped" = "sistem wis dibootstrapped";
+"system not bootstrapped" = "sistem durung dibootstrapped";
+"bootstrap server check successful" = "ngecek server bootstrap sukses";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Koyok e sampeyan ngepasang aplikasi Filza, sing mungkin iso ngedeteksi lak perangkatmu nang kondisi Jailbreak. Sampeyan iso ngaktifane Tweak kanggo ndelikne.";
+
+"Status: Rebuilding Apps" = "Status: Mulihake Aplikasi";
+"Status: Reinstalling Sileo" = "Status: Pasang Ulang Sileo";
+"Status: Reinstalling Zebra" = "Status: Pasang Ulang Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo karo Zebra dipasang ulang!";
+"Status: Rebuilding Icon Cache" = "Status: Mulihake Icon Cache";
+
+"openssh package is not installed" = "paket openssh ora dipasang";
+
+"Reboot Device" = "Reboot Perangkat";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Versi bootstrapped saiki ora konsisten karo versi aplikasi Bootstrap, lan sampeyan perlu reboot perangkat kanggo nganyari iki.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Versi trollstore sampeyan terlalu lawas, Bootstrap mung ngedukung trollstore>=2.0, sampeyan kudu nge update versi trolstore mari ngono ngepasang ulang Bootstrap app maneh.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Mode pengembang neng perangkat e sampeyan mungkin durung aktif.\n\nAktifake mode pengembang lan reboot perangkat e sampeyan.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine wis dipasang neng perangkat iki, masang bootstrap saiki iso ngerusak!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Sampeyan wis nginstal versi beta lawas, mangga nonaktifne kabeh tweak aplikasi lan reboot perangkat kanggo nginstal e supaya sampeyan bisa nginstal bootstrap versi anyar.";
+
+"openssh launch successful" = "peluncuran openssh sukses";
+"respring now..." = "respring saiki...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Sampeyan yakin pengen uninstall bootstrap?\n\nMangga pastekno sampeyan wis nonaktifne tweak kanggo kabeh aplikasi sakdurunge nguninstall.";
+

@@ -1,48 +1,66 @@
 # Bootstrap
-[![GitHub stars](https://img.shields.io/github/stars/RootHide/Bootstrap?style=social)](https://github.com/RootHide/Bootstrap/stargazers)
 
+[![GitHub stars](https://img.shields.io/github/stars/roothide/Bootstrap?style=social)](https://github.com/roothide/Bootstrap/stargazers)
 
-A full featured bootstrap for ios14.0-17.0, A8-A17,M1+M2. (currently tested on ios15.0~ios17.0)
+A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2 using the arm64e deb architecture providing amazing support for jailbreak detection. (Currently only tested tested on iOS 15.0-17.0)
+
+##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage.
+
+This software is available to download on its [Releases](https://github.com/roothide/Bootstrap/releases).
 
 ## Building
 
-You'll need MacOS to build, as you require Xcode Command Line Tools. If you don't have Xcode installed, you can install the Command Line Tools by itself by running `xcode-select --install`.
+If you do not have MacOS, check the FAQ in the Usage section of this README to build with GitHub Actions instead.
 
- 1. Update your theos to the this
+You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is *insufficient*.
+
+You will need Homebrew installed. If you don't have Homebrew installed, run the following command in your terminal:
+
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+ 1. Update/Install Theos with roothide support
     
-    ```bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"```
+    `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
     
     This build of Theos is consistently updated.
 
- 2. Build `Bootstrap.tipa`
+ 2. Install make
 
-    ```make package```
+    `brew install make`
 
- 3. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore!
+ 3. Clone the GitHub repository and enter directory
+
+    `git clone https://github.com/roothide/Bootstrap/ && cd Bootstrap`
+
+ 5. Build `Bootstrap.tipa`
+
+    `gmake -j$(sysctl -n hw.ncpu) package`
+
+ 6. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore!
 
 ## Usage
 
+The latest version of TrollStore is required as the bootstrap is built around the CoreTrust bug. Developer mode also needs to be enabled, so use TrollStore version 2.0.9 or later to automatically enable it.
+
 Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
 
-You can add various sources to Sileo or Zebra, and install tweaks. You may need to convert tweaks to be Bootstrap compatible.
+You can add various sources and install tweaks through Sileo, like other jailbreaks. You may need to convert tweaks to be roothide compatible if they aren't already converted or developed for this bootstrap.
 
-By default, tweaks are not injected into any apps. To enable tweak injection, click AppEnabler in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You *cannot* inject into SpringBoard (com.apple.springboard) or Photos (com.apple.mobileslideshow) at the moment.
+By default, tweaks are not injected into any apps. To enable tweak injection, click App List in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You **cannot** inject into SpringBoard (com.apple.springboard) at the moment by any official means, though refer to the FAQ for tools you can use to enable this functionality.
+
+**A frequently updated FAQ** is currently available [here](https://github.com/dleovl/Bootstrap/blob/faq/README.md), and can assist with tweak conversion along with answering other questions you may have.
 
 ## Develop tweaks
 
-[Document](https://github.com/RootHide/Developer)
+Rootful and rootless tweaks aren't out-of-the-box compatible with this bootstrap, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).
 
-## <a id="faq-convert" /> How to install tweaks?
+## Discord
 
-Bootstrap can enable tweaks for almost all apps, but it does not yet support springboard tweaks, such as the homescreen, lockscreen, control center, statusbar tweaks.
+You can join our Discord for support or general talk [here](https://discord.com/invite/scqCkumAYp). There's a FAQ channel if you need any more information.
 
-When installing a tweak, you might see a message saying 'Not Updated'. This tweak will need to be updated to support Bootstrap.
+## The "Our Table" Icon
 
-Install the Patcher in the sileo. When attempting to install a tweak, press 'Convert'. In the share sheet, press the Patcher app. When you convert a tweak to be Bootstrap compatible, you're given the option to directly convert simple tweaks or use rootless compat layer. If a tweak doesn't work with directly converting, try the rootless compat layer! You will need to install rootless-compat as a dependancy.
-
-## <a id="faq-discord" /> I have a question that isn't listed here. Where do I go for help?
-
-You can join the our Discord [here](https://discord.com/invite/scqCkumAYp).
+[Alpha](https://github.com/TheAlphaStream) is the one who made the ProcursusTeam logo in the first place, and then edited by @sourcelocation
 
 ## Credits
 
@@ -99,7 +117,7 @@ Huge thanks to these people, we couldn't have completed this project without the
 - Phuc Do: [https://twitter.com/dobabaophuc](https://twitter.com/dobabaophuc)
 - PoomSmart: [https://twitter.com/poomsmart](https://twitter.com/poomsmart)
 - ProcursusTeam: [https://procursus.social/@team](https://procursus.social/@team)
-- roothide: [http://github.com/RootHide](http://github.com/RootHide)
+- roothide: [http://github.com/roothide](http://github.com/roothide)
 - Sam Bingner: [http://github.com/sbingner](http://github.com/sbingner)
 - Shadow-: [http://iosjb.top/](http://iosjb.top/)
 - Snail: [https://twitter.com/somnusix](https://twitter.com/somnusix)

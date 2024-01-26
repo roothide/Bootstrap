@@ -1,0 +1,70 @@
+"Settings" = "Einstellungen";
+"Tweak Enable" = "Tweak aktivieren";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Apps neu aufbauen";
+"Rebuild Icon Cache" = "Icon-Cache neu aufbauen";
+"Reinstall Sileo & Zebra" = "Sileo & Zebra neu installieren";
+"Uninstall" = "Entfernen";
+"Credits" = "Danksagungen";
+"New Version Available" = "Neue Version verfügbar";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Update";
+"Install" = "Installieren";
+"Unsupported" = "Nicht unterstützt";
+"App List" = "App-Liste";
+
+
+"OK" = "Okay";
+"Error" = "Fehler";
+"Warning" = "Warnung";
+"Applying" = "Anwenden";
+"Cancel" = "Abbrechen";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "Entferne";
+"bootstrap uninstalled" = "Bootstrap entfernt";
+
+"Enable Tweak for App" = "Tweak für App aktivieren";
+"name or identifier" = "Name oder Identifikator";
+
+"Server Not Running" = "Server läuft nicht";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "Aus unbekannten Gründen läuft der Bootstrap-Server nicht. Das Einzige, was wir tun können, ist, ihn jetzt neu zu starten.";
+
+"Restart Server" = "Server neu starten";
+"bootstrap server restart successful" = "Neustart des Bootstrap-Servers erfolgreich";
+
+"Rebuilding" = "Neuaufbau";
+"Don't exit Bootstrap app until show the lock screen" = "Beenden Sie die Bootstrap-App erst, wenn der Sperrbildschirm angezeigt wird.";
+
+"bootstrap installed" = "Bootstrap installiert";
+"bootstrap not installed" = "Bootstrap nicht installiert";
+"system bootstrapped" = "System gebootstrappt";
+"system not bootstrapped" = "System nicht gebootstrappt";
+"bootstrap server check successful" = "Überprüfung des Bootstrap-Servers erfolgreich.";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Es scheint, dass Sie die Filza-App installiert haben, die möglicherweise als Jailbreak erkannt wird. Sie können den Tweak aktivieren, um Filza verstecken.";
+
+"Status: Rebuilding Apps" = "Status: Apps werden neu aufgebaut";
+"Status: Reinstalling Sileo" = "Status: Sileo wird neu installiert";
+"Status: Reinstalling Zebra" = "Status: Zebra wird neu installiert";
+"Sileo and Zebra reinstalled!" = "Sileo und Zebra neu installiert!";
+"Status: Rebuilding Icon Cache" = "Status: Icon-Cache wird neu aufgebaut";
+
+"openssh package is not installed" = "Das OpenSSH-Paket ist nicht installiert.";
+
+"Reboot Device" = "Gerät neustarten";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Die aktuelle Bootstrap-Version stimmt nicht mit der Bootstrap-App-Version überein. Sie müssen das Gerät neu starten, um es zu aktualisieren.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Ihre Trollstore-Version ist zu alt, Bootstrap unterstützt nur Trollstore>=2.0. Sie müssen Trollstore aktualisieren und dann die Bootstrap-App neu installieren.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Auf Ihrem Gerät scheint der Entwicklermodus nicht aktiviert zu sein.\n\nBitte aktivieren Sie den Entwicklermodus und starten Sie das Gerät neu.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "Roothide Dopamine wurde auf diesem Gerät installiert. Wenn Bootstrap installiert wird, können Fehler auftreten!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Sie haben eine alte Beta-Version installiert. Bitte deaktivieren Sie alle App-Tweaks und starten Sie das Gerät neu, um diese zu deinstallieren, damit Sie eine neue Bootstrap Version installieren können.";
+
+"openssh launch successful" = "OpenSSH-Start erfolgreich";
+"respring now..." = "Respring ...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Möchten Sie Bootstrap wirklich deinstallieren?\n\nBitte stellen Sie vor der Deinstallation sicher, dass Sie die Tweaks für alle Apps deaktiviert haben.";

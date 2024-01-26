@@ -1,0 +1,69 @@
+"Settings" = "Pengaturan";
+"Tweak Enable" = "Aktifkan Tweak";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Respring";
+"Rebuild Apps" = "Rebuild Aplikasi";
+"Rebuild Icon Cache" = "Rebuild Icon Cache";
+"Reinstall Sileo & Zebra" = "Pasang Ulang Sileo & Zebra";
+"Uninstall" = "Hapus";
+"Credits" = "Kredit";
+"New Version Available" = "Versi Baru Tersedia";
+"Bootstrapped" = "Bootstrapped";
+"Update" = "Perbarui";
+"Install" = "Pasang";
+"Unsupported" = "Tidak Didukung";
+"App List" = "Daftar Aplikasi";
+
+"OK" = "OK";
+"Error" = "Kesalahan";
+"Warning" = "Peringatan";
+"Applying" = "Menerapkan";
+"Cancel" = "Batal";
+"Bootstrapping" = "Bootstrapping";
+"Uninstalling" = "Menghapus";
+"bootstrap uninstalled" = "bootstrap dihapus";
+
+"Enable Tweak for App" = "Aktifkan Tweak untuk Aplikasi";
+"name or identifier" = "nama atau pengenal";
+
+"Server Not Running" = "Server Tidak Berjalan";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "dengan alasan yang tidak diketahui server bootstrap tidak berjalan, satu-satunya yang dapat kita lakukan adalah me-mulai ulang sekarang.";
+
+"Restart Server" = "Mulai Ulang Server";
+"bootstrap server restart successful" = "mulai ulang server bootstrap berhasil";
+
+"Rebuilding" = "Membangun Kembali";
+"Don't exit Bootstrap app until show the lock screen" = "Jangan keluar dari aplikasi Bootstrap sampai muncul layar kunci";
+
+"bootstrap installed" = "bootstrap terpasang";
+"bootstrap not installed" = "bootstrap tidak terpasang";
+"system bootstrapped" = "sistem terbootstrap";
+"system not bootstrapped" = "sistem tidak terbootstrap";
+"bootstrap server check successful" = "cek server bootstrap berhasil";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Sepertinya Anda telah menginstal aplikasi Filza, yang mungkin terdeteksi sebagai perangkat jailbroken. Anda dapat mengaktifkan Tweak untuk menyembunyikannya.";
+
+"Status: Rebuilding Apps" = "Status: Membangun Ulang Aplikasi";
+"Status: Reinstalling Sileo" = "Status: Pasang Ulang Sileo";
+"Status: Reinstalling Zebra" = "Status: Pasang Ulang Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo dan Zebra dipasang ulang!";
+"Status: Rebuilding Icon Cache" = "Status: Membangun Ulang Icon Cache";
+
+"openssh package is not installed" = "paket openssh tidak terpasang";
+
+"Reboot Device" = "Reboot Perangkat";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Versi bootstrap saat ini tidak konsisten dengan versi aplikasi Bootstrap, dan Anda perlu me-reboot perangkat untuk memperbarui.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Versi trollstore Anda terlalu usang, Bootstrap hanya mendukung trollstore>=2.0, Anda harus memperbarui trollstore Anda kemudian menginstal ulang aplikasi Bootstrap.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Perangkat Anda sepertinya tidak memiliki mode pengembang yang diaktifkan.\n\nAktifkan mode pengembang dan reboot perangkat Anda.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine telah terinstal di perangkat ini, sekarang menginstal bootstrap ini mungkin merusaknya!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "Anda telah menginstal versi beta lama, harap nonaktifkan semua tweak aplikasi dan reboot perangkat untuk menghapusnya sehingga Anda dapat menginstal bootstrap versi baru.";
+
+"openssh launch successful" = "peluncuran openssh berhasil";
+"respring now..." = "respring sekarang...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Apakah Anda yakin ingin menghapus bootstrap?\n\nPastikan Anda telah menonaktifkan tweak untuk semua aplikasi sebelum menghapusnya.";

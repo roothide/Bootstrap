@@ -1,0 +1,70 @@
+"Settings" = "Настройки";
+"Tweak Enable" = "Включение твиков";
+"OpenSSH" = "OpenSSH";
+"Respring" = "Респринг";
+"Rebuild Apps" = "Перестроить приложения";
+"Rebuild Icon Cache" = "Перестроить кэш иконок";
+"Reinstall Sileo & Zebra" = "Переустановка Sileo & Zebra";
+"Uninstall" = "Удалить";
+"Credits" = "Титры";
+"New Version Available" = "Доступна новая версия";
+"Bootstrapped" = "Установлено";
+"Update" = "Обновить";
+"Install" = "Установить";
+"Unsupported" = "Не поддерживается";
+"App List" = "Список приложений";
+
+
+"OK" = "OK";
+"Error" = "Ошибка";
+"Warning" = "Внимание";
+"Applying" = " Применение";
+"Cancel" = "Отмена";
+"Bootstrapping" = "Установка";
+"Uninstalling" = "Удаление";
+"bootstrap uninstalled" = "bootstrap удален";
+
+"Enable Tweak for App" = "Включение твиков для приложения";
+"name or identifier" = "имя или идентификатор";
+
+"Server Not Running" = "Сервер не запущен";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "по неизвестным причинам сервер bootstrap не запущен, единственное, что мы можем сделать, это перезагрузить его";
+
+"Restart Server" = "Перезапустить сервер";
+"bootstrap server restart successful" = "сервер bootstrap успешно перезагружен";
+
+"Rebuilding" = "Перестроение";
+"Don't exit Bootstrap app until show the lock screen" = "Не выходите из приложения Bootstrap пока не увидите экран блокировки";
+
+"bootstrap installed" = "bootstrap установлен";
+"bootstrap not installed" = "bootstrap не установлен";
+"system bootstrapped" = "система уже имеет bootstrap";
+"system not bootstrapped" = "система не имеет установленного bootstrap";
+"bootstrap server check successful" = "проверка сервера bootstrap прошла успешно";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "По всей видимости у вас установлена Filza, что может привести к определению как jailbroken. Вы можете включить твик, чтобы спрятать ее.";
+
+"Status: Rebuilding Apps" = "Статус: Перестроение приложений";
+"Status: Reinstalling Sileo" = "Статус: Переустановка Sileo";
+"Status: Reinstalling Zebra" = "Статус: Переустановка Zebra";
+"Sileo and Zebra reinstalled!" = "Sileo и Zebra успешно переустановлены!";
+"Status: Rebuilding Icon Cache" = "Статус: Перестроение кэша иконок";
+
+"openssh package is not installed" = "пакет openssh не установлен";
+
+"Reboot Device" = "Перезагрузить устройство";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "Текущая bootstrapped версия несовместима с текущей версией приложения Bootstrap, вам понадобится перезагрузить устройство, чтобы обновить его.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Ваша версия TrollStore устарела, Bootstrap поддерживает только TrollStore>=2.0, вам нужно обновить TrollStore, а затем переустановить приложение Bootstrap";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Видимо, на вашем устройстве не включен режим разработчика.\n\nПожалуйста, включите режим разработчика и перезагрузите устройство.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine установлен на вашем устройстве, установка bootstrap может сломать это!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "У вас установлена старая бета-версия, пожалуйста, отключите все твики приложений и перезагрузите устройство, чтобы установить новую версию bootstrap.";
+
+"openssh launch successful" = "запуск openssh прошел успешно";
+"respring now..." = "респринг...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Вы уверены, что хотите удалить bootstrap?\n\nПожалуйста, убедитесь, что вы отключили твики для всех приложений перед удалением.";

@@ -5,6 +5,6 @@
 #include "utils.h"
 #include "seh.h"
 
-#define Localized(x) x
+#define Localized(x) NSLocalizedString(x,nil)
 
 #endif /* common_h */

@@ -1,0 +1,71 @@
+"Settings" = "설정";
+"Tweak Enable" = "트윅 활성화";
+"OpenSSH" = "OpenSSH";
+"Respring" = "SpringBoard 재시작";
+"Rebuild Apps" = "앱 재구축";
+"Rebuild Icon Cache" = "아이콘 캐시 재구축";
+"Reinstall Sileo & Zebra" = "Sileo & Zebra 재설치";
+"Uninstall" = "제거";
+"Credits" = "크레딧";
+"New Version Available" = "새 버전을 상ㅅㅇ할 수 있습니다";
+"Bootstrapped" = "부트스트랩됨";
+"Update" = "업데이트";
+"Install" = "설치";
+"Unsupported" = "미지원";
+"App List" = "앱 리스트";
+
+
+"OK" = "확인";
+"Error" = "에러";
+"Warning" = "주의";
+"Applying" = "적용중";
+"Cancel" = "취소";
+"Bootstrapping" = "부트스트랩중";
+"Uninstalling" = "제거중";
+"bootstrap uninstalled" = "부트스트랩 제거됨";
+
+"Enable Tweak for App" = "앱 트윅 활성화";
+"name or identifier" = "이름 또는 식별자";
+
+"Server Not Running" = "서버가 활성화되지 않았습니다";
+
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "부트스트랩 서버가 실행되고 있지 않습니다. 우리가 할 수 있는 것은 재시작 하는 것입니다..";
+
+"Restart Server" = "서버 재시작";
+"bootstrap server restart successful" = "부트스트랩 서버 재시작 성공";
+
+"Rebuilding" = "재구축중";
+"Don't exit Bootstrap app until show the lock screen" = "잠금 화면이 표시될 때까지 부트스트랩 앱을 종료하지 마세요.";
+
+"bootstrap installed" = "부트스트랩 설치됨";
+"bootstrap not installed" = "부트스트랩 설치 안됨";
+"system bootstrapped" = "부트스트랩됨";
+"system not bootstrapped" = "부트스트랩 되지 않음";
+"bootstrap server check successful" = "부트스트랩 서버 확인 됨";
+
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Filza 앱이 설치된 것 같습니다. 이는 탈옥 감지로 이어질 수 있고 숨기기 위해 Tweak을 활성화할 수 있습니다.";
+
+"Status: Rebuilding Apps" = "상태: 앱 재구축중";
+"Status: Reinstalling Sileo" = "상태 : Sileo 재설치중";
+"Status: Reinstalling Zebra" = "상태 : Zebra 재설치중";
+"Sileo and Zebra reinstalled!" = "Sileo와 Zebra 재설치됨!";
+"Status: Rebuilding Icon Cache" = "상태 : 아이콘 캐시 재구축중";
+
+"openssh package is not installed" = "openssh 패키지가 설치되지 않았습니다";
+
+"Reboot Device" = "장치 재부팅";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "현재 부트스트랩 버전은 부트스트랩 앱 버전과 일치하지 않으며, 업데이트하려면 장치를 재부팅해야 합니다.";
+
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "TrollStore 버전이 너무 오래되었고, 부트스트랩은 TrollStore 2.0 이상만 지원하며, TrollStore를 업데이트한 다음 부트스트랩 앱을 다시 설치해야 합니다.";
+
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "장치에 개발자 모드가 활성화되어 있지 않은 것 같습니다.\n\n개발자 모드를 활성화하고 장치를 재부팅하십시오.";
+
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "Roothide Dopamine이 이 장치에 설치되어있습니다. 부트스트랩을 설치하면 망가질 수 있습니다!";
+
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "이전 베타 버전을 설치되었습니다. 모든 앱 트윅을 비활성화하고 장치를 재부팅하여 제거하여 새 버전 부트스트랩을 설치할 수 있습니다.";
+
+"openssh launch successful" = "OpenSSH 작동 성공";
+"respring now..." = "SpringBoard 재시작 중...";
+
+"Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "부트스트랩을 제거하시겠습니까? \n\n제거하기 전에 모든 앱 트윅을 비활성화했는지 확인하세요.";
+
