@@ -236,20 +236,8 @@ void reinstallPackageManager()
             success = NO;
         }
 
-        [AppDelegate addLogText:Localized(@"Status: Reinstalling Zebra")];
-        NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
-        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
-            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
-            success = NO;
-        }
-
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
-            [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
-            success = NO;
-        }
-
         if(success) {
-            [AppDelegate showMesage:Localized(@"Sileo and Zebra reinstalled!") title:@""];
+            [AppDelegate showMesage:Localized(@"Sileo reinstalled!") title:@""];
         }
         [AppDelegate dismissHud];
     });

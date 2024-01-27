@@ -167,7 +167,7 @@ struct OptionsView: View {
                                     reinstallPackageManager()
                                 } label: {
                                     Label(
-                                        title: { Text("Reinstall Sileo & Zebra") },
+                                        title: { Text("Reinstall Sileo") },
                                         icon: { Image(systemName: "shippingbox") }
                                     )
                                     .frame(maxWidth: .infinity)

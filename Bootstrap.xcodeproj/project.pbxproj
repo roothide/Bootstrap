@@ -13,7 +13,6 @@
 		843E87572B56E45300CB45C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 843E87592B56E45300CB45C4 /* Localizable.strings */; };
 		84438D472B26090D00A1E407 /* sileo.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D432B26090D00A1E407 /* sileo.deb */; };
 		84438D482B26090D00A1E407 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = 84438D442B26090D00A1E407 /* tar */; };
-		84438D4A2B26090D00A1E407 /* zebra.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84438D462B26090D00A1E407 /* zebra.deb */; };
 		84438D4C2B2609B200A1E407 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D4B2B2609B200A1E407 /* utils.m */; };
 		84438D502B260F8200A1E407 /* libzstd in Frameworks */ = {isa = PBXBuildFile; productRef = 84438D4F2B260F8200A1E407 /* libzstd */; };
 		84438D522B260FEB00A1E407 /* zstd_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D512B260FEB00A1E407 /* zstd_wrapper.m */; };
@@ -71,7 +70,6 @@
 		843E875B2B57BD5500CB45C4 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84438D432B26090D00A1E407 /* sileo.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sileo.deb; sourceTree = "<group>"; };
 		84438D442B26090D00A1E407 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
-		84438D462B26090D00A1E407 /* zebra.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = zebra.deb; sourceTree = "<group>"; };
 		84438D4B2B2609B200A1E407 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		84438D4D2B2609C600A1E407 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		84438D512B260FEB00A1E407 /* zstd_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zstd_wrapper.m; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				84438D582B261FBA00A1E407 /* basebin */,
 				84438D432B26090D00A1E407 /* sileo.deb */,
 				84438D442B26090D00A1E407 /* tar */,
-				84438D462B26090D00A1E407 /* zebra.deb */,
 				8470999E2B1D868F003FA4ED /* control */,
 				8470999F2B1D868F003FA4ED /* entitlements.plist */,
 				847099A02B1D868F003FA4ED /* Makefile */,
@@ -340,7 +337,6 @@
 			files = (
 				84438D592B261FBA00A1E407 /* basebin in Resources */,
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
-				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
 				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
 				843E87572B56E45300CB45C4 /* Localizable.strings in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,

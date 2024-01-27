@@ -40,14 +40,4 @@ Suites: iphoneos-arm64e/%d\n\
 Components: main\n\
 "
 
-#define ZEBRA_SOURCES "\
-# Zebra Sources List\n\
-deb https://getzbra.com/repo/ ./\n\
-deb https://repo.chariz.com/ ./\n\
-deb https://havoc.app/ ./\n\
-deb https://roothide.github.io/ ./\n\
-deb https://roothide.github.io/procursus iphoneos-arm64e/%d main\n\
-\n\
-"
-
 #endif /* sources_h */
