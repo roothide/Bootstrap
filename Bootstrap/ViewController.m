@@ -110,15 +110,15 @@ void initFromSwiftUI()
         }
     }
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"ios-version: %@",UIDevice.currentDevice.systemVersion]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"ios-version: %@"),UIDevice.currentDevice.systemVersion]];
 
     struct utsname systemInfo;
     uname(&systemInfo);
-    [AppDelegate addLogText:[NSString stringWithFormat:@"device-model: %s",systemInfo.machine]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"device-model: %s"),systemInfo.machine]];
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"app-version: %@",NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"app-version: %@"),NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
 
-    [AppDelegate addLogText:[NSString stringWithFormat:@"boot-session: %@",getBootSession()]];
+    [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"boot-session: %@"),getBootSession()]];
 
     [AppDelegate addLogText: isBootstrapInstalled()? Localized(@"bootstrap installed"):Localized(@"bootstrap not installed")];
     [AppDelegate addLogText: isSystemBootstrapped()? Localized(@"system bootstrapped"):Localized(@"system not bootstrapped")];
@@ -190,23 +190,6 @@ void rebuildappsAction()
         int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
         if(status==0) {
             killAllForApp("/usr/libexec/backboardd");
-        } else {
-            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
-        }
-        [AppDelegate dismissHud];
-    });
-}
-
-void fixNotification()
-{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [AppDelegate showHudMsg:Localized(@"Applying")];
-
-        NSString* log=nil;
-        NSString* err=nil;
-        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/fixnotification.sh", NULL}, nil, nil);
-        if(status==0) {
-            [AppDelegate showMesage:Localized(@"done") title:@""];
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }

@@ -1,6 +1,6 @@
 "Settings" = "ตั้งค่า";
-"Tweak Enable" = "เปิดการใช้งาน Tweak";
-"OpenSSH" = "OpenSSH";
+"Tweak Enable" = "เปิดการใช้ Tweak";
+"OpenSSH" = "เปิดการใช้ OpenSSH";
 "Respring" = "รีสปริง";
 "Rebuild Apps" = "รีบิ๊วแอปใหม่";
 "Rebuild Icon Cache" = "รีบิ๊วแคชไอคอนใหม่";
@@ -29,7 +29,7 @@
 
 "Server Not Running" = "เซิร์ฟเวอร์ไม่ได้ทำงานอยู่";
 
-"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "ไม่ทราบสาเหตุที่เซิร์ฟเวอร์ bootstrap ไม่ทำงาน, สิ่งเดียวที่เราทําได้คือรีสตาร์ทตอนนี้.";
+"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "ไม่ทราบสาเหตุที่เซิร์ฟเวอร์ bootstrap หยุดทำงาน, สิ่งเดียวที่เราทําได้คือรีสตาร์ทมันตอนนี้.";
 
 "Restart Server" = "รีสตาร์ทเซิร์ฟเวอร์";
 "bootstrap server restart successful" = "รีสตาร์ทเซิร์ฟเวอร์ bootstrap สำเร็จ";
@@ -37,11 +37,11 @@
 "Rebuilding" = "กำลังรีบิ๊ว";
 "Don't exit Bootstrap app until show the lock screen" = "อย่าออกจากแอป Bootstrap จนกว่าจะแสดงหน้าล็อกสกรีน";
 
-"bootstrap installed" = "bootstrap ติดตั้งแล้ว";
-"bootstrap not installed" = "bootstrap ยังไม่ได้ติดตั้ง";
-"system bootstrapped" = "ระบบทำ bootstrap แล้ว";
-"system not bootstrapped" = "ระบบยังไม่ได้ bootstrap";
-"bootstrap server check successful" = "ตรวจสอบ bootstrap เซิร์ฟเวอร์สำเร็จ";
+"bootstrap installed" = "ติดตั้ง bootstrap แล้ว";
+"bootstrap not installed" = "ยังไม่ได้ติดตั้ง bootstrap !";
+"system bootstrapped" = "ระบบรัน bootstrap แล้ว";
+"system not bootstrapped" = "ระบบไม่ได้รัน bootstrap";
+"bootstrap server check successful" = "เช็คเซิร์ฟเวอร์ bootstrap สำเร็จ";
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "ดูเหมือนว่าคุณได้ติดตั้งแอป Filza ไว้, ซึ่งอาจจะโดนการตรวจจับเจลเบรค. คุณสามารถเปิดใช้งาน Tweak เพื่อซ่อนมัน.";
 
@@ -51,7 +51,7 @@
 "Sileo and Zebra reinstalled!" = "Sileo และ Zebra ติดตั้งใหม่แล้ว!";
 "Status: Rebuilding Icon Cache" = "สถานะ: กำลังรีบิ๊วแคชไอคอน";
 
-"openssh package is not installed" = "openssh แพ็คเกจยังไม่ได้ติดตั้ง";
+"openssh package is not installed" = "แพ็คเกจ openssh ยังไม่ได้ถูกติดตั้ง";
 
 "Reboot Device" = "รีบูตเครื่อง";
 "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "เวอร์ชั่นของ bootstrap ที่ลงอยู่ไม่สอดคล้องกับแอป Bootstrap, คุณจะต้องรีบูตเครื่องเพื่ออัพเดทมัน.";
@@ -69,3 +69,8 @@
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "คุณมั่นใจแล้วใช่ไหมที่จะถอน bootstrap?\n\nโปรดเช็คให้แน่ใจว่าได้ปิดการใช้งาน tweak ในทุกแอปก่อนที่จะถอนมัน.";
 
+"ios-version: %@" = "เวอร์ชั่น iOS: %@";
+"device-model: %s" = "รุ่นโมเดล: %s";
+"app-version: %@" = "เวอร์ชั่นของแอป: %@";
+"boot-session: %@" = "เซสชั่นการบูต: %@";
+"UI made with love by haxi0. ♡" = "UI ที่สร้างด้วยความรักโดย haxi0. ♡";

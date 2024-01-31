@@ -25,9 +25,9 @@
 "bootstrap uninstalled" = "bootstrap uninstalled";
 
 "Enable Tweak for App" = "Enable Tweak for App";
-"name or identifier" = "name or identifier";
+"name or identifier" = "Search by name or identifier";
 
-"Server Not Running" = "Server Not Running";
+"Server Not Running" = "Server isn't running";
 
 "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now." = "for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.";
 
@@ -35,7 +35,7 @@
 "bootstrap server restart successful" = "bootstrap server restart successful";
 
 "Rebuilding" = "Rebuilding";
-"Don't exit Bootstrap app until show the lock screen" = "Don't exit Bootstrap app until show the lock screen";
+"Don't exit Bootstrap app until show the lock screen" = "Don't exit the app until you land on the lock screen";
 
 "bootstrap installed" = "bootstrap installed";
 "bootstrap not installed" = "bootstrap not installed";
@@ -43,7 +43,7 @@
 "system not bootstrapped" = "system not bootstrapped";
 "bootstrap server check successful" = "bootstrap server check successful";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "It seems that you have Filza installed, which may be detected as jailbroken. You can enable a Tweak for it to hide its presence.";
 
 "Status: Rebuilding Apps" = "Status: Rebuilding Apps";
 "Status: Reinstalling Sileo" = "Status: Reinstalling Sileo";
@@ -54,13 +54,13 @@
 "openssh package is not installed" = "openssh package is not installed";
 
 "Reboot Device" = "Reboot Device";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it.";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "The current bootstrapped version is inconsistent with the Bootstrap app version. Please reboot your device to update it.";
 
-"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app.";
+"Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "Your TrollStore version is too old, Bootstrap only supports TrollStore 2.0 and higher. Please update it and then reinstall the Bootstrap app.";
 
 "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, now install this bootstrap may break it!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine has been installed on this device, installing this bootstrap may break it!";
 
 "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap.";
 
@@ -69,3 +69,8 @@
 
 "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling." = "Are you sure to uninstall bootstrap?\n\nPlease make sure you have disabled tweak for all apps before uninstalling.";
 
+"ios-version: %@" = "ios-version: %@";
+"device-model: %s" = "device-model: %s";
+"app-version: %@" = "app-version: %@";
+"boot-session: %@" = "boot-session: %@";
+"UI made with love by haxi0. ♡" = "UI made with love by haxi0. ♡";
