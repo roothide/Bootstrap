@@ -35,7 +35,7 @@
 "bootstrap server restart successful" = "bootstrap服務重新啟動成功";
 
 "Rebuilding" = "重建中";
-"Don't exit Bootstrap app until show the lock screen" = "在顯示鎖定畫面之前,請不要退出Bootstrap應用程序";
+"Don't exit Bootstrap app until show the lock screen" = "在顯示鎖定畫面之前,請不要退出Bootstrap應用程式";
 
 "bootstrap installed" = "bootstrap已安裝";
 "bootstrap not installed" = "bootstrap未安裝";
@@ -43,7 +43,7 @@
 "system not bootstrapped" = "系統未bootstrap";
 "bootstrap server check successful" = "bootstrap服務檢查成功";
 
-"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "你似乎安裝了Filza,該應用可能會被檢測為越獄狀態,啟用Tweak來隱藏該應用";
+"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "你似乎安裝了Filza,該應用程式可能會被檢測為越獄狀態,啟用Tweak來隱藏該應用";
 
 "Status: Rebuilding Apps" = "狀態: 正在重建應用程式";
 "Status: Reinstalling Sileo" = "狀態: 正在重新安裝Sileo";
@@ -53,16 +53,16 @@
 
 "openssh package is not installed" = "openssh插件未安裝";
 
-"Reboot Device" = "重新啟動設備";
-"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "當前Bootstrap版本與已安裝的Bootstrap App版本不一致,需要重新啟動設備以進行更新";
+"Reboot Device" = "重新啟動裝置";
+"The current bootstrapped version is inconsistent with the Bootstrap app version, and you need to reboot the device to update it." = "當前Bootstrap版本與已安裝的Bootstrap App版本不一致,需要重新啟動裝置以進行更新";
 
 "Your trollstore version is too old, Bootstrap only supports trollstore>=2.0, you have to update your trollstore then reinstall Bootstrap app." = "你的TrollStore版本太舊,Bootstrap僅支援TrollStore>=2.0,您必須更新您的TrollStore然後重新安裝Bootstrap應用程式";
 
-"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "你的設備似乎沒有啟用開發者模式. \n\n請啟用開發者模式並重新啟動你的設備";
+"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device." = "你的裝置似乎沒有啟用開發者模式. \n\n請啟用開發者模式並重新啟動你的裝置";
 
-"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine已安裝到此設備上,現在安裝bootstrap可能會被破壞!";
+"roothide dopamine has been installed on this device, now install this bootstrap may break it!" = "roothide dopamine已安裝到此裝置上,現在安裝bootstrap可能會被破壞!";
 
-"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "您已經安裝了舊版本請關閉所有App的tweaks並重新啟動該設備,卸載後您將可以安裝新版本的Bootstrap";
+"You have installed an old beta version, please disable all app tweaks and reboot the device to uninstall it so that you can install the new version bootstrap." = "您已經安裝了舊版本請關閉所有App的tweaks並重新啟動該裝置,卸載後您將可以安裝新版本的Bootstrap";
 
 "openssh launch successful" = "openssh啟動成功";
 "respring now..." = "現在重新啟動SpringBorad...";
