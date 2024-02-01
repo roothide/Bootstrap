@@ -38,13 +38,13 @@ body:
     id: serotonin-version
     attributes:
       label: Serotonin Version
-      description: Are you using Serotonin, and if so, which version are you using?
+      description: What version of Serotonin are you using? (if applicable)
       placeholder: ex. 1.0.1
   - type: textarea
     id: bugs
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
+      label: What happened
+      description: Also, what did you expect to happen? How can we reproduce this?
       placeholder: I did ..., but ... was supposed to happen. ... doesn't work!
     validations:
       required: true
@@ -58,7 +58,7 @@ body:
     id: acknowledgement
     attributes:
       label: Acknowledgement of README and FAQ
-      description: By submitting this issue, you acknowledge you have read both the [README.md](https://github.com/roothide/Bootstrap/blob/main/README.md) and the [FAQ](https://github.com/dleovl/Bootstrap/blob/faq/README.md), and neither solve the issue (or it shouldn't be listed).
+      description: By submitting this issue, you acknowledge you have read both the [README](https://github.com/roothide/Bootstrap/blob/main/README.md) and the [FAQ](https://github.com/dleovl/Bootstrap/blob/faq/README.md), and neither solve the issue (nor should it be written).
       options:
         - label: I have read both the README and the FAQ.
           required: true
