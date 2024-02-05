@@ -306,6 +306,32 @@ int ReRandomizeBootstrap()
     return 0;
 }
 
+void fixMobileDirectories()
+{
+    NSFileManager* fm = NSFileManager.defaultManager;
+    NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:jbroot(@"/var/mobile/") isDirectory:YES] includingPropertiesForKeys:@[NSURLIsDirectoryKey] options:0 errorHandler:nil];
+    
+    for (NSURL *enumURL in directoryEnumerator) {
+        @autoreleasepool {
+            
+            if([enumURL.path containsString:@"/var/mobile/Library/pkgmirror/"]
+               || [enumURL.path hasSuffix:@"/var/mobile/Library/pkgmirror"])
+                continue;
+            
+            struct stat st={0};
+            if(lstat(enumURL.path.fileSystemRepresentation, &st)==0)
+            {
+                if((st.st_mode&S_IFDIR)==0) continue;
+                
+//                SYSLOG("fixMobileDirectory %d:%d %@", st.st_uid, st.st_gid, enumURL); usleep(1000*10);
+                if(st.st_uid == 0) {
+                    chown(enumURL.path.fileSystemRepresentation, 501, st.st_gid==0 ? 501 : st.st_gid);
+                }
+            }
+        }
+    }
+}
+
 int bootstrap()
 {
     ASSERT(getuid()==0);
@@ -357,6 +383,8 @@ int bootstrap()
         STRAPLOG("Status: Rerandomize jbroot");
         
         ASSERT(ReRandomizeBootstrap() == 0);
+        
+        fixMobileDirectories();
     }
     
     ASSERT(disableRootHideBlacklist()==0);
