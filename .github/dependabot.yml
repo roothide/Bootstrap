@@ -5,8 +5,13 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "npm"
+    ...
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "09:00"
