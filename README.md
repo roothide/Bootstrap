@@ -17,7 +17,7 @@ You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Li
 You will need Homebrew installed. If you don't have Homebrew installed, run the following command in your terminal:
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-
+.
  1. Update/Install Theos with roothide support
     
     `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
