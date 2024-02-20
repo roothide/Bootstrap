@@ -24,15 +24,19 @@ struct CreditsView: View {
                         .frame(maxWidth: 250, alignment: .leading)
                         .font(Font.system(size: 35))
                     Button {
-                        withAnimation {
-                            showCredits.toggle()
+                        Haptic.shared.play(.light)
+                        withAnimation(niceAnimation) {
+                            showCredits = false
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
                             .resizable()
-                            .foregroundColor(.red)
+                            .foregroundColor(.primary)
                             .frame(width: 25, height: 25)
+                            .padding(6)
                     }
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(.infinity)
                 }
                 
                 ScrollView {
@@ -46,14 +50,15 @@ struct CreditsView: View {
                     }
                     .frame(width: 253)
                     .padding(20)
-                    .background {
-                        Color(UIColor.systemBackground)
-                            .cornerRadius(20)
-                            .opacity(0.5)
-                    }
+                }
+                .background {
+                    Color(UIColor.systemBackground)
+                        .cornerRadius(20)
+                        .opacity(0.5)
                 }
                 .frame(maxHeight: 550)
             }
+            .scaleEffect(showCredits ? 1 : 0.9)
         }
     }
     

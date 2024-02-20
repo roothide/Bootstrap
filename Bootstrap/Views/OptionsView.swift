@@ -19,6 +19,8 @@ struct OptionsView: View {
     @Binding var tweakEnable: Bool
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
     
+    @Binding var colorScheme: Int
+    
     var body: some View {
         ZStack {
             VisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -32,54 +34,70 @@ struct OptionsView: View {
                         .font(Font.system(size: 35))
                     
                     Button {
-                        withAnimation {
-                            showOptions.toggle()
+                        Haptic.shared.play(.light)
+                        withAnimation(niceAnimation) {
+                            showOptions = false
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
                             .resizable()
-                            .foregroundColor(.red)
-                            .frame(width: 30, height: 30)
+                            .foregroundColor(.primary)
+                            .frame(width: 25, height: 25)
+                            .padding(6)
                     }
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(.infinity)
                 }
                 
                 //ScrollView {
                     VStack {
                         VStack {
-                            
-                            Toggle(isOn: $tweakEnable, label: {
-                                Label(
-                                    title: { Text("Tweak Enable") },
-                                    icon: { Image(systemName: "wrench.and.screwdriver") }
-                                )
-                            }).padding(5)
-                            .onChange(of: tweakEnable) { newValue in
-                                tweaEnableAction(newValue)
-                            }
-                            
-                            Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
-                                opensshStatus.state = opensshAction($0)
-                            }), label: {
-                                Label(
-                                    title: { Text("OpenSSH") },
-                                    icon: { Image(systemName: "terminal") }
-                                )
-                            })
-                            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
-                                DispatchQueue.global(qos: .utility).async {
-                                    let newStatus = (obj.object as! NSNumber).boolValue
-                                    opensshStatus.state = newStatus
+                            Group {
+                                Toggle(isOn: $tweakEnable, label: {
+                                    Label(
+                                        title: { Text("Tweak Enable") },
+                                        icon: { Image(systemName: "wrench.and.screwdriver") }
+                                    )
+                                })
+                                    .onChange(of: tweakEnable) { newValue in
+                                        tweaEnableAction(newValue)
+                                    }
+                                
+                                Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
+                                    opensshStatus.state = opensshAction($0)
+                                }), label: {
+                                    Label(
+                                        title: { Text("OpenSSH") },
+                                        icon: { Image(systemName: "terminal") }
+                                    )
+                                })
+                                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
+                                    DispatchQueue.global(qos: .utility).async {
+                                        let newStatus = (obj.object as! NSNumber).boolValue
+                                        opensshStatus.state = newStatus
+                                    }
+                                }
+                                HStack {
+                                    Label(
+                                        title: { Text("Colors") },
+                                        icon: { Image(systemName: "paintpalette") }
+                                    )
+                                    Spacer()
+                                    Picker(selection: $colorScheme, label: Text("")) {
+                                        Text("Warm").tag(0)
+                                        Text("Cold").tag(1)
+                                    }
+                                    .foregroundColor(.primary)
                                 }
                             }
                             .padding(5)
                             
-
                             Divider().padding(10)
                             
                             VStack(alignment: .leading, spacing: 12, content: {
                                 
                                 Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Haptic.shared.play(.light)
                                     respringAction()
                                 } label: {
                                     Label(
@@ -100,7 +118,7 @@ struct OptionsView: View {
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Haptic.shared.play(.light)
                                     rebuildappsAction()
                                 } label: {
                                     Label(
@@ -121,7 +139,7 @@ struct OptionsView: View {
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Haptic.shared.play(.light)
                                     rebuildIconCacheAction()
                                 } label: {
                                     Label(
@@ -142,7 +160,7 @@ struct OptionsView: View {
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Haptic.shared.play(.light)
                                     resetMobilePassword()
                                 } label: {
                                     Label(
@@ -163,7 +181,7 @@ struct OptionsView: View {
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Haptic.shared.play(.light)
                                     reinstallPackageManager()
                                 } label: {
                                     Label(
@@ -185,7 +203,7 @@ struct OptionsView: View {
                                 
                                 if isBootstrapInstalled() {
                                     Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        Haptic.shared.play(.light)
                                         unbootstrapAction()
                                     } label: {
                                         Label(
@@ -218,6 +236,7 @@ struct OptionsView: View {
                 //}
             }
             .frame(maxHeight: 550)
+            .scaleEffect(showOptions ? 1 : 0.9)
         }
     }
 }
