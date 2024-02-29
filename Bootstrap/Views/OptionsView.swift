@@ -106,7 +106,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -127,7 +127,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -148,7 +148,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -169,7 +169,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -190,7 +190,7 @@ struct OptionsView: View {
                                     )
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color(uiColor: UIColor.label))
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)
@@ -212,7 +212,7 @@ struct OptionsView: View {
                                         )
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 10)
-                                        .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                        .foregroundColor(isSystemBootstrapped() ? Color.accentColor : Color(uiColor: UIColor.label))
                                     }
                                     .frame(width: 250)
                                     .background(Color.clear)
