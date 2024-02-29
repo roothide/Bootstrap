@@ -3,5 +3,5 @@ version = 1
 [[analyzers]]
 name = "swift"
 
-[[analyzers]]
-name = "shell"
+[[transformers]]
+name = "swift-format"
