@@ -5,9 +5,3 @@ name = "cxx"
 
 [[analyzers]]
 name = "swift"
-
-[[transformers]]
-name = "swift-format"
-
-[[transformers]]
-name = "clang-format"
