@@ -34,6 +34,7 @@
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
+		D694DE962B8504B80025DC7F /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694DE952B8504B80025DC7F /* Haptic++.swift */; };
 		FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AB2B41BC3D00B94787 /* CreditsView.swift */; };
 		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
 		FE84597B2B44508300DCB44E /* AppViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */; };
@@ -121,6 +122,7 @@
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
 		8595F05E2B578D9900681FC6 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D694DE952B8504B80025DC7F /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
 		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
 		FE0633AD2B41BCD900B94787 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		FE84597A2B44508300DCB44E /* AppViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewControllerWrapper.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				FE0633AD2B41BCD900B94787 /* OptionsView.swift */,
 				FE0633AB2B41BC3D00B94787 /* CreditsView.swift */,
 				FE895FE72B418FB800A16882 /* ContentView.swift */,
+				D694DE952B8504B80025DC7F /* Haptic++.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D694DE962B8504B80025DC7F /* Haptic++.swift in Sources */,
 				847099A32B1D868F003FA4ED /* Makefile in Sources */,
 				8470998D2B1D855D003FA4ED /* ViewController.m in Sources */,
 				FE895FE82B418FB900A16882 /* ContentView.swift in Sources */,
