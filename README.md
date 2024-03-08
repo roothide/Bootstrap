@@ -1,4 +1,4 @@
-# Bootstrap
+# roothide Bootstrap
 
 [![GitHub stars](https://img.shields.io/github/stars/roothide/Bootstrap?style=social)](https://github.com/roothide/Bootstrap/stargazers)
 
