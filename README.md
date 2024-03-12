@@ -12,9 +12,7 @@ roothide Bootstrap is available to download on this repositories [Releases](http
 
 If you do not have access to MacOS, refer to the FAQ in the `Usage` section to build with GitHub Actions instead.
 
-You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is *insufficient*.
-
-The **entire** install of Xcode from the App Store is required. Additionally, Homebrew must be installed. If you don't have Homebrew installed, you can run the following command in your terminal to install Homebrew:
+You'll need MacOS to build, as you require a full Xcode installation. Simply having Xcode Command Line Tools is *insufficient*. Additionally, Homebrew must be installed. If you don't have Homebrew installed, you can run the following command in your terminal to install Homebrew:
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
