@@ -12,9 +12,7 @@ roothide Bootstrap is available to download on this repositories [Releases](http
 
 If you do not have access to MacOS, refer to the FAQ in the `Usage` section to build with GitHub Actions instead.
 
-You'll need MacOS to build, as you require a full Xcode installation. Simply having Xcode Command Line Tools is *insufficient*. Additionally, Homebrew must be installed. If you don't have Homebrew installed, you can run the following command in your terminal to install Homebrew:
-
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+You'll need MacOS to build, as you require a full Xcode installation. Simply having Xcode Command Line Tools is *insufficient*.
 
  1. Update/Install Theos with roothide support
     
@@ -32,7 +30,7 @@ You'll need MacOS to build, as you require a full Xcode installation. Simply hav
 
  5. Build `Bootstrap.tipa`
 
-    `gmake -j$(sysctl -n hw.ncpu) package`
+    `make package`
 
  6. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore
 
