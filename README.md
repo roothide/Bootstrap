@@ -12,21 +12,26 @@ roothide Bootstrap is available to download on this repositories [Releases](http
 
 If you do not have access to MacOS, refer to the FAQ in the `Usage` section to build with GitHub Actions instead.
 
-You'll need MacOS to build, as you require a full Xcode installation. Simply having Xcode Command Line Tools is *insufficient*.
+You'll need MacOS to build, as you require Xcode from the App Store. Simply having Xcode Command Line Tools is *insufficient*. Here's how to build the Bootstrap:
 
- 1. Update/Install Theos with roothide support:
+ 1. Update/Install Theos with roothide support
     
-    `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
+    ```
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+    ```
+    *If you encounter errors from a previous Theos installation, remove Theos in its entirety before continuing.*
 
-    If you encounter errors from a previous Theos installation, remove Theos in its entirety before continuing.
+ 2. Clone the GitHub repository and enter directory
 
- 2. Clone the GitHub repository and enter directory:
+    ```
+    git clone https://github.com/roothide/Bootstrap/ && cd Bootstrap
+    ```
 
-    `git clone https://github.com/roothide/Bootstrap/ && cd Bootstrap`
+ 3. Build `Bootstrap.tipa`
 
- 3. Build `Bootstrap.tipa`:
-
-    `make package`
+    ```
+    make package
+    ```
 
  4. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore
 
@@ -44,7 +49,7 @@ By design, roothide does not inject tweaks into any applications by default. To 
 
 Both rootful and rootless tweaks aren't out-of-the-box compatible with roothide, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).
 
-## Discord
+## Discord server
 
 You can join the roothide Discord server for support or general discussion [here](https://discord.com/invite/scqCkumAYp).
 
