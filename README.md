@@ -1,66 +1,61 @@
-# Bootstrap
+# roothide Bootstrap
 
 [![GitHub stars](https://img.shields.io/github/stars/roothide/Bootstrap?style=social)](https://github.com/roothide/Bootstrap/stargazers)
 
-A full featured bootstrap for iOS 14.0-17.0 A8-A17 & M1+M2 using the arm64e deb architecture providing amazing support for jailbreak detection. (Currently only tested tested on iOS 15.0-17.0)
+A full featured bootstrap for iOS 15.0-17.0 A8-A17 & M1+M2 using roothide.
 
-##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any modification to your device may cause irreparable damage.
+##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any unofficial modifications to your device may cause irreparable damage. Refer to the FAQ linked in the `Usage` section for safe usage of this software.
 
-This software is available to download on its [Releases](https://github.com/roothide/Bootstrap/releases).
+roothide Bootstrap is available to download on this repositories [Releases](https://github.com/roothide/Bootstrap/releases).
 
 ## Building
 
-If you do not have MacOS, check the FAQ in the Usage section of this README to build with GitHub Actions instead.
+If you do not have access to MacOS, refer to the FAQ in the `Usage` section to build with GitHub Actions instead.
 
-You'll need MacOS to build, as you require Xcode. Simply having Xcode Command Line Tools is *insufficient*.
-
-You will need Homebrew installed. If you don't have Homebrew installed, run the following command in your terminal:
-
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+You'll need MacOS to build, as you require Xcode from the App Store. Simply having Xcode Command Line Tools is *insufficient*. Here's how to build the Bootstrap:
 
  1. Update/Install Theos with roothide support
     
-    `bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"`
-    
-    This build of Theos is consistently updated.
+    ```
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+    ```
+    *If you encounter errors from a previous Theos installation, remove Theos in its entirety before continuing.*
 
- 2. Install make
+ 2. Clone the GitHub repository and enter directory
 
-    `brew install make`
+    ```
+    git clone https://github.com/roothide/Bootstrap/ && cd Bootstrap
+    ```
 
- 3. Clone the GitHub repository and enter directory
+ 3. Build `Bootstrap.tipa`
 
-    `git clone https://github.com/roothide/Bootstrap/ && cd Bootstrap`
+    ```
+    make package
+    ```
 
- 5. Build `Bootstrap.tipa`
-
-    `gmake -j$(sysctl -n hw.ncpu) package`
-
- 6. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore!
+ 4. Transfer `Bootstrap.tipa` from `./packages/` to your device and install it with TrollStore
 
 ## Usage
 
-The latest version of TrollStore is required as the bootstrap is built around the CoreTrust bug. Developer mode also needs to be enabled, so use TrollStore version 2.0.9 or later to automatically enable it.
+The roothide Bootstrap application **must** be installed with [TrollStore](https://ios.cfw.guide/installing-trollstore/). Use version `2.0.9` or later for enabling developer mode on-device.
 
-Once you open the Bootstrap app, press Bootstrap. This will install the necessary apps and files.
+Tweaks not compiled or converted to roothide will not work out-of-the-box with roothide Bootstrap. Refer to the FAQ below on how to use roothide Patcher.
 
-You can add various sources and install tweaks through Sileo, like other jailbreaks. You may need to convert tweaks to be roothide compatible if they aren't already converted or developed for this bootstrap.
+By design, roothide does not inject tweaks into any applications by default. To enable tweak injection into an application, press `App List` in the Bootstrap app, and enable the toggle of the application you want to inject into. Injection into `com.apple.springboard` or daemons is not possible with the roothide Bootstrap. Refer to the FAQ below on injection into `com.apple.springboard`.
 
-By default, tweaks are not injected into any apps. To enable tweak injection, click App List in the Bootstrap app, and toggle on an app you want to enable your tweaks in. You **cannot** inject into SpringBoard (com.apple.springboard) at the moment by any official means, though refer to the FAQ for tools you can use to enable this functionality.
-
-**A frequently updated FAQ** is currently available [here](https://github.com/dleovl/Bootstrap/blob/faq/README.md), and can assist with tweak conversion along with answering other questions you may have.
+**A roothide Bootstrap FAQ** is available [here](https://github.com/dleovl/Bootstrap/blob/faq/README.md).
 
 ## Develop tweaks
 
-Rootful and rootless tweaks aren't out-of-the-box compatible with this bootstrap, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).
+Both rootful and rootless tweaks aren't out-of-the-box compatible with roothide, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).
 
-## Discord
+## Discord server
 
-You can join our Discord for support or general talk [here](https://discord.com/invite/scqCkumAYp). There's a FAQ channel if you need any more information.
+You can join the roothide Discord server for support or general discussion [here](https://discord.com/invite/scqCkumAYp).
 
 ## The "Our Table" Icon
 
-[Alpha](https://github.com/TheAlphaStream) is the one who made the ProcursusTeam logo in the first place, and then edited by @sourcelocation
+The ProcursusTeam logo was originally made by [@TheAlphaStream](https://github.com/TheAlphaStream), and later edited by [@sourcelocation](https://github.com/sourcelocation).
 
 ## Credits
 
@@ -133,3 +128,4 @@ Huge thanks to these people, we couldn't have completed this project without the
 - xsf1re: [https://twitter.com/xsf1re](https://twitter.com/xsf1re)
 - yandevelop: [https://twitter.com/yandevelop](https://twitter.com/yandevelop)
 - YourRepo: [https://twitter.com/yourepo](https://twitter.com/yourepo)
+- And ***you***, the community, for giving insightful feedback and support.
