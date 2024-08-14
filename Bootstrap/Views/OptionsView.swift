@@ -17,6 +17,7 @@ class toggleState: ObservableObject {
 struct OptionsView: View {
     @Binding var showOptions: Bool
     @Binding var tweakEnable: Bool
+    @StateObject var allowURLSchemes = toggleState(state: isBootstrapInstalled() && FileManager.default.fileExists(atPath: jbroot("/var/mobile/.allow_url_schemes")))
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
     
     @Binding var colorScheme: Int
@@ -49,7 +50,7 @@ struct OptionsView: View {
                     .cornerRadius(.infinity)
                 }
                 
-                //ScrollView {
+                ScrollView {
                     VStack {
                         VStack {
                             Group {
@@ -75,6 +76,23 @@ struct OptionsView: View {
                                     DispatchQueue.global(qos: .utility).async {
                                         let newStatus = (obj.object as! NSNumber).boolValue
                                         opensshStatus.state = newStatus
+                                    }
+                                }
+                                if isBootstrapInstalled() {
+                                    Toggle(isOn: Binding(get: {allowURLSchemes.state}, set: {
+                                        allowURLSchemes.state = $0
+                                        URLSchemesAction($0)
+                                    }), label: {
+                                        Label(
+                                            title: { Text("URL Schemes") },
+                                            icon: { Image(systemName: "link") }
+                                        )
+                                    })
+                                    .disabled(!isSystemBootstrapped())
+                                    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("URLSchemesCancelNotification"))) { obj in
+                                        DispatchQueue.global(qos: .utility).async {
+                                            allowURLSchemes.state = false
+                                        }
                                     }
                                 }
                                 HStack {
@@ -233,9 +251,9 @@ struct OptionsView: View {
                                 .opacity(0.5)
                         }
                     }
-                //}
+                }
             }
-            .frame(maxHeight: 550)
+            .frame(maxHeight: 650)
             .scaleEffect(showOptions ? 1 : 0.9)
         }
     }

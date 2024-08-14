@@ -7,7 +7,7 @@ INSTALL_TARGET_PROCESSES = Bootstrap
 
 THEOS_PACKAGE_SCHEME = roothide
 
-THEOS_DEVICE_IP = iphone13.local
+THEOS_DEVICE_IP = iphone13pm.local
 
 #disable theos auto sign for all mach-o
 TARGET_CODESIGN = echo "don't sign"

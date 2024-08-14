@@ -28,7 +28,7 @@ struct MainView: View {
     @State var currentBlobs: [Color] = []
     @State var currentHighlights: [Color] = []
     
-    @AppStorage("colorScheme") var colorScheme = 0
+    @AppStorage("colorScheme", store: UserDefaults.app()) var colorScheme = 0
     
     @State private var showOptions = false
     @State private var showCredits = false

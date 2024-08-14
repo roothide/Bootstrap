@@ -144,7 +144,7 @@ void initFromSwiftUI()
         if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
            || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
         {
-            [AppDelegate showMesage:Localized(@"It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it.") title:Localized(@"Warning")];
+            [AppDelegate showMesage:Localized(@"It seems that you have the Filza installed in trollstore, which may be detected as jailbroken. You can remove it from trollstore then install Filza from roothide repo in Sileo.") title:Localized(@"Warning")];
         }
     }
 }
@@ -240,7 +240,7 @@ void reinstallPackageManager()
 
 int rebuildIconCache()
 {
-    AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(!tsapp) {
         STRAPLOG("trollstore not found!");
         return -1;
@@ -303,6 +303,36 @@ void tweaEnableAction(BOOL enable)
     } else if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
         ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
     }
+}
+
+void URLSchemesToggle(BOOL enable)
+{
+    if(enable) {
+        ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.allow_url_schemes") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    } else if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.allow_url_schemes")]) {
+        ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.allow_url_schemes") error:nil]);
+    }
+    
+    rebuildappsAction();
+}
+
+void URLSchemesAction(BOOL enable)
+{
+    if(!isSystemBootstrapped()) return;
+    
+    if(!enable) {
+        URLSchemesToggle(enable);
+        return;
+    }
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Enabling URL Schemes may result in jailbreak detection. Are you sure you want to continue?") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"NO") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesCancelNotification" object:nil];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        URLSchemesToggle(enable);
+    }]];
+    [AppDelegate showAlert:alert];
 }
 
 BOOL opensshAction(BOOL enable)
