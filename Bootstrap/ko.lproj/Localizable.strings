@@ -7,7 +7,7 @@
 "Reinstall Sileo & Zebra" = "Sileo & Zebra 재설치";
 "Uninstall" = "제거";
 "Credits" = "크레딧";
-"New Version Available" = "새 버전을 상ㅅㅇ할 수 있습니다";
+"New Version Available" = "새 버전을 사용할 수 있습니다";
 "Bootstrapped" = "부트스트랩됨";
 "Update" = "업데이트";
 "Install" = "설치";
@@ -34,7 +34,7 @@
 "Restart Server" = "서버 재시작";
 "bootstrap server restart successful" = "부트스트랩 서버 재시작 성공";
 
-"Rebuilding" = "재구축중";
+"Rebuilding" = "재구축 중";
 "Don't exit Bootstrap app until show the lock screen" = "잠금 화면이 표시될 때까지 부트스트랩 앱을 종료하지 마세요.";
 
 "bootstrap installed" = "부트스트랩 설치됨";
@@ -45,11 +45,11 @@
 
 "It seems that you have the Filza app installed, which may be detected as jailbroken. You can enable Tweak for it to hide it." = "Filza 앱이 설치된 것 같습니다. 이는 탈옥 감지로 이어질 수 있고 숨기기 위해 Tweak을 활성화할 수 있습니다.";
 
-"Status: Rebuilding Apps" = "상태: 앱 재구축중";
-"Status: Reinstalling Sileo" = "상태 : Sileo 재설치중";
-"Status: Reinstalling Zebra" = "상태 : Zebra 재설치중";
+"Status: Rebuilding Apps" = "상태: 앱 재구축 중";
+"Status: Reinstalling Sileo" = "상태 : Sileo 재설치 중";
+"Status: Reinstalling Zebra" = "상태 : Zebra 재설치 중";
 "Sileo and Zebra reinstalled!" = "Sileo와 Zebra 재설치됨!";
-"Status: Rebuilding Icon Cache" = "상태 : 아이콘 캐시 재구축중";
+"Status: Rebuilding Icon Cache" = "상태 : 아이콘 캐시 재구축 중";
 
 "openssh package is not installed" = "openssh 패키지가 설치되지 않았습니다";
 
