@@ -18,9 +18,8 @@ import FluidGradient
 public let niceAnimation = Animation.timingCurve(0.25, 0.1, 0.35, 1.3).speed(0.9)
 
 struct MainView: View {
-    @State var LogItems: [String.SubSequence] = {
-        return [""]
-    }()
+    @State var LogString: String = ""
+    @State var lastScroll = Date()
     
 //    let colorsWarm: [Color] = [.red, .orange, .yellow]
 //    let colorsCold: [Color] = [.blue, .purple, .pink]
@@ -189,22 +188,35 @@ struct MainView: View {
                     }
                     
                     VStack {
-                        ScrollView {
-                            ScrollViewReader { scroll in
-                                VStack(alignment: .leading) {
-                                    ForEach(0..<LogItems.count, id: \.self) { LogItem in
-                                        Text("\(String(LogItems[LogItem]))")
-                                            .textSelection(.enabled)
-                                            .font(.custom("Menlo", size: 15))
-                                            .foregroundColor(.white)
+                        ScrollViewReader { scroll in
+                            ScrollView {
+                                Text(LogString)
+                                    .frame(minWidth: 0,
+                                           maxWidth: .infinity,
+                                           minHeight: 0,
+                                           maxHeight: .infinity,
+                                           alignment: .topLeading)
+                                    .transition(.opacity)
+                                    .textSelection(.enabled)
+                                    .font(.custom("Menlo", size: 15))
+                                    .foregroundColor(.white)
+                                    .id("LogText")
+                                    .onChange(of: LogString) { newValue in
+//                                        withAnimation  {
+//                                            if lastScroll.timeIntervalSinceNow < -0.25 {
+//                                                lastScroll = Date()
+//                                                scroll.scrollTo("LogText", anchor: .bottom)
+//                                            }
+//                                        }
+                                        scroll.scrollTo("LogText", anchor: .bottom)
+
                                     }
-                                }
-                                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("LogMsgNotification"))) { obj in
-                                    DispatchQueue.global(qos: .utility).async {
-                                        LogItems.append((obj.object as! NSString) as String.SubSequence)
-                                        scroll.scrollTo(LogItems.count - 1)
+                                    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("LogMsgNotification"))) { obj in
+                                        DispatchQueue.main.async {
+                                            LogString += "\(obj.object as! NSString)\n"
+                                        }
                                     }
-                                }
+                                    
                             }
                         }
                         .frame(maxHeight: 200)

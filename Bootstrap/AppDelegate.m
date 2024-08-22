@@ -10,6 +10,7 @@
 
 + (void)addLogText:(NSString*)text
 {
+    SYSLOG("addLogText: %@", text);
     [NSNotificationCenter.defaultCenter postNotificationName:@"LogMsgNotification" object:text];
 }
 

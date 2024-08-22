@@ -136,7 +136,7 @@ void initFromSwiftUI()
         }
 
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            checkServer();
+            if(isSystemBootstrapped()) checkServer();
         }];
     }
 

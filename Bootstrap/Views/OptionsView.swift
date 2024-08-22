@@ -73,7 +73,7 @@ struct OptionsView: View {
                                     )
                                 })
                                 .onReceive(NotificationCenter.default.publisher(for: Notification.Name("opensshStatusNotification"))) { obj in
-                                    DispatchQueue.global(qos: .utility).async {
+                                    DispatchQueue.main.async {
                                         let newStatus = (obj.object as! NSNumber).boolValue
                                         opensshStatus.state = newStatus
                                     }
@@ -90,7 +90,7 @@ struct OptionsView: View {
                                     })
                                     .disabled(!isSystemBootstrapped())
                                     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("URLSchemesCancelNotification"))) { obj in
-                                        DispatchQueue.global(qos: .utility).async {
+                                        DispatchQueue.main.async {
                                             allowURLSchemes.state = false
                                         }
                                     }
