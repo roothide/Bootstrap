@@ -3,7 +3,7 @@ name: Build roothide Bootstrap .tipa
 on:
   push:
     paths:
-      - ".github/workflows/cron.yml"
+      - ".github/workflows/main.yml"
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
         run: |
           REPO=${{ github.repository }}
   
-          if [ "$REPO" != "dleovl/Bootstrap" ]; then
+          if [ "$REPO" != "BOFHELL/Bootstrap" ]; then
             echo "This workflow is only permitted usage for dleovl/Bootstrap repository. Exiting."
             exit 1
           fi
