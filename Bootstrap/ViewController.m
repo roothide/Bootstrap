@@ -1,7 +1,7 @@
 #include "common.h"
 #include "credits.h"
 #include "bootstrap.h"
-#include "AppList.h"
+#include "AppInfo.h"
 #include "AppDelegate.h"
 #import "ViewController.h"
 #include "AppViewController.h"
@@ -151,6 +151,12 @@ void initFromSwiftUI()
 
 @end
 
+void setIdleTimerDisabled(BOOL disabled) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication] setIdleTimerDisabled:disabled];
+    });
+}
+
 BOOL checkTSVersion()
 {    
     CFURLRef binaryURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)NSBundle.mainBundle.executablePath, kCFURLPOSIXPathStyle, false);
@@ -184,6 +190,7 @@ void rebuildappsAction()
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
+        setIdleTimerDisabled(YES);
 
         NSString* log=nil;
         NSString* err=nil;
@@ -194,6 +201,7 @@ void rebuildappsAction()
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
     });
 }
 
@@ -240,7 +248,7 @@ void reinstallPackageManager()
 
 int rebuildIconCache()
 {
-AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    AppInfo* tsapp = [AppInfo appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(!tsapp) {
         STRAPLOG("trollstore not found!");
         return -1;
@@ -279,6 +287,7 @@ void rebuildIconCacheAction()
     [AppDelegate addLogText:Localized(@"Status: Rebuilding Icon Cache")];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        setIdleTimerDisabled(YES);
         [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen")];
 
         NSString* log=nil;
@@ -289,6 +298,7 @@ void rebuildIconCacheAction()
         }
 
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
     });
 }
 
@@ -424,6 +434,7 @@ void bootstrapAction()
     [AppDelegate showHudMsg:Localized(@"Bootstrapping")];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        setIdleTimerDisabled(YES);
 
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
         int status = spawn(argv[0], argv, environ, ^(char* outstr, int length){
@@ -435,6 +446,7 @@ void bootstrapAction()
         });
 
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
 
         if(status != 0)
         {
@@ -478,12 +490,14 @@ void unbootstrapAction()
 
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [AppDelegate showHudMsg:Localized(@"Uninstalling")];
+            setIdleTimerDisabled(YES);
 
             NSString* log=nil;
             NSString* err=nil;
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
 
             [AppDelegate dismissHud];
+            setIdleTimerDisabled(NO);
 
             NSString* msg = (status==0) ? Localized(@"bootstrap uninstalled") : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
 

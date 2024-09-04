@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #include <sys/stat.h>
-#include "AppList.h"
+#include "AppInfo.h"
 #include "common.h"
 
 NSString * relativize(NSURL * to, NSURL * from, BOOL fromIsDir) {

@@ -6,7 +6,7 @@
 #include "sources.h"
 #include "bootstrap.h"
 #include "NSUserDefaults+appDefaults.h"
-#include "AppList.h"
+#include "AppInfo.h"
 
 extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_path);
 
@@ -448,7 +448,7 @@ int unbootstrap()
     
     [LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
     
-    AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    AppInfo* tsapp = [AppInfo appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(tsapp) {
         NSString* log=nil;
         NSString* err=nil;
