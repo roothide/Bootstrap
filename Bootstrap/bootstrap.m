@@ -158,6 +158,10 @@ int InstallBootstrap(NSString* jbroot_path)
     
     ASSERT(mkdir(jbroot_path.fileSystemRepresentation, 0755) == 0);
     ASSERT(chown(jbroot_path.fileSystemRepresentation, 0, 0) == 0);
+
+    find_jbroot(YES); //refresh
+    
+    //jbroot() and jbrand() available now
     
     NSString* bootstrapZstFile = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:
                                   [NSString stringWithFormat:@"strapfiles/bootstrap-%d.tar.zst", getCFMajorVersion()]];
@@ -252,12 +256,12 @@ int InstallBootstrap(NSString* jbroot_path)
 
 int ReRandomizeBootstrap()
 {
-    //jbroot() unavailable
-    
-    NSFileManager* fm = NSFileManager.defaultManager;
-    
     uint64_t prev_jbrand = jbrand();
     uint64_t new_jbrand = jbrand_new();
+    
+    //jbroot() and jbrand() unavailable now
+    
+    NSFileManager* fm = NSFileManager.defaultManager;
     
     ASSERT( [fm moveItemAtPath:[NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", prev_jbrand]
                         toPath:[NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", new_jbrand] error:nil] );
@@ -292,8 +296,10 @@ int ReRandomizeBootstrap()
     ASSERT([fm createSymbolicLinkAtPath:[jbroot_secondary stringByAppendingPathComponent:@".jbroot"]
                     withDestinationPath:jbroot_path error:nil]);
     
-    //jbroot() available now
+    find_jbroot(YES); //refresh
     
+    //jbroot() and jbrand() available now
+
     STRAPLOG("Status: Building Base Binaries");
     ASSERT(rebuildBasebin() == 0);
     
@@ -332,6 +338,84 @@ void fixMobileDirectories()
     }
 }
 
+#include <mach-o/loader.h>
+NSString* getMachoInstallName(NSString* path)
+{
+    int fd = open(path.fileSystemRepresentation, O_RDONLY);
+    if(fd < 0) return nil;
+
+    NSString* installname = nil;
+    
+    do {
+        if(lseek(fd, 0, SEEK_SET) != 0) break;
+        
+        struct mach_header_64 header={0};
+        if(read(fd, &header, sizeof(header)) != sizeof(header))break;
+        
+        //there is no universal macho on Bootstrap
+        if(header.magic!=MH_MAGIC_64 || header.cputype!= CPU_TYPE_ARM64) break;
+        
+        struct load_command* lc = malloc(header.sizeofcmds);
+        if(!lc) break;
+        
+        if(read(fd, lc, header.sizeofcmds) != header.sizeofcmds)break;
+        
+        for (uint32_t i = 0; i < header.ncmds; i++) {
+            if (lc->cmd == LC_ID_DYLIB)
+            {
+                struct dylib_command* id_dylib = (struct dylib_command*)lc;
+                const char* name = (char*)((uint64_t)id_dylib + id_dylib->dylib.name.offset);
+                installname = @(name);
+            }
+            lc = (struct load_command *) ((char *)lc + lc->cmdsize);
+        }
+        
+    } while(0);
+    
+    close(fd);
+    
+    return installname;
+}
+
+void fixBadPatchFiles()
+{
+    NSString* dirpath = jbroot(@"/");
+    for(NSString* path in [[NSFileManager defaultManager] enumeratorAtPath:dirpath]) {
+
+        if(![path.pathExtension isEqualToString:@"roothidepatch"]) {
+            continue;
+        }
+        
+        NSString* fullpath = [dirpath stringByAppendingPathComponent:path];
+        
+        struct stat symst;
+        if(lstat(fullpath.fileSystemRepresentation, &symst) !=0)
+        {
+            SYSLOG("scanBadPatchFiles: lstat: %@: %s", fullpath, strerror(errno));
+            continue;
+        }
+
+        if(S_ISLNK(symst.st_mode))
+        {
+            SYSLOG("scanBadPatchFiles: symlink: %@", fullpath);
+            continue;
+        }
+        
+        STRAPLOG("fixBadPatchFiles: %@", path);
+        
+        NSString* installname = getMachoInstallName(fullpath);
+        
+        if([installname.stringByDeletingLastPathComponent isEqualToString:@"@loader_path/.jbroot/usr/lib/DynamicPatches"])
+        {
+            ASSERT(unlink(fullpath.fileSystemRepresentation) == 0);
+            
+            NSString* sympath = jbroot([@"/usr/lib/DynamicPatches" stringByAppendingPathComponent:installname.lastPathComponent]);
+            ASSERT(symlink(sympath.fileSystemRepresentation, fullpath.fileSystemRepresentation) == 0);
+        }
+    }
+}
+
+
 int bootstrap()
 {
     ASSERT(getuid()==0);
@@ -346,7 +430,7 @@ int bootstrap()
         ASSERT([fm removeItemAtPath:@"/var/jb" error:nil]);
     }
     
-    NSString* jbroot_path = find_jbroot();
+    NSString* jbroot_path = find_jbroot(YES);
     
     if(!jbroot_path) {
         STRAPLOG("device is not strapped...");
@@ -385,6 +469,7 @@ int bootstrap()
         ASSERT(ReRandomizeBootstrap() == 0);
         
         fixMobileDirectories();
+        fixBadPatchFiles();
     }
     
     ASSERT(disableRootHideBlacklist()==0);
@@ -467,7 +552,7 @@ int unbootstrap()
 
 bool isBootstrapInstalled()
 {
-    if(!find_jbroot())
+    if(!find_jbroot(YES))
         return NO;
 
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]

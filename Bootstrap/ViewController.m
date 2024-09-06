@@ -97,6 +97,16 @@ BOOL checkServer()
     return ret;
 }
 
+
+#define PROC_PIDPATHINFO_MAXSIZE  (1024)
+int proc_pidpath(pid_t pid, void *buffer, uint32_t buffersize);
+NSString* getLaunchdPath()
+{
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE] = {0};
+    ASSERT(proc_pidpath(1, pathbuf, sizeof(pathbuf)) > 0);
+    return @(pathbuf);
+}
+
 void initFromSwiftUI()
 {
     BOOL IconCacheRebuilding=NO;
@@ -410,11 +420,25 @@ void bootstrapAction()
         [AppDelegate showMesage:Localized(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.") title:Localized(@"Error")];
         return;
     }
+    
+    NSString* launchdpath = getLaunchdPath();
+    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasPrefix:@"/var/containers/Bundle/Application/.jbroot-"])
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Please reboot device first.") preferredStyle:UIAlertControllerStyleAlert];
+
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+        }]];
+
+        [AppDelegate showAlert:alert];
+        return;
+    }
 
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     [generator impactOccurred];
 
-    if(find_jbroot()) //make sure jbroot() function available
+    if(find_jbroot(YES)) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
             [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
