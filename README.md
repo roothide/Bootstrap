@@ -45,6 +45,8 @@ By design, roothide does not inject tweaks into any applications by default. To 
 
 **A roothide Bootstrap FAQ** is available [here](https://github.com/dleovl/Bootstrap/blob/faq/README.md).
 
+**For installing Bootstrap**, refer to the guides at [https://onejailbreak.com/blog/bootstrap-roothide/](https://onejailbreak.com/blog/bootstrap-roothide/)
+
 ## Develop tweaks
 
 Both rootful and rootless tweaks aren't out-of-the-box compatible with roothide, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).

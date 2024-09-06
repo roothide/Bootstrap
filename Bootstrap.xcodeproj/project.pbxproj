@@ -22,7 +22,7 @@
 		84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D5F2B26546E00A1E407 /* MobileCoreServices.framework */; };
 		84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D612B2654EB00A1E407 /* MobileContainerManager.framework */; };
 		84438D652B27522400A1E407 /* envbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 84438D642B27522400A1E407 /* envbuf.c */; };
-		84438D6C2B2CDE0100A1E407 /* AppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D682B2CDE0100A1E407 /* AppList.m */; };
+		84438D6C2B2CDE0100A1E407 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D682B2CDE0100A1E407 /* AppInfo.m */; };
 		84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6B2B2CDE0100A1E407 /* AppViewController.m */; };
 		84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6E2B2CE5A300A1E407 /* AppEnabler.m */; };
 		847099872B1D855D003FA4ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099862B1D855D003FA4ED /* AppDelegate.m */; };
@@ -83,8 +83,8 @@
 		84438D612B2654EB00A1E407 /* MobileContainerManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileContainerManager.framework; path = Bootstrap/Frameworks/MobileContainerManager.framework; sourceTree = "<group>"; };
 		84438D632B27522400A1E407 /* envbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envbuf.h; sourceTree = "<group>"; };
 		84438D642B27522400A1E407 /* envbuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = envbuf.c; sourceTree = "<group>"; };
-		84438D682B2CDE0100A1E407 /* AppList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppList.m; sourceTree = "<group>"; };
-		84438D692B2CDE0100A1E407 /* AppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppList.h; sourceTree = "<group>"; };
+		84438D682B2CDE0100A1E407 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
+		84438D692B2CDE0100A1E407 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		84438D6A2B2CDE0100A1E407 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
 		84438D6B2B2CDE0100A1E407 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
 		84438D6E2B2CE5A300A1E407 /* AppEnabler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppEnabler.m; sourceTree = "<group>"; };
@@ -190,8 +190,8 @@
 				FE0633B52B41CF6600B94787 /* Views */,
 				FE0633B42B41CF5800B94787 /* Extensions */,
 				FE0633B32B41CF4D00B94787 /* Classes */,
-				84438D692B2CDE0100A1E407 /* AppList.h */,
-				84438D682B2CDE0100A1E407 /* AppList.m */,
+				84438D692B2CDE0100A1E407 /* AppInfo.h */,
+				84438D682B2CDE0100A1E407 /* AppInfo.m */,
 				847099852B1D855D003FA4ED /* AppDelegate.h */,
 				847099862B1D855D003FA4ED /* AppDelegate.m */,
 				847099882B1D855D003FA4ED /* SceneDelegate.h */,
@@ -378,7 +378,7 @@
 				847099982B1D855E003FA4ED /* main.m in Sources */,
 				84438D522B260FEB00A1E407 /* zstd_wrapper.m in Sources */,
 				8470998A2B1D855D003FA4ED /* SceneDelegate.m in Sources */,
-				84438D6C2B2CDE0100A1E407 /* AppList.m in Sources */,
+				84438D6C2B2CDE0100A1E407 /* AppInfo.m in Sources */,
 				84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */,
 				84438D5D2B264A2800A1E407 /* NSUserDefaults+appDefaults.m in Sources */,
 			);
@@ -571,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.6;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -609,7 +609,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.6;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";

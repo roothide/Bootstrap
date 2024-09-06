@@ -9,7 +9,7 @@ uint64_t jbrand();
 
 uint64_t jbrand_new();
 
-NSString* find_jbroot();
+NSString* find_jbroot(BOOL force);
 
 NSString* jbroot(NSString *path);
 

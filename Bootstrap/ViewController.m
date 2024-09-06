@@ -1,7 +1,7 @@
 #include "common.h"
 #include "credits.h"
 #include "bootstrap.h"
-#include "AppList.h"
+#include "AppInfo.h"
 #include "AppDelegate.h"
 #import "ViewController.h"
 #include "AppViewController.h"
@@ -97,6 +97,16 @@ BOOL checkServer()
     return ret;
 }
 
+
+#define PROC_PIDPATHINFO_MAXSIZE  (1024)
+int proc_pidpath(pid_t pid, void *buffer, uint32_t buffersize);
+NSString* getLaunchdPath()
+{
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE] = {0};
+    ASSERT(proc_pidpath(1, pathbuf, sizeof(pathbuf)) > 0);
+    return @(pathbuf);
+}
+
 void initFromSwiftUI()
 {
     BOOL IconCacheRebuilding=NO;
@@ -151,6 +161,12 @@ void initFromSwiftUI()
 
 @end
 
+void setIdleTimerDisabled(BOOL disabled) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication] setIdleTimerDisabled:disabled];
+    });
+}
+
 BOOL checkTSVersion()
 {    
     CFURLRef binaryURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)NSBundle.mainBundle.executablePath, kCFURLPOSIXPathStyle, false);
@@ -184,6 +200,7 @@ void rebuildappsAction()
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
+        setIdleTimerDisabled(YES);
 
         NSString* log=nil;
         NSString* err=nil;
@@ -194,6 +211,7 @@ void rebuildappsAction()
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
     });
 }
 
@@ -240,7 +258,7 @@ void reinstallPackageManager()
 
 int rebuildIconCache()
 {
-AppList* tsapp = [AppList appWithBundleIdentifier:@"com.opa334.TrollStore"];
+    AppInfo* tsapp = [AppInfo appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(!tsapp) {
         STRAPLOG("trollstore not found!");
         return -1;
@@ -279,6 +297,7 @@ void rebuildIconCacheAction()
     [AppDelegate addLogText:Localized(@"Status: Rebuilding Icon Cache")];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        setIdleTimerDisabled(YES);
         [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen")];
 
         NSString* log=nil;
@@ -289,6 +308,7 @@ void rebuildIconCacheAction()
         }
 
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
     });
 }
 
@@ -400,11 +420,25 @@ void bootstrapAction()
         [AppDelegate showMesage:Localized(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.") title:Localized(@"Error")];
         return;
     }
+    
+    NSString* launchdpath = getLaunchdPath();
+    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasPrefix:@"/var/containers/Bundle/Application/.jbroot-"])
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Please reboot device first.") preferredStyle:UIAlertControllerStyleAlert];
+
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+        }]];
+
+        [AppDelegate showAlert:alert];
+        return;
+    }
 
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     [generator impactOccurred];
 
-    if(find_jbroot()) //make sure jbroot() function available
+    if(find_jbroot(YES)) //make sure jbroot() function available
     {
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
             [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
@@ -424,6 +458,7 @@ void bootstrapAction()
     [AppDelegate showHudMsg:Localized(@"Bootstrapping")];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        setIdleTimerDisabled(YES);
 
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
         int status = spawn(argv[0], argv, environ, ^(char* outstr, int length){
@@ -435,6 +470,7 @@ void bootstrapAction()
         });
 
         [AppDelegate dismissHud];
+        setIdleTimerDisabled(NO);
 
         if(status != 0)
         {
@@ -478,12 +514,14 @@ void unbootstrapAction()
 
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [AppDelegate showHudMsg:Localized(@"Uninstalling")];
+            setIdleTimerDisabled(YES);
 
             NSString* log=nil;
             NSString* err=nil;
             int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
 
             [AppDelegate dismissHud];
+            setIdleTimerDisabled(NO);
 
             NSString* msg = (status==0) ? Localized(@"bootstrap uninstalled") : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
 

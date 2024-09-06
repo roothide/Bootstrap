@@ -2,7 +2,7 @@
 
 #import "AppViewController.h"
 #include "AppDelegate.h"
-#import "AppList.h"
+#import "AppInfo.h"
 #include "common.h"
 #include "AppDelegate.h"
 #include <sys/stat.h>
@@ -54,7 +54,7 @@
         isFiltered = true;
         filteredApps = [[NSMutableArray alloc] init];
         searchText = searchText.lowercaseString;
-        for (AppList* app in appsArray) {
+        for (AppInfo* app in appsArray) {
             NSRange nameRange = [app.name.lowercaseString rangeOfString:searchText options:NSCaseInsensitiveSearch];
             NSRange bundleIdRange = [app.bundleIdentifier.lowercaseString rangeOfString:searchText options:NSCaseInsensitiveSearch];
             if(nameRange.location != NSNotFound || bundleIdRange.location != NSNotFound) {
@@ -127,7 +127,7 @@
     [self.tableView.refreshControl endRefreshing];
 }
 
--(BOOL)tweakEnabled:(AppList*)app {
+-(BOOL)tweakEnabled:(AppInfo*)app {
     struct stat st;
     if(lstat([app.bundleURL.path stringByAppendingPathComponent:@".jbroot"].fileSystemRepresentation, &st)==0) {
         return YES;
@@ -156,7 +156,7 @@
 
     for(id proxy in allInstalledApplications)
     {
-        AppList* app = [AppList appWithPrivateProxy:proxy];
+        AppInfo* app = [AppInfo appWithPrivateProxy:proxy];
     
 //        if(app.isHiddenApp) continue;
                 
@@ -196,7 +196,7 @@
     
     if(sort)
     {
-        NSArray *appsSortedByName = [applications sortedArrayUsingComparator:^NSComparisonResult(AppList *app1, AppList *app2) {
+        NSArray *appsSortedByName = [applications sortedArrayUsingComparator:^NSComparisonResult(AppInfo *app1, AppInfo *app2) {
 
             BOOL enabled1 = [self tweakEnabled:app1];
             BOOL enabled2 = [self tweakEnabled:app2];
@@ -217,9 +217,9 @@
     else
     {
         NSMutableArray *newapps = [NSMutableArray array];
-        [applications enumerateObjectsUsingBlock:^(AppList *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [applications enumerateObjectsUsingBlock:^(AppInfo *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
             __block BOOL hasBeenContained = NO;
-            [self->appsArray enumerateObjectsUsingBlock:^(AppList *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self->appsArray enumerateObjectsUsingBlock:^(AppInfo *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.bundleIdentifier isEqualToString:newobj.bundleIdentifier]) {
                     hasBeenContained = YES;
                     *stop = YES;
@@ -231,8 +231,8 @@
         }];
         
         NSMutableArray *tmpArray = [NSMutableArray array];
-        [self->appsArray enumerateObjectsUsingBlock:^(AppList *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [applications enumerateObjectsUsingBlock:^(AppList *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self->appsArray enumerateObjectsUsingBlock:^(AppInfo *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [applications enumerateObjectsUsingBlock:^(AppInfo *newobj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.bundleIdentifier isEqualToString:newobj.bundleIdentifier]) {
                     [tmpArray addObject:newobj];
                     *stop = YES;
@@ -291,7 +291,7 @@ NSArray* unsupportedBundleIDs = @[
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     
-    AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+    AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
     
     if(!app.isHiddenApp) {
         UIImage *image = app.icon;
@@ -328,7 +328,7 @@ NSArray* unsupportedBundleIDs = @[
     CGPoint pos = [switchInCell convertPoint:switchInCell.bounds.origin toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pos];
     BOOL enabled = switchInCell.on;
-    AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+    AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
@@ -365,7 +365,7 @@ NSArray* unsupportedBundleIDs = @[
         long tag = recognizer.view.tag;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:tag&0xFFFFFFFF inSection:tag>>32];
         
-        AppList* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+        AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];

@@ -60,37 +60,45 @@ uint64_t resolve_jbrand_value(const char* name)
 }
 
 
-NSString* find_jbroot()
+NSString* find_jbroot(BOOL force)
 {
-    //jbroot path may change when re-randomize it
-    NSString * jbroot = nil;
-    NSArray *subItems = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/var/containers/Bundle/Application/" error:nil];
-    for (NSString *subItem in subItems) {
-        if (is_jbroot_name(subItem.UTF8String))
-        {
-            NSString* path = [@"/var/containers/Bundle/Application/" stringByAppendingPathComponent:subItem];
-            
-//            if([NSFileManager.defaultManager fileExistsAtPath:
-//                 [path stringByAppendingPathComponent:@".installed_dopamine"]])
-//                continue;
-                
-            jbroot = path;
-            break;
-        }
+    static NSString* cached_jbroot = nil;
+    if(!force && cached_jbroot) {
+        return cached_jbroot;
     }
-    return jbroot;
+    @synchronized(@"find_jbroot_lock")
+    {
+        //jbroot path may change when re-randomize it
+        NSString * jbroot = nil;
+        NSArray *subItems = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/var/containers/Bundle/Application/" error:nil];
+        for (NSString *subItem in subItems) {
+            if (is_jbroot_name(subItem.UTF8String))
+            {
+                NSString* path = [@"/var/containers/Bundle/Application/" stringByAppendingPathComponent:subItem];
+                
+    //            if([NSFileManager.defaultManager fileExistsAtPath:
+    //                 [path stringByAppendingPathComponent:@".installed_dopamine"]])
+    //                continue;
+                    
+                jbroot = path;
+                break;
+            }
+        }
+        cached_jbroot = jbroot;
+    }
+    return cached_jbroot;
 }
 
 NSString *jbroot(NSString *path)
 {
-    NSString* jbroot = find_jbroot();
+    NSString* jbroot = find_jbroot(NO);
     ASSERT(jbroot != NULL); //to avoid [nil stringByAppendingString:
     return [jbroot stringByAppendingPathComponent:path];
 }
 
 uint64_t jbrand()
 {
-    NSString* jbroot = find_jbroot();
+    NSString* jbroot = find_jbroot(NO);
     ASSERT(jbroot != NULL);
     return resolve_jbrand_value([jbroot lastPathComponent].UTF8String);
 }
