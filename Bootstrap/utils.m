@@ -59,7 +59,6 @@ uint64_t resolve_jbrand_value(const char* name)
     return value;
 }
 
-
 NSString* find_jbroot(BOOL force)
 {
     static NSString* cached_jbroot = nil;
@@ -75,10 +74,6 @@ NSString* find_jbroot(BOOL force)
             if (is_jbroot_name(subItem.UTF8String))
             {
                 NSString* path = [@"/var/containers/Bundle/Application/" stringByAppendingPathComponent:subItem];
-                
-    //            if([NSFileManager.defaultManager fileExistsAtPath:
-    //                 [path stringByAppendingPathComponent:@".installed_dopamine"]])
-    //                continue;
                     
                 jbroot = path;
                 break;
