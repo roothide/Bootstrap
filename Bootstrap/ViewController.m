@@ -422,7 +422,7 @@ void bootstrapAction()
     }
     
     NSString* launchdpath = getLaunchdPath();
-    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasPrefix:@"/var/containers/Bundle/Application/.jbroot-"])
+    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasPrefix:@"/private/var/containers/Bundle/Application/.jbroot-"])
     {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Please reboot device first.") preferredStyle:UIAlertControllerStyleAlert];
 
@@ -437,6 +437,18 @@ void bootstrapAction()
 
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     [generator impactOccurred];
+
+    int count=0;
+    NSArray *subItems = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/var/containers/Bundle/Application/" error:nil];
+    for (NSString *subItem in subItems) {
+        if (is_jbroot_name(subItem.UTF8String))
+            count++;
+    }
+
+    if(count > 1) {
+        [AppDelegate showMesage:Localized(@"There are multi jbroot in /var/containers/Bundle/Applicaton/") title:Localized(@"Error")];
+        return;
+    }
 
     if(find_jbroot(YES)) //make sure jbroot() function available
     {
@@ -494,6 +506,22 @@ void bootstrapAction()
 
         if(gTweakEnabled && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
             ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.tweakenabled") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        }
+        
+        if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.preferences_tweak_inited")])
+        {
+            [AppDelegate addLogText:Localized(@"Enable Tweak Injection for com.apple.Preferences")];
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"enableapp",@"/Applications/Preferences.app"], &log, &err);
+            
+            if(status == 0) {
+                ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.preferences_tweak_inited") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+            } else {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"error(%d)",status]];
+                return;
+            }
         }
 
         [generator impactOccurred];

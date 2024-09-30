@@ -3,6 +3,11 @@
 
 #define DEFAULT_SOURCES "\
 Types: deb\n\
+URIs: https://yourepo.com/\n\
+Suites: ./\n\
+Components:\n\
+\n\
+Types: deb\n\
 URIs: https://repo.chariz.com/\n\
 Suites: ./\n\
 Components:\n\
@@ -44,6 +49,7 @@ Components: main\n\
 # Zebra Sources List\n\
 deb https://getzbra.com/repo/ ./\n\
 deb https://repo.chariz.com/ ./\n\
+deb https://yourepo.com/ ./\n\
 deb https://havoc.app/ ./\n\
 deb https://roothide.github.io/ ./\n\
 deb https://roothide.github.io/procursus iphoneos-arm64e/%d main\n\
