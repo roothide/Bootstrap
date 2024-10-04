@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "__locale": "c",
+        "__tree": "c",
+        "bitset": "c",
+        "set": "c",
+        "syslimits.h": "c",
+        "mman.h": "c",
+        "fcntl.h": "c",
+        "_pthread_types.h": "c",
+        "_pthread_t.h": "c",
+        "signal.h": "c",
+        "algorithm": "cpp",
+        "__bit_reference": "c",
+        "chrono": "c",
+        "map": "c",
+        "unordered_map": "c",
+        "pwd.h": "c",
+        "libgen.h": "c",
+        "libproc.h": "c",
+        "proc_info.h": "c",
+        "libproc_private.h": "c"
+    }
+}

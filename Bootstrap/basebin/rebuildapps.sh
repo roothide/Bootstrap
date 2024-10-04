@@ -3,7 +3,7 @@
 ls /Applications/  | while read app; do
     echo "--$app--";
     
-    uicache -p "/Applications/$app"
+    uicache -p "/Applications/$app" || true
 
 done
 
@@ -14,5 +14,5 @@ ls -d /var/containers/Bundle/Application/*/*.app/.jbroot | while read file; do
     unlink "$bundle"/.jbroot
     ln -s /  "$bundle"/.jbroot
 
-    uicache -s -p "$bundle"
+    uicache -s -p "$bundle" || true
 done
