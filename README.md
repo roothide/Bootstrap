@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/roothide/Bootstrap?style=social)](https://github.com/roothide/Bootstrap/stargazers)
 
-A full featured bootstrap for iOS 15.0-17.0 A8-A17 & M1+M2 using roothide.
+A full featured bootstrap for iOS 15.0-17.0 A8-A17Pro & M1+M2 using roothide.
 
 ##### *WARNING:* By using this software, you take full responsibility for what you do with it. Any unofficial modifications to your device may cause irreparable damage. Refer to the FAQ linked in the `Usage` section for safe usage of this software.
 
