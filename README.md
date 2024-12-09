@@ -53,7 +53,7 @@ Both rootful and rootless tweaks aren't out-of-the-box compatible with roothide,
 
 ## Discord server
 
-You can join the roothide Discord server for support or general discussion [here](https://discord.com/invite/scqCkumAYp).
+You can join the roothide Discord server for support or general discussion [here](https://discord.gg/ZvY2Yjw8GA).
 
 ## The "Our Table" Icon
 
