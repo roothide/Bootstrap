@@ -438,25 +438,34 @@ void bootstrapAction()
     UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleSoft];
     [generator impactOccurred];
 
-    int count=0;
-    NSArray *subItems = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/var/containers/Bundle/Application/" error:nil];
-    for (NSString *subItem in subItems) {
-        if (is_jbroot_name(subItem.UTF8String))
-            count++;
+    int installedCount=0;
+    NSString* dirpath = @"/var/containers/Bundle/Application/";
+    NSArray *subItems = [NSFileManager.defaultManager contentsOfDirectoryAtPath:dirpath error:nil];
+    for (NSString *subItem in subItems)
+    {
+        if (!is_jbroot_name(subItem.UTF8String)) continue;
+        
+        NSString* jbroot_path = [dirpath stringByAppendingPathComponent:subItem];
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:[jbroot_path stringByAppendingPathComponent:@"/.installed_dopamine"]]) {
+            [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
+            return;
+        }
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:[jbroot_path stringByAppendingPathComponent:@"/.bootstrapped"]]
+           || [NSFileManager.defaultManager fileExistsAtPath:[jbroot_path stringByAppendingPathComponent:@"/.thebootstrapped"]]) {
+            installedCount++;
+            continue;
+        }
     }
 
-    if(count > 1) {
+    if(installedCount > 1) {
         [AppDelegate showMesage:Localized(@"There are multi jbroot in /var/containers/Bundle/Applicaton/") title:Localized(@"Error")];
         return;
     }
 
     if(find_jbroot(YES)) //make sure jbroot() function available
     {
-        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.installed_dopamine")]) {
-            [AppDelegate showMesage:Localized(@"roothide dopamine has been installed on this device, now install this bootstrap may break it!") title:Localized(@"Error")];
-            return;
-        }
-
         //check beta version
         if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/.bootstrapped")]) {
             NSString* strappedVersion = [NSString stringWithContentsOfFile:jbroot(@"/.bootstrapped") encoding:NSUTF8StringEncoding error:nil];

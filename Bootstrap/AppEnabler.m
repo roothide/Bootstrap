@@ -210,7 +210,8 @@ int enableForApp(NSString* bundlePath)
         }
     }
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
+            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]]
+            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStoreLite"]])
     {
         ASSERT(backupApp(bundlePath) == 0);
 
@@ -257,7 +258,8 @@ int disableForApp(NSString* bundlePath)
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).UTF8String, NULL}, nil, nil) == 0);
     }
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]])
+            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]]
+            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStoreLite"]])
     {
         
         struct stat st;

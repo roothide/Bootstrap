@@ -90,35 +90,33 @@
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
-    [refreshControl addTarget:self action:@selector(startRefresh) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(manualRefresh) forControlEvents:UIControlEventValueChanged];
     self.tableView.refreshControl = refreshControl;
     
     [self updateData:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(startRefresh2)
+                                             selector:@selector(autoRefresh)
                                           name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 }
 
-- (void)startRefresh {
+- (void)startRefresh:(BOOL)resort {
     [self.tableView.refreshControl beginRefreshing];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [self updateData:YES];
+        [self updateData:resort];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView.refreshControl endRefreshing];
         });
     });
 }
 
-- (void)startRefresh2 {
-    [self.tableView.refreshControl beginRefreshing];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [self updateData:NO];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView.refreshControl endRefreshing];
-        });
-    });
+- (void)manualRefresh {
+    [self startRefresh:YES];
+}
+
+- (void)autoRefresh {
+    [self startRefresh:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

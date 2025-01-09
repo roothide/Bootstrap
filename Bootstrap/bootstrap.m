@@ -196,15 +196,6 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT([fm moveItemAtPath:jbroot(@"/tmp") toPath:[jbroot_secondary stringByAppendingPathComponent:@"/var/tmp"] error:nil]);
     ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/tmp") withDestinationPath:@"var/tmp" error:nil]);
     
-    for(NSString* item in [fm contentsOfDirectoryAtPath:jbroot_path error:nil])
-    {
-        if([item isEqualToString:@"var"])
-            continue;
-
-        ASSERT([fm createSymbolicLinkAtPath:[jbroot_secondary stringByAppendingPathComponent:item] withDestinationPath:[jbroot_path stringByAppendingPathComponent:item] error:nil]);
-    }
-    
-    ASSERT([fm removeItemAtPath:[jbroot_secondary stringByAppendingPathComponent:@".jbroot"] error:nil]);
     ASSERT([fm createSymbolicLinkAtPath:[jbroot_secondary stringByAppendingPathComponent:@".jbroot"]
                     withDestinationPath:jbroot_path error:nil]);
     
@@ -254,6 +245,39 @@ int InstallBootstrap(NSString* jbroot_path)
     return 0;
 }
 
+int fixBootstrapSymlink(NSString* path)
+{
+    const char* jbpath = jbroot(path).fileSystemRepresentation;
+    
+    struct stat st={0};
+    ASSERT(lstat(jbpath, &st) == 0);
+    if (!S_ISLNK(st.st_mode)) {
+        return 0;
+    }
+    
+    char link[PATH_MAX+1] = {0};
+    ASSERT(readlink(jbpath, link, sizeof(link)-1) > 0);
+    if(link[0] != '/') {
+        return 0;
+    }
+
+    NSString* _link = @(link).stringByStandardizingPath.stringByResolvingSymlinksInPath;
+    
+    NSString *pattern = @"^/var/containers/Bundle/Application/\\.jbroot-[0-9A-Z]{16}(/.+)$";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    NSTextCheckingResult *match = [regex firstMatchInString:_link options:0 range:NSMakeRange(0, [_link length])];
+    ASSERT(match != nil);
+    
+    NSString* target = [_link substringWithRange:[match rangeAtIndex:1]];
+    NSString* newlink = [@".jbroot" stringByAppendingPathComponent:target];
+    
+    ASSERT(unlink(jbpath) == 0);
+    ASSERT(symlink(newlink.fileSystemRepresentation, jbpath) == 0);
+    ASSERT(access(jbpath, F_OK) == 0);
+    
+    return 0;
+}
+
 int ReRandomizeBootstrap()
 {
     uint64_t prev_jbrand = jbrand();
@@ -272,21 +296,6 @@ int ReRandomizeBootstrap()
     
     NSString* jbroot_path = [NSString stringWithFormat:@"/var/containers/Bundle/Application/.jbroot-%016llX", new_jbrand];
     NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", new_jbrand];
-
-    for(NSString* item in [fm contentsOfDirectoryAtPath:jbroot_path error:nil])
-    {
-        if([item isEqualToString:@"var"])
-            continue;
-
-        NSString* checkpath = [jbroot_secondary stringByAppendingPathComponent:item];
-        
-        struct stat st;
-        if(lstat(checkpath.fileSystemRepresentation, &st)==0) {
-            ASSERT([fm removeItemAtPath:checkpath error:nil]);
-        }
-        
-        ASSERT([fm createSymbolicLinkAtPath:checkpath withDestinationPath:[jbroot_path stringByAppendingPathComponent:item] error:nil]);
-    }
     
     ASSERT([fm removeItemAtPath:[jbroot_path stringByAppendingPathComponent:@"/private/var"] error:nil]);
     ASSERT([fm createSymbolicLinkAtPath:[jbroot_path stringByAppendingPathComponent:@"/private/var"]
@@ -307,6 +316,8 @@ int ReRandomizeBootstrap()
     ASSERT(startBootstrapServer() == 0);
     
     STRAPLOG("Status: Updating Symlinks");
+    ASSERT(fixBootstrapSymlink(@"/bin/sh") == 0);
+    ASSERT(fixBootstrapSymlink(@"/usr/bin/sh") == 0);
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
     
     return 0;
@@ -430,6 +441,29 @@ int bootstrap()
         ASSERT([fm removeItemAtPath:@"/var/jb" error:nil]);
     }
     
+    NSString* dirpath = @"/var/containers/Bundle/Application/";
+    NSArray *subItems = [fm contentsOfDirectoryAtPath:dirpath error:nil];
+    for (NSString *subItem in subItems)
+    {
+        if (!is_jbroot_name(subItem.UTF8String)) continue;
+        
+        NSString* jbroot_path = [dirpath stringByAppendingPathComponent:subItem];
+        
+        if([fm fileExistsAtPath:[jbroot_path stringByAppendingPathComponent:@"/.bootstrapped"]]
+           || [fm fileExistsAtPath:[jbroot_path stringByAppendingPathComponent:@"/.thebootstrapped"]]) {
+            continue;
+        }
+        
+        STRAPLOG("remove unknown/unfinished jbroot %@", subItem);
+
+        NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/%@", subItem];
+        if([fm fileExistsAtPath:jbroot_secondary]) {
+            ASSERT([fm removeItemAtPath:jbroot_secondary error:nil]);
+        }
+        
+        ASSERT([fm removeItemAtPath:jbroot_path error:nil]);
+    }
+    
     NSString* jbroot_path = find_jbroot(YES);
     
     if(!jbroot_path) {
@@ -441,25 +475,10 @@ int bootstrap()
         
         ASSERT(InstallBootstrap(jbroot_path) == 0);
         
-    } else if(![fm fileExistsAtPath:jbroot(@"/.bootstrapped")] && ![fm fileExistsAtPath:jbroot(@"/.thebootstrapped")]) {
-        STRAPLOG("remove unfinished bootstrap %@", jbroot_path);
-        
-        uint64_t prev_jbrand = jbrand();
-        
-        ASSERT([fm removeItemAtPath:jbroot_path error:nil]);
-        
-        NSString* jbroot_secondary = [NSString stringWithFormat:@"/var/mobile/Containers/Shared/AppGroup/.jbroot-%016llX", prev_jbrand];
-        if([fm fileExistsAtPath:jbroot_secondary]) {
-            STRAPLOG("remove unfinished bootstrap %@", jbroot_secondary);
-            ASSERT([fm removeItemAtPath:jbroot_secondary error:nil]);
-        }
-        
-        STRAPLOG("bootstrap @ %@", jbroot_path);
-        
-        ASSERT(InstallBootstrap(jbroot_path) == 0);
-        
     } else {
         STRAPLOG("device is strapped: %@", jbroot_path);
+        
+        ASSERT([fm fileExistsAtPath:jbroot(@"/.bootstrapped")] || [fm fileExistsAtPath:jbroot(@"/.thebootstrapped")]);
         
         if([fm fileExistsAtPath:jbroot(@"/.bootstrapped")]) //beta version to public version
             ASSERT([fm moveItemAtPath:jbroot(@"/.bootstrapped") toPath:jbroot(@"/.thebootstrapped") error:nil]);

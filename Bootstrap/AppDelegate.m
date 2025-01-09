@@ -51,25 +51,22 @@ MBProgressHUD *switchHud=nil;
     });
     
     dispatch_async(alertQueue, ^{
-        
-        __block UIViewController* availableVC=nil;
-        while(!availableVC) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        __block BOOL presenting = NO;
+        __block BOOL presented = NO;
+        while(!presenting) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
                 UIViewController* vc = UIApplication.sharedApplication.keyWindow.rootViewController;
                 while(vc.presentedViewController){
                     vc = vc.presentedViewController;
-                    if(vc.isBeingDismissed) return;
+                    if(vc.isBeingDismissed) {
+                        return;
+                    }
                 }
-                availableVC = vc;
+                presenting = YES;
+                [vc presentViewController:alert animated:YES completion:^{ presented=YES; }];
             });
-            if(!availableVC) usleep(1000*100);
+            if(!presenting) usleep(1000*100);
         }
-        
-        __block BOOL presented = NO;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [availableVC presentViewController:alert animated:YES completion:^{ presented=YES; }];
-        });
-        
         while(!presented) usleep(100*1000);
     });
 }

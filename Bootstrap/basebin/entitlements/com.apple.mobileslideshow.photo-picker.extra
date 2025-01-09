@@ -10,6 +10,8 @@
 	<true/>
 	<key>com.apple.private.security.no-sandbox</key>
 	<true/>
+	<key>uicache.data-container-required</key>
+	<true/>
 
 	<key>com.apple.security.exception.process-info</key>
 	<true/>
