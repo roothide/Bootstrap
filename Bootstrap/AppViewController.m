@@ -320,7 +320,7 @@ NSArray* unsupportedBundleIDs = @[
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
         
-        killAllForApp(app.bundleURL.path.UTF8String);
+        killAllForBundle(app.bundleURL.path.UTF8String);
         
         int status;
         NSString* log=nil;
@@ -335,7 +335,7 @@ NSArray* unsupportedBundleIDs = @[
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"error(%d)",status]];
         }
         
-        killAllForApp(app.bundleURL.path.UTF8String);
+        killAllForBundle(app.bundleURL.path.UTF8String);
         
         //refresh app cache list
         [self updateData:NO];

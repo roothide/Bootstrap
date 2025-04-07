@@ -29,8 +29,8 @@ void machoGetInfo(FILE* candidateFile, bool *isMachoOut, bool *isLibraryOut);
 
 BOOL isDefaultInstallationPath(NSString* _path);
 
-void killAllForApp(const char* bundlePath);
-
+void killAllForBundle(const char* bundlePath);
+void killAllForExecutable(const char* path);
 
 @interface _LSApplicationState : NSObject
 - (BOOL)isValid;

@@ -431,6 +431,21 @@ void fixBadPatchFiles()
     }
 }
 
+void removeUnexceptPreferences()
+{
+    BOOL reload = NO;
+    NSArray* files = @[@".GlobalPreferences.plist", @"kCFPreferencesAnyApplication.plist"];
+    for(NSString* item in files) {
+        NSString* path = [jbroot(@"/var/mobile/Library/Preferences") stringByAppendingPathComponent:item];
+        if([NSFileManager.defaultManager fileExistsAtPath:path]) {
+            [NSFileManager.defaultManager removeItemAtPath:path error:nil];
+            reload = YES;
+        }
+    }
+    if(reload) {
+        killAllForExecutable("/usr/sbin/cfprefsd");
+    }
+}
 
 int bootstrap()
 {
@@ -492,6 +507,7 @@ int bootstrap()
         
         ASSERT(ReRandomizeBootstrap() == 0);
         
+        removeUnexceptPreferences();
         fixMobileDirectories();
         fixBadPatchFiles();
     }
@@ -568,7 +584,7 @@ int unbootstrap()
         STRAPLOG("trollstore not found!");
     }
     
-    killAllForApp("/usr/libexec/backboardd");
+    killAllForExecutable("/usr/libexec/backboardd");
     
     return 0;
 }

@@ -215,7 +215,7 @@ void rebuildappsAction()
         NSString* err=nil;
         int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
         if(status==0) {
-            killAllForApp("/usr/libexec/backboardd");
+            killAllForExecutable("/usr/libexec/backboardd");
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
@@ -289,7 +289,7 @@ int rebuildIconCache()
 
     int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, &log, &err);
     if(status==0) {
-        killAllForApp("/usr/libexec/backboardd");
+        killAllForExecutable("/usr/libexec/backboardd");
     } else {
         STRAPLOG("rebuildapps failed:%@\nERR:\n%@",log,err);
     }
@@ -710,15 +710,22 @@ void hideAllCTBugApps()
 
 void unhideAllCTBugApps()
 {
-    NSString* log=nil;
-    NSString* err=nil;
-    int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-a",NULL}, &log, &err);
-    NSString* msg = (status==0) ? Localized(@"Done") : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
-    [AppDelegate showAlert:alert];
-    
-    [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.allctbugappshidden") error:nil];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [AppDelegate showHudMsg:Localized(@"Restore Jailbreak Apps...")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-a",NULL}, &log, &err);
+        
+        [AppDelegate dismissHud];
+        
+        NSString* msg = (status==0) ? Localized(@"Done") : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+        [AppDelegate showAlert:alert];
+        
+        [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.allctbugappshidden") error:nil];
+    });
 }
 
 BOOL isAllCTBugAppsHidden()

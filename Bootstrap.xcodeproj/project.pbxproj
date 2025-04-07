@@ -34,6 +34,8 @@
 		847099982B1D855E003FA4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099972B1D855E003FA4ED /* main.m */; };
 		847099A32B1D868F003FA4ED /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 847099A02B1D868F003FA4ED /* Makefile */; };
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
+		84A551A82DA47BCC0015CE66 /* roothideapp.deb in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A551A72DA47BCC0015CE66 /* roothideapp.deb */; };
+		84A551A92DA47BD00015CE66 /* roothideapp.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84A551A72DA47BCC0015CE66 /* roothideapp.deb */; };
 		D694DE962B8504B80025DC7F /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694DE952B8504B80025DC7F /* Haptic++.swift */; };
 		FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AB2B41BC3D00B94787 /* CreditsView.swift */; };
 		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
@@ -121,6 +123,7 @@
 		8470999F2B1D868F003FA4ED /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
+		84A551A72DA47BCC0015CE66 /* roothideapp.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = roothideapp.deb; sourceTree = "<group>"; };
 		8595F05E2B578D9900681FC6 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D694DE952B8504B80025DC7F /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
 		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 				84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */,
 				FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */,
 				84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */,
+				84A551A82DA47BCC0015CE66 /* roothideapp.deb in Frameworks */,
 				84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */,
 				84438D502B260F8200A1E407 /* libzstd in Frameworks */,
 			);
@@ -167,6 +171,7 @@
 				84438D432B26090D00A1E407 /* sileo.deb */,
 				84438D442B26090D00A1E407 /* tar */,
 				84438D462B26090D00A1E407 /* zebra.deb */,
+				84A551A72DA47BCC0015CE66 /* roothideapp.deb */,
 				8470999E2B1D868F003FA4ED /* control */,
 				8470999F2B1D868F003FA4ED /* entitlements.plist */,
 				847099A02B1D868F003FA4ED /* Makefile */,
@@ -344,6 +349,7 @@
 				84438D592B261FBA00A1E407 /* basebin in Resources */,
 				84438D472B26090D00A1E407 /* sileo.deb in Resources */,
 				84438D4A2B26090D00A1E407 /* zebra.deb in Resources */,
+				84A551A92DA47BD00015CE66 /* roothideapp.deb in Resources */,
 				84364F472B3C5D4600E90B58 /* libkrw0-dummy.deb in Resources */,
 				843E87572B56E45300CB45C4 /* Localizable.strings in Resources */,
 				84438D482B26090D00A1E407 /* tar in Resources */,
@@ -571,7 +577,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "1.4-beta1";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = "1.4-beta2";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -609,7 +619,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "1.4-beta1";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = "1.4-beta2";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";

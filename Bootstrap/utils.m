@@ -1,4 +1,5 @@
 #include <spawn.h>
+#include <sys/stat.h>
 #include <sys/sysctl.h>
 #include <mach-o/fat.h>
 #include <mach-o/loader.h>
@@ -378,22 +379,22 @@ BOOL isDefaultInstallationPath(NSString* _path)
     return YES;
 }
 
-void killAllForApp(const char* bundlePath)
+int proc_pidpath(int pid, void * buffer, uint32_t  buffersize);
+
+void killAllForBundle(const char* bundlePath)
 {
-    SYSLOG("killBundleForPath: %s", bundlePath);
+    SYSLOG("killAllForBundle: %s", bundlePath);
     
-    char realBundlePath[PATH_MAX];
+    char realBundlePath[PATH_MAX+1];
     if(!realpath(bundlePath, realBundlePath))
         return;
     
-    static int maxArgumentSize = 0;
-    if (maxArgumentSize == 0) {
-        size_t size = sizeof(maxArgumentSize);
-        if (sysctl((int[]){ CTL_KERN, KERN_ARGMAX }, 2, &maxArgumentSize, &size, NULL, 0) == -1) {
-            perror("sysctl argument size");
-            maxArgumentSize = 4096; // Default
-        }
+    size_t realBundlePathLen = strlen(realBundlePath);
+    if(realBundlePath[realBundlePathLen] != '/') {
+        strcat(realBundlePath, "/");
+        realBundlePathLen++;
     }
+
     int mib[3] = { CTL_KERN, KERN_PROC, KERN_PROC_ALL};
     struct kinfo_proc *info;
     size_t length;
@@ -413,22 +414,60 @@ void killAllForApp(const char* bundlePath)
         if (pid == 0) {
             continue;
         }
-        size_t size = maxArgumentSize;
-        char* buffer = (char *)malloc(length);
-        if (sysctl((int[]){ CTL_KERN, KERN_PROCARGS2, pid }, 3, buffer, &size, NULL, 0) == 0) {
-            char *executablePath = buffer + sizeof(int);
-            //SYSLOG("executablePath [%d] %s", pid, executablePath);
+        
+        char executablePath[PATH_MAX];
+        if(proc_pidpath(pid, executablePath, sizeof(executablePath)) > 0) {
             char realExecutablePath[PATH_MAX];
             if (realpath(executablePath, realExecutablePath)
-                && strncmp(realExecutablePath, realBundlePath, strlen(realBundlePath)) == 0) {
-                kill(pid, SIGKILL);
+                && strncmp(realExecutablePath, realBundlePath, realBundlePathLen) == 0) {
+                int ret = kill(pid, SIGKILL);
+                SYSLOG("killAllForBundle %s -> %d", realExecutablePath, ret);
             }
         }
-        free(buffer);
     }
     free(info);
 }
 
+void killAllForExecutable(const char* path)
+{
+    SYSLOG("killallForExecutable %s, %d", path);
+    
+    struct stat st;
+    if(stat(path, &st) < 0) return;
+
+    int mib[3] = { CTL_KERN, KERN_PROC, KERN_PROC_ALL};
+    struct kinfo_proc *info;
+    size_t length;
+    size_t count;
+    
+    if (sysctl(mib, 3, NULL, &length, NULL, 0) < 0)
+        return;
+    if (!(info = malloc(length)))
+        return;
+    if (sysctl(mib, 3, info, &length, NULL, 0) < 0) {
+        free(info);
+        return;
+    }
+    count = length / sizeof(struct kinfo_proc);
+    for (int i = 0; i < count; i++) {
+        pid_t pid = info[i].kp_proc.p_pid;
+        if (pid == 0) {
+            continue;
+        }
+        
+        char procpath[PATH_MAX];
+        if(proc_pidpath(pid, procpath, sizeof(procpath)) > 0) {
+            struct stat st2;
+            if(stat(procpath, &st2) == 0) {
+                if(st.st_ino==st2.st_ino && st.st_dev==st2.st_dev) {
+                    int ret = kill(pid, SIGKILL);
+                    //SYSLOG("killAllForExecutable(%d) %s -> %d", signal, path, ret);
+                }
+            }
+        }
+    }
+    free(info);
+}
 
 NSString* getBootSession()
 {
