@@ -143,6 +143,15 @@ void initFromSwiftUI()
     {
         if(checkServer()) {
             [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
+            
+            if(isAllCTBugAppsHidden()) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Jailbreak Apps is Hidden") message:Localized(@"Do you want to restore them now?") preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:Localized(@"NO") style:UIAlertActionStyleCancel handler:nil]];
+                [alert addAction:[UIAlertAction actionWithTitle:Localized(@"YES") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    unhideAllCTBugApps();
+                }]];
+                [AppDelegate showAlert:alert];
+            }
         }
 
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
@@ -598,4 +607,126 @@ void resetMobilePassword()
 
     }]];
     [AppDelegate showAlert:alert];
+}
+
+void hideAllCTBugApps()
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"This operation will make all apps installed via TrollStore/Bootstrap disappear from the Home Screen. You can restore them later via TrollStore Helper->[Refresh App Registrations] and Bootstrap->Settings->[Unhide Jailbreak Apps]") preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Hide") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [AppDelegate showHudMsg:Localized(@"Hiding All Jailbreak/TrollStore Apps...")];
+            
+            NSArray* allInstalledApplications = [LSApplicationWorkspace.defaultWorkspace allInstalledApplications];
+            
+            BOOL TSHelperFound = NO;
+            for(LSApplicationProxy* proxy in allInstalledApplications) {
+                NSString* TSHelperMarker = [proxy.bundleURL.path stringByAppendingPathComponent:@".TrollStorePersistenceHelper"];
+                if([NSFileManager.defaultManager fileExistsAtPath:TSHelperMarker]) {
+                    TSHelperFound = YES;
+                    break;
+                }
+            }
+            
+            if(!TSHelperFound) {
+                [AppDelegate dismissHud];
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"You haven't installed TrollStore Helper yet, please install it in TrollStore->Settings first.") preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+                [AppDelegate showAlert:alert];
+                
+                return;
+            }
+            
+            for(LSApplicationProxy* proxy in allInstalledApplications)
+            {
+                if([NSFileManager.defaultManager fileExistsAtPath:[proxy.bundleURL.path stringByAppendingString:@"/../_TrollStore"]])
+                {
+                    if([proxy.bundleIdentifier isEqualToString:NSBundle.mainBundle.bundleIdentifier]) {
+                        continue;
+                    }
+                    
+                    NSString* log=nil;
+                    NSString* err=nil;
+                    int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-u",rootfsPrefix(proxy.bundleURL.path).fileSystemRepresentation,NULL}, &log, &err);
+                    if(status != 0) {
+                        [AppDelegate dismissHud];
+                        
+                        NSString* msg = [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+                        [AppDelegate showAlert:alert];
+                        
+                        return;
+                    }
+                }
+            }
+            
+            for(NSString* bundle in [NSFileManager.defaultManager directoryContentsAtPath:jbroot(@"/Applications")])
+            {
+                NSString* bundlePath = [@"/Applications" stringByAppendingPathComponent:bundle];
+                NSDictionary* appInfo = [NSDictionary dictionaryWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"Info.plist"]];
+                
+                if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] && [NSFileManager.defaultManager fileExistsAtPath:bundlePath]) {
+                    continue;
+                }
+                
+                NSString* log=nil;
+                NSString* err=nil;
+                int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-u",bundlePath.fileSystemRepresentation,NULL}, &log, &err);
+                if(status != 0) {
+                    [AppDelegate dismissHud];
+                    
+                    NSString* msg = [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+                    [AppDelegate showAlert:alert];
+                    
+                    return;
+                }
+            }
+
+            [AppDelegate dismissHud];
+            
+            [[NSString stringWithFormat:@"%llX",jbrand()] writeToFile:jbroot(@"/var/mobile/.allctbugappshidden") atomically:YES encoding:NSUTF8StringEncoding error:nil];
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-u",rootfsPrefix(NSBundle.mainBundle.bundlePath).fileSystemRepresentation,NULL}, &log, &err);
+            if(status != 0) {
+                NSString* msg = [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+                [AppDelegate showAlert:alert];
+            } else {
+                exit(0);
+            }
+        });
+
+    }]];
+    [AppDelegate showAlert:alert];
+}
+
+void unhideAllCTBugApps()
+{
+    NSString* log=nil;
+    NSString* err=nil;
+    int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-a",NULL}, &log, &err);
+    NSString* msg = (status==0) ? Localized(@"Done") : [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+    [AppDelegate showAlert:alert];
+    
+    [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.allctbugappshidden") error:nil];
+}
+
+BOOL isAllCTBugAppsHidden()
+{
+    if(!isBootstrapInstalled() || !isSystemBootstrapped()) {
+        return NO;
+    }
+    
+    NSString* flag = [NSString stringWithContentsOfFile:jbroot(@"/var/mobile/.allctbugappshidden") encoding:NSUTF8StringEncoding error:nil];
+    return flag && [flag isEqualToString:[NSString stringWithFormat:@"%llX",jbrand()]];
 }

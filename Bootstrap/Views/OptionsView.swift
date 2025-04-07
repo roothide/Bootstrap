@@ -19,6 +19,7 @@ struct OptionsView: View {
     @Binding var tweakEnable: Bool
     @StateObject var allowURLSchemes = toggleState(state: isBootstrapInstalled() && FileManager.default.fileExists(atPath: jbroot("/var/mobile/.allow_url_schemes")))
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
+    @StateObject var allCTBugAppsHidden = toggleState(state: isAllCTBugAppsHidden())
     
     @Binding var colorScheme: Int
     
@@ -162,6 +163,32 @@ struct OptionsView: View {
                                 } label: {
                                     Label(
                                         title: { Text("Rebuild Icon Cache") },
+                                        icon: { Image(systemName: "arrow.clockwise") }
+                                    )
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .frame(width: 250)
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray, lineWidth: 1)
+                                        .opacity(0.3)
+                                )
+                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                                
+                                Button {
+                                    Haptic.shared.play(.light)
+                                    if isAllCTBugAppsHidden() {
+                                        unhideAllCTBugApps()
+                                    } else {
+                                        hideAllCTBugApps()
+                                    }
+                                    allCTBugAppsHidden.state = isAllCTBugAppsHidden()
+                                } label: {
+                                    Label(
+                                        title: { Text( allCTBugAppsHidden.state && isAllCTBugAppsHidden() ? "Unhide Jailbreak Apps" : "Hide All JB/TS Apps") },
                                         icon: { Image(systemName: "arrow.clockwise") }
                                     )
                                     .frame(maxWidth: .infinity)

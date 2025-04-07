@@ -7,16 +7,6 @@
 #include "AppDelegate.h"
 #include <sys/stat.h>
 
-@interface PrivateApi_LSApplicationWorkspace
-- (NSArray*)allInstalledApplications;
-- (BOOL)openApplicationWithBundleID:(id)arg1;
-- (NSArray*)privateURLSchemes;
-- (NSArray*)publicURLSchemes;
-- (BOOL)_LSPrivateRebuildApplicationDatabasesForSystemApps:(BOOL)arg1
-                                                  internal:(BOOL)arg2
-                                                      user:(BOOL)arg3;
-@end
-
 @interface AppViewController () {
     UISearchController *searchController;
     NSArray *appsArray;
@@ -149,8 +139,7 @@
 
 - (void)updateData:(BOOL)sort {
     NSMutableArray* applications = [NSMutableArray new];
-    PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];
-    NSArray* allInstalledApplications = [_workspace allInstalledApplications];
+    NSArray* allInstalledApplications = [LSApplicationWorkspace.defaultWorkspace allInstalledApplications];
 
     for(id proxy in allInstalledApplications)
     {
@@ -366,8 +355,7 @@ NSArray* unsupportedBundleIDs = @[
         AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
 
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            PrivateApi_LSApplicationWorkspace* _workspace = [NSClassFromString(@"LSApplicationWorkspace") new];
-            [_workspace openApplicationWithBundleID:app.bundleIdentifier];
+            [LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:app.bundleIdentifier];
         });
     }
 }

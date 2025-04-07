@@ -206,6 +206,10 @@ int enableForApp(NSString* bundlePath)
         NSString* err=nil;
         if(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", bundlePath.UTF8String, NULL}, &log, &err) != 0) {
             STRAPLOG("%@\nERR:%@", log, err);
+            AppInfo* app = [AppInfo appWithBundleIdentifier:appInfo[@"CFBundleIdentifier"]];
+            if(app && [app.bundleURL.path hasPrefix:@"/Applications/"]) {
+                ASSERT([fm removeItemAtPath:bundlePath error:nil]);
+            }
             ABORT();
         }
     }

@@ -236,6 +236,10 @@ int InstallBootstrap(NSString* jbroot_path)
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
     ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, nil, nil) == 0);
     
+    NSString* roothideappDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"roothideapp.deb"];
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(roothideappDeb).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/RootHide.app", NULL}, nil, nil) == 0);
+    
     ASSERT([[NSString stringWithFormat:@"%d",BOOTSTRAP_VERSION] writeToFile:jbroot(@"/.thebootstrapped") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     ASSERT([fm copyItemAtPath:jbroot(@"/.thebootstrapped") toPath:[jbroot_secondary stringByAppendingPathComponent:@".thebootstrapped"] error:nil]);
     
@@ -261,9 +265,10 @@ int fixBootstrapSymlink(NSString* path)
         return 0;
     }
 
+    //stringByStandardizingPath won't remove /private/ prefix if the path does not exist on disk
     NSString* _link = @(link).stringByStandardizingPath.stringByResolvingSymlinksInPath;
     
-    NSString *pattern = @"^/var/containers/Bundle/Application/\\.jbroot-[0-9A-Z]{16}(/.+)$";
+    NSString *pattern = @"^(?:/private)?/var/containers/Bundle/Application/\\.jbroot-[0-9A-Z]{16}(/.+)$";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
     NSTextCheckingResult *match = [regex firstMatchInString:_link options:0 range:NSMakeRange(0, [_link length])];
     ASSERT(match != nil);
