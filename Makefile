@@ -1,7 +1,7 @@
 ARCHS = arm64
-TARGET = iphone:latest:15.0
+TARGET = iphone:latest:18.5
 DEB_ARCH = iphoneos-arm64e
-IPHONEOS_DEPLOYMENT_TARGET = 15.0
+IPHONEOS_DEPLOYMENT_TARGET = 18.5
 
 INSTALL_TARGET_PROCESSES = Bootstrap
 
@@ -42,3 +42,4 @@ before-package::
 
 after-install::
 	install.exec 'uiopen -b com.roothide.Bootstrap'
+instal sileo and cydia
