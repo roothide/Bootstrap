@@ -67,6 +67,7 @@ void killAllForExecutable(const char* path);
 
 @interface LSApplicationWorkspace : NSObject
 + (id)defaultWorkspace;
+- (BOOL)unregisterApplication:(NSURL *)url;
 - (BOOL)openApplicationWithBundleID:(id)arg1;
 - (NSArray<LSApplicationProxy*>*)allApplications;
 - (NSArray<LSApplicationProxy*>*)allInstalledApplications;

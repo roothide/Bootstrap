@@ -185,7 +185,6 @@ struct OptionsView: View {
                                     } else {
                                         hideAllCTBugApps()
                                     }
-                                    allCTBugAppsHidden.state = isAllCTBugAppsHidden()
                                 } label: {
                                     Label(
                                         title: { Text( allCTBugAppsHidden.state && isAllCTBugAppsHidden() ? "Unhide Jailbreak Apps" : "Hide All JB/TS Apps") },
@@ -194,6 +193,11 @@ struct OptionsView: View {
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
                                     .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                }
+                                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("unhideAllCTBugAppsNotification"))) { obj in
+                                    DispatchQueue.main.async {
+                                        allCTBugAppsHidden.state = isAllCTBugAppsHidden()
+                                    }
                                 }
                                 .frame(width: 250)
                                 .background(Color.clear)

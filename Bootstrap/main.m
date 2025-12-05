@@ -26,6 +26,9 @@ int main(int argc, char * argv[]) {
             } else if(strcmp(argv[1], "rebuildiconcache")==0) {
                 int rebuildIconCache();
                 exit(rebuildIconCache());
+            } else if(strcmp(argv[1], "hidebootstrapapp")==0) {
+                int hideBootstrapApp(BOOL usreboot);
+                exit(hideBootstrapApp(argc==3 && strcmp(argv[2],"usreboot")==0));
             } else if(strcmp(argv[1], "reboot")==0) {
                 sync();
                 sleep(1);

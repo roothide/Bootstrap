@@ -33,17 +33,17 @@ Suites: iphoneos-arm64e/%d\n\
 Components: main\n\
 "
 
-#define ALT_SOURCES "\
-Types: deb\n\
-URIs: https://iosjb.top/\n\
-Suites: ./\n\
-Components:\n\
-\n\
-Types: deb\n\
-URIs: https://iosjb.top/procursus\n\
-Suites: iphoneos-arm64e/%d\n\
-Components: main\n\
-"
+//#define ALT_SOURCES "\
+//Types: deb\n\
+//URIs: https://iosjb.top/\n\
+//Suites: ./\n\
+//Components:\n\
+//\n\
+//Types: deb\n\
+//URIs: https://iosjb.top/procursus\n\
+//Suites: iphoneos-arm64e/%d\n\
+//Components: main\n\
+//"
 
 #define ZEBRA_SOURCES "\
 # Zebra Sources List\n\

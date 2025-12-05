@@ -72,10 +72,11 @@ MBProgressHUD *switchHud=nil;
 }
 
 + (void)showMesage:(NSString*)msg title:(NSString*)title {
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
-    [self showAlert:alert];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert]; //may crash if on non-main thread
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+        [self showAlert:alert];
+    });
 }
 
 
