@@ -91,6 +91,9 @@ int backupApp(NSString* bundlePath)
         ASSERT([fm removeItemAtPath:backup error:nil]);
     }
     
+    NSDictionary* appInfo = [NSDictionary dictionaryWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"Info.plist"]];
+    BOOL encryptedApp = [[NSFileManager defaultManager] fileExistsAtPath:[bundlePath stringByAppendingPathComponent:@"SC_Info"]];
+    
     NSString *resolvedPath = [[bundlePath stringByResolvingSymlinksInPath] stringByStandardizingPath];
     NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 errorHandler:nil];
 
@@ -100,13 +103,24 @@ int backupApp(NSString* bundlePath)
         ASSERT([enumURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil] && isFile!=nil);
         if (![isFile boolValue]) continue;
         
-        FILE *fp = fopen(enumURL.fileSystemRepresentation, "rb");
-        ASSERT(fp != NULL);
+        BOOL copy = NO;
         
-        bool ismacho=false, islib=false;
-        machoGetInfo(fp, &ismacho, &islib);
+        if([appBackupFileNames containsObject:enumURL.path.lastPathComponent]) {
+            copy = YES;
+        }
+        else if(encryptedApp) {
+            if([appInfo[@"CFBundleExecutable"] isEqualToString:enumURL.path.lastPathComponent]) {
+                copy = YES;
+            }
+        }
+        else {
+            bool ismacho=false, islib=false;
+            ASSERT(machoGetInfo(enumURL.fileSystemRepresentation, &ismacho, &islib));
+            if(ismacho) {
+                copy = YES;
+            }
+        }
         
-        fclose(fp);
         
         //bundlePath should be a real-path
         NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:bundlePath], YES);
@@ -115,7 +129,7 @@ int backupApp(NSString* bundlePath)
         if(![fm fileExistsAtPath:backupPath.stringByDeletingLastPathComponent])
             ASSERT([fm createDirectoryAtPath:backupPath.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil]);
         
-        if(ismacho || [appBackupFileNames containsObject:enumURL.path.lastPathComponent])
+        if(copy)
         {
             NSError* err=nil;
             ASSERT([fm copyItemAtPath:enumURL.path toPath:backupPath error:&err]);
@@ -213,9 +227,7 @@ int enableForApp(NSString* bundlePath)
             ABORT();
         }
     }
-    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStoreLite"]])
+    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
     {
         ASSERT(backupApp(bundlePath) == 0);
 
@@ -261,9 +273,7 @@ int disableForApp(NSString* bundlePath)
         NSString* sysPath = [@"/Applications/" stringByAppendingString:bundlePath.lastPathComponent];
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).UTF8String, NULL}, nil, nil) == 0);
     }
-    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStore"]]
-            || [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingString:@"/../_TrollStoreLite"]])
+    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
     {
         
         struct stat st;

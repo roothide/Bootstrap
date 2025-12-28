@@ -25,20 +25,17 @@ void rebuildSignature(NSString *directoryPath)
     
     NSString* ldidPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/ldid"];
     NSString* fastSignPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/fastPathSign"];
-    NSString* entitlementsPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/nickchan.entitlements"];
+    NSString* entitlementsPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/entitlements/nickchan.entitlements"];
     NSString* ldidEntitlements = [NSString stringWithFormat:@"-S%@", entitlementsPath];
     
     for (NSURL *enumURL in directoryEnumerator) {
         @autoreleasepool {
-            NSNumber *isSymlink;
-            [enumURL getResourceValue:&isSymlink forKey:NSURLIsSymbolicLinkKey error:nil];
-            if (isSymlink && ![isSymlink boolValue]) {
-                
-                FILE *fp = fopen(enumURL.fileSystemRepresentation, "rb");
-                ASSERT(fp != NULL);
-                
+            NSNumber* isFile=nil;
+            [enumURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil];
+            if (isFile && [isFile boolValue]) {
+
                 bool ismacho=false, islib=false;
-                machoGetInfo(fp, &ismacho, &islib);
+                ASSERT(machoGetInfo(enumURL.fileSystemRepresentation, &ismacho, &islib));
                 
                 if(ismacho) {
                     
@@ -53,9 +50,6 @@ void rebuildSignature(NSString *directoryPath)
                     
                     ASSERT(spawnRoot(fastSignPath, @[enumURL.path], nil, nil) == 0);
                 }
-                
-                fclose(fp);
-
             }
         }
     }
@@ -121,7 +115,7 @@ int rebuildBasebin()
     ASSERT([fm copyItemAtPath:basebinPath toPath:jbroot(@"/basebin") error:nil]);
     
     unlink(jbroot(@"/basebin/.jbroot").fileSystemRepresentation);
-    ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/basebin/.jbroot") withDestinationPath:jbroot(@"/") error:nil]);
+    ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/basebin/.jbroot") withDestinationPath:@"../.jbroot" error:nil]); //use a relative path so libvroot won't remove it
     
     return 0;
 }
@@ -140,7 +134,7 @@ int startBootstrapServer()
     
     sleep(1);
     
-     status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], &log, &err);
+     status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"check"], &log, &err);
     if(status != 0) {
         STRAPLOG("bootstrap server check faild(%d):\n%@\nERR:%@", status, log, err);
         ABORT();
@@ -518,7 +512,7 @@ int bootstrap()
     
     NSString* log=nil;
     NSString* err=nil;
-    if(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, &log, &err) != 0) {
+    if(spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err) != 0) {
         STRAPLOG("%@\nERR:%@", log, err);
         ABORT();
     }
@@ -536,7 +530,7 @@ int unbootstrap()
     STRAPLOG("unbootstrap...");
     
     //try
-    spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"stop"], nil, nil);
+    spawnRoot(jbroot(@"/basebin/bsctl"), @[@"stop"], nil, nil);
     
     //jbroot unavailable now
     

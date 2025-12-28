@@ -121,7 +121,7 @@
         return YES;
     }
     
-    if(!isDefaultInstallationPath(app.bundleURL.path)) {
+    if(!isDefaultInstallationPath(app.bundleURL.path.fileSystemRepresentation)) {
         return NO;
     }
     
@@ -147,7 +147,7 @@
     
 //        if(app.isHiddenApp) continue;
                 
-        if(![app.bundleURL.path hasPrefix:@"/Applications/"] && !isDefaultInstallationPath(app.bundleURL.path)) {
+        if(![app.bundleURL.path hasPrefix:@"/Applications/"] && !isDefaultInstallationPath(app.bundleURL.path.fileSystemRepresentation)) {
             //sysapp installed as jailbreak apps
             NSString* sysPath = [@"/Applications/" stringByAppendingPathComponent:app.bundleURL.path.lastPathComponent];
             if(![NSFileManager.defaultManager fileExistsAtPath:sysPath])

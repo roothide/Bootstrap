@@ -21,7 +21,6 @@
 		84438D5D2B264A2800A1E407 /* NSUserDefaults+appDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D5C2B264A2800A1E407 /* NSUserDefaults+appDefaults.m */; };
 		84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D5F2B26546E00A1E407 /* MobileCoreServices.framework */; };
 		84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84438D612B2654EB00A1E407 /* MobileContainerManager.framework */; };
-		84438D652B27522400A1E407 /* envbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 84438D642B27522400A1E407 /* envbuf.c */; };
 		84438D6C2B2CDE0100A1E407 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D682B2CDE0100A1E407 /* AppInfo.m */; };
 		84438D6D2B2CDE0100A1E407 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6B2B2CDE0100A1E407 /* AppViewController.m */; };
 		84438D6F2B2CE5A300A1E407 /* AppEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438D6E2B2CE5A300A1E407 /* AppEnabler.m */; };
@@ -36,6 +35,10 @@
 		847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 847099A42B1D9686003FA4ED /* Bootstrap.m */; };
 		84A551A82DA47BCC0015CE66 /* roothideapp.deb in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A551A72DA47BCC0015CE66 /* roothideapp.deb */; };
 		84A551A92DA47BD00015CE66 /* roothideapp.deb in Resources */ = {isa = PBXBuildFile; fileRef = 84A551A72DA47BCC0015CE66 /* roothideapp.deb */; };
+		84C3ECC02EFE72D300D1DC78 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C3ECBF2EFE72D300D1DC78 /* libcommon.a */; };
+		84C3ECC22F01A2BA00D1DC78 /* prepare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C3ECC12F01A2BA00D1DC78 /* prepare.a */; };
+		84C3ECC42F01A30900D1DC78 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C3ECC32F01A30900D1DC78 /* IOKit.framework */; };
+		84C3ECC62F01A3A000D1DC78 /* libarchive.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C3ECC52F01A3A000D1DC78 /* libarchive.2.tbd */; };
 		D694DE962B8504B80025DC7F /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694DE952B8504B80025DC7F /* Haptic++.swift */; };
 		FE0633AC2B41BC3D00B94787 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AB2B41BC3D00B94787 /* CreditsView.swift */; };
 		FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0633AD2B41BCD900B94787 /* OptionsView.swift */; };
@@ -83,8 +86,6 @@
 		84438D5C2B264A2800A1E407 /* NSUserDefaults+appDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+appDefaults.m"; sourceTree = "<group>"; };
 		84438D5F2B26546E00A1E407 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		84438D612B2654EB00A1E407 /* MobileContainerManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileContainerManager.framework; path = Bootstrap/Frameworks/MobileContainerManager.framework; sourceTree = "<group>"; };
-		84438D632B27522400A1E407 /* envbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envbuf.h; sourceTree = "<group>"; };
-		84438D642B27522400A1E407 /* envbuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = envbuf.c; sourceTree = "<group>"; };
 		84438D682B2CDE0100A1E407 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
 		84438D692B2CDE0100A1E407 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		84438D6A2B2CDE0100A1E407 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
@@ -124,6 +125,10 @@
 		847099A02B1D868F003FA4ED /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		847099A42B1D9686003FA4ED /* Bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bootstrap.m; sourceTree = "<group>"; };
 		84A551A72DA47BCC0015CE66 /* roothideapp.deb */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = roothideapp.deb; sourceTree = "<group>"; };
+		84C3ECBF2EFE72D300D1DC78 /* libcommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcommon.a; path = basebin/common/lib/libcommon.a; sourceTree = "<group>"; };
+		84C3ECC12F01A2BA00D1DC78 /* prepare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = prepare.a; path = basebin/common/lib/prepare.a; sourceTree = "<group>"; };
+		84C3ECC32F01A30900D1DC78 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		84C3ECC52F01A3A000D1DC78 /* libarchive.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libarchive.2.tbd; path = usr/lib/libarchive.2.tbd; sourceTree = SDKROOT; };
 		8595F05E2B578D9900681FC6 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D694DE952B8504B80025DC7F /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
 		FE0633AB2B41BC3D00B94787 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
@@ -141,12 +146,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C3ECC62F01A3A000D1DC78 /* libarchive.2.tbd in Frameworks */,
+				84C3ECC42F01A30900D1DC78 /* IOKit.framework in Frameworks */,
 				84364F3D2B323FB600E90B58 /* MBProgressHUD.framework in Frameworks */,
 				FE895FF12B418FDC00A16882 /* FluidGradient in Frameworks */,
 				84438D622B2654EB00A1E407 /* MobileContainerManager.framework in Frameworks */,
 				84A551A82DA47BCC0015CE66 /* roothideapp.deb in Frameworks */,
 				84438D602B26546E00A1E407 /* MobileCoreServices.framework in Frameworks */,
 				84438D502B260F8200A1E407 /* libzstd in Frameworks */,
+				84C3ECC02EFE72D300D1DC78 /* libcommon.a in Frameworks */,
+				84C3ECC22F01A2BA00D1DC78 /* prepare.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +165,10 @@
 		84438D5E2B26546E00A1E407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84C3ECC52F01A3A000D1DC78 /* libarchive.2.tbd */,
+				84C3ECC32F01A30900D1DC78 /* IOKit.framework */,
+				84C3ECC12F01A2BA00D1DC78 /* prepare.a */,
+				84C3ECBF2EFE72D300D1DC78 /* libcommon.a */,
 				84364F3B2B323CE300E90B58 /* MBProgressHUD.framework */,
 				84438D612B2654EB00A1E407 /* MobileContainerManager.framework */,
 				84438D5F2B26546E00A1E407 /* MobileCoreServices.framework */,
@@ -219,8 +232,6 @@
 				84364F412B337BC000E90B58 /* bootstrap.h */,
 				847099A42B1D9686003FA4ED /* Bootstrap.m */,
 				84438D6E2B2CE5A300A1E407 /* AppEnabler.m */,
-				84438D632B27522400A1E407 /* envbuf.h */,
-				84438D642B27522400A1E407 /* envbuf.c */,
 				84438D4D2B2609C600A1E407 /* utils.h */,
 				84438D4B2B2609B200A1E407 /* utils.m */,
 				84364F382B2E53BA00E90B58 /* seh.h */,
@@ -373,7 +384,6 @@
 				FE0633AE2B41BCD900B94787 /* OptionsView.swift in Sources */,
 				FE84597B2B44508300DCB44E /* AppViewControllerWrapper.swift in Sources */,
 				847099A52B1D9686003FA4ED /* Bootstrap.m in Sources */,
-				84438D652B27522400A1E407 /* envbuf.c in Sources */,
 				FE895FEC2B418FC800A16882 /* VisualEffectView.swift in Sources */,
 				FE895FED2B418FC800A16882 /* Log.swift in Sources */,
 				84438D4C2B2609B200A1E407 /* utils.m in Sources */,
@@ -557,9 +567,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 49LJ27SG38;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Bootstrap/Frameworks",
@@ -580,16 +591,19 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/basebin/common/lib",
 				);
-				MARKETING_VERSION = "1.4";
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bootstrap/Bootstrap-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/basebin/common\"";
 			};
 			name = Debug;
 		};
@@ -599,9 +613,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 49LJ27SG38;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Bootstrap/Frameworks",
@@ -622,15 +637,18 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/basebin/common/lib",
 				);
-				MARKETING_VERSION = "1.4";
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bootstrap/Bootstrap-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/basebin/common\"";
 			};
 			name = Release;
 		};

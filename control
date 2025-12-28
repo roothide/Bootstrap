@@ -1,4 +1,4 @@
-Package: com.roothide.bootstrap
+Package: com.roothide.bootstrap.bootstrap-app
 Name: RootHide Bootstrap
 Version: 0.1
 Architecture: iphoneos-arm64e

@@ -51,6 +51,20 @@
 
     <key>com.apple.lsapplicationworkspace.rebuildappdatabases</key>
     <true/>
+
+	<!-- TaskPortHaxx prepare -->
+	<key>com.apple.security.iokit-user-client-class</key>
+	<array>
+		<string>AppleMobileFileIntegrityUserClient</string>
+	</array>
+	<key>com.apple.private.amfi.can-load-trust-cache</key>
+	<true/>
+	<key>com.apple.private.pmap.load-trust-cache</key>
+	<array>
+		<string>global.pdi</string>
+		<string>personalized.pdi</string>
+		<string>personalized.ddi</string>
+	</array>
     
 </dict>
 </plist>

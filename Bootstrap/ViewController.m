@@ -3,12 +3,13 @@
 #include "bootstrap.h"
 #include "AppInfo.h"
 #include "AppDelegate.h"
-#import "ViewController.h"
+#include "ViewController.h"
 #include "AppViewController.h"
 #include "NSUserDefaults+appDefaults.h"
-#import "Bootstrap-Swift.h"
-#import <sys/sysctl.h>
+#include "Bootstrap-Swift.h"
+#include <sys/stat.h>
 #include <sys/mount.h>
+#include <sys/sysctl.h>
 #include <sys/utsname.h>
 
 #include <Security/SecKey.h>
@@ -52,8 +53,8 @@ BOOL updateOpensshStatus(BOOL notify)
 {
     BOOL status;
     
-    if(isSystemBootstrapped() && spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil)==0) {
-        status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"check"], nil, nil)==0;
+    if(isSystemBootstrapped() && spawnRoot(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil)==0) {
+        status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",@"check"], nil, nil)==0;
     } else {
         status = [NSUserDefaults.appDefaults boolForKey:@"openssh"];
     }
@@ -77,11 +78,15 @@ void checkAppsHidden()
 
 void tryLoadOpenSSH()
 {
+//    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+//        return;
+//    }
+    
     if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")])
     {
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",@"start"], &log, &err);
+        int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",@"start"], &log, &err);
         if(status==0)
             [AppDelegate addLogText:Localized(@"openssh launch successful")];
         else
@@ -96,7 +101,7 @@ BOOL checkServer()
 
     BOOL ret=NO;
 
-    if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"check"], nil, nil) != 0)
+    if(spawnRoot(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil) != 0)
     {
         ret = NO;
         alerted = true;
@@ -132,7 +137,11 @@ int proc_pidpath(pid_t pid, void *buffer, uint32_t buffersize);
 NSString* getLaunchdPath()
 {
     char pathbuf[PROC_PIDPATHINFO_MAXSIZE] = {0};
-    ASSERT(proc_pidpath(1, pathbuf, sizeof(pathbuf)) > 0);
+    int ret = proc_pidpath(1, pathbuf, sizeof(pathbuf));
+    if(ret <= 0) {
+        SYSLOG("proc_pidpath failed: %d:%d,%s", ret, errno, strerror(errno));
+        return nil;
+    }
     return @(pathbuf);
 }
 
@@ -234,7 +243,7 @@ void rebuildappsAction()
 
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, nil, nil);
+        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, nil, nil);
         if(status==0) {
             killAllForExecutable("/usr/libexec/backboardd");
         } else {
@@ -308,11 +317,11 @@ int rebuildIconCache()
     [[NSString new] writeToFile:jbroot(@"/basebin/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil];
     [LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
 
-    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildapps.sh", NULL}, &log, &err);
+    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err);
     if(status==0) {
         killAllForExecutable("/usr/libexec/backboardd");
     } else {
-        STRAPLOG("rebuildapps failed:%@\nERR:\n%@",log,err);
+        STRAPLOG("rebuildApps failed:%@\nERR:\n%@",log,err);
     }
 
     if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
@@ -393,9 +402,9 @@ BOOL opensshAction(BOOL enable)
         return enable;
     }
     
-    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
-        return NO;
-    }
+//    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+//        return NO;
+//    }
 
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
         [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
@@ -404,7 +413,7 @@ BOOL opensshAction(BOOL enable)
 
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"openssh",enable?@"start":@"stop"], &log, &err);
+    int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",enable?@"start":@"stop"], &log, &err);
 
     //try
     if(!enable) spawnBootstrap((char*[]){"/usr/bin/killall","-9","sshd",NULL}, nil, nil);
@@ -423,6 +432,94 @@ BOOL opensshAction(BOOL enable)
     return enable;
 }
 
+NSArray* ResignExecutables = @[
+    @"/sbin/launchd",
+    @"/usr/libexec/xpcproxy",
+    @"/System/Library/CoreServices/SpringBoard.app/SpringBoard",
+];
+
+#define RESIGNED_SYSROOT_PATH jbroot(@"/.sysroot")
+
+int exploitStart()
+{
+    NSFileManager* fm = NSFileManager.defaultManager;
+    
+    // Patch basebin plists
+    NSURL *basebinDaemonsURL = [NSURL fileURLWithPath:jbroot(@"/basebin/LaunchDaemons")];
+    for (NSURL *fileURL in [fm contentsOfDirectoryAtURL:basebinDaemonsURL includingPropertiesForKeys:nil options:0 error:nil]) {
+        NSString* plistContent = [NSString stringWithContentsOfFile:fileURL.path encoding:NSUTF8StringEncoding error:nil];
+        if(plistContent) {
+            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBROOT@" withString:jbroot(@"/")];
+            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBRAND@" withString:[NSString stringWithFormat:@"%016llX",jbrand()]];
+            ASSERT([plistContent writeToFile:fileURL.path atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        }
+    }
+
+    if([fm fileExistsAtPath:RESIGNED_SYSROOT_PATH]) {
+        ASSERT([fm removeItemAtPath:RESIGNED_SYSROOT_PATH error:nil]);
+    }
+    
+    NSString* ldidPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/ldid"];
+    NSString* fastSignPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/fastPathSign"];
+    
+    for(NSString* sourcePath in ResignExecutables)
+    {
+        NSString* destPath = [RESIGNED_SYSROOT_PATH stringByAppendingPathComponent:sourcePath];
+        NSString* destDirPath = [destPath stringByDeletingLastPathComponent];
+        
+        NSString* destSubPathTemp = RESIGNED_SYSROOT_PATH;
+        NSArray<NSString *>* sourcePathComponents = sourcePath.pathComponents;
+        for(NSString* item in sourcePathComponents)
+        {
+            destSubPathTemp = [destSubPathTemp stringByAppendingPathComponent:item];
+            
+            struct stat st={0};
+            if(lstat(destSubPathTemp.fileSystemRepresentation, &st) != 0) {
+                break;
+            }
+            
+            if(S_ISLNK(st.st_mode)) {
+                ASSERT(unlink(destSubPathTemp.fileSystemRepresentation)==0);
+                break;
+            }
+        }
+        
+        if(![fm fileExistsAtPath:destDirPath]) {
+            NSDictionary* attr = @{NSFilePosixPermissions:@(0755), NSFileOwnerAccountID:@(0), NSFileGroupOwnerAccountID:@(0)};
+            ASSERT([fm createDirectoryAtPath:destDirPath withIntermediateDirectories:YES attributes:attr error:nil]);
+        }
+        
+        ASSERT([fm copyItemAtPath:sourcePath toPath:destPath error:nil]);
+        
+        NSURL* sourceDirURL = [NSURL fileURLWithPath:sourcePath.stringByDeletingLastPathComponent];
+        for (NSURL* fileURL in [fm contentsOfDirectoryAtURL:sourceDirURL includingPropertiesForKeys:nil options:0 error:nil]) {
+            NSString* destfile = [destDirPath stringByAppendingPathComponent:fileURL.lastPathComponent];
+            if(![fm fileExistsAtPath:destfile]) {
+                ASSERT([fm createSymbolicLinkAtPath:destfile withDestinationPath:fileURL.path error:nil]);
+            }
+        }
+
+        NSString* entitlementsFileInBundlePath = [NSString stringWithFormat:@"basebin/entitlements/executables/%@.extra", sourcePath.lastPathComponent];
+        NSString* entitlementsFilePath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:entitlementsFileInBundlePath];
+        if([fm fileExistsAtPath:entitlementsFilePath]) {
+            ASSERT(spawnRoot(ldidPath, @[@"-M", [NSString stringWithFormat:@"-S%@", entitlementsFilePath], destPath], nil, nil) == 0);
+        }
+        
+        ASSERT(spawnRoot(fastSignPath, @[destPath], nil, nil) == 0);
+    }
+    
+    
+    NSString* execDir = [@"/var/db/com.apple.xpc.roleaccountd.staging/exec-" stringByAppendingString:[[NSUUID UUID] UUIDString]];
+    
+    int child_stage1_prepare(NSString* execDir);
+    ASSERT(child_stage1_prepare(execDir) == 0);
+    
+    ASSERT(spawnRoot(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], nil, nil) == 0);
+    
+    ASSERT(spawnRoot(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil) == 0);
+    
+    return 0;
+}
 
 void bootstrapAction()
 {
@@ -452,7 +549,7 @@ void bootstrapAction()
     }
     
     NSString* launchdpath = getLaunchdPath();
-    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasPrefix:@"/private/var/containers/Bundle/Application/.jbroot-"])
+    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasSuffix:@"/.sysroot/sbin/launchd"])
     {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Please reboot device first.") preferredStyle:UIAlertControllerStyleAlert];
 
@@ -512,7 +609,7 @@ void bootstrapAction()
         setIdleTimerDisabled(YES);
 
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
-        int status = spawn(argv[0], argv, environ, ^(char* outstr, int length){
+        int status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
             NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
             [AppDelegate addLogText:str];
         }, ^(char* errstr, int length){
@@ -554,9 +651,28 @@ void bootstrapAction()
             }
         }
 
+        if(@available(iOS 16.0, *))
+        {
+            [AppDelegate addLogText:Localized(@"exploit...")];
+            const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", NULL};
+            status = spawn(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
+                NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+                [AppDelegate addLogText:str];
+            }, ^(char* errstr, int length){
+                NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+                [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
+            });
+            if(status!=0) {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                return;
+            }
+            
+            return;
+        }
+        
         [generator impactOccurred];
+        
         [AppDelegate addLogText:Localized(@"respring now...")]; sleep(1);
-
          status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
         if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 
@@ -631,7 +747,7 @@ int hideBootstrapApp(BOOL usreboot)
     {
         sleep(2);
         
-        int status = spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"usreboot"], nil, nil);
+        int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil);
         if(status != 0) {
             return -2;
         }
@@ -679,12 +795,8 @@ void hideAllCTBugAppsAction(BOOL usreboot)
             continue;
         }
         
-        if(isDefaultInstallationPath(appPath))
-        {
-            if(![NSFileManager.defaultManager fileExistsAtPath:[appPath stringByAppendingString:@"/../_TrollStore"]]
-                && ![NSFileManager.defaultManager fileExistsAtPath:[appPath stringByAppendingString:@"/../_TrollStoreLite"]]) {
-                continue;
-            }
+        if(isDefaultInstallationPath(appPath.fileSystemRepresentation) && !hasTrollstoreMarker(appPath.fileSystemRepresentation)) {
+            continue;
         }
         
         if([proxy.bundleIdentifier hasPrefix:@"com.apple."] && [NSFileManager.defaultManager fileExistsAtPath:[@"/Applications" stringByAppendingPathComponent:appPath.lastPathComponent]]) {

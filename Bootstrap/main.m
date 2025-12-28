@@ -3,7 +3,20 @@
 #include "NSUserDefaults+appDefaults.h"
 #include "common.h"
 
+void CommLog(const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    char* logbuf = NULL;
+    vasprintf(&logbuf, format, ap);
+    SYSLOG("%s", logbuf);
+    free(logbuf);
+    va_end(ap);
+}
+
 int main(int argc, char * argv[]) {
+    
+    CommLogFunction = CommLog;
 
     if(argc >= 2)
     {
@@ -17,6 +30,9 @@ int main(int argc, char * argv[]) {
             } else if(strcmp(argv[1], "unbootstrap")==0) {
                 int unbootstrap();
                 exit(unbootstrap());
+            } else if(strcmp(argv[1], "exploit")==0) {
+                int exploitStart();
+                exit(exploitStart());
             } else if(strcmp(argv[1], "enableapp")==0) {
                 int enableForApp(NSString* bundlePath);
                 exit(enableForApp(@(argv[2])));
