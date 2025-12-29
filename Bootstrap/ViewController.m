@@ -160,8 +160,7 @@ void initFromSwiftUI()
 
     [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"ios-version: %@"),UIDevice.currentDevice.systemVersion]];
 
-    struct utsname systemInfo;
-    uname(&systemInfo);
+    struct utsname systemInfo={0}; uname(&systemInfo);
     [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"device-model: %s"),systemInfo.machine]];
 
     [AppDelegate addLogText:[NSString stringWithFormat:Localized(@"app-version: %@"),NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"]]];
@@ -440,7 +439,7 @@ NSArray* ResignExecutables = @[
 
 #define RESIGNED_SYSROOT_PATH jbroot(@"/.sysroot")
 
-int exploitStart()
+int exploitStart(NSString* execDir)
 {
     NSFileManager* fm = NSFileManager.defaultManager;
     
@@ -507,12 +506,6 @@ int exploitStart()
         
         ASSERT(spawnRoot(fastSignPath, @[destPath], nil, nil) == 0);
     }
-    
-    
-    NSString* execDir = [@"/var/db/com.apple.xpc.roleaccountd.staging/exec-" stringByAppendingString:[[NSUUID UUID] UUIDString]];
-    
-    int child_stage1_prepare(NSString* execDir);
-    ASSERT(child_stage1_prepare(execDir) == 0);
     
     ASSERT(spawnRoot(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], nil, nil) == 0);
     
@@ -617,9 +610,6 @@ void bootstrapAction()
             [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
         });
 
-        [AppDelegate dismissHud];
-        setIdleTimerDisabled(NO);
-
         if(status != 0)
         {
             [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
@@ -654,7 +644,22 @@ void bootstrapAction()
         if(@available(iOS 16.0, *))
         {
             [AppDelegate addLogText:Localized(@"exploit...")];
-            const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", NULL};
+            
+            NSString* execDir = [@"/var/db/com.apple.xpc.roleaccountd.staging/exec-" stringByAppendingString:[[NSUUID UUID] UUIDString]];
+                
+            @try {
+                ASSERT(spawnRoot(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], nil, nil) == 0);
+                
+                int load_trust_cache(NSString *tcPath);
+                ASSERT(load_trust_cache(jbroot(@"/tmp/TaskPortHaxx/UpdateBrainService/AssetData/.TrustCache")) == 0);
+            }
+            @catch (NSException *exception)
+            {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@", exception] title:@"ERROR"];
+                return;
+            }
+            
+            const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", execDir.fileSystemRepresentation, NULL};
             status = spawn(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
                 NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
                 [AppDelegate addLogText:str];
@@ -670,6 +675,8 @@ void bootstrapAction()
             return;
         }
         
+        setIdleTimerDisabled(NO);
+        [AppDelegate dismissHud];
         [generator impactOccurred];
         
         [AppDelegate addLogText:Localized(@"respring now...")]; sleep(1);
