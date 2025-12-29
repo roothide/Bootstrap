@@ -32,7 +32,7 @@ int main(int argc, char * argv[]) {
                 exit(unbootstrap());
             } else if(strcmp(argv[1], "exploit")==0) {
                 int exploitStart();
-                exit(exploitStart());
+                exit(exploitStart(@(argv[2])));
             } else if(strcmp(argv[1], "enableapp")==0) {
                 int enableForApp(NSString* bundlePath);
                 exit(enableForApp(@(argv[2])));
