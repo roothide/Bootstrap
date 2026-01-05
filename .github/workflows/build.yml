@@ -1,0 +1,102 @@
+name: Build Bootstrap.tipa
+
+on:
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build:
+    name: Build Bootstrap
+    runs-on: macos-latest
+    
+    steps:
+      # 1. Checkout the Main Bootstrap Repository into a folder named 'Bootstrap'
+      - name: Checkout Bootstrap
+        uses: actions/checkout@v4
+        with:
+          path: Bootstrap
+          submodules: recursive
+
+      # 2. Checkout the BaseBin Repository into a folder named 'BaseBin'
+      - name: Checkout BaseBin Source
+        uses: actions/checkout@v4
+        with:
+          repository: roothide/Bootstrap-basebin
+          path: BaseBin
+
+      # 3. Install Dependencies
+      - name: Install Dependencies
+        run: |
+          brew install ldid
+          brew install make
+
+      # 4. Compile BaseBin
+      - name: Build BaseBin
+        run: |
+          cd BaseBin
+          ./build.sh
+
+      # 5. Install BaseBin into Bootstrap
+      # We copy the built 'basebin' folder into the Bootstrap project root
+      - name: Install BaseBin into Bootstrap
+        run: |
+          # Copy the '.build' output folder from BaseBin to inside the Bootstrap folder
+          rm -rf Bootstrap/basebin
+          cp -R BaseBin/.build Bootstrap/basebin
+          
+          # Verify it exists
+          ls -R Bootstrap/basebin
+
+      # 6. Build the App using xcodebuild
+      # IMPORTANT: We cd into 'Bootstrap' first
+      - name: Build Xcode Project
+        run: |
+          cd Bootstrap
+          
+          # Remove Makefile references to prevent "Exit Code 65"
+          find . -name "Makefile" -delete
+          find . -name "Makefile.in" -delete
+          
+          xcodebuild -project Bootstrap.xcodeproj \
+            -scheme Bootstrap \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+      # 7. Create the .tipa package
+      - name: Package .tipa
+        run: |
+          cd Bootstrap
+          
+          APP_BUNDLE="build/Build/Products/Release-iphoneos/Bootstrap.app"
+          
+          # Copy required files into the app bundle (files are in repo root, use ../ to access)
+          cp -a ../strapfiles "$APP_BUNDLE/"
+          cp ../tar "$APP_BUNDLE/"
+          chmod +x "$APP_BUNDLE/tar"
+          cp ../libkrw0-dummy.deb "$APP_BUNDLE/"
+          cp ../sileo.deb "$APP_BUNDLE/"
+          cp ../zebra.deb "$APP_BUNDLE/"
+          cp ../roothideapp.deb "$APP_BUNDLE/"
+          
+          # Sign the binary with ldid and entitlements (entitlements.plist is in repo root)
+          ldid -S../entitlements.plist "$APP_BUNDLE/Bootstrap"
+          
+          # Create Payload directory and copy the app
+          mkdir -p packages/Payload
+          cp -R "$APP_BUNDLE" packages/Payload/
+          
+          # Zip it into a .tipa file (matching Makefile format)
+          cd packages
+          zip -mry Bootstrap.tipa Payload
+          cd ..
+          
+      # 8. Upload the Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bootstrap.tipa
+          path: Bootstrap/packages/Bootstrap.tipa
