@@ -12,14 +12,6 @@
 #include <sys/sysctl.h>
 #include <sys/utsname.h>
 
-#include <Security/SecKey.h>
-#include <Security/Security.h>
-typedef struct CF_BRIDGED_TYPE(id) __SecCode const* SecStaticCodeRef; /* code on disk */
-typedef enum { kSecCSDefaultFlags=0, kSecCSSigningInformation = 1 << 1 } SecCSFlags;
-OSStatus SecStaticCodeCreateWithPathAndAttributes(CFURLRef path, SecCSFlags flags, CFDictionaryRef attributes, SecStaticCodeRef* CF_RETURNS_RETAINED staticCode);
-OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, CFDictionaryRef* __nonnull CF_RETURNS_RETAINED information);
-
-
 @interface ViewController ()
 @end
 
@@ -78,10 +70,6 @@ void checkAppsHidden()
 
 void tryLoadOpenSSH()
 {
-//    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
-//        return;
-//    }
-    
     if([NSUserDefaults.appDefaults boolForKey:@"openssh"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")])
     {
         NSString* log=nil;
@@ -108,6 +96,10 @@ BOOL checkServer()
 
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+            if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+                return;
+            }
 
             alerted = false;
 
@@ -178,6 +170,10 @@ void initFromSwiftUI()
 
     if(isSystemBootstrapped())
     {
+        if(!checkBootstrapVersion()) {
+            return;
+        }
+        
         if(checkServer()) {
             [AppDelegate addLogText:Localized(@"bootstrap server check successful")];
             checkAppsHidden();
@@ -206,19 +202,8 @@ void setIdleTimerDisabled(BOOL disabled) {
 }
 
 BOOL checkTSVersion()
-{    
-    CFURLRef binaryURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)NSBundle.mainBundle.executablePath, kCFURLPOSIXPathStyle, false);
-    if(binaryURL == NULL) return NO;
-    
-    SecStaticCodeRef codeRef = NULL;
-    OSStatus result = SecStaticCodeCreateWithPathAndAttributes(binaryURL, kSecCSDefaultFlags, NULL, &codeRef);
-    if(result != errSecSuccess) return NO;
-        
-    CFDictionaryRef signingInfo = NULL;
-     result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
-    if(result != errSecSuccess) return NO;
-        
-    NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
+{
+    NSString* teamID = getTeamIDFromBinaryAtPath(NSBundle.mainBundle.executablePath);
     SYSLOG("teamID in trollstore: %@", teamID);
     
     return [teamID isEqualToString:@"T8ALTGMVXN"];
@@ -361,6 +346,15 @@ void tweaEnableAction(BOOL enable)
     } else if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
         ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
     }
+    
+    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Userspace Reboot Required") message:Localized(@"A userspace reboot is neccessary to apply the changes. Do you want to do it now?") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Later") style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Now") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            spawnBootstrap((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
+        }]];
+        [AppDelegate showAlert:alert];
+    }
 }
 
 void URLSchemesToggle(BOOL enable)
@@ -400,13 +394,14 @@ BOOL opensshAction(BOOL enable)
         [NSUserDefaults.appDefaults synchronize];
         return enable;
     }
-    
-//    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
-//        return NO;
-//    }
 
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
         [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
+        return NO;
+    }
+    
+    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+        [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
         return NO;
     }
 
@@ -431,10 +426,17 @@ BOOL opensshAction(BOOL enable)
     return enable;
 }
 
+void rebootUserspaceAction()
+{
+    spawnBootstrap((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
+}
+
 NSArray* ResignExecutables = @[
     @"/sbin/launchd",
     @"/usr/libexec/xpcproxy",
     @"/System/Library/CoreServices/SpringBoard.app/SpringBoard",
+    @"/usr/bin/powerlogHelperd",
+    @"/usr/sbin/spindump",
 ];
 
 #define RESIGNED_SYSROOT_PATH jbroot(@"/.sysroot")
@@ -802,7 +804,7 @@ void hideAllCTBugAppsAction(BOOL usreboot)
             continue;
         }
         
-        if(isDefaultInstallationPath(appPath.fileSystemRepresentation) && !hasTrollstoreMarker(appPath.fileSystemRepresentation)) {
+        if(isRemovableBundlePath(appPath.fileSystemRepresentation) && !hasTrollstoreMarker(appPath.fileSystemRepresentation)) {
             continue;
         }
         

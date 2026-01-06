@@ -37,7 +37,7 @@ struct MainView: View {
     @State private var newVersionReleaseURL:String = ""
     @State private var tweakEnable: Bool = !isSystemBootstrapped() || FileManager.default.fileExists(atPath: jbroot("/var/mobile/.tweakenabled"))
     
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     
     var body: some View {
         ZStack {
@@ -69,7 +69,7 @@ struct MainView: View {
                         Text("Bootstrap")
                             .bold()
                             .font(Font.system(size: 35))
-                        Text("Version \(appVersion!)")
+                        Text("Version \(appVersion)")
                             .font(Font.system(size: 20))
                             .opacity(0.5)
                     })
@@ -184,6 +184,7 @@ struct MainView: View {
                                 .cornerRadius(18)
                                 .opacity(0.5)
                         }
+                        .disabled(isSystemBootstrapped() && !checkBootstrapVersion())
                         
                     }
                     

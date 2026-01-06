@@ -61,9 +61,9 @@ struct OptionsView: View {
                                         icon: { Image(systemName: "wrench.and.screwdriver") }
                                     )
                                 })
-                                    .onChange(of: tweakEnable) { newValue in
-                                        tweaEnableAction(newValue)
-                                    }
+                                .onChange(of: tweakEnable) { newValue in
+                                    tweaEnableAction(newValue)
+                                }
                                 
                                 Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
                                     opensshStatus.state = opensshAction($0)
@@ -178,35 +178,62 @@ struct OptionsView: View {
                                 )
                                 .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
-                                Button {
-                                    Haptic.shared.play(.light)
-                                    if isAllCTBugAppsHidden() {
-                                        unhideAllCTBugApps()
-                                    } else {
-                                        hideAllCTBugApps()
+                                if isSystemBootstrapped() && checkBootstrapVersion()
+                                {
+                                    if FileManager.default.fileExists(atPath: jbroot("/basebin/.launchctl_support"))
+                                    {
+                                        Button {
+                                            Haptic.shared.play(.light)
+                                            rebootUserspaceAction();
+                                        } label: {
+                                            Label(
+                                                title: { Text("Reboot Userspace") },
+                                                icon: { Image(systemName: "arrow.clockwise.circle") }
+                                            )
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, 10)
+                                            .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                        }
+                                        .frame(width: 250)
+                                        .background(Color.clear)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(.gray, lineWidth: 1)
+                                                .opacity(0.3)
+                                        )
                                     }
-                                } label: {
-                                    Label(
-                                        title: { Text( allCTBugAppsHidden.state && isAllCTBugAppsHidden() ? "Unhide Jailbreak Apps" : "Hide All JB/TS Apps") },
-                                        icon: { Image(systemName: "arrow.clockwise") }
-                                    )
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
-                                }
-                                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("unhideAllCTBugAppsNotification"))) { obj in
-                                    DispatchQueue.main.async {
-                                        allCTBugAppsHidden.state = isAllCTBugAppsHidden()
+                                    else
+                                    {
+                                        Button {
+                                            Haptic.shared.play(.light)
+                                            if isAllCTBugAppsHidden() {
+                                                unhideAllCTBugApps()
+                                            } else {
+                                                hideAllCTBugApps()
+                                            }
+                                        } label: {
+                                            Label(
+                                                title: { Text( allCTBugAppsHidden.state && isAllCTBugAppsHidden() ? "Unhide Jailbreak Apps" : "Hide All JB/TS Apps") },
+                                                icon: { Image(systemName: "arrow.clockwise.circle") }
+                                            )
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, 10)
+                                            .foregroundColor((!isSystemBootstrapped() || !checkBootstrapVersion()) ? Color.accentColor : Color.init(uiColor: UIColor.label))
+                                        }
+                                        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("unhideAllCTBugAppsNotification"))) { obj in
+                                            DispatchQueue.main.async {
+                                                allCTBugAppsHidden.state = isAllCTBugAppsHidden()
+                                            }
+                                        }
+                                        .frame(width: 250)
+                                        .background(Color.clear)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(.gray, lineWidth: 1)
+                                                .opacity(0.3)
+                                        )
                                     }
                                 }
-                                .frame(width: 250)
-                                .background(Color.clear)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.gray, lineWidth: 1)
-                                        .opacity(0.3)
-                                )
-                                .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
                                 
                                 Button {
                                     Haptic.shared.play(.light)
