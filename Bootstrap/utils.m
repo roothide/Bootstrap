@@ -3,6 +3,8 @@
 #include <sys/sysctl.h>
 #include <mach-o/fat.h>
 #include <mach-o/loader.h>
+#include <Security/SecKey.h>
+#include <Security/Security.h>
 #include "common.h"
 
 uint64_t jbrand_new()
@@ -129,3 +131,52 @@ NSString* getBootSession()
     
     return @(uuid);
 }
+
+typedef struct CF_BRIDGED_TYPE(id) __SecCode const* SecStaticCodeRef; /* code on disk */
+typedef enum { kSecCSDefaultFlags=0, kSecCSSigningInformation = 1 << 1 } SecCSFlags;
+OSStatus SecStaticCodeCreateWithPathAndAttributes(CFURLRef path, SecCSFlags flags, CFDictionaryRef attributes, SecStaticCodeRef* CF_RETURNS_RETAINED staticCode);
+OSStatus SecCodeCopySigningInformation(SecStaticCodeRef code, SecCSFlags flags, CFDictionaryRef* __nonnull CF_RETURNS_RETAINED information);
+
+SecStaticCodeRef getStaticCodeRef(NSString *binaryPath) {
+    if (binaryPath == nil) {
+        return NULL;
+    }
+    
+    CFURLRef binaryURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)binaryPath, kCFURLPOSIXPathStyle, false);
+    if (binaryURL == NULL) {
+        return NULL;
+    }
+    
+    SecStaticCodeRef codeRef = NULL;
+    OSStatus result;
+    
+    result = SecStaticCodeCreateWithPathAndAttributes(binaryURL, kSecCSDefaultFlags, NULL, &codeRef);
+    
+    CFRelease(binaryURL);
+    
+    if (result != errSecSuccess) {
+        return NULL;
+    }
+        
+    return codeRef;
+}
+
+NSString* getTeamIDFromBinaryAtPath(NSString *binaryPath)
+{
+    SecStaticCodeRef codeRef = getStaticCodeRef(binaryPath);
+    if(codeRef == NULL) {
+        return nil;
+    }
+    
+    CFDictionaryRef signingInfo = NULL;
+    OSStatus result = SecCodeCopySigningInformation(codeRef, kSecCSSigningInformation, &signingInfo);
+    if(result != errSecSuccess) return nil;
+        
+    NSString* teamID = (NSString*)CFDictionaryGetValue(signingInfo, CFSTR("teamid"));
+    
+    CFRelease(signingInfo);
+    CFRelease(codeRef);
+    
+    return teamID;
+}
+

@@ -30,6 +30,9 @@
 		<string>AGXDeviceUserClient</string>
 		<string>IOHDIXControllerUserClient</string>
 		<string>IOSurfaceRootUserClient</string>
+
+		<!-- TaskPortHaxx prepare -->
+		<string>AppleMobileFileIntegrityUserClient</string>
 	</array>
     
 	<key>com.apple.private.persona-mgmt</key>
@@ -53,10 +56,6 @@
     <true/>
 
 	<!-- TaskPortHaxx prepare -->
-	<key>com.apple.security.iokit-user-client-class</key>
-	<array>
-		<string>AppleMobileFileIntegrityUserClient</string>
-	</array>
 	<key>com.apple.private.amfi.can-load-trust-cache</key>
 	<true/>
 	<key>com.apple.private.pmap.load-trust-cache</key>

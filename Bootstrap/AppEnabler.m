@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#include <sys/clonefile.h>
 #include <sys/stat.h>
 #include "AppInfo.h"
 #include "common.h"
@@ -73,83 +74,6 @@ NSString * relativize(NSURL * to, NSURL * from, BOOL fromIsDir) {
     return relPath;
 }
 
-NSArray* appBackupFileNames = @[
-    @"Info.plist",
-    @"_CodeSignature",
-    @"SC_Info",
-];
-
-//will skip empty dir
-int backupApp(NSString* bundlePath)
-{
-    NSFileManager* fm = NSFileManager.defaultManager;
-    
-    NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
-    
-    if([fm fileExistsAtPath:backup]) {
-        ASSERT(![fm fileExistsAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"]]);
-        ASSERT([fm removeItemAtPath:backup error:nil]);
-    }
-    
-    NSDictionary* appInfo = [NSDictionary dictionaryWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"Info.plist"]];
-    BOOL encryptedApp = [[NSFileManager defaultManager] fileExistsAtPath:[bundlePath stringByAppendingPathComponent:@"SC_Info"]];
-    
-    NSString *resolvedPath = [[bundlePath stringByResolvingSymlinksInPath] stringByStandardizingPath];
-    NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 errorHandler:nil];
-
-    int backupFileCount=0;
-    for (NSURL *enumURL in directoryEnumerator) { @autoreleasepool {
-        NSNumber *isFile=nil;
-        ASSERT([enumURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil] && isFile!=nil);
-        if (![isFile boolValue]) continue;
-        
-        BOOL copy = NO;
-        
-        if([appBackupFileNames containsObject:enumURL.path.lastPathComponent]) {
-            copy = YES;
-        }
-        else if(encryptedApp) {
-            if([appInfo[@"CFBundleExecutable"] isEqualToString:enumURL.path.lastPathComponent]) {
-                copy = YES;
-            }
-        }
-        else {
-            bool ismacho=false, islib=false;
-            ASSERT(machoGetInfo(enumURL.fileSystemRepresentation, &ismacho, &islib));
-            if(ismacho) {
-                copy = YES;
-            }
-        }
-        
-        
-        //bundlePath should be a real-path
-        NSString* subPath = relativize(enumURL, [NSURL fileURLWithPath:bundlePath], YES);
-        NSString* backupPath = [backup stringByAppendingPathComponent:subPath];
-        
-        if(![fm fileExistsAtPath:backupPath.stringByDeletingLastPathComponent])
-            ASSERT([fm createDirectoryAtPath:backupPath.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil]);
-        
-        if(copy)
-        {
-            NSError* err=nil;
-            ASSERT([fm copyItemAtPath:enumURL.path toPath:backupPath error:&err]);
-            SYSLOG("copied %@ => %@", enumURL.path, backupPath);
-            
-            backupFileCount++;
-        }
-        else {
-            ASSERT(link(enumURL.path.UTF8String, backupPath.UTF8String)==0);
-        }
-        
-    } }
-    
-    ASSERT(backupFileCount > 0);
-
-    ASSERT([[NSString new] writeToFile:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] atomically:YES encoding:NSUTF8StringEncoding error:nil]);
-    
-    return 0;
-}
-
 //if the app package is changed/upgraded, the directory structure may change and some paths may become invalid.
 int restoreApp(NSString* bundlePath)
 {
@@ -157,9 +81,27 @@ int restoreApp(NSString* bundlePath)
     NSFileManager* fm = NSFileManager.defaultManager;
     
     NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
+    NSString* backupFlag = [bundlePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"];
     
     ASSERT([fm fileExistsAtPath:backup]);
-    ASSERT([fm fileExistsAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"]]);
+    ASSERT([fm fileExistsAtPath:backupFlag]);
+    NSString* backupver = [NSString stringWithContentsOfFile:backupFlag encoding:NSASCIIStringEncoding error:nil];
+    if(backupver.intValue >= 1) {
+        ASSERT([fm removeItemAtPath:bundlePath error:nil]);
+        ASSERT([fm moveItemAtPath:backup toPath:bundlePath error:nil]);
+        ASSERT([fm removeItemAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] error:nil]);
+        return 0;
+    }
+    
+    struct stat st;
+    if(lstat([bundlePath stringByAppendingString:@"/.jbroot"].fileSystemRepresentation, &st)==0)
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
+    if(lstat([bundlePath stringByAppendingString:@"/.prelib"].fileSystemRepresentation, &st)==0)
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.prelib"] error:nil]);
+    if(lstat([bundlePath stringByAppendingString:@"/.preload"].fileSystemRepresentation, &st)==0)
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.preload"] error:nil]);
+    if(lstat([bundlePath stringByAppendingString:@"/.rebuild"].fileSystemRepresentation, &st)==0)
+        ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
     
     NSString *resolvedPath = [[backup stringByResolvingSymlinksInPath] stringByStandardizingPath];
     NSDirectoryEnumerator<NSURL *> *directoryEnumerator = [fm enumeratorAtURL:[NSURL fileURLWithPath:resolvedPath isDirectory:YES] includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 errorHandler:nil];
@@ -197,6 +139,23 @@ int restoreApp(NSString* bundlePath)
     return 0;
 }
 
+int backupApp(NSString* bundlePath)
+{
+    NSFileManager* fm = NSFileManager.defaultManager;
+    
+    NSString* backup = [bundlePath stringByAppendingPathExtension:@"appbackup"];
+    
+    if([fm fileExistsAtPath:backup]) {
+        ASSERT(![fm fileExistsAtPath:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"]]);
+        ASSERT([fm removeItemAtPath:backup error:nil]);
+    }
+    
+    ASSERT(clonefile(bundlePath.fileSystemRepresentation, backup.fileSystemRepresentation, CLONE_ACL) == 0);
+
+    ASSERT([@"1" writeToFile:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    
+    return 0;
+}
 
 int enableForApp(NSString* bundlePath)
 {
@@ -276,16 +235,6 @@ int disableForApp(NSString* bundlePath)
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
     {
         
-        struct stat st;
-        if(lstat([bundlePath stringByAppendingString:@"/.jbroot"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.prelib"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.prelib"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.preload"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.preload"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.rebuild"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
-        
         ASSERT(restoreApp(bundlePath) == 0);
         
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
@@ -294,17 +243,12 @@ int disableForApp(NSString* bundlePath)
     {
         //should be an appstored app
         
-        struct stat st;
-        if(lstat([bundlePath stringByAppendingString:@"/.jbroot"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.prelib"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.prelib"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.preload"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.preload"] error:nil]);
-        if(lstat([bundlePath stringByAppendingString:@"/.rebuild"].fileSystemRepresentation, &st)==0)
-            ASSERT([fm removeItemAtPath:[bundlePath stringByAppendingString:@"/.rebuild"] error:nil]);
+        BOOL encryptedApp = [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingPathComponent:@"SC_Info"]];
+        NSString* backupVersion = [NSString stringWithContentsOfFile:[bundlePath stringByAppendingString:@"/../.appbackup"] encoding:NSASCIIStringEncoding error:nil];
         
         ASSERT(restoreApp(bundlePath) == 0);
+        
+        if(encryptedApp && backupVersion.intValue>=1) return 0;
         
         //unregister or respring to keep app's icon on home screen
         ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);

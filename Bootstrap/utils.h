@@ -18,6 +18,8 @@ NSString* rootfsPrefix(NSString* path);
 
 NSString* getBootSession();
 
+NSString* getTeamIDFromBinaryAtPath(NSString *binaryPath);
+
 @interface _LSApplicationState : NSObject
 - (BOOL)isValid;
 @end

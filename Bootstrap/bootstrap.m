@@ -425,7 +425,7 @@ void fixBadPatchFiles()
     }
 }
 
-void removeUnexceptPreferences()
+void removeUnexpectedPreferences()
 {
     BOOL reload = NO;
     NSArray* files = @[@".GlobalPreferences.plist", @"kCFPreferencesAnyApplication.plist"];
@@ -501,7 +501,7 @@ int bootstrap()
         
         ASSERT(ReRandomizeBootstrap() == 0);
         
-        removeUnexceptPreferences();
+        removeUnexpectedPreferences();
         fixMobileDirectories();
         fixBadPatchFiles();
     }
