@@ -442,6 +442,15 @@ NSArray* ResignExecutables = @[
     @"/System/Library/CoreServices/SpringBoard.app/SpringBoard",
     @"/usr/bin/powerlogHelperd",
     @"/usr/sbin/spindump",
+    @"/usr/libexec/replayd",
+    @"/usr/libexec/sharingd",
+    @"/usr/libexec/locationd",
+    @"/usr/libexec/runningboardd",
+    @"/usr/libexec/backboardd",
+    @"/usr/libexec/thermalmoniord",
+    @"/usr/sbin/installd",
+    @"/usr/sbin/cfprefsd",
+    @"/usr/libexec/nfcd",
 ];
 
 #define RESIGNED_SYSROOT_PATH jbroot(@"/.sysroot")
