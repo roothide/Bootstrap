@@ -65,6 +65,25 @@ struct OptionsView: View {
                                     tweaEnableAction(newValue)
                                 }
                                 
+                                if isBootstrapInstalled() {
+                                    Toggle(isOn: Binding(get: {allowURLSchemes.state}, set: {
+                                        allowURLSchemes.state = $0
+                                        URLSchemesAction($0)
+                                    }), label: {
+                                        Label(
+                                            title: { Text("URL Schemes") },
+                                            icon: { Image(systemName: "link") }
+                                        )
+                                    })
+                                    .disabled(!isSystemBootstrapped())
+                                    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("URLSchemesStatusNotification"))) { obj in
+                                        DispatchQueue.main.async {
+                                            let newStatus = (obj.object as! NSNumber).boolValue
+                                            allowURLSchemes.state = newStatus
+                                        }
+                                    }
+                                }
+                                
                                 Toggle(isOn: Binding(get: {opensshStatus.state}, set: {
                                     opensshStatus.state = opensshAction($0)
                                 }), label: {
@@ -79,23 +98,7 @@ struct OptionsView: View {
                                         opensshStatus.state = newStatus
                                     }
                                 }
-                                if isBootstrapInstalled() {
-                                    Toggle(isOn: Binding(get: {allowURLSchemes.state}, set: {
-                                        allowURLSchemes.state = $0
-                                        URLSchemesAction($0)
-                                    }), label: {
-                                        Label(
-                                            title: { Text("URL Schemes") },
-                                            icon: { Image(systemName: "link") }
-                                        )
-                                    })
-                                    .disabled(!isSystemBootstrapped())
-                                    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("URLSchemesCancelNotification"))) { obj in
-                                        DispatchQueue.main.async {
-                                            allowURLSchemes.state = false
-                                        }
-                                    }
-                                }
+                                
                                 HStack {
                                     Label(
                                         title: { Text("Colors") },

@@ -16,7 +16,7 @@ void CommLog(const char* format, ...)
 
 int main(int argc, char * argv[]) {
     
-    CommLogFunction = CommLog;
+    enableCommLog(CommLog, CommLog);
 
     if(argc >= 2)
     {

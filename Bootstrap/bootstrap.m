@@ -13,6 +13,10 @@ extern int decompress_tar_zstd(const char* src_file_path, const char* dst_file_p
 
 int getCFMajorVersion()
 {
+    if(@available(iOS 16.0, *)) {
+        return 1900;
+    }
+    
     return ((int)kCFCoreFoundationVersionNumber / 100) * 100;
 }
 
@@ -76,6 +80,43 @@ int disableRootHideBlacklist()
     [defaults setValue:@YES forKey:@"blacklistDisabled"];
     
     ASSERT([defaults writeToFile:configFilePath atomically:YES]);
+    
+    return 0;
+}
+
+int fixPackageSources()
+{
+    NSArray* sileoSources = [NSFileManager.defaultManager directoryContentsAtPath:jbroot(@"/etc/apt/sources.list.d")];
+    ASSERT(sileoSources != NULL);
+    for(NSString* item in sileoSources)
+    {
+        NSString* source = [jbroot(@"/etc/apt/sources.list.d") stringByAppendingPathComponent:item];
+        NSString* sileoList = [NSString stringWithContentsOfFile:source encoding:NSUTF8StringEncoding error:nil];
+        ASSERT(sileoList != NULL);
+        
+        if([sileoList containsString:@"iphoneos-arm64e/2000"]) {
+            if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/lib/apt/lists")])
+                ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/lib/apt/lists") error:nil]);
+            if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/lib/apt/sileolists")])
+                ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/lib/apt/sileolists") error:nil]);
+        }
+        
+        sileoList = [sileoList stringByReplacingOccurrencesOfString:@"iphoneos-arm64e/2000" withString:@"iphoneos-arm64e/1900"];
+        
+        ASSERT([sileoList writeToFile:source atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    }
+    
+    
+    NSString* zebraList = [NSString stringWithContentsOfFile:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/sources.list") encoding:NSUTF8StringEncoding error:nil];
+    ASSERT(zebraList != NULL);
+    if([zebraList containsString:@"iphoneos-arm64e/2000"]) {
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/lists")])
+            ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/lists") error:nil]);
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/zebra.db")])
+            ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/zebra.db") error:nil]);
+    }
+    zebraList = [zebraList stringByReplacingOccurrencesOfString:@"iphoneos-arm64e/2000" withString:@"iphoneos-arm64e/1900"];
+    ASSERT([zebraList writeToFile:jbroot(@"/var/mobile/Library/Application Support/xyz.willy.Zebra/sources.list") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     
     return 0;
 }
@@ -239,6 +280,9 @@ int InstallBootstrap(NSString* jbroot_path)
     
     STRAPLOG("Status: Bootstrap Installed");
     
+    if(@available(iOS 16.0, *)) {
+        ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.allow_url_schemes") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    }
     
     return 0;
 }
@@ -318,6 +362,8 @@ int ReRandomizeBootstrap()
     ASSERT(fixBootstrapSymlink(@"/bin/sh") == 0);
     ASSERT(fixBootstrapSymlink(@"/usr/bin/sh") == 0);
     ASSERT(spawnBootstrap((char*[]){"/bin/sh", "/usr/libexec/updatelinks.sh", NULL}, nil, nil) == 0);
+    
+    ASSERT(fixPackageSources() == 0);
     
     return 0;
 }

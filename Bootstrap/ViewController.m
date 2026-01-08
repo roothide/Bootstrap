@@ -95,12 +95,10 @@ BOOL checkServer()
         alerted = true;
 
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")])
+          [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             
-            if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
-                return;
-            }
-
             alerted = false;
 
             NSString* log=nil;
@@ -184,7 +182,7 @@ void initFromSwiftUI()
         }];
     }
 
-    if(!IconCacheRebuilding && isBootstrapInstalled() && !isSystemBootstrapped()) {
+    if(!IconCacheRebuilding && isSystemBootstrapped() && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
         if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
            || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
         {
@@ -372,14 +370,21 @@ void URLSchemesAction(BOOL enable)
 {
     if(!isSystemBootstrapped()) return;
     
-    if(!enable) {
+    if(!enable)
+    {
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+            [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(YES)];
+            [AppDelegate showMesage:Localized(@"URL Schemes are now undetectable on your device, you don't need to disable them anymore.") title:@""];
+            return;
+        }
+        
         URLSchemesToggle(enable);
         return;
     }
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Enabling URL Schemes may result in jailbreak detection. Are you sure you want to continue?") preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"NO") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesCancelNotification" object:nil];
+        [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(NO)];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:Localized(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         URLSchemesToggle(enable);
@@ -504,6 +509,9 @@ int exploitStart(NSString* execDir)
         NSString* entitlementsFilePath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:entitlementsFileInBundlePath];
         if([fm fileExistsAtPath:entitlementsFilePath]) {
             ASSERT(spawnRoot(ldidPath, @[@"-M", [NSString stringWithFormat:@"-S%@", entitlementsFilePath], destPath], nil, nil) == 0);
+        } else {
+            STRAPLOG("Entitlements File %@ Not Found!!!", entitlementsFileInBundlePath);
+            return -1;
         }
         
         ASSERT(spawnRoot(fastSignPath, @[destPath], nil, nil) == 0);
