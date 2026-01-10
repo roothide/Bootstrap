@@ -12,6 +12,8 @@ NSString* find_jbroot(BOOL force);
 
 int is_jbroot_name(const char* name);
 
+const char* jbroot(const char* path);
+
 NSString* __attribute__((overloadable)) jbroot(NSString *path);
 
 NSString* rootfsPrefix(NSString* path);

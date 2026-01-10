@@ -45,8 +45,17 @@ BOOL updateOpensshStatus(BOOL notify)
 {
     BOOL status;
     
-    if(isSystemBootstrapped() && spawnRoot(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil)==0) {
-        status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",@"check"], nil, nil)==0;
+    if(isSystemBootstrapped())
+    {
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+            status = [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")];
+        } else {
+            if(spawn_root(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil)==0) {
+                status = spawn_root(jbroot(@"/basebin/bsctl"), @[@"openssh",@"check"], nil, nil)==0;
+            } else {
+                status = [NSUserDefaults.appDefaults boolForKey:@"openssh"];
+            }
+        }
     } else {
         status = [NSUserDefaults.appDefaults boolForKey:@"openssh"];
     }
@@ -74,7 +83,7 @@ void tryLoadOpenSSH()
     {
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",@"start"], &log, &err);
+        int status = spawn_root(jbroot(@"/basebin/bsctl"), @[@"openssh",@"start"], &log, &err);
         if(status==0)
             [AppDelegate addLogText:Localized(@"openssh launch successful")];
         else
@@ -89,7 +98,7 @@ BOOL checkServer()
 
     BOOL ret=NO;
 
-    if(spawnRoot(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil) != 0)
+    if(spawn_root(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil) != 0)
     {
         ret = NO;
         alerted = true;
@@ -103,7 +112,7 @@ BOOL checkServer()
 
             NSString* log=nil;
             NSString* err=nil;
-            if(spawnRoot(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
+            if(spawn_root(jbroot(@"/basebin/bootstrapd"), @[@"daemon",@"-f"], &log, &err)==0) {
                 [AppDelegate addLogText:Localized(@"bootstrap server restart successful")];
                 checkAppsHidden();
                 tryLoadOpenSSH();
@@ -211,7 +220,7 @@ void respringAction()
 {
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
+    int status = spawn_bootstrap_binary((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
     if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 }
 
@@ -225,7 +234,7 @@ void rebuildappsAction()
 
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, nil, nil);
+        int status = spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, nil, nil);
         if(status==0) {
             killAllForExecutable("/usr/libexec/backboardd");
         } else {
@@ -248,24 +257,24 @@ void reinstallPackageManager()
 
         [AppDelegate addLogText:Localized(@"Status: Reinstalling Sileo")];
         NSString* sileoDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"sileo.deb"];
-        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(sileoDeb).fileSystemRepresentation, NULL}, &log, &err) != 0) {
             [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
             success = NO;
         }
 
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache", "-p", "/Applications/Sileo.app", NULL}, &log, &err) != 0) {
             [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
             success = NO;
         }
 
         [AppDelegate addLogText:Localized(@"Status: Reinstalling Zebra")];
         NSString* zebraDeb = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"zebra.deb"];
-        if(spawnBootstrap((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/dpkg", "-i", rootfsPrefix(zebraDeb).fileSystemRepresentation, NULL}, nil, nil) != 0) {
             [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
             success = NO;
         }
 
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache", "-p", "/Applications/Zebra.app", NULL}, &log, &err) != 0) {
             [AppDelegate addLogText:[NSString stringWithFormat:@"failed:%@\nERR:%@", log, err]];
             success = NO;
         }
@@ -291,7 +300,7 @@ int rebuildIconCache()
     NSString* log=nil;
     NSString* err=nil;
 
-    if(spawnRoot([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
+    if(spawn_root([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
         STRAPLOG("refresh tsapps failed:%@\nERR:%@", log, err);
         return -1;
     }
@@ -299,7 +308,7 @@ int rebuildIconCache()
     [[NSString new] writeToFile:jbroot(@"/basebin/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil];
     [LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
 
-    int status = spawnBootstrap((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err);
+    int status = spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err);
     if(status==0) {
         killAllForExecutable("/usr/libexec/backboardd");
     } else {
@@ -323,7 +332,7 @@ void rebuildIconCacheAction()
 
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
+        int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
         if(status != 0) {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
@@ -349,7 +358,7 @@ void tweaEnableAction(BOOL enable)
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Userspace Reboot Required") message:Localized(@"A userspace reboot is neccessary to apply the changes. Do you want to do it now?") preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Later") style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Now") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            spawnBootstrap((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
+            spawn_bootstrap_binary((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
         }]];
         [AppDelegate showAlert:alert];
     }
@@ -399,23 +408,23 @@ BOOL opensshAction(BOOL enable)
         [NSUserDefaults.appDefaults synchronize];
         return enable;
     }
+    
+    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+        [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
+        return [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")];
+    }
 
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
         [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
         return NO;
     }
-    
-    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
-        [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
-        return NO;
-    }
 
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"openssh",enable?@"start":@"stop"], &log, &err);
+    int status = spawn_root(jbroot(@"/basebin/bsctl"), @[@"openssh",enable?@"start":@"stop"], &log, &err);
 
     //try
-    if(!enable) spawnBootstrap((char*[]){"/usr/bin/killall","-9","sshd",NULL}, nil, nil);
+    if(!enable) spawn_bootstrap_binary((char*[]){"/usr/bin/killall","-9","sshd",NULL}, nil, nil);
 
     if(status==0)
     {
@@ -433,18 +442,8 @@ BOOL opensshAction(BOOL enable)
 
 void rebootUserspaceAction()
 {
-    spawnBootstrap((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
+    spawn_bootstrap_binary((char*[]){"/usr/bin/launchctl","reboot","userspace",NULL}, nil, nil);
 }
-
-NSArray* ResignExecutables = @[
-    @"/sbin/launchd",
-    @"/usr/libexec/xpcproxy",
-    @"/System/Library/CoreServices/SpringBoard.app/SpringBoard",
-    @"/usr/bin/powerlogHelperd",
-    @"/usr/sbin/spindump",
-];
-
-#define RESIGNED_SYSROOT_PATH jbroot(@"/.sysroot")
 
 int exploitStart(NSString* execDir)
 {
@@ -460,66 +459,10 @@ int exploitStart(NSString* execDir)
             ASSERT([plistContent writeToFile:fileURL.path atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         }
     }
-
-    if([fm fileExistsAtPath:RESIGNED_SYSROOT_PATH]) {
-        ASSERT([fm removeItemAtPath:RESIGNED_SYSROOT_PATH error:nil]);
-    }
     
-    NSString* ldidPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/ldid"];
-    NSString* fastSignPath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/fastPathSign"];
+    ASSERT(spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], nil, nil) == 0);
     
-    for(NSString* sourcePath in ResignExecutables)
-    {
-        NSString* destPath = [RESIGNED_SYSROOT_PATH stringByAppendingPathComponent:sourcePath];
-        NSString* destDirPath = [destPath stringByDeletingLastPathComponent];
-        
-        NSString* destSubPathTemp = RESIGNED_SYSROOT_PATH;
-        NSArray<NSString *>* sourcePathComponents = sourcePath.pathComponents;
-        for(NSString* item in sourcePathComponents)
-        {
-            destSubPathTemp = [destSubPathTemp stringByAppendingPathComponent:item];
-            
-            struct stat st={0};
-            if(lstat(destSubPathTemp.fileSystemRepresentation, &st) != 0) {
-                break;
-            }
-            
-            if(S_ISLNK(st.st_mode)) {
-                ASSERT(unlink(destSubPathTemp.fileSystemRepresentation)==0);
-                break;
-            }
-        }
-        
-        if(![fm fileExistsAtPath:destDirPath]) {
-            NSDictionary* attr = @{NSFilePosixPermissions:@(0755), NSFileOwnerAccountID:@(0), NSFileGroupOwnerAccountID:@(0)};
-            ASSERT([fm createDirectoryAtPath:destDirPath withIntermediateDirectories:YES attributes:attr error:nil]);
-        }
-        
-        ASSERT([fm copyItemAtPath:sourcePath toPath:destPath error:nil]);
-        
-        NSURL* sourceDirURL = [NSURL fileURLWithPath:sourcePath.stringByDeletingLastPathComponent];
-        for (NSURL* fileURL in [fm contentsOfDirectoryAtURL:sourceDirURL includingPropertiesForKeys:nil options:0 error:nil]) {
-            NSString* destfile = [destDirPath stringByAppendingPathComponent:fileURL.lastPathComponent];
-            if(![fm fileExistsAtPath:destfile]) {
-                ASSERT([fm createSymbolicLinkAtPath:destfile withDestinationPath:fileURL.path error:nil]);
-            }
-        }
-
-        NSString* entitlementsFileInBundlePath = [NSString stringWithFormat:@"basebin/entitlements/executables/%@.extra", sourcePath.lastPathComponent];
-        NSString* entitlementsFilePath = [NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:entitlementsFileInBundlePath];
-        if([fm fileExistsAtPath:entitlementsFilePath]) {
-            ASSERT(spawnRoot(ldidPath, @[@"-M", [NSString stringWithFormat:@"-S%@", entitlementsFilePath], destPath], nil, nil) == 0);
-        } else {
-            STRAPLOG("Entitlements File %@ Not Found!!!", entitlementsFileInBundlePath);
-            return -1;
-        }
-        
-        ASSERT(spawnRoot(fastSignPath, @[destPath], nil, nil) == 0);
-    }
-    
-    ASSERT(spawnRoot(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], nil, nil) == 0);
-    
-    ASSERT(spawnRoot(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil) == 0);
+    ASSERT(spawn_root(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil) == 0);
     
     return 0;
 }
@@ -534,7 +477,7 @@ void bootstrapAction()
 
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+            ASSERT(spawn_root(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
         }]];
 
         [AppDelegate showAlert:alert];
@@ -546,7 +489,7 @@ void bootstrapAction()
         return;
     }
 
-    if(spawnRoot([NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/devtest"], nil, nil, nil) != 0) {
+    if(spawn_root([NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:@"basebin/devtest"], nil, nil, nil) != 0) {
         [AppDelegate showMesage:Localized(@"Your device does not seem to have developer mode enabled.\n\nPlease enable developer mode and reboot your device.") title:Localized(@"Error")];
         return;
     }
@@ -558,7 +501,7 @@ void bootstrapAction()
 
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            ASSERT(spawnRoot(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
+            ASSERT(spawn_root(NSBundle.mainBundle.executablePath, @[@"reboot"], nil, nil)==0);
         }]];
 
         [AppDelegate showAlert:alert];
@@ -641,7 +584,7 @@ void bootstrapAction()
             
             NSString* log=nil;
             NSString* err=nil;
-            status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"enableapp",@"/Applications/Preferences.app"], &log, &err);
+            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp",@"/Applications/Preferences.app"], &log, &err);
             
             if(status == 0) {
                 ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.preferences_tweak_inited") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
@@ -658,7 +601,7 @@ void bootstrapAction()
             NSString* execDir = [@"/var/db/com.apple.xpc.roleaccountd.staging/exec-" stringByAppendingString:[[NSUUID UUID] UUIDString]];
                 
             @try {
-                ASSERT(spawnRoot(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], nil, nil) == 0);
+                ASSERT(spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], nil, nil) == 0);
                 
                 int load_trust_cache(NSString *tcPath);
                 ASSERT(load_trust_cache(jbroot(@"/tmp/TaskPortHaxx/UpdateBrainService/AssetData/.TrustCache")) == 0);
@@ -668,6 +611,15 @@ void bootstrapAction()
                 [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@", exception] title:@"ERROR"];
                 return;
             }
+            
+            const char* argv[] = {jbroot("/basebin/bsctl"), "resign", NULL};
+            int status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
+                NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+                [AppDelegate addLogText:str];
+            }, ^(char* errstr, int length){
+                NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+                [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
+            });
             
             const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", execDir.fileSystemRepresentation, NULL};
             status = spawn(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
@@ -690,7 +642,7 @@ void bootstrapAction()
         [generator impactOccurred];
         
         [AppDelegate addLogText:Localized(@"respring now...")]; sleep(1);
-         status = spawnBootstrap((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
+         status = spawn_bootstrap_binary((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
         if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
 
     });
@@ -709,7 +661,7 @@ void unbootstrapAction()
 
             NSString* log=nil;
             NSString* err=nil;
-            int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
+            int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"unbootstrap"], &log, &err);
 
             [AppDelegate dismissHud];
             setIdleTimerDisabled(NO);
@@ -743,7 +695,7 @@ void resetMobilePassword()
         NSString* err=nil;
         NSString* pwcmd = [NSString stringWithFormat:@"printf \"%%s\\n\" \"%@\" | /usr/sbin/pw usermod 501 -h 0", alert.textFields.lastObject.text];
         const char* args[] = {"/usr/bin/dash", "-c", pwcmd.UTF8String, NULL};
-        int status = spawnBootstrap(args, &log, &err);
+        int status = spawn_bootstrap_binary(args, &log, &err);
         if(status == 0 || status == 67) {
             [AppDelegate showMesage:Localized(@"done") title:@""];
         } else {
@@ -764,7 +716,7 @@ int hideBootstrapApp(BOOL usreboot)
     {
         sleep(2);
         
-        int status = spawnRoot(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil);
+        int status = spawn_root(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil);
         if(status != 0) {
             return -2;
         }
@@ -839,7 +791,7 @@ void hideAllCTBugAppsAction(BOOL usreboot)
 
     NSString* log=nil;
     NSString* err=nil;
-    int status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"hidebootstrapapp",usreboot?@"usreboot":@""], &log, &err);
+    int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"hidebootstrapapp",usreboot?@"usreboot":@""], &log, &err);
     if(status != 0) {
         NSString* msg = [NSString stringWithFormat:@"code(%d)\n%@\n\nstderr:\n%@",status,log,err];
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
@@ -875,7 +827,7 @@ void unhideAllCTBugApps()
         
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawnBootstrap((char*[]){"/usr/bin/uicache","-a",NULL}, &log, &err);
+        int status = spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-a",NULL}, &log, &err);
         
         [AppDelegate dismissHud];
         

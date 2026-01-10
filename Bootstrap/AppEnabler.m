@@ -177,7 +177,7 @@ int enableForApp(NSString* bundlePath)
         
         NSString* log=nil;
         NSString* err=nil;
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", bundlePath.UTF8String, NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", bundlePath.UTF8String, NULL}, &log, &err) != 0) {
             STRAPLOG("%@\nERR:%@", log, err);
             AppInfo* app = [AppInfo appWithBundleIdentifier:appInfo[@"CFBundleIdentifier"]];
             if(app && [app.bundleURL.path hasPrefix:@"/Applications/"]) {
@@ -194,7 +194,7 @@ int enableForApp(NSString* bundlePath)
         
         NSString* log=nil;
         NSString* err=nil;
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
             STRAPLOG("%@\nERR:%@", log, err);
             ABORT();
         }
@@ -207,7 +207,7 @@ int enableForApp(NSString* bundlePath)
         
         NSString* log=nil;
         NSString* err=nil;
-        if(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
+        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, &log, &err) != 0) {
             STRAPLOG("%@\nERR:%@", log, err);
             ABORT();
         }
@@ -230,14 +230,14 @@ int disableForApp(NSString* bundlePath)
         ASSERT([fm removeItemAtPath:bundlePath error:nil]);
         
         NSString* sysPath = [@"/Applications/" stringByAppendingString:bundlePath.lastPathComponent];
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).UTF8String, NULL}, nil, nil) == 0);
     }
     else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
     {
         
         ASSERT(restoreApp(bundlePath) == 0);
         
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     else
     {
@@ -251,9 +251,9 @@ int disableForApp(NSString* bundlePath)
         if(encryptedApp && backupVersion.intValue>=1) return 0;
         
         //unregister or respring to keep app's icon on home screen
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
         //come back
-        ASSERT(spawnBootstrap((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
+        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(bundlePath).UTF8String, NULL}, nil, nil) == 0);
     }
     
     return 0;

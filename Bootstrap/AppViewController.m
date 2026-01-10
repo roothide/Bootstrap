@@ -316,6 +316,12 @@ NSArray* unsupportedBundleIDs = @[
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pos];
     BOOL enabled = switchInCell.on;
     AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+    
+    if(enabled && isBlacklistedApp(app.bundleIdentifier.UTF8String)) {
+        [AppDelegate showMesage:Localized(@"This app is blacklisted by RootHide Manager, please unblacklist it first.") title:@""];
+        [switchInCell setOn:NO];
+        return;
+    }
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
@@ -326,9 +332,9 @@ NSArray* unsupportedBundleIDs = @[
         NSString* log=nil;
         NSString* err=nil;
         if(enabled) {
-            status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"enableapp",app.bundleURL.path], &log, &err);
+            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp",app.bundleURL.path], &log, &err);
         } else {
-            status = spawnRoot(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
+            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
         }
         
         if(status != 0) {
