@@ -447,20 +447,13 @@ void rebootUserspaceAction()
 
 int exploitStart(NSString* execDir)
 {
-    NSFileManager* fm = NSFileManager.defaultManager;
-    
-    // Patch basebin plists
-    NSURL *basebinDaemonsURL = [NSURL fileURLWithPath:jbroot(@"/basebin/LaunchDaemons")];
-    for (NSURL *fileURL in [fm contentsOfDirectoryAtURL:basebinDaemonsURL includingPropertiesForKeys:nil options:0 error:nil]) {
-        NSString* plistContent = [NSString stringWithContentsOfFile:fileURL.path encoding:NSUTF8StringEncoding error:nil];
-        if(plistContent) {
-            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBROOT@" withString:jbroot(@"/")];
-            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBRAND@" withString:[NSString stringWithFormat:@"%016llX",jbrand()]];
-            ASSERT([plistContent writeToFile:fileURL.path atomically:YES encoding:NSUTF8StringEncoding error:nil]);
-        }
+    NSString* log=nil;
+    NSString* err=nil;
+    int status = spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], &log, &err);
+    if(status != 0) {
+        STRAPLOG("TaskPortHaxx: %@", err); //only output stderr here
+        return status;
     }
-    
-    ASSERT(spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[execDir], nil, nil) == 0);
     
     ASSERT(spawn_root(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil) == 0);
     
@@ -599,27 +592,37 @@ void bootstrapAction()
             [AppDelegate addLogText:Localized(@"exploit...")];
             
             NSString* execDir = [@"/var/db/com.apple.xpc.roleaccountd.staging/exec-" stringByAppendingString:[[NSUUID UUID] UUIDString]];
+            
+            NSString* log=nil;
+            NSString* err=nil;
+            int status = spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], &log, &err);
+            if(status != 0) {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\n%@\n\nstderr:\n%@",Localized(@"Please reboot device and try again!"),log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                return;
+            }
                 
             @try {
-                ASSERT(spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], nil, nil) == 0);
-                
                 int load_trust_cache(NSString *tcPath);
                 ASSERT(load_trust_cache(jbroot(@"/tmp/TaskPortHaxx/UpdateBrainService/AssetData/.TrustCache")) == 0);
             }
             @catch (NSException *exception)
             {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@", exception] title:@"ERROR"];
+                [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@\n\n%@", exception] title:@"ERROR"];
                 return;
             }
             
             const char* argv[] = {jbroot("/basebin/bsctl"), "resign", NULL};
-            int status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
+             status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
                 NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
                 [AppDelegate addLogText:str];
             }, ^(char* errstr, int length){
                 NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
                 [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
             });
+            if(status != 0) {
+                [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
+                return;
+            }
             
             const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", execDir.fileSystemRepresentation, NULL};
             status = spawn(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
@@ -630,7 +633,7 @@ void bootstrapAction()
                 [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
             });
             if(status!=0) {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate showMesage:Localized(@"Please reboot device and try again!") title:[NSString stringWithFormat:@"code(%d)",status]];
                 return;
             }
             
@@ -643,7 +646,10 @@ void bootstrapAction()
         
         [AppDelegate addLogText:Localized(@"respring now...")]; sleep(1);
          status = spawn_bootstrap_binary((char*[]){"/usr/bin/sbreload", NULL}, &log, &err);
-        if(status!=0) [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+        if(status!=0) {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            return;
+        }
 
     });
 }

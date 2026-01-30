@@ -150,7 +150,7 @@ int backupApp(NSString* bundlePath)
         ASSERT([fm removeItemAtPath:backup error:nil]);
     }
     
-    ASSERT(clonefile(bundlePath.fileSystemRepresentation, backup.fileSystemRepresentation, CLONE_ACL) == 0);
+    ASSERT(clonefile(bundlePath.fileSystemRepresentation, backup.fileSystemRepresentation, 0) == 0);
 
     ASSERT([@"1" writeToFile:[backup.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"] atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     

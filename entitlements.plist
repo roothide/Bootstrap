@@ -38,12 +38,6 @@
 	<key>com.apple.private.persona-mgmt</key>
 	<true/>
     
-	<key>com.apple.security.exception.shared-preference.read-write</key>
-	<array>
-        <string>com.roothide.Bootstrap</string>
-        <string>com.roothide.Bootstrap.shared</string>
-	</array>
-    
     <key>com.apple.private.MobileContainerManager.allowed</key>
     <true/>
     

@@ -143,6 +143,17 @@ int rebuildBasebin()
     unlink(jbroot(@"/basebin/.jbroot").fileSystemRepresentation);
     ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/basebin/.jbroot") withDestinationPath:@"../.jbroot" error:nil]); //use a relative path so libvroot won't remove it
     
+    // Patch basebin plists
+    NSURL *basebinDaemonsURL = [NSURL fileURLWithPath:jbroot(@"/basebin/LaunchDaemons")];
+    for (NSURL *fileURL in [fm contentsOfDirectoryAtURL:basebinDaemonsURL includingPropertiesForKeys:nil options:0 error:nil]) {
+        NSString* plistContent = [NSString stringWithContentsOfFile:fileURL.path encoding:NSUTF8StringEncoding error:nil];
+        if(plistContent) {
+            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBROOT@" withString:jbroot(@"/")];
+            plistContent = [plistContent stringByReplacingOccurrencesOfString:@"@JBRAND@" withString:[NSString stringWithFormat:@"%016llX",jbrand()]];
+            ASSERT([plistContent writeToFile:fileURL.path atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        }
+    }
+    
     return 0;
 }
 
