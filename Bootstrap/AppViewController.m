@@ -336,6 +336,15 @@ NSArray* unsupportedBundleIDs = @[
         return;
     }
     
+    if(![NSFileManager.defaultManager fileExistsAtPath:app.bundleURL.path]) {
+        NSString* msg = [NSString stringWithFormat:@"%@\n\n%@",
+                         Localized(@"App bundle does not exist, try Bootstrap->[settings]->[rebuild icon cache] to fix it."),
+                         app.bundleURL.path];
+        [AppDelegate showMesage:msg title:Localized(@"Error")];
+        [switchInCell setOn:!enabled];
+        return;
+    }
+    
     if([app.bundleURL.path hasPrefix:@"/Applications/"])
     {
         NSString* resignedBundlePath = [jbroot(@"/.sysroot") stringByAppendingPathComponent:app.bundleURL.path];
