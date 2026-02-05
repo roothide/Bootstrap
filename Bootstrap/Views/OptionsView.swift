@@ -183,7 +183,7 @@ struct OptionsView: View {
                                 
                                 if isSystemBootstrapped() && checkBootstrapVersion()
                                 {
-                                    if FileManager.default.fileExists(atPath: jbroot("/basebin/.launchctl_support"))
+                                    if launchctl_support()
                                     {
                                         Button {
                                             Haptic.shared.play(.light)

@@ -480,7 +480,7 @@ void removeUnexpectedPreferences()
         }
     }
     if(reload) {
-        killAllForExecutable("/usr/sbin/cfprefsd");
+        killAllForExecutable("/usr/sbin/cfprefsd", SIGKILL);
     }
 }
 
@@ -626,7 +626,7 @@ int unbootstrap()
         STRAPLOG("trollstore not found!");
     }
     
-    killAllForExecutable("/usr/libexec/backboardd");
+    killAllForExecutable("/usr/libexec/backboardd", SIGKILL);
     
     return 0;
 }

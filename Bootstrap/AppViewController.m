@@ -121,6 +121,17 @@
         return YES;
     }
     
+    if(@available(iOS 16.0, *))
+    {
+        if([app.bundleURL.path hasPrefix:@"/Applications/"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(app.bundleURL.path)]) {
+            return YES;
+        }
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot([@"/.sysroot/" stringByAppendingString:app.bundleURL.path])]) {
+            return YES;
+        }
+    }
+    
     if(!isRemovableBundlePath(app.bundleURL.path.fileSystemRepresentation)) {
         return NO;
     }
@@ -314,34 +325,46 @@ NSArray* unsupportedBundleIDs = @[
     UISwitch *switchInCell = (UISwitch *)sender;
     CGPoint pos = [switchInCell convertPoint:switchInCell.bounds.origin toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pos];
-    BOOL enabled = switchInCell.on;
+    
     AppInfo* app = isFiltered? filteredApps[indexPath.row] : appsArray[indexPath.row];
+    
+    BOOL enabled = switchInCell.on;
     
     if(enabled && isBlacklistedApp(app.bundleIdentifier.UTF8String)) {
         [AppDelegate showMesage:Localized(@"This app is blacklisted by RootHide Manager, please unblacklist it first.") title:@""];
         [switchInCell setOn:NO];
         return;
     }
+    
+    if([app.bundleURL.path hasPrefix:@"/Applications/"])
+    {
+        NSString* resignedBundlePath = [jbroot(@"/.sysroot") stringByAppendingPathComponent:app.bundleURL.path];
+        if([NSFileManager.defaultManager fileExistsAtPath:resignedBundlePath])
+        {
+            NSString* InfoPlistPath = [resignedBundlePath stringByAppendingPathComponent:@"Info.plist"];
+            
+            struct stat st={0};
+            if(lstat(InfoPlistPath.fileSystemRepresentation, &st)!=0 || S_ISLNK(st.st_mode)) {
+                [AppDelegate showMesage:Localized(@"This app's injection is hosted by Bootstrap now, you don't have to deal with it.") title:@""];
+                [switchInCell setOn:!enabled];
+                return;
+            }
+        }
+    }
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [AppDelegate showHudMsg:Localized(@"Applying")];
         
-        killAllForBundle(app.bundleURL.path.UTF8String);
+        killAllForBundle(app.bundleURL.path.fileSystemRepresentation);
         
-        int status;
         NSString* log=nil;
         NSString* err=nil;
-        if(enabled) {
-            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp",app.bundleURL.path], &log, &err);
-        } else {
-            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"disableapp",app.bundleURL.path], &log, &err);
-        }
-        
+        int status = spawn_root(NSBundle.mainBundle.executablePath, @[enabled ? @"enableapp" : @"disableapp",app.bundleURL.path], &log, &err);
         if(status != 0) {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"error(%d)",status]];
         }
         
-        killAllForBundle(app.bundleURL.path.UTF8String);
+        killAllForBundle(app.bundleURL.path.fileSystemRepresentation);
         
         //refresh app cache list
         [self updateData:NO];

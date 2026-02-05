@@ -47,7 +47,7 @@ BOOL updateOpensshStatus(BOOL notify)
     
     if(isSystemBootstrapped())
     {
-        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+        if(launchctl_support()) {
             status = [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")];
         } else {
             if(spawn_root(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil)==0) {
@@ -97,6 +97,11 @@ BOOL checkServer()
     if(alerted) return NO;
 
     BOOL ret=NO;
+    
+    if(launchctl_support()) {
+        bool bsd_tick_mach_service();
+        bsd_tick_mach_service();
+    }
 
     if(spawn_root(jbroot(@"/basebin/bsctl"), @[@"check"], nil, nil) != 0)
     {
@@ -105,7 +110,7 @@ BOOL checkServer()
 
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Server Not Running") message:Localized(@"for unknown reasons the bootstrap server is not running, the only thing we can do is to restart it now.") preferredStyle:UIAlertControllerStyleAlert];
         
-        if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")])
+        if(!launchctl_support())
           [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Restart Server") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             
             alerted = false;
@@ -130,6 +135,31 @@ BOOL checkServer()
     return ret;
 }
 
+BOOL ensureTrollStoreHelper(NSArray* allInstalledApplications)
+{
+    if(!allInstalledApplications) {
+        allInstalledApplications = [LSApplicationWorkspace.defaultWorkspace allInstalledApplications];
+    }
+    
+    BOOL TSHelperFound = NO;
+    for(LSApplicationProxy* proxy in allInstalledApplications) {
+        NSString* TSHelperMarker = [proxy.bundleURL.path stringByAppendingPathComponent:@".TrollStorePersistenceHelper"];
+        if([NSFileManager.defaultManager fileExistsAtPath:TSHelperMarker]) {
+            TSHelperFound = YES;
+            break;
+        }
+    }
+    
+    if(!TSHelperFound) {
+        [AppDelegate dismissHud];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"You haven't installed [TrollStore Persistence Helper] yet, please install it in [TrollStore]->[Settings] first.") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
+        [AppDelegate showAlert:alert];
+    }
+    
+    return TSHelperFound;
+}
 
 #define PROC_PIDPATHINFO_MAXSIZE  (1024)
 int proc_pidpath(pid_t pid, void *buffer, uint32_t buffersize);
@@ -150,9 +180,15 @@ void initFromSwiftUI()
 
     if(isSystemBootstrapped())
     {
-        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
-            [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/basebin/.rebuildiconcache") error:nil];
-            [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen")];
+        NSString* rebuildStatus = [NSString stringWithContentsOfFile:jbroot(@"/var/mobile/.rebuildiconcache") encoding:NSASCIIStringEncoding error:nil];
+        if(rebuildStatus) {
+            if(rebuildStatus.intValue > 200) {
+                ASSERT([@"101" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+                [AppDelegate showHudMsg:Localized(@"Rebuilding") detail:Localized(@"Don't exit Bootstrap app until show the lock screen")];
+            } else if(rebuildStatus.intValue < 100) {
+                ASSERT([@"102" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@ : %@", Localized(@"Rebuild Icon Cache"), rebuildStatus] title:Localized(@"Error")];
+            }
             IconCacheRebuilding = YES;
         }
     }
@@ -191,7 +227,7 @@ void initFromSwiftUI()
         }];
     }
 
-    if(!IconCacheRebuilding && isSystemBootstrapped() && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+    if(!IconCacheRebuilding && isSystemBootstrapped() && !launchctl_support()) {
         if([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"filza://"]]
            || [LSPlugInKitProxy pluginKitProxyForIdentifier:@"com.tigisoftware.Filza.Sharing"])
         {
@@ -236,7 +272,7 @@ void rebuildappsAction()
         NSString* err=nil;
         int status = spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, nil, nil);
         if(status==0) {
-            killAllForExecutable("/usr/libexec/backboardd");
+            killAllForExecutable("/usr/libexec/backboardd", SIGKILL);
         } else {
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
@@ -288,38 +324,48 @@ void reinstallPackageManager()
 
 int rebuildIconCache()
 {
+    ASSERT([@"1" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     AppInfo* tsapp = [AppInfo appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(!tsapp) {
+        ASSERT([@"-1" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         STRAPLOG("trollstore not found!");
         return -1;
     }
 
     STRAPLOG("rebuild icon cache...");
-    ASSERT([LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES]);
+    ASSERT([@"2" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    if(![LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES]) {
+        ASSERT([@"-2" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        return -1;
+    }
 
     NSString* log=nil;
     NSString* err=nil;
 
+    ASSERT([@"3" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     if(spawn_root([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
+        ASSERT([@"-3" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         STRAPLOG("refresh tsapps failed:%@\nERR:%@", log, err);
         return -1;
     }
 
-    [[NSString new] writeToFile:jbroot(@"/basebin/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    [LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
-
-    int status = spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err);
-    if(status==0) {
-        killAllForExecutable("/usr/libexec/backboardd");
-    } else {
-        STRAPLOG("rebuildApps failed:%@\nERR:\n%@",log,err);
+    ASSERT([@"201" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    if(![LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier]) {
+        ASSERT([@"-4" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     }
 
-    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.rebuildiconcache")]) {
-        [NSFileManager.defaultManager removeItemAtPath:jbroot(@"/basebin/.rebuildiconcache") error:nil];
+    ASSERT([@"202" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    if(spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err) != 0) {
+        ASSERT([@"-5" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+        STRAPLOG("rebuild apps failed:%@\nERR:%@", log, err);
+        return -1;
     }
-
-    return status;
+    
+    ASSERT([@"203" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    killAllForExecutable("/usr/libexec/backboardd", SIGKILL);
+    
+    ASSERT([@"100" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    return 0;
 }
 
 void rebuildIconCacheAction()
@@ -332,8 +378,11 @@ void rebuildIconCacheAction()
 
         NSString* log=nil;
         NSString* err=nil;
-        int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
+        int status = spawn_daemon(NSBundle.mainBundle.executablePath, @[@"rebuildiconcache"], &log, &err);
         if(status != 0) {
+            if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.rebuildiconcache")]) {
+                ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.rebuildiconcache") error:nil]);
+            }
             [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
         }
 
@@ -354,7 +403,7 @@ void tweaEnableAction(BOOL enable)
         ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
     }
     
-    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+    if(launchctl_support()) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Userspace Reboot Required") message:Localized(@"A userspace reboot is neccessary to apply the changes. Do you want to do it now?") preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Later") style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Now") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -381,7 +430,7 @@ void URLSchemesAction(BOOL enable)
     
     if(!enable)
     {
-        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+        if(launchctl_support()) {
             [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(YES)];
             [AppDelegate showMesage:Localized(@"URL Schemes are now undetectable on your device, you don't need to disable them anymore.") title:@""];
             return;
@@ -409,7 +458,7 @@ BOOL opensshAction(BOOL enable)
         return enable;
     }
     
-    if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/basebin/.launchctl_support")]) {
+    if(launchctl_support()) {
         [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
         return [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")];
     }
@@ -462,6 +511,10 @@ int exploitStart(NSString* execDir)
 
 void bootstrapAction()
 {
+    if(!ensureTrollStoreHelper(nil)) {
+        return;
+    }
+    
     if(isSystemBootstrapped())
     {
         ASSERT(checkBootstrapVersion()==false);
@@ -548,7 +601,7 @@ void bootstrapAction()
         setIdleTimerDisabled(YES);
 
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
-        int status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
+        int status = spawn_binary(argv[0], argv, environ, nil, ^(char* outstr, int length) {
             NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
             [AppDelegate addLogText:str];
         }, ^(char* errstr, int length){
@@ -612,7 +665,7 @@ void bootstrapAction()
             }
             
             const char* argv[] = {jbroot("/basebin/bsctl"), "resign", NULL};
-             status = spawn(argv[0], argv, environ, nil, ^(char* outstr, int length) {
+             status = spawn_binary(argv[0], argv, environ, nil, ^(char* outstr, int length) {
                 NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
                 [AppDelegate addLogText:str];
             }, ^(char* errstr, int length){
@@ -625,7 +678,7 @@ void bootstrapAction()
             }
             
             const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "exploit", execDir.fileSystemRepresentation, NULL};
-            status = spawn(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
+            status = spawn_binary(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
                 NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
                 [AppDelegate addLogText:str];
             }, ^(char* errstr, int length){
@@ -737,22 +790,7 @@ void hideAllCTBugAppsAction(BOOL usreboot)
     
     NSArray* allInstalledApplications = [LSApplicationWorkspace.defaultWorkspace allInstalledApplications];
     
-    BOOL TSHelperFound = NO;
-    for(LSApplicationProxy* proxy in allInstalledApplications) {
-        NSString* TSHelperMarker = [proxy.bundleURL.path stringByAppendingPathComponent:@".TrollStorePersistenceHelper"];
-        if([NSFileManager.defaultManager fileExistsAtPath:TSHelperMarker]) {
-            TSHelperFound = YES;
-            break;
-        }
-    }
-    
-    if(!TSHelperFound) {
-        [AppDelegate dismissHud];
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"You haven't installed TrollStore Helper yet, please install it in TrollStore->Settings first.") preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
-        [AppDelegate showAlert:alert];
-        
+    if(!ensureTrollStoreHelper(allInstalledApplications)) {
         return;
     }
     
