@@ -198,13 +198,19 @@
 
             BOOL enabled1 = [self tweakEnabled:app1];
             BOOL enabled2 = [self tweakEnabled:app2];
+            BOOL isApple1 = [app1.bundleIdentifier hasPrefix:@"com.apple."];
+            BOOL isApple2 = [app2.bundleIdentifier hasPrefix:@"com.apple."];
             
-            if((enabled1&&!enabled2) || (!enabled1&&enabled2)) {
+            if(enabled1 != enabled2) {
                 return [@(enabled2) compare:@(enabled1)];
             }
             
-            if(app1.isHiddenApp || app2.isHiddenApp) {
-                return (enabled1&&enabled2) ? [@(app2.isHiddenApp) compare:@(app1.isHiddenApp)] : [@(app1.isHiddenApp) compare:@(app2.isHiddenApp)];
+            if(app1.isHiddenApp != app2.isHiddenApp) {
+                return [@(app1.isHiddenApp) compare:@(app2.isHiddenApp)];
+            }
+            
+            if(isApple1 != isApple2) {
+                return [@(isApple1) compare:@(isApple2)];
             }
             
             return [app1.name localizedStandardCompare:app2.name];

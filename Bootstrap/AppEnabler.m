@@ -209,10 +209,10 @@ int enableForApp(NSString* bundlePath)
             ABORT();
         }
     }
-    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
+    else if(isRemovableBundlePath(bundlePath.fileSystemRepresentation))
     {
         ASSERT(backupApp(bundlePath) == 0);
-
+        
         ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
         
         NSString* log=nil;
@@ -222,18 +222,9 @@ int enableForApp(NSString* bundlePath)
             ABORT();
         }
     }
-    else
-    {
-        ASSERT(backupApp(bundlePath) == 0);
-        
-        ASSERT([fm createSymbolicLinkAtPath:[bundlePath stringByAppendingString:@"/.jbroot"] withDestinationPath:jbroot(@"/") error:nil]);
-        
-        NSString* log=nil;
-        NSString* err=nil;
-        if(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, &log, &err) != 0) {
-            STRAPLOG("%@\nERR:%@", log, err);
-            ABORT();
-        }
+    else {
+        STRAPLOG("unknown bundle path: %@", bundlePath);
+        ABORT();
     }
     
     return 0;
@@ -265,27 +256,42 @@ int disableForApp(NSString* bundlePath)
         NSString* sysPath = [@"/Applications/" stringByAppendingString:bundlePath.lastPathComponent];
         ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(sysPath).fileSystemRepresentation, NULL}, nil, nil) == 0);
     }
-    else if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
+    else if(isRemovableBundlePath(bundlePath.fileSystemRepresentation))
     {
-        ASSERT(restoreApp(bundlePath) == 0);
-        
-        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
+        if([appInfo[@"CFBundleIdentifier"] hasPrefix:@"com.apple."] || hasTrollstoreMarker(bundlePath.fileSystemRepresentation))
+        {
+            //should be a system app
+            
+            ASSERT(restoreApp(bundlePath) == 0);
+            
+            ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-s","-p", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
+        }
+        else
+        {
+            //should be a user app
+            
+            //read the backup file before restoreApp
+            NSString* backupFlag = [bundlePath.stringByDeletingLastPathComponent stringByAppendingPathComponent:@".appbackup"];
+            NSString* backupVersion = [NSString stringWithContentsOfFile:backupFlag encoding:NSASCIIStringEncoding error:nil];
+            
+            ASSERT(restoreApp(bundlePath) == 0);
+            
+            if(@available(iOS 16.0, *))
+            {
+                if(backupVersion.intValue >= 1) {
+                    return 0;
+                }
+            }
+            
+            //unregister or respring to keep app's icon on home screen
+            ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
+            //come back
+            ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
+        }
     }
-    else
-    {
-        //should be an appstored app
-        
-        BOOL encryptedApp = [NSFileManager.defaultManager fileExistsAtPath:[bundlePath stringByAppendingPathComponent:@"SC_Info"]];
-        NSString* backupVersion = [NSString stringWithContentsOfFile:[bundlePath stringByAppendingString:@"/../.appbackup"] encoding:NSASCIIStringEncoding error:nil];
-        
-        ASSERT(restoreApp(bundlePath) == 0);
-        
-        if(encryptedApp && backupVersion.intValue>=1) return 0;
-        
-        //unregister or respring to keep app's icon on home screen
-        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-u", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
-        //come back
-        ASSERT(spawn_bootstrap_binary((char*[]){"/usr/bin/uicache","-p", rootfsPrefix(bundlePath).fileSystemRepresentation, NULL}, nil, nil) == 0);
+    else {
+        STRAPLOG("unknown bundle path: %@", bundlePath);
+        ABORT();
     }
     
     return 0;

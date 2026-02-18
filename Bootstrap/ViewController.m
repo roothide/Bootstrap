@@ -161,19 +161,6 @@ BOOL ensureTrollStoreHelper(NSArray* allInstalledApplications)
     return TSHelperFound;
 }
 
-#define PROC_PIDPATHINFO_MAXSIZE  (1024)
-int proc_pidpath(pid_t pid, void *buffer, uint32_t buffersize);
-NSString* getLaunchdPath()
-{
-    char pathbuf[PROC_PIDPATHINFO_MAXSIZE] = {0};
-    int ret = proc_pidpath(1, pathbuf, sizeof(pathbuf));
-    if(ret <= 0) {
-        SYSLOG("proc_pidpath failed: %d:%d,%s", ret, errno, strerror(errno));
-        return nil;
-    }
-    return @(pathbuf);
-}
-
 void initFromSwiftUI()
 {
     BOOL IconCacheRebuilding=NO;
@@ -403,7 +390,7 @@ void tweaEnableAction(BOOL enable)
         ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
     }
     
-    if(launchctl_support()) {
+    if(isSystemBootstrapped() && launchctl_support()) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Userspace Reboot Required") message:Localized(@"A userspace reboot is neccessary to apply the changes. Do you want to do it now?") preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Later") style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Now") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -509,6 +496,85 @@ int exploitStart(NSString* execDir)
     return 0;
 }
 
+int injectSystemApps()
+{
+    NSString* injectionVersion = @(__DATE__ __TIME__);
+    
+    NSArray* bundles = [NSDictionary dictionaryWithContentsOfFile:jbroot(@"/basebin/resignList.plist")][@"bundles"];
+    
+    STRAPLOG("Injecting Bootstrap-managed system apps...");
+    
+    for(NSString* bundle in bundles)
+    {
+        if(![NSFileManager.defaultManager fileExistsAtPath:bundle]) {
+            STRAPLOG("%@ Not Found, Skip...", bundle.lastPathComponent);
+            continue;
+        }
+        
+        NSString* rebuildFilePath = [jbroot(bundle) stringByAppendingPathComponent:@".rebuild"];
+        NSDictionary* rebuildStatus = [NSDictionary dictionaryWithContentsOfFile:rebuildFilePath];
+        
+        BOOL injectedVersionMatched = [rebuildStatus[@"injected_version"] isEqualToString:injectionVersion];
+        
+        if(injectedVersionMatched) {
+            STRAPLOG("Skip reinjecting %@ ...", bundle.lastPathComponent);
+            continue;
+        }
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp", bundle], &log, &err);
+        if(status == 0) {
+            STRAPLOG("Injected %@", bundle);
+        } else {
+            STRAPLOG("Failed(%d) to inject %@: %@, ERR: %@", status, bundle, log, err);
+            return -1;
+        }
+        
+        //reload .rebuild file after injection
+        NSMutableDictionary* newStatus = [NSMutableDictionary dictionaryWithContentsOfFile:rebuildFilePath];
+        [newStatus addEntriesFromDictionary:@{@"injected_version" : injectionVersion}];
+        ASSERT([newStatus writeToFile:rebuildFilePath atomically:YES]);
+    }
+    
+    STRAPLOG("Re-Injecting User-managed system apps...");
+    
+    for(NSString* item in [NSFileManager.defaultManager directoryContentsAtPath:jbroot(@"/Applications")])
+    {
+        NSString* bundle = [@"/Applications" stringByAppendingPathComponent:item];
+        
+        if([bundles containsObject:bundle]) continue;
+        if(![NSFileManager.defaultManager fileExistsAtPath:bundle]) continue;
+        
+        NSString* rebuildFilePath = [jbroot(bundle) stringByAppendingPathComponent:@".rebuild"];
+        NSDictionary* rebuildStatus = [NSDictionary dictionaryWithContentsOfFile:rebuildFilePath];
+        
+        BOOL injectedVersionMatched = [rebuildStatus[@"injected_version"] isEqualToString:injectionVersion];
+        
+        if(injectedVersionMatched) {
+            STRAPLOG("Skip reinjecting %@ ...", bundle.lastPathComponent);
+            continue;
+        }
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp", bundle], &log, &err);
+        if(status == 0) {
+            STRAPLOG("Injected %@", bundle);
+        } else {
+            STRAPLOG("Failed(%d) to inject %@: %@, ERR: %@", status, bundle, log, err);
+            //ignore //return -1;
+        }
+        
+        //reload .rebuild file after injection
+        NSMutableDictionary* newStatus = [NSMutableDictionary dictionaryWithContentsOfFile:rebuildFilePath];
+        [newStatus addEntriesFromDictionary:@{@"injected_version" : injectionVersion}];
+        ASSERT([newStatus writeToFile:rebuildFilePath atomically:YES]);
+    }
+    
+    return 0;
+}
+
 void bootstrapAction()
 {
     if(!ensureTrollStoreHelper(nil)) {
@@ -540,10 +606,9 @@ void bootstrapAction()
         return;
     }
     
-    NSString* launchdpath = getLaunchdPath();
-    if(![launchdpath isEqualToString:@"/sbin/launchd"] && ![launchdpath hasSuffix:@"/.sysroot/sbin/launchd"])
+    if(otherJailbreakActived())
     {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Please reboot device first.") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"Your device currently has another jailbreak activated, please reboot device.") preferredStyle:UIAlertControllerStyleAlert];
 
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Cancel") style:UIAlertActionStyleDefault handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"Reboot Device") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
@@ -608,38 +673,48 @@ void bootstrapAction()
             NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
             [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
         });
-
         if(status != 0)
         {
-            [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate showMesage:Localized(@"bootstrap failed!") title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate dismissHud];
             return;
         }
 
-        NSString* log=nil;
-        NSString* err=nil;
-
         tryLoadOpenSSH();
+        
+        if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.watchdogmsg")]) {
+            ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.watchdogmsg") error:nil]);
+        }
 
         if(gTweakEnabled && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
             ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.tweakenabled") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         }
         
-        if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.preferences_tweak_inited")])
-        {
-            [AppDelegate addLogText:Localized(@"Enable Tweak Injection for com.apple.Preferences")];
-            
-            NSString* log=nil;
-            NSString* err=nil;
-            status = spawn_root(NSBundle.mainBundle.executablePath, @[@"enableapp",@"/Applications/Preferences.app"], &log, &err);
-            
-            if(status == 0) {
-                ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.preferences_tweak_inited") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
-            } else {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"error(%d)",status]];
-                return;
-            }
+        const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "injectsystemapps", NULL};
+        int status2 = spawn_binary(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
+            NSString *str = [[NSString alloc] initWithBytes:outstr length:length encoding:NSASCIIStringEncoding];
+            [AppDelegate addLogText:str];
+        }, ^(char* errstr, int length){
+            NSString *str = [[NSString alloc] initWithBytes:errstr length:length encoding:NSASCIIStringEncoding];
+            [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
+        });
+        if(status2 != 0) {
+            [AppDelegate showMesage:Localized(@"Inject System Apps Failed!") title:[NSString stringWithFormat:@"code(%d)",status2]];
+            [AppDelegate dismissHud];
+            return;
         }
-
+        
+        [AppDelegate addLogText:Localized(@"Status: Rebuilding Apps")];
+        
+        NSString* log=nil;
+        NSString* err=nil;
+        int status3 = spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err);
+        if(status3 != 0) {
+            [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+            [AppDelegate dismissHud];
+            return;
+        }
+        
         if(@available(iOS 16.0, *))
         {
             [AppDelegate addLogText:Localized(@"exploit...")];
@@ -650,7 +725,8 @@ void bootstrapAction()
             NSString* err=nil;
             int status = spawn_root(jbroot(@"/basebin/TaskPortHaxx"), @[@"prepare", execDir], &log, &err);
             if(status != 0) {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\n%@\n\nstderr:\n%@",Localized(@"Please reboot device and try again!"),log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\n%@\n\nstderr:\n%@",Localized(@"Please ensure your device is connected to the network, you can reboot device and try again."),log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate dismissHud];
                 return;
             }
                 
@@ -660,7 +736,8 @@ void bootstrapAction()
             }
             @catch (NSException *exception)
             {
-                [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@\n\n%@", exception] title:@"ERROR"];
+                [AppDelegate showMesage:[NSString stringWithFormat:@"***exception: %@\n\n%@", exception] title:Localized(@"Error")];
+                [AppDelegate dismissHud];
                 return;
             }
             
@@ -674,6 +751,7 @@ void bootstrapAction()
             });
             if(status != 0) {
                 [AppDelegate showMesage:@"" title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate dismissHud];
                 return;
             }
             
@@ -686,7 +764,8 @@ void bootstrapAction()
                 [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
             });
             if(status!=0) {
-                [AppDelegate showMesage:Localized(@"Please reboot device and try again!") title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate showMesage:Localized(@"Please reboot device and try again.") title:[NSString stringWithFormat:@"code(%d)",status]];
+                [AppDelegate dismissHud];
                 return;
             }
             

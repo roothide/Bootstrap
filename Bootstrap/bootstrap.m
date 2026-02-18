@@ -551,15 +551,6 @@ int bootstrap()
     
     ASSERT(roothide_config_set_blacklist_enable(false)==0);
     
-    STRAPLOG("Status: Rebuilding Apps");
-    
-    NSString* log=nil;
-    NSString* err=nil;
-    if(spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err) != 0) {
-        STRAPLOG("%@\nERR:%@", log, err);
-        ABORT();
-    }
-    
     //Remove the shits triggered by uicache
     [NSFileManager.defaultManager removeItemAtPath:@"/var/mobile/Library/SplashBoard/Snapshots/xyz.willy.Zebra" error:nil];
     [NSFileManager.defaultManager removeItemAtPath:@"/var/mobile/Library/SplashBoard/Snapshots/com.roothide.manager" error:nil];

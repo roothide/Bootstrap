@@ -39,6 +39,9 @@ int main(int argc, char * argv[]) {
             } else if(strcmp(argv[1], "disableapp")==0) {
                 int disableForApp(NSString* bundlePath);
                 exit(disableForApp(@(argv[2])));
+            } else if(strcmp(argv[1], "injectsystemapps")==0) {
+                int injectSystemApps();
+                exit(injectSystemApps());
             } else if(strcmp(argv[1], "rebuildiconcache")==0) {
                 int rebuildIconCache();
                 exit(rebuildIconCache());

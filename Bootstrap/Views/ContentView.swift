@@ -17,9 +17,33 @@ import FluidGradient
 
 public let niceAnimation = Animation.timingCurve(0.25, 0.1, 0.35, 1.3).speed(0.9)
 
+class Logger: ObservableObject {
+    @Published var log: String = ""
+    static var shared = Logger()
+}
+    
 struct MainView: View {
-    @State var LogString: String = ""
+    @StateObject var logger = Logger.shared
     @State var lastScroll = Date()
+    
+    @State private var flashCount = 0
+    @State private var borderColor = Color.clear
+    
+    private func startFlashing() {
+        withAnimation {
+            borderColor = Color.red
+        }
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+            if flashCount < 6 {
+                borderColor = (flashCount % 2 == 0) ? Color.red : Color.clear
+                flashCount += 1
+            } else {
+                flashCount = 0
+                timer.invalidate()
+                borderColor = Color.clear
+            }
+        }
+    }
     
 //    let colorsWarm: [Color] = [.red, .orange, .yellow]
 //    let colorsCold: [Color] = [.blue, .purple, .pink]
@@ -32,6 +56,7 @@ struct MainView: View {
     @State private var showOptions = false
     @State private var showCredits = false
     @State private var showAppView = false
+    @State private var inBootstrapping = false
     @State private var strapButtonDisabled = false
     @State private var newVersionAvailable = false
     @State private var newVersionReleaseURL:String = ""
@@ -93,6 +118,7 @@ struct MainView: View {
                 VStack {
                     Button {
                         Haptic.shared.play(.light)
+                        inBootstrapping = true
                         bootstrapAction()
                     } label: {
                         if isSystemBootstrapped() {
@@ -146,13 +172,21 @@ struct MainView: View {
                             .cornerRadius(18)
                             .opacity(0.5)
                     }
-                    .disabled(strapButtonDisabled)
+                    .overlay(RoundedRectangle(cornerRadius: 18).stroke(borderColor, lineWidth: 4))
+                    .animation(.easeInOut(duration: 0.2), value: borderColor)
+                    .disabled(strapButtonDisabled || inBootstrapping)
                     
                     HStack {
                         
                         Button {
-                            showAppView.toggle()
-                            Haptic.shared.play(.light)
+                            if !isSystemBootstrapped() {
+                                if flashCount == 0 {
+                                    startFlashing()
+                                }
+                            } else {
+                                showAppView.toggle()
+                                Haptic.shared.play(.light)
+                            }
                         } label: {
                             Label(
                                 title: { Text("App List") },
@@ -165,7 +199,7 @@ struct MainView: View {
                                 .cornerRadius(18)
                                 .opacity(0.5)
                         }
-                        .disabled(!isSystemBootstrapped() || !checkBootstrapVersion())
+                        .disabled((isSystemBootstrapped() && !checkBootstrapVersion()) || inBootstrapping)
                         
                         Button {
                             withAnimation(niceAnimation) {
@@ -184,14 +218,14 @@ struct MainView: View {
                                 .cornerRadius(18)
                                 .opacity(0.5)
                         }
-                        .disabled(isSystemBootstrapped() && !checkBootstrapVersion())
+                        .disabled((isSystemBootstrapped() && !checkBootstrapVersion()) || inBootstrapping)
                         
                     }
                     
                     VStack {
                         ScrollViewReader { scroll in
                             ScrollView {
-                                Text(LogString)
+                                Text(logger.log)
                                     .frame(minWidth: 0,
                                            maxWidth: .infinity,
                                            minHeight: 0,
@@ -199,25 +233,22 @@ struct MainView: View {
                                            alignment: .topLeading)
                                     .transition(.opacity)
                                     .textSelection(.enabled)
-                                    .font(.custom("Menlo", size: 15))
+                                    .font(.system(size: 15))
                                     .foregroundColor(.white)
                                     .id("LogText")
-                                    .onChange(of: LogString) { newValue in
-//                                        withAnimation  {
-//                                            if lastScroll.timeIntervalSinceNow < -0.25 {
-//                                                lastScroll = Date()
-//                                                scroll.scrollTo("LogText", anchor: .bottom)
-//                                            }
-//                                        }
-                                        scroll.scrollTo("LogText", anchor: .bottom)
-
+                                    .onChange(of: logger.log) { newValue in
+                                        withAnimation  {
+                                            if lastScroll.timeIntervalSinceNow < -0.25 {
+                                                lastScroll = Date()
+                                                scroll.scrollTo("LogText", anchor: .bottom)
+                                            }
+                                        }
                                     }
                                     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("LogMsgNotification"))) { obj in
                                         DispatchQueue.main.async {
-                                            LogString += "\(obj.object as! NSString)\n"
+                                            logger.log += "\(obj.object as! NSString)\n"
                                         }
                                     }
-                                    
                             }
                         }
                         .frame(maxHeight: 200)
