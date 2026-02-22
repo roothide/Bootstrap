@@ -39,17 +39,13 @@ You'll need MacOS to build, as you require Xcode from the App Store. Simply havi
 
 The roothide Bootstrap application **must** be installed with [TrollStore](https://ios.cfw.guide/installing-trollstore/). Use version `2.0.9` or later for enabling developer mode on-device.
 
-Tweaks not compiled or converted to roothide will not work out-of-the-box with roothide Bootstrap. Refer to the FAQ below on how to use roothide Patcher.
-
-By design, roothide does not inject tweaks into any applications by default. To enable tweak injection into an application, press `App List` in the Bootstrap app, and enable the toggle of the application you want to inject into. Injection into `com.apple.springboard` or daemons is not possible with the roothide Bootstrap. Refer to the FAQ below on injection into `com.apple.springboard`.
-
-**A roothide Bootstrap FAQ** is available [here](https://github.com/dleovl/Bootstrap/blob/faq/README.md).
+By design, roothide does not inject tweaks into any 3rd applications by default. To enable tweak injection into an application, press `App List` in the Bootstrap app, and enable the toggle of the application you want to inject into.
 
 **For installing Bootstrap**, refer to the guides at [https://onejailbreak.com/blog/bootstrap-roothide/](https://onejailbreak.com/blog/bootstrap-roothide/)
 
 ## Develop tweaks
 
-Both rootful and rootless tweaks aren't out-of-the-box compatible with roothide, so you'll need to develop them specifically to support it. You can refer to the developer documentation [here](https://github.com/roothide/Developer).
+You can refer to the developer documentation [here](https://github.com/roothide/Developer).
 
 ## Discord server
 
