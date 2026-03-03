@@ -699,7 +699,7 @@ void bootstrapAction()
             [AppDelegate addLogText:[NSString stringWithFormat:@"ERR: %@\n",str]];
         });
         if(status2 != 0) {
-            [AppDelegate showMesage:Localized(@"Inject System Apps Failed!") title:[NSString stringWithFormat:@"code(%d)",status2]];
+            [AppDelegate showMesage:Localized(@"Inject System Apps Failed!\n\nPlease rebuild icon cache in TrollStore and try again.") title:[NSString stringWithFormat:@"code(%d)",status2]];
             [AppDelegate dismissHud];
             return;
         }
