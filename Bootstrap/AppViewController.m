@@ -172,7 +172,7 @@
         }
         
         if([NSFileManager.defaultManager fileExistsAtPath:
-            [app.bundleURL.path stringByAppendingString:@"/.TrollStorePresistenceHelper"]])
+            [app.bundleURL.path stringByAppendingString:@"/.TrollStorePersistenceHelper"]])
                 continue;
         
         if([NSFileManager.defaultManager fileExistsAtPath:
