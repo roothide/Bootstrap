@@ -276,7 +276,7 @@ int InstallBootstrap(NSString* jbroot_path)
     
     STRAPLOG("Status: Bootstrap Installed");
     
-    if(@available(iOS 16.0, *)) {
+    if(launchd_exploit_available()) {
         ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.allow_url_schemes") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     }
     

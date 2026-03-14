@@ -151,8 +151,6 @@ BOOL ensureTrollStoreHelper(NSArray* allInstalledApplications)
     }
     
     if(!TSHelperFound) {
-        [AppDelegate dismissHud];
-        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Error") message:Localized(@"You haven't installed [TrollStore Persistence Helper] yet, please install it in [TrollStore]->[Settings] first.") preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:Localized(@"OK") style:UIAlertActionStyleDefault handler:nil]];
         [AppDelegate showAlert:alert];
@@ -444,15 +442,15 @@ BOOL opensshAction(BOOL enable)
         [NSUserDefaults.appDefaults synchronize];
         return enable;
     }
-    
-    if(launchctl_support()) {
-        [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
-        return [NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")];
-    }
 
     if(![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/usr/libexec/sshd-keygen-wrapper")]) {
         [AppDelegate showMesage:Localized(@"openssh package is not installed") title:Localized(@"Developer")];
         return NO;
+    }
+    
+    if(launchctl_support()) {
+        [AppDelegate showMesage:Localized(@"The SSH Service on your device is hosted by launchd.") title:@""];
+        return YES;
     }
 
     NSString* log=nil;
@@ -715,7 +713,7 @@ void bootstrapAction()
             return;
         }
         
-        if(@available(iOS 16.0, *))
+        if(launchd_exploit_available())
         {
             [AppDelegate addLogText:Localized(@"exploit...")];
             
@@ -731,8 +729,8 @@ void bootstrapAction()
             }
                 
             @try {
-                int load_trust_cache(NSString *tcPath);
-                ASSERT(load_trust_cache(jbroot(@"/tmp/TaskPortHaxx/UpdateBrainService/AssetData/.TrustCache")) == 0);
+                int TaskPortHaxx_prepare_from_ui_process(NSString* execDir);
+                ASSERT(TaskPortHaxx_prepare_from_ui_process(execDir) == 0);
             }
             @catch (NSException *exception)
             {
@@ -865,13 +863,13 @@ int hideBootstrapApp(BOOL usreboot)
 
 void hideAllCTBugAppsAction(BOOL usreboot)
 {
-    [AppDelegate showHudMsg:Localized(@"Hiding All Jailbreak/TrollStore Apps...")];
-    
     NSArray* allInstalledApplications = [LSApplicationWorkspace.defaultWorkspace allInstalledApplications];
     
     if(!ensureTrollStoreHelper(allInstalledApplications)) {
         return;
     }
+    
+    [AppDelegate showHudMsg:Localized(@"Hiding All Jailbreak/TrollStore Apps...")];
     
     for(LSApplicationProxy* proxy in allInstalledApplications)
     {

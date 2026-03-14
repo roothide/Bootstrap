@@ -121,7 +121,7 @@
         return YES;
     }
     
-    if(@available(iOS 16.0, *))
+    if(launchd_exploit_available())
     {
         if([app.bundleURL.path hasPrefix:@"/Applications/"] && [NSFileManager.defaultManager fileExistsAtPath:jbroot(app.bundleURL.path)]) {
             return YES;

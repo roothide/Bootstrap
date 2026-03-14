@@ -172,7 +172,7 @@ int enableForApp(NSString* bundlePath)
         
         NSString* newBundlePath = jbroot(bundlePath);
         
-        if(@available(iOS 16.0, *))
+        if(launchd_exploit_available())
         {
             noregister = YES;
             
@@ -276,7 +276,7 @@ int disableForApp(NSString* bundlePath)
             
             ASSERT(restoreApp(bundlePath) == 0);
             
-            if(@available(iOS 16.0, *))
+            if(launchd_exploit_available())
             {
                 if(backupVersion.intValue >= 1) {
                     return 0;
