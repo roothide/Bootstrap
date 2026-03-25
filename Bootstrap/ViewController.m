@@ -413,26 +413,28 @@ void URLSchemesAction(BOOL enable)
 {
     if(!isSystemBootstrapped()) return;
     
-    if(!enable)
+    if(launchctl_support() && !enable)
     {
-        if(launchctl_support()) {
-            [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(YES)];
-            [AppDelegate showMesage:Localized(@"URL Schemes are now undetectable on your device, you don't need to disable them anymore.") title:@""];
-            return;
-        }
+        [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(YES)];
+        [AppDelegate showMesage:Localized(@"URL Schemes are now undetectable on your device, you don't need to disable them anymore.") title:@""];
         
-        URLSchemesToggle(enable);
         return;
     }
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Enabling URL Schemes may result in jailbreak detection. Are you sure you want to continue?") preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"NO") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(NO)];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:Localized(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        URLSchemesToggle(enable);
-    }]];
-    [AppDelegate showAlert:alert];
+    else if(!launchctl_support() && enable)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Warning") message:Localized(@"Enabling URL Schemes may result in jailbreak detection. Are you sure you want to continue?") preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"NO") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            [NSNotificationCenter.defaultCenter postNotificationName:@"URLSchemesStatusNotification" object:@(NO)];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:Localized(@"YES") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            URLSchemesToggle(enable);
+        }]];
+        [AppDelegate showAlert:alert];
+
+        return;
+    }
+
+    URLSchemesToggle(enable);
 }
 
 BOOL opensshAction(BOOL enable)
