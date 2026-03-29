@@ -309,6 +309,8 @@ void reinstallPackageManager()
 
 int rebuildIconCache()
 {
+    signal(SIGPIPE, SIG_IGN);
+    
     ASSERT([@"1" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     AppInfo* tsapp = [AppInfo appWithBundleIdentifier:@"com.opa334.TrollStore"];
     if(!tsapp) {
@@ -317,7 +319,7 @@ int rebuildIconCache()
         return -1;
     }
 
-    STRAPLOG("rebuild icon cache...");
+    STRAPLOG("rebuildIconCache: rebuild icon cache...");
     ASSERT([@"2" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     if(![LSApplicationWorkspace.defaultWorkspace _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES]) {
         ASSERT([@"-2" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
@@ -327,6 +329,7 @@ int rebuildIconCache()
     NSString* log=nil;
     NSString* err=nil;
 
+    STRAPLOG("rebuildIconCache: refresh trollstore apps...");
     ASSERT([@"3" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     if(spawn_root([tsapp.bundleURL.path stringByAppendingPathComponent:@"trollstorehelper"], @[@"refresh"], &log, &err) != 0) {
         ASSERT([@"-3" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
@@ -334,11 +337,13 @@ int rebuildIconCache()
         return -1;
     }
 
+    STRAPLOG("rebuildIconCache: launching Bootstrap app...");
     ASSERT([@"201" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     if(![LSApplicationWorkspace.defaultWorkspace openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier]) {
         ASSERT([@"-4" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     }
 
+    STRAPLOG("rebuildIconCache: rebuild tweaked apps...");
     ASSERT([@"202" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     if(spawn_bootstrap_binary((char*[]){"/bin/sh", "/basebin/rebuildApps.sh", NULL}, &log, &err) != 0) {
         ASSERT([@"-5" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
@@ -346,10 +351,13 @@ int rebuildIconCache()
         return -1;
     }
     
+    STRAPLOG("rebuildIconCache: respring...");
     ASSERT([@"203" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
     killAllForExecutable("/usr/libexec/backboardd", SIGKILL);
     
+    STRAPLOG("rebuildIconCache: done.");
     ASSERT([@"100" writeToFile:jbroot(@"/var/mobile/.rebuildiconcache") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
+    
     return 0;
 }
 
