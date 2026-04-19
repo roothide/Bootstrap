@@ -30,6 +30,7 @@
 		<string>AGXDeviceUserClient</string>
 		<string>IOHDIXControllerUserClient</string>
 		<string>IOSurfaceRootUserClient</string>
+		<string>IOSurfaceRoot</string>
 
 		<!-- TaskPortHaxx prepare -->
 		<string>AppleMobileFileIntegrityUserClient</string>

@@ -17,6 +17,7 @@ class toggleState: ObservableObject {
 struct OptionsView: View {
     @Binding var showOptions: Bool
     @Binding var tweakEnable: Bool
+    @AppStorage("KernelExploit", store: UserDefaults.app()) private var KernelExploit: Bool = false
     @StateObject var allowURLSchemes = toggleState(state: isBootstrapInstalled() && FileManager.default.fileExists(atPath: jbroot("/var/mobile/.allow_url_schemes")))
     @StateObject var opensshStatus = toggleState(state: updateOpensshStatus(false))
     @StateObject var allCTBugAppsHidden = toggleState(state: isAllCTBugAppsHidden())
@@ -63,6 +64,20 @@ struct OptionsView: View {
                                 })
                                 .onChange(of: tweakEnable) { newValue in
                                     tweaEnableAction(newValue)
+                                }
+                                
+                                
+                                if #available(iOS 16, *)
+                                {
+                                    if !isSystemBootstrapped()
+                                    {
+                                        Toggle(isOn: $KernelExploit, label: {
+                                            Label(
+                                                title: { Text("Kernel Exploit") },
+                                                icon: { Image(systemName: "shield.lefthalf.filled") }
+                                            ).imageScale(.large)
+                                        })
+                                    }
                                 }
                                 
                                 if isBootstrapInstalled() {

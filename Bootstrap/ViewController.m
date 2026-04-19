@@ -499,8 +499,6 @@ int exploitStart(NSString* execDir)
         return status;
     }
     
-    ASSERT(spawn_root(jbroot(@"/basebin/bsctl"), @[@"usreboot"], nil, nil) == 0);
-    
     return 0;
 }
 
@@ -672,6 +670,31 @@ void bootstrapAction()
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         setIdleTimerDisabled(YES);
+        
+        BOOL KernelExploit = [NSUserDefaults.appDefaults boolForKey:@"KernelExploit"];
+        
+        if(@available(iOS 16.0, *))
+        {
+            if(KernelExploit)
+            {
+                int patchfinding();
+                int exploit_init(const char *flavor);
+                
+                [AppDelegate addLogText:Localized(@"Status: Patch Finding")];
+                if(patchfinding() != 0) {
+                    [AppDelegate addLogText:@"patchfinding failed!"];
+                    [AppDelegate dismissHud];
+                    return;
+                }
+                
+                [AppDelegate addLogText:Localized(@"Status: Exploit Kernel")];
+                if(exploit_init("ds") != 0) {
+                    [AppDelegate addLogText:@"exploit_init failed!"];
+                    [AppDelegate dismissHud];
+                    return;
+                }
+            }
+        }
 
         const char* argv[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "bootstrap", NULL};
         int status = spawn_binary(argv[0], argv, environ, nil, ^(char* outstr, int length) {
@@ -774,6 +797,26 @@ void bootstrapAction()
             if(status!=0) {
                 [AppDelegate showMesage:Localized(@"Please reboot device and try again.") title:[NSString stringWithFormat:@"code(%d)",status]];
                 [AppDelegate dismissHud];
+                return;
+            }
+            
+            if(@available(iOS 16.0, *))
+            {
+                if(KernelExploit)
+                {
+                    void hideDeveloperMode();
+                    hideDeveloperMode();
+                }
+            }
+            
+            setIdleTimerDisabled(NO);
+            [AppDelegate dismissHud];
+            [generator impactOccurred];
+            
+            [AppDelegate addLogText:Localized(@"reboot userspace now...")]; sleep(1);
+            status = spawn_root(jbroot(@"/basebin/bsctl"), @[@"usreboot"], &log, &err);
+            if(status != 0) {
+                [AppDelegate showMesage:[NSString stringWithFormat:@"%@\n\nstderr:\n%@",log,err] title:[NSString stringWithFormat:@"code(%d)",status]];
                 return;
             }
             
