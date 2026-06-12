@@ -608,7 +608,7 @@
 					"$(PROJECT_DIR)/basebin/common/lib",
 					"$(PROJECT_DIR)/basebin/kexploit/kexploit-libs",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.2.1;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -655,7 +655,7 @@
 					"$(PROJECT_DIR)/basebin/common/lib",
 					"$(PROJECT_DIR)/basebin/kexploit/kexploit-libs",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.2.1;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.roothide.Bootstrap;
 				PRODUCT_NAME = "$(TARGET_NAME)";

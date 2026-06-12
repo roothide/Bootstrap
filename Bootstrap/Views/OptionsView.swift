@@ -69,14 +69,14 @@ struct OptionsView: View {
                                 
                                 if #available(iOS 16, *)
                                 {
-                                    if !isSystemBootstrapped()
+                                    if KernelExploit || !isSystemBootstrapped()
                                     {
                                         Toggle(isOn: $KernelExploit, label: {
                                             Label(
                                                 title: { Text("Kernel Exploit") },
                                                 icon: { Image(systemName: "shield.lefthalf.filled") }
                                             ).imageScale(.large)
-                                        })
+                                        }).disabled(isSystemBootstrapped())
                                     }
                                 }
                                 
