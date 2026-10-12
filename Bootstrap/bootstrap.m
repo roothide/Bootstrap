@@ -136,6 +136,8 @@ int rebuildBasebin()
     
     unlink(jbroot(@"/basebin/.jbroot").fileSystemRepresentation);
     ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/basebin/.jbroot") withDestinationPath:@"../.jbroot" error:nil]); //use a relative path so libvroot won't remove it
+
+    ASSERT([fm createSymbolicLinkAtPath:jbroot(@"/basebin/present") withDestinationPath:jbroot(@"/var/mobile/.present") error:nil]);
     
     // Patch basebin plists
     NSURL *basebinDaemonsURL = [NSURL fileURLWithPath:jbroot(@"/basebin/LaunchDaemons")];

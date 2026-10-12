@@ -395,6 +395,8 @@ void tweaEnableAction(BOOL enable)
     } else if([NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
         ASSERT([NSFileManager.defaultManager removeItemAtPath:jbroot(@"/var/mobile/.tweakenabled") error:nil]);
     }
+
+    setBasebinDependency(enable);
     
     if(isSystemBootstrapped() && launchctl_support()) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:Localized(@"Userspace Reboot Required") message:Localized(@"A userspace reboot is neccessary to apply the changes. Do you want to do it now?") preferredStyle:UIAlertControllerStyleAlert];
@@ -720,6 +722,8 @@ void bootstrapAction()
         if(gTweakEnabled && ![NSFileManager.defaultManager fileExistsAtPath:jbroot(@"/var/mobile/.tweakenabled")]) {
             ASSERT([[NSString new] writeToFile:jbroot(@"/var/mobile/.tweakenabled") atomically:YES encoding:NSUTF8StringEncoding error:nil]);
         }
+        
+        setBasebinDependency(gTweakEnabled);
         
         const char* argv2[] = {NSBundle.mainBundle.executablePath.fileSystemRepresentation, "injectsystemapps", NULL};
         int status2 = spawn_binary(argv2[0], argv2, environ, nil, ^(char* outstr, int length) {
